@@ -1,0 +1,28 @@
+# ==========================
+# Delphi / RAD Studio
+# ==========================
+
+# Compilados
+*.dcu
+*.exe
+*.dll
+*.bpl
+*.dcp
+
+# Pastas de build
+Win32/
+Win64/
+Debug/
+Release/
+
+# Arquivos locais da IDE
+*.local
+*.identcache
+*.stat
+
+# Histórico automático
+__history/
+__recovery/
+
+# Backup do Delphi
+*.~*

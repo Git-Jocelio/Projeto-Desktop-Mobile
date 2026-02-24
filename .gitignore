@@ -1,0 +1,38 @@
+# Delphi / RAD Studio
+
+# Compiled files
+*.exe
+*.dll
+*.bpl
+*.dcu
+*.identcache
+*.local
+*.map
+*.drc
+
+# Backup files
+*.~*
+*.bak
+
+# Project local files
+*.stat
+*.res
+*.rsm
+
+# History
+__history/
+*.~pas
+*.~dfm
+
+# Build folders
+Win32/
+Win64/
+Android/
+iOSDevice64/
+iOSSimulator/
+
+# Logs
+*.log
+
+# Temporary
+*.tmp
