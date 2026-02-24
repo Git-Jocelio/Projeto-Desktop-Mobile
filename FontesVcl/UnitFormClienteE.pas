@@ -11,13 +11,17 @@ type
   TFormClienteE = class(TForm)
     Label1: TLabel;
     Label2: TLabel;
-    Edit1: TEdit;
+    edtNome: TEdit;
     Panel2: TPanel;
-    SpeedButton1: TSpeedButton;
+    btnSalvar: TSpeedButton;
     Panel1: TPanel;
-    SpeedButton2: TSpeedButton;
+    btnCancelar: TSpeedButton;
+    Label3: TLabel;
+    edtTelefone: TEdit;
+    Label4: TLabel;
+    edtsetor: TEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure SpeedButton2Click(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -37,7 +41,7 @@ begin
   FormClienteE := nil;
 end;
 
-procedure TFormClienteE.SpeedButton2Click(Sender: TObject);
+procedure TFormClienteE.btnCancelarClick(Sender: TObject);
 begin
   {aqui o TNavigation vai enteder que aqui é uma tela modal e
   fechará tanto essa tela como a tela sombreada}

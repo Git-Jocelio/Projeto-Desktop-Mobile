@@ -1,10 +1,3 @@
-// unit GLOBAL do projeto para pegar dados do usuario logado
-// declarado como class pra pegar de qq lugar do projeto
-// usando class não preciso me preocupar em criar ou destruir.
-// o delphi se encarrega disso...
-
-// sempre que precisar dos dados de login importar esse form
-
 unit Vcl.Session;
 
 interface

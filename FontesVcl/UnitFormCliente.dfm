@@ -241,6 +241,12 @@ object FormCliente: TFormCliente
         Align = alClient
         BevelOuter = bvNone
         BorderStyle = bsNone
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 1
       end
     end

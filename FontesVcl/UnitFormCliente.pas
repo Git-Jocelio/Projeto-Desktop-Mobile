@@ -95,13 +95,13 @@ end;
 
 procedure TFormCliente.RefreshPessoa;
 begin
-  TLoading.Show(self);
+  TLoading.Show;
 
   TLoading.ExecuteThread(procedure
   begin
-    sleep(1500);
-    dsPessoa.DataSet := nil;
-    dmPessoa.ListarPessoa(dmPessoa.tabPessoa, edtFiltrar.text);
+    sleep(1000);
+    dsPessoa.DataSet := nil; // Evita erro ao redenrizar a tela
+    dmPessoa.ListarPessoa( dmPessoa.tabPessoa, edtFiltrar.text );
   end,
   TerminateBusca
   );

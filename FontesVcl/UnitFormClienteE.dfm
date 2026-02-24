@@ -3,8 +3,8 @@ object FormClienteE: TFormClienteE
   Top = 0
   BorderStyle = bsNone
   Caption = 'Cadastro de Cliente'
-  ClientHeight = 258
-  ClientWidth = 428
+  ClientHeight = 309
+  ClientWidth = 413
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -27,7 +27,7 @@ object FormClienteE: TFormClienteE
     Caption = 'Novo Cliente'
     Color = 16744448
     Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
+    Font.Color = 16744448
     Font.Height = -21
     Font.Name = 'Segoe UI Semibold'
     Font.Style = [fsBold]
@@ -35,23 +35,55 @@ object FormClienteE: TFormClienteE
     ParentFont = False
   end
   object Label2: TLabel
-    Left = 56
-    Top = 80
+    Left = 40
+    Top = 56
     Width = 33
     Height = 15
     Caption = 'Nome'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = 8289918
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
   end
-  object Edit1: TEdit
-    Left = 56
-    Top = 101
+  object Label3: TLabel
+    Left = 40
+    Top = 104
+    Width = 44
+    Height = 15
+    Caption = 'Telefone'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = 8289918
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label4: TLabel
+    Left = 40
+    Top = 160
+    Width = 27
+    Height = 15
+    Caption = 'Setor'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = 8289918
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+  end
+  object edtNome: TEdit
+    Left = 40
+    Top = 77
     Width = 326
     Height = 23
     TabOrder = 0
   end
   object Panel2: TPanel
     AlignWithMargins = True
-    Left = 166
-    Top = 201
+    Left = 116
+    Top = 236
     Width = 102
     Height = 35
     Margins.Left = 10
@@ -61,8 +93,8 @@ object FormClienteE: TFormClienteE
     BevelOuter = bvNone
     Color = 16744448
     ParentBackground = False
-    TabOrder = 1
-    object SpeedButton1: TSpeedButton
+    TabOrder = 3
+    object btnSalvar: TSpeedButton
       AlignWithMargins = True
       Left = 0
       Top = 0
@@ -82,13 +114,14 @@ object FormClienteE: TFormClienteE
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      ExplicitLeft = -48
+      ExplicitLeft = 2
+      ExplicitTop = 16
     end
   end
   object Panel1: TPanel
     AlignWithMargins = True
-    Left = 280
-    Top = 200
+    Left = 230
+    Top = 235
     Width = 102
     Height = 35
     Margins.Left = 10
@@ -104,8 +137,8 @@ object FormClienteE: TFormClienteE
     Font.Style = []
     ParentBackground = False
     ParentFont = False
-    TabOrder = 2
-    object SpeedButton2: TSpeedButton
+    TabOrder = 4
+    object btnCancelar: TSpeedButton
       AlignWithMargins = True
       Left = 0
       Top = 0
@@ -120,16 +153,30 @@ object FormClienteE: TFormClienteE
       Caption = 'Cancelar'
       Flat = True
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = 14666948
+      Font.Color = 8289918
       Font.Height = -15
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      OnClick = SpeedButton2Click
+      OnClick = btnCancelarClick
       ExplicitLeft = 176
       ExplicitTop = 16
       ExplicitWidth = 23
       ExplicitHeight = 22
     end
+  end
+  object edtTelefone: TEdit
+    Left = 40
+    Top = 125
+    Width = 326
+    Height = 23
+    TabOrder = 1
+  end
+  object edtsetor: TEdit
+    Left = 40
+    Top = 181
+    Width = 326
+    Height = 23
+    TabOrder = 2
   end
 end

@@ -24,6 +24,11 @@ type
     procedure CarregarConfgDB(connection: TFDConnection);
   public
     function pessoaListar(filtro: string): TJSONArray;
+    function pessoaListarId(pessoa_id: integer): TJSONObject;
+    function pessoaInserir(nome, telefone, setor: string): TJSONObject;
+    function pessoaEditar(pessoa_id: integer; nome, telefone,
+      setor: string): TJSONObject;
+    function pessoaExcluir(pessoa_id: integer): TJSONObject;
   end;
 
 var
@@ -81,8 +86,8 @@ begin
       qry.SQL.Add('where nome like :nome');
       qry.ParamByName('nome').AsString := '%' + filtro + '%';
     end;
+    qry.SQL.Add('order by nome');
 
-    qry.sql.Add('order by nome');
     qry.Active := True;
 
     // devolve um array contendo uma lista de pessoas
@@ -91,9 +96,108 @@ begin
   finally
     freeandnil(qry);
   end;
+end;
+
+function TDM.pessoaListarId(pessoa_id: integer): TJSONObject;
+var
+  qry : TFDquery;
+begin
+  try
+    qry := TFDquery.Create(nil);
+    qry.Connection := conn;
+
+    qry.SQL.Add('select * from Pessoa ');
+
+    if pessoa_id > 0 then
+    begin
+      qry.SQL.Add('where pessoa_id =:pessoa_id');
+      qry.ParamByName('pessoa_id').AsInteger := pessoa_id;
+    end;
+
+    qry.Active := True;
+
+    // devolve um array contendo uma  pessoas
+    result := qry.toJSONObject;
+
+  finally
+    freeandnil(qry);
+  end;
 
 end;
 
+function TDM.pessoaInserir(nome, telefone, setor: string): TJSONObject;
+var
+  qry : TFDquery;
+begin
+  try
+    qry := TFDquery.Create(nil);
+    qry.Connection := conn;
+
+    qry.SQL.Add('insert into pessoa');
+    qry.SQL.Add('(nome, telefone, setor)');
+    qry.SQL.Add('values');
+    qry.SQL.Add('(:nome, :telefone, :setor);');
+    qry.SQL.Add('returning pessoa_id');
+
+    qry.ParamByName('nome').AsString := nome;
+    qry.ParamByName('telefone').AsString := telefone;
+    qry.ParamByName('setor').AsString := setor;
+    qry.Active := True;
+
+    // devolve um array contendo uma  pessoas
+    result := qry.toJSONObject;
+
+  finally
+    freeandnil(qry);
+  end;
+end;
+
+function TDM.pessoaEditar(pessoa_id: integer;
+                          nome, telefone, setor: string): TJSONObject;
+var
+  qry : TFDquery;
+begin
+  try
+    qry := TFDquery.Create(nil);
+    qry.Connection := conn;
+
+    qry.SQL.Add('update pessoa');
+    qry.SQL.Add(' set nome=:nome, telefone=:telefone, setor=:setor');
+    qry.SQL.Add('where pessoa_id =:pessoa_id');
+    qry.ParamByName('pessoa_id').AsInteger := pessoa_id;
+    qry.ParamByName('nome').AsString := nome;
+    qry.ParamByName('telefone').AsString := telefone;
+    qry.ParamByName('setor').AsString := setor;
+    qry.ExecSQL;
+
+    // devolve um array contendo uma  pessoas com id
+    result := TJSONObject.create(TJSONPair.create('pessoa_id', pessoa_id));
+
+  finally
+    freeandnil(qry);
+  end;
+end;
+
+function TDM.pessoaExcluir(pessoa_id: integer): TJSONObject;
+var
+  qry : TFDquery;
+begin
+  try
+    qry := TFDquery.Create(nil);
+    qry.Connection := conn;
+
+    qry.SQL.Add('delete from pessoa');
+    qry.SQL.Add('where pessoa_id =:pessoa_id');
+    qry.ParamByName('pessoa_id').AsInteger := pessoa_id;
+    qry.ExecSQL;
+
+    // devolve um array contendo uma  pessoas com id
+    result := TJSONObject.create(TJSONPair.create('pessoa_id', pessoa_id));
+
+  finally
+    freeandnil(qry);
+  end;
+end;
 
 
 
