@@ -7,7 +7,6 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Imaging.pngimage,
   Vcl.ExtCtrls,
   DataModule.Global,
-
   Controllers.Cliente;
 
 type
@@ -26,8 +25,6 @@ var
 
 implementation
 
-
-
 {$R *.dfm}
 
 uses
@@ -40,8 +37,8 @@ begin
    THorse.use(Jhonson());
    THorse.use(CORS);
 
+   // verifica a rota chamada e da andamento a requisição
    Controllers.Cliente.RegistrarRotas;
-
 
    THorse.Listen(3000);
    lblServidor.caption := 'Servidor Horse respondendo na porta : ' + THorse.Port.toString;

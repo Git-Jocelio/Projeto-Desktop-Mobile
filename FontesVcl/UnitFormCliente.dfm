@@ -62,7 +62,7 @@ object FormCliente: TFormCliente
       Color = 6316270
       ParentBackground = False
       TabOrder = 0
-      object BtnAcessar: TSpeedButton
+      object BtnExcluir: TSpeedButton
         AlignWithMargins = True
         Left = 0
         Top = 0
@@ -82,6 +82,7 @@ object FormCliente: TFormCliente
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
+        OnClick = BtnExcluirClick
         ExplicitLeft = 176
         ExplicitTop = 16
         ExplicitWidth = 23
@@ -103,7 +104,7 @@ object FormCliente: TFormCliente
       Color = 16744448
       ParentBackground = False
       TabOrder = 1
-      object SpeedButton1: TSpeedButton
+      object btnInserir: TSpeedButton
         AlignWithMargins = True
         Left = 0
         Top = 0
@@ -123,7 +124,7 @@ object FormCliente: TFormCliente
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        OnClick = SpeedButton1Click
+        OnClick = btnInserirClick
         ExplicitLeft = 176
         ExplicitTop = 16
         ExplicitWidth = 23
@@ -145,7 +146,7 @@ object FormCliente: TFormCliente
       Color = 16744448
       ParentBackground = False
       TabOrder = 2
-      object SpeedButton2: TSpeedButton
+      object BtnEditar: TSpeedButton
         AlignWithMargins = True
         Left = 0
         Top = 0
@@ -165,6 +166,7 @@ object FormCliente: TFormCliente
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
+        OnClick = BtnEditarClick
         ExplicitLeft = 176
         ExplicitTop = 16
         ExplicitWidth = 23

@@ -16,11 +16,11 @@ type
     PnlHeader: TPanel;
     Label1: TLabel;
     PnlBotaoInserir: TPanel;
-    BtnAcessar: TSpeedButton;
+    BtnExcluir: TSpeedButton;
     Panel2: TPanel;
-    SpeedButton1: TSpeedButton;
+    btnInserir: TSpeedButton;
     Panel3: TPanel;
-    SpeedButton2: TSpeedButton;
+    BtnEditar: TSpeedButton;
     Panel1: TPanel;
     Panel4: TPanel;
     btnFiltrar: TSpeedButton;
@@ -28,13 +28,17 @@ type
     DBGrid: TDBGrid;
     dsPessoa: TDataSource;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure SpeedButton1Click(Sender: TObject);
+    procedure btnInserirClick(Sender: TObject);
     procedure btnFiltrarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure BtnEditarClick(Sender: TObject);
+    procedure BtnExcluirClick(Sender: TObject);
   private
-    procedure OpenCadCliente(id_cliente: integer);
+    procedure OpenCadCliente(pessoa_id: integer);
     procedure RefreshPessoa;
     procedure TerminateBusca(Sender: TObject);
+    procedure Editar;
+    procedure TerminateExcluir(Sender: TObject);
     { Private declarations }
   public
     { Public declarations }
@@ -62,15 +66,66 @@ begin
   RefreshPessoa;
 end;
 
-procedure TFormCliente.OpenCadCliente(id_cliente: integer);
+procedure TFormCliente.OpenCadCliente(pessoa_id: integer);
 begin
+  TNavigation.ParamInt := pessoa_id;
   TNavigation.OpenModal(TFormClienteE, FormClienteE);
 end;
 
-procedure TFormCliente.SpeedButton1Click(Sender: TObject);
+procedure TFormCliente.btnInserirClick(Sender: TObject);
 begin
   OpenCadCliente(0);
 end;
+
+procedure TFormCliente.Editar;
+begin
+  if DmPessoa.tabPessoa.IsEmpty then
+    exit;
+
+   OpenCadCliente(DmPessoa.tabPessoa.FieldByName('pessoa_id').AsInteger);
+
+end;
+
+
+procedure TFormCliente.BtnEditarClick(Sender: TObject);
+begin
+  Editar;
+end;
+
+procedure TFormCliente.BtnExcluirClick(Sender: TObject);
+begin
+  if DmPessoa.tabPessoa.IsEmpty then
+    exit;
+ if MessageDlg('Deseja realmente excluir este registro?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+ begin
+
+   TLoading.Show;
+   TLoading.ExecuteThread(procedure
+   begin
+      DmPessoa.Excluir(DmPessoa.tabPessoa.FieldByName('pessoa_id').AsInteger);
+   end,
+   TerminateExcluir
+   );
+ end;
+
+end;
+
+procedure TFormCliente.TerminateExcluir(Sender: TObject);
+begin
+
+  TLoading.Hide;
+
+  if (Sender is TThread) then
+    if Assigned(TThread(Sender).FatalException) then
+    begin
+      ShowMessage( Exception(TThread(Sender).FatalException).Message );
+      exit;
+    end;
+
+  RefreshPessoa;
+
+end;
+
 
 procedure TFormCliente.btnFiltrarClick(Sender: TObject);
 begin
@@ -105,6 +160,7 @@ begin
   end,
   TerminateBusca
   );
+
 end;
 
 

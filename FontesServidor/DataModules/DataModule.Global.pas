@@ -88,9 +88,11 @@ begin
     end;
     qry.SQL.Add('order by nome');
 
+    // vai no banco de dados, faz a pesquisa ...
     qry.Active := True;
 
-    // devolve um array contendo uma lista de pessoas
+    {o resultado do dataset é convertido em array Json
+    contendo uma lista de pessoas e devolvido ao controller}
     result := qry.ToJSONArray;
 
   finally
@@ -125,30 +127,34 @@ begin
 
 end;
 
+
+
 function TDM.pessoaInserir(nome, telefone, setor: string): TJSONObject;
 var
-  qry : TFDquery;
+  qry: TFDQuery;
 begin
+
+  result := nil; // Inicializa o resultado para evitar lixo de memória
+  qry := TFDQuery.Create(nil);
+
   try
-    qry := TFDquery.Create(nil);
     qry.Connection := conn;
 
-    qry.SQL.Add('insert into pessoa');
-    qry.SQL.Add('(nome, telefone, setor)');
-    qry.SQL.Add('values');
-    qry.SQL.Add('(:nome, :telefone, :setor);');
-    qry.SQL.Add('returning pessoa_id');
+    qry.SQL.Add('INSERT INTO pessoa (nome, telefone, setor)');
+    qry.SQL.Add('VALUES (:nome, :telefone, :setor)');
+    qry.SQL.Add('RETURNING pessoa_id');
 
-    qry.ParamByName('nome').AsString := nome;
+    qry.ParamByName('nome').AsString     := nome;
     qry.ParamByName('telefone').AsString := telefone;
-    qry.ParamByName('setor').AsString := setor;
-    qry.Active := True;
+    qry.ParamByName('setor').AsString    := setor;
 
-    // devolve um array contendo uma  pessoas
-    result := qry.toJSONObject;
+    qry.Open;
+
+    if not qry.IsEmpty then
+      result := qry.ToJSONObject;
 
   finally
-    freeandnil(qry);
+    FreeAndNil(qry);
   end;
 end;
 

@@ -9,7 +9,8 @@ uses
   FireDAC.Comp.Client, FireDAC.Stan.Intf,
   DataSet.Serialize.Config,  // transforma json em dataset
   RestRequest4D, // usado para receber respostas do servidor
-  DataSet.Serialize.Adapter.RESTRequest4D ;
+  DataSet.Serialize.Adapter.RESTRequest4D,
+  System.JSON ;
 
 type
   TDmPessoa = class(TDataModule)
@@ -18,6 +19,11 @@ type
   private
   public
     procedure ListarPessoa(memTable: TFDMemTable; filtro: string);
+    procedure ListarPessoaID(memTable: TFDMemTable; pessoa_id: integer);
+    //CRUD
+    procedure Inserir(nome, telefone, setor: string);
+    procedure Editar(pessoa_id: integer; nome, telefone, setor: string);
+    procedure Excluir(pessoa_id: integer);
   end;
 
 var
@@ -41,7 +47,7 @@ var
   resp : IResponse; // usado para receber respostas do servidor
 begin
   resp := TRequest.New.BaseURL('http://localhost:3000') // criando uma requisição do servidor
-                      .Resource('/pessoa')               // nessa rota
+                      .Resource('/pessoa')              // nessa rota
                       .AddParam('filtro',filtro)        // nesse filtro
                       .Accept('application/json')       // trabalhar com json
                       .Adapters(TDataSetSerializeAdapter.New(memTable)) // qdo a requisicao voltar vai pegar o json e jogar dentro do memtable
@@ -53,6 +59,93 @@ begin
     raise Exception.Create(resp.content);
 
 end;
+
+procedure TDmPessoa.ListarPessoaID(memTable: TFDMemTable; pessoa_id: integer);
+var
+  resp : IResponse; // usado para receber respostas do servidor
+begin
+  resp := TRequest.New.BaseURL('http://localhost:3000')   // criando uma requisição do servidor
+                      .Resource('/pessoa')               // nessa rota
+                      .ResourceSuffix(pessoa_id.ToString)// acrescenta /id da pessoa
+                      .Accept('application/json')        // trabalhar com json
+                      .Adapters(TDataSetSerializeAdapter.New(memTable)) // qdo a requisicao voltar vai pega o json e jogar dentro do memtable
+                      .Get;                             // passando um Get
+  // trata erro se houver
+  if resp.StatusCode <> 200 then
+    raise Exception.Create(resp.content);
+end;
+
+procedure TDmPessoa.Inserir(nome, telefone, setor: string);
+var
+  resp : IResponse; // usado para receber respostas do servidor
+  json : TJSONObject; // usado para criar um objeto json com os dados da pessoa
+begin
+
+  try
+    // criar um objeto json com os dados do cliente
+    json := TJSONObject.Create;
+    json.AddPair('nome',nome);
+    json.AddPair('telefone',telefone);
+    json.AddPair('setor',setor);
+
+    resp := TRequest.New.BaseURL('http://localhost:3000')   // criando uma requisição do servidor
+                        .Resource('/pessoa')               // nessa rota
+                        .AddBody(json.ToJSON)              // passando um json como string com dados da pessoa
+                        .Accept('application/json')        // trabalhar com json
+                        .Post;                             // passando um Post
+    // trata erro se houver
+    if resp.StatusCode <> 201 then
+      raise Exception.Create(resp.content);
+
+  finally
+    freeandnil(json);
+  end;
+end;
+
+
+procedure TDmPessoa.Editar(pessoa_id: integer; nome, telefone, setor: string);
+var
+  resp : IResponse; // usado para receber respostas do servidor
+  json : TJSONObject; // usado para criar um objeto json com os dados da pessoa
+begin
+
+  try
+    // criar um objeto json com os dados do cliente
+    json := TJSONObject.Create;
+    json.AddPair('nome',nome);
+    json.AddPair('telefone',telefone);
+    json.AddPair('setor',setor);
+
+    resp := TRequest.New.BaseURL('http://localhost:3000') // criando uma requisição do servidor
+                        .Resource('/pessoa')              // nessa rota
+                        .ResourceSuffix(pessoa_id.ToString) // acrescenta o parametro pessoa_id recebido na url
+                        .AddBody(json.ToJSON)             // passando um json como string com dados da pessoa
+                        .Accept('application/json')       // trabalhar com json
+                        .Put;                             // passando um Post
+    // trata erro se houver
+    if resp.StatusCode <> 200 then
+      raise Exception.Create(resp.content);
+
+  finally
+    freeandnil(json);
+  end;
+end;
+
+procedure TDmPessoa.Excluir(pessoa_id: integer);
+var
+  resp : IResponse;   // usado para receber respostas do servidor
+begin
+
+    resp := TRequest.New.BaseURL('http://localhost:3000')  // criando uma requisição do servidor
+                        .Resource('/pessoa')               // nessa rota
+                        .ResourceSuffix(pessoa_id.ToString) // acrescenta o parametro pessoa_id recebido na url
+                        .Accept('application/json')        // trabalhar com json
+                        .delete;                              // passando um Post
+    // trata erro se houver
+    if resp.StatusCode <> 200 then
+      raise Exception.Create(resp.content);
+end;
+
 
 
 end.
