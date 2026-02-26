@@ -25,10 +25,10 @@ begin
    {o que estou dizendo para o horse: quando chegar uma requisição /pessoa
    chame o metodo correspondente. ex. Listar para listar pessoas}
    THorse.Get('/pessoa', Listar);              // lista pessoa pelo nome
-   THorse.Get('/pessoa/:id_pessoa', ListarId); // lista pessoa pelo id
+   THorse.Get('/pessoa/:pessoa_id', ListarId); // lista pessoa pelo id
    THorse.Post('/pessoa', Inserir);            // insere uma pessoa
-   THorse.Put('/pessoa/:id_pessoa', Editar);   // edita uma pessoa
-   THorse.Delete('/pessoa/:id_pessoa', Excluir); // excluir uma pessoa
+   THorse.Put('/pessoa/:pessoa_id', Editar);   // edita uma pessoa
+   THorse.Delete('/pessoa/:pessoa_id', Excluir); // excluir uma pessoa
 end;
 
 procedure Listar(req : THorseRequest; res : THorseResponse; Next : TProc);
@@ -39,63 +39,48 @@ begin
 
   try
 
+    dm := nil;
+    filtro := Trim(req.Query['filtro']);
+
     try
-
-      // cria o dm somente quando for usar(ativa o fdConnection)
       dm := TDM.Create(nil);
-
-      // captura o filtro fornecido pelo usuário
-      filtro := req.query['filtro']; // vem do corpo da requisição
-
-      {o metodo pessoaListar é chamado dentro do dm,
-      e devolve o resultado da qry em formato json,
-      que é devolvido com resposta(res) para o servidor(horse) na unit principal}
       res.Send<TJSONArray>(dm.pessoaListar(filtro));
-
-    except on ex: exception do
-       res.send('Erro ao listar pessoas').status(500);
+    except
+      on E: Exception do
+        res.Status(500).Send(E.Message);
     end;
 
   finally
-    // fecha e libera o fdconnection da memária
-    freeandnil(dm);
+    if Assigned(dm) then
+      FreeAndNil(dm);
   end;
-
 end;
 
 procedure ListarId (req : THorseRequest; res : THorseResponse; Next : TProc);
 var
   dm : TDM;
-  id_pessoa: integer;
+  pessoa_id: integer;
 begin
-  // montar um endpoint
-  try
-
-    try
-
-      // cria o dm somente quando for usar
-      dm := TDM.Create(nil);
-      try
-        // o valor id_cliente do parametro passado na requisição
-        id_pessoa := req.Params['id_pessoa'].ToInteger;
-      except
-        id_pessoa := 0;
-      end;
-
-      {converte o dataset recebido da funcao pessoaListar em um array e
-      envia a quem solicitou}
-      res.Send<TJSONObject>(dm.pessoaListarId(id_pessoa));
-
-    except on ex: exception do
-       res.send('Erro ao listar pessoas').status(500);
-    end;
-
-  finally
-    freeandnil(dm);
+  if not TryStrToInt(req.Params['pessoa_id'], pessoa_id) then
+  begin
+    res.Status(400).Send('ID inválido');
+    Exit;
   end;
 
+  dm := nil;
+  try
+    try
+      dm := TDM.Create(nil);
+      res.Send<TJSONObject>(dm.pessoaListarId(pessoa_id));
+    except
+      on E: Exception do
+        res.Status(500).Send(E.Message);
+    end;
+  finally
+    if Assigned(dm) then
+      FreeAndNil(dm);
+  end;
 end;
-
 
 procedure Inserir(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
@@ -129,8 +114,7 @@ begin
 
     except
       on E: Exception do
-        // É importante logar ou enviar a mensagem real (E.Message) para depurar
-        res.Status(500).Send('Erro ao Inserir: ' + E.Message);
+        res.Status(500).Send(E.Message);
     end;
   finally
     // 4. Libera o DataModule, mas o jsonRetorno vive até o res.Send terminar
@@ -150,10 +134,9 @@ begin
   try
     try
       // 1. Validar o ID antes de qualquer coisa
-      pessoa_id := req.Params.Dictionary['pessoa_id'].ToInteger;
-      if pessoa_id <= 0 then
+      if not TryStrToInt(req.Params['pessoa_id'], pessoa_id) then
       begin
-        res.Status(400).Send('ID da pessoa inválido');
+        res.Status(400).Send('ID inválido');
         Exit;
       end;
 
@@ -176,8 +159,7 @@ begin
 
     except
       on E: Exception do
-        // Retorna o erro real para facilitar o debug durante o desenvolvimento
-        res.Status(500).Send('Erro ao Editar pessoa: ' + E.Message);
+        res.Status(500).Send(E.Message);
     end;
   finally
     if Assigned(dm) then
@@ -198,18 +180,17 @@ begin
       // cria o dm somente quando for usar
       dm := TDM.Create(nil);
       // extrair o pessoa_id passado por parametro
-      try
-        pessoa_id := req.Params['pessoa_id'].ToInteger;
-      except
-        pessoa_id := 0;
+      if not TryStrToInt(req.Params['pessoa_id'], pessoa_id) then
+      begin
+        res.Status(400).Send('ID inválido');
+        Exit;
       end;
-
       {converte o dataset recebido da funcao pessoaListar em um array e
       envia a quem solicitou}
       res.Send<TJSONObject>(dm.pessoaExcluir(pessoa_id));
 
-    except on ex: exception do
-       res.send('Erro ao Inserir pessoas').status(500);
+    except on e: exception do
+       res.Status(500).Send(E.Message);
     end;
 
   finally
