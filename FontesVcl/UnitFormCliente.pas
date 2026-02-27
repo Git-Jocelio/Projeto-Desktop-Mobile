@@ -25,15 +25,18 @@ type
     Panel4: TPanel;
     btnFiltrar: TSpeedButton;
     edtFiltrar: TEdit;
-    DBGrid: TDBGrid;
+    dbgPessoas: TDBGrid;
     dsPessoa: TDataSource;
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure btnInserirClick(Sender: TObject);
-    procedure btnFiltrarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+
+    procedure btnInserirClick(Sender: TObject);
     procedure BtnEditarClick(Sender: TObject);
     procedure BtnExcluirClick(Sender: TObject);
+    procedure btnFiltrarClick(Sender: TObject);
+    procedure dbgPessoasDblClick(Sender: TObject);
   private
+    bookMark : TBookMark;
     procedure OpenCadCliente(pessoa_id: integer);
     procedure RefreshPessoa;
     procedure TerminateBusca(Sender: TObject);
@@ -68,6 +71,7 @@ end;
 
 procedure TFormCliente.OpenCadCliente(pessoa_id: integer);
 begin
+  TNavigation.ExecuteOnClose := RefreshPessoa;
   TNavigation.ParamInt := pessoa_id;
   TNavigation.OpenModal(TFormClienteE, FormClienteE);
 end;
@@ -77,10 +81,17 @@ begin
   OpenCadCliente(0);
 end;
 
+procedure TFormCliente.dbgPessoasDblClick(Sender: TObject);
+begin
+  Editar;
+end;
+
 procedure TFormCliente.Editar;
 begin
   if DmPessoa.tabPessoa.IsEmpty then
     exit;
+
+    bookMark := dbgPessoas.DataSource.DataSet.GetBookmark;
 
    OpenCadCliente(DmPessoa.tabPessoa.FieldByName('pessoa_id').AsInteger);
 
@@ -145,6 +156,14 @@ begin
        exit;
      end;
 
+     if bookMark<>nil then
+     try
+       dbgPessoas.DataSource.DataSet.GotoBookmark(bookMark);
+       dbgPessoas.DataSource.DataSet.FreeBookmark(bookMark);
+       bookMark := nil;
+     except
+       //
+     end;
 end;
 
 
