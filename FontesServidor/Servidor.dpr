@@ -4,7 +4,8 @@ uses
   Vcl.Forms,
   UnitPrincipal in 'UnitPrincipal.pas' {FormPrincipal},
   Controllers.Cliente in 'Controllers\Controllers.Cliente.pas',
-  DataModule.Global in 'DataModules\DataModule.Global.pas' {DM: TDataModule};
+  DataModule.Global in 'DataModules\DataModule.Global.pas' {DM: TDataModule},
+  Controllers.Usuario in 'Controllers\Controllers.Usuario.pas';
 
 {$R *.res}
 

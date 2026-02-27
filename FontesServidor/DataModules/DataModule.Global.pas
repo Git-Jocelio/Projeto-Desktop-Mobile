@@ -31,8 +31,8 @@ type
     function pessoaExcluir(pessoa_id: integer): TJSONObject;
   end;
 
-var
-  DM: TDM;
+//var
+//  DM: TDM;
 
 implementation
 
@@ -51,7 +51,7 @@ begin
   TDataSetSerializeConfig.GetInstance.CaseNameDefinition := cndLower;
   TDataSetSerializeConfig.GetInstance.Import.DecimalSeparator := '.';
 
-  Conn.Connected := TRUE;
+  Conn.open;
 
 end;
 
@@ -75,28 +75,24 @@ function TDM.pessoaListar(filtro: string): TJSONArray;
 var
   qry : TFDquery;
 begin
+  qry := TFDQuery.Create(nil);
   try
-    qry := TFDquery.Create(nil);
-    qry.Connection := conn;
-
-    qry.SQL.Add('select * from Pessoa ');
+    qry.Connection := Conn;
+    qry.SQL.Text := 'select * from pessoa';
 
     if filtro <> '' then
     begin
       qry.SQL.Add('where nome like :nome');
       qry.ParamByName('nome').AsString := '%' + filtro + '%';
     end;
+
     qry.SQL.Add('order by nome');
 
-    // vai no banco de dados, faz a pesquisa ...
-    qry.Active := True;
+    qry.Open;
 
-    {o resultado do dataset é convertido em array Json
-    contendo uma lista de pessoas e devolvido ao controller}
-    result := qry.ToJSONArray;
-
+    Result := qry.ToJSONArray;
   finally
-    freeandnil(qry);
+    qry.Free;
   end;
 end;
 
@@ -104,27 +100,20 @@ function TDM.pessoaListarId(pessoa_id: integer): TJSONObject;
 var
   qry : TFDquery;
 begin
+  qry := TFDQuery.Create(nil);
   try
-    qry := TFDquery.Create(nil);
-    qry.Connection := conn;
+    qry.Connection := Conn;
+    qry.SQL.Text :=
+      'select * from pessoa where pessoa_id = :pessoa_id';
 
-    qry.SQL.Add('select * from Pessoa ');
+    qry.ParamByName('pessoa_id').AsInteger := pessoa_id;
 
-    if pessoa_id > 0 then
-    begin
-      qry.SQL.Add('where pessoa_id =:pessoa_id');
-      qry.ParamByName('pessoa_id').AsInteger := pessoa_id;
-    end;
+    qry.Open;
 
-    qry.Active := True;
-
-    // devolve um array contendo uma  pessoas
-    result := qry.toJSONObject;
-
+    Result := qry.ToJSONObject;
   finally
-    freeandnil(qry);
+    qry.Free;
   end;
-
 end;
 
 
@@ -177,8 +166,9 @@ begin
     qry.ExecSQL;
 
     // devolve um array contendo uma  pessoas com id
-    result := TJSONObject.create(TJSONPair.create('pessoa_id', pessoa_id));
-
+    //result := TJSONObject.create(TJSONPair.create('pessoa_id', pessoa_id));
+    Result := TJSONObject.Create;
+    Result.AddPair('pessoa_id', TJSONNumber.Create(pessoa_id));
   finally
     freeandnil(qry);
   end;
@@ -198,8 +188,9 @@ begin
     qry.ExecSQL;
 
     // devolve um array contendo uma  pessoas com id
-    result := TJSONObject.create(TJSONPair.create('pessoa_id', pessoa_id));
-
+    //result := TJSONObject.create(TJSONPair.create('pessoa_id', pessoa_id));
+    Result := TJSONObject.Create;
+    Result.AddPair('pessoa_id', TJSONNumber.Create(pessoa_id));
   finally
     freeandnil(qry);
   end;

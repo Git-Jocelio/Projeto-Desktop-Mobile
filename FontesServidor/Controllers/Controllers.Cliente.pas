@@ -31,30 +31,27 @@ begin
    THorse.Delete('/pessoa/:pessoa_id', Excluir); // excluir uma pessoa
 end;
 
-procedure Listar(req : THorseRequest; res : THorseResponse; Next : TProc);
+procedure Listar(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
-  dm : TDM;
+  dm: TDM;
   filtro: string;
 begin
+  filtro := Trim(req.Query['filtro']);
 
+  dm := TDM.Create(nil);
   try
-
-    dm := nil;
-    filtro := Trim(req.Query['filtro']);
-
     try
-      dm := TDM.Create(nil);
-      res.Send<TJSONArray>(dm.pessoaListar(filtro));
+      res.Status(200)
+         .Send<TJSONArray>(dm.pessoaListar(filtro));
     except
       on E: Exception do
         res.Status(500).Send(E.Message);
     end;
-
   finally
-    if Assigned(dm) then
-      FreeAndNil(dm);
+    dm.Free;
   end;
 end;
+
 
 procedure ListarId (req : THorseRequest; res : THorseResponse; Next : TProc);
 var
@@ -67,18 +64,16 @@ begin
     Exit;
   end;
 
-  dm := nil;
+  dm := TDM.Create(nil);
   try
     try
-      dm := TDM.Create(nil);
       res.Send<TJSONObject>(dm.pessoaListarId(pessoa_id));
     except
       on E: Exception do
         res.Status(500).Send(E.Message);
     end;
   finally
-    if Assigned(dm) then
-      FreeAndNil(dm);
+    dm.Free;
   end;
 end;
 
@@ -89,114 +84,94 @@ var
   nome, telefone, setor: string;
   jsonRetorno: TJSONObject;
 begin
-  dm := nil;
+  body := req.Body<TJSONObject>;
+  if not Assigned(body) then
+  begin
+    res.Status(400).Send('JSON inválido ou vazio');
+    Exit;
+  end;
+
+  nome     := body.GetValue<string>('nome', '');
+  telefone := body.GetValue<string>('telefone', '');
+  setor    := body.GetValue<string>('setor', '');
+
+  dm := TDM.Create(nil);
   try
     try
-      dm := TDM.Create(nil);
-
-      // 1. Tenta pegar o body e valida se não está vazio
-      body := req.Body<TJSONObject>;
-      if not Assigned(body) then
-      begin
-        res.Send('JSON inválido ou vazio').Status(400);
-        Exit;
-      end;
-
-      nome     := body.GetValue<string>('nome', '');
-      telefone := body.GetValue<string>('telefone', '');
-      setor    := body.GetValue<string>('setor', '');
-
-      // 2. Chama a função e armazena o resultado em uma variável local
       jsonRetorno := dm.pessoaInserir(nome, telefone, setor);
-
-      // 3. Envia o JSON. O Horse assumirá o controle da liberação deste objeto
       res.Status(201).Send<TJSONObject>(jsonRetorno);
-
     except
       on E: Exception do
         res.Status(500).Send(E.Message);
     end;
   finally
-    // 4. Libera o DataModule, mas o jsonRetorno vive até o res.Send terminar
-    if Assigned(dm) then
-      FreeAndNil(dm);
+    dm.Free;
   end;
 end;
 
-procedure Editar(req : THorseRequest; res : THorseResponse; Next : TProc);
+procedure Editar(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
-  dm : TDM;
-  body : TJSONObject;
-  pessoa_id: integer;
+  dm: TDM;
+  body: TJSONObject;
+  pessoa_id: Integer;
   nome, telefone, setor: string;
 begin
-  dm := nil;
+  if not TryStrToInt(req.Params['pessoa_id'], pessoa_id) then
+  begin
+    res.Status(400).Send('ID inválido');
+    Exit;
+  end;
+
+  body := req.Body<TJSONObject>;
+  if not Assigned(body) then
+  begin
+    res.Status(400).Send('Corpo da requisição vazio ou inválido');
+    Exit;
+  end;
+
+  nome     := body.GetValue<string>('nome', '');
+  telefone := body.GetValue<string>('telefone', '');
+  setor    := body.GetValue<string>('setor', '');
+
+  dm := TDM.Create(nil);
   try
     try
-      // 1. Validar o ID antes de qualquer coisa
-      if not TryStrToInt(req.Params['pessoa_id'], pessoa_id) then
-      begin
-        res.Status(400).Send('ID inválido');
-        Exit;
-      end;
-
-      // 2. Validar o Body
-      body := req.Body<TJSONObject>;
-      if not Assigned(body) then
-      begin
-        res.Status(400).Send('Corpo da requisição vazio ou inválido');
-        Exit;
-      end;
-
-      dm := TDM.Create(nil);
-
-      nome     := body.GetValue<string>('nome', '');
-      telefone := body.GetValue<string>('telefone', '');
-      setor    := body.GetValue<string>('setor', '');
-
-      // 3. Executar e retornar (O Horse gerencia a memória do JSON retornado)
-      res.Status(200).Send<TJSONObject>(dm.pessoaEditar(pessoa_id, nome, telefone, setor));
-
+      res.Status(200)
+         .Send<TJSONObject>(dm.pessoaEditar(pessoa_id, nome, telefone, setor));
     except
       on E: Exception do
         res.Status(500).Send(E.Message);
     end;
   finally
-    if Assigned(dm) then
-      FreeAndNil(dm);
+    dm.Free;
   end;
 end;
 
-procedure Excluir(req : THorseRequest; res : THorseResponse; Next : TProc);
+
+procedure Excluir(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
-  dm : TDM;
-  pessoa_id: integer;
+  dm: TDM;
+  pessoa_id: Integer;
 begin
-  // montar um endpoint
-  try
-
-    try
-
-      // cria o dm somente quando for usar
-      dm := TDM.Create(nil);
-      // extrair o pessoa_id passado por parametro
-      if not TryStrToInt(req.Params['pessoa_id'], pessoa_id) then
-      begin
-        res.Status(400).Send('ID inválido');
-        Exit;
-      end;
-      {converte o dataset recebido da funcao pessoaListar em um array e
-      envia a quem solicitou}
-      res.Send<TJSONObject>(dm.pessoaExcluir(pessoa_id));
-
-    except on e: exception do
-       res.Status(500).Send(E.Message);
-    end;
-
-  finally
-    freeandnil(dm);
+  if not TryStrToInt(req.Params['pessoa_id'], pessoa_id) then
+  begin
+    res.Status(400).Send('ID inválido');
+    Exit;
   end;
 
+  dm := TDM.Create(nil);
+  try
+    try
+      res.Status(200)
+         .Send<TJSONObject>(dm.pessoaExcluir(pessoa_id));
+    except
+      on E: Exception do
+        res.Status(500).Send(E.Message);
+    end;
+  finally
+    dm.Free;
+  end;
 end;
+
 
 end.
