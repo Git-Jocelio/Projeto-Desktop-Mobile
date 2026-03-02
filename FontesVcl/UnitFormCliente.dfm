@@ -274,7 +274,7 @@ object FormCliente: TFormCliente
     Columns = <
       item
         Expanded = False
-        FieldName = 'PESSOA_ID'
+        FieldName = 'PESSOAID'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
@@ -317,6 +317,7 @@ object FormCliente: TFormCliente
         Font.Name = 'Segoe UI'
         Font.Style = []
         Title.Alignment = taCenter
+        Title.Caption = 'Telefone'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
         Title.Font.Height = -15
@@ -346,7 +347,6 @@ object FormCliente: TFormCliente
   end
   object dsPessoa: TDataSource
     AutoEdit = False
-    DataSet = DmPessoa.tabPessoa
     Left = 310
     Top = 120
   end

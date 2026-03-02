@@ -8,7 +8,7 @@ uses
   Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.Navigation, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, DataModele.Pessoa,
+  FireDAC.Comp.Client, DataModele.Pessoa, System.UITypes,
   Vcl.Loading; // unit que carrega um loandin na tela
 
 type
@@ -37,7 +37,7 @@ type
     procedure dbgPessoasDblClick(Sender: TObject);
   private
     bookMark : TBookMark;
-    procedure OpenCadCliente(pessoa_id: integer);
+    procedure OpenCadCliente(pessoaId: integer);
     procedure RefreshPessoa;
     procedure TerminateBusca(Sender: TObject);
     procedure Editar;
@@ -69,10 +69,10 @@ begin
   RefreshPessoa;
 end;
 
-procedure TFormCliente.OpenCadCliente(pessoa_id: integer);
+procedure TFormCliente.OpenCadCliente(pessoaId: integer);
 begin
   TNavigation.ExecuteOnClose := RefreshPessoa;
-  TNavigation.ParamInt := pessoa_id;
+  TNavigation.ParamInt := pessoaId;
   TNavigation.OpenModal(TFormClienteE, FormClienteE);
 end;
 
@@ -93,7 +93,7 @@ begin
 
     bookMark := dbgPessoas.DataSource.DataSet.GetBookmark;
 
-   OpenCadCliente(DmPessoa.tabPessoa.FieldByName('pessoa_id').AsInteger);
+    OpenCadCliente(DmPessoa.tabPessoa.FieldByName('pessoaId').AsInteger);
 
 end;
 
@@ -113,7 +113,7 @@ begin
    TLoading.Show;
    TLoading.ExecuteThread(procedure
    begin
-      DmPessoa.Excluir(DmPessoa.tabPessoa.FieldByName('pessoa_id').AsInteger);
+      DmPessoa.Excluir(DmPessoa.tabPessoa.FieldByName('pessoaId').AsInteger);
    end,
    TerminateExcluir
    );
@@ -156,14 +156,14 @@ begin
        exit;
      end;
 
-     if bookMark<>nil then
-     try
-       dbgPessoas.DataSource.DataSet.GotoBookmark(bookMark);
-       dbgPessoas.DataSource.DataSet.FreeBookmark(bookMark);
-       bookMark := nil;
-     except
-       //
-     end;
+   if bookMark<>nil then
+   try
+     dbgPessoas.DataSource.DataSet.GotoBookmark(bookMark);
+     dbgPessoas.DataSource.DataSet.FreeBookmark(bookMark);
+     bookMark := nil;
+   except
+     //
+   end;
 end;
 
 
@@ -175,7 +175,7 @@ begin
   begin
     sleep(1000);
     dsPessoa.DataSet := nil; // Evita erro ao redenrizar a tela
-    dmPessoa.ListarPessoa( dmPessoa.tabPessoa, edtFiltrar.text );
+    dmPessoa.ListarPessoa( dmPessoa.tabPessoa, uppercase(edtFiltrar.text) );
   end,
   TerminateBusca
   );

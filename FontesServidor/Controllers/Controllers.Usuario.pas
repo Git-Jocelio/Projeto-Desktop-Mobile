@@ -2,7 +2,7 @@ unit Controllers.Usuario;
 
 interface
 uses Horse,
-     DataModule.Global,  dialogs,
+     DataModule.Pessoa,  dialogs,
      System.SysUtils,
      System.JSON;
 
@@ -20,12 +20,12 @@ end;
 
 procedure Login(req : THorseRequest; res : THorseResponse; Next : TProc);
 var
-  dm: TDM;
+  dmPessoa: TDmPessoa;
   body: TJSONObject;
   nome, email: string;
   jsonRetorno: TJSONObject;
 begin
-  dm := nil;
+  dmPessoa := nil;
   try
     try
       body := req.Body<TJSONObject>;
@@ -58,8 +58,8 @@ begin
     end;
   finally
     // 4. Libera o DataModule, mas o jsonRetorno vive até o res.Send terminar
-    if Assigned(dm) then
-      FreeAndNil(dm);
+    if Assigned(dmPessoa) then
+      FreeAndNil(dmPessoa);
   end;
 end;
 

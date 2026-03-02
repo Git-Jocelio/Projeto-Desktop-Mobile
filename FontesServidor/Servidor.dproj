@@ -130,12 +130,12 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Controllers\Controllers.Cliente.pas"/>
-        <DCCReference Include="DataModules\DataModule.Global.pas">
-            <Form>DM</Form>
+        <DCCReference Include="Controllers\Controllers.Usuario.pas"/>
+        <DCCReference Include="DataModules\DataModule.Pessoa.pas">
+            <Form>DmPessoa</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="Controllers\Controllers.Usuario.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

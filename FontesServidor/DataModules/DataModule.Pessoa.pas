@@ -1,4 +1,4 @@
-unit DataModule.Global;
+unit DataModule.Pessoa;
 
 interface
 
@@ -7,7 +7,7 @@ uses
   FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.PG,
   FireDAC.Phys.PGDef, FireDAC.VCLUI.Wait, Data.DB, FireDAC.Comp.Client,
-  FireDAC.Phys.FB, FireDAC.Phys.FBDef, FireDAC.Phys.IBBase,
+  FireDAC.Phys.FB, FireDAC.Phys.FBDef, FireDAC.Phys.IBBase, fireDac.Stan.Param,
 
   DataSet.Serialize.Config, // necessário para tratar varaveis de consulta
   DataSet.Serialize,        // necessário para por transformar um dataset em um array JSON
@@ -15,7 +15,7 @@ uses
   FireDac.Dapt;             // necessario para trabalhar com qry dinanmicas
 
 type
-  TDM = class(TDataModule)
+  TDmPessoa = class(TDataModule)
     Conn: TFDConnection;
     FDPhysFBDriverLink1: TFDPhysFBDriverLink;
     procedure DataModuleCreate(Sender: TObject);
@@ -24,11 +24,11 @@ type
     procedure CarregarConfgDB(connection: TFDConnection);
   public
     function pessoaListar(filtro: string): TJSONArray;
-    function pessoaListarId(pessoa_id: integer): TJSONObject;
+    function pessoaListarId(pessoaId: integer): TJSONObject;
     function pessoaInserir(nome, telefone, setor: string): TJSONObject;
-    function pessoaEditar(pessoa_id: integer; nome, telefone,
+    function pessoaEditar(pessoaId: integer; nome, telefone,
       setor: string): TJSONObject;
-    function pessoaExcluir(pessoa_id: integer): TJSONObject;
+    function pessoaExcluir(pessoaId: integer): TJSONObject;
   end;
 
 //var
@@ -40,12 +40,12 @@ implementation
 
 {$R *.dfm}
 
-procedure TDM.ConnBeforeConnect(Sender: TObject);
+procedure TDmPessoa.ConnBeforeConnect(Sender: TObject);
 begin
   CarregarConfgDB(Conn);
 end;
 
-procedure TDM.DataModuleCreate(Sender: TObject);
+procedure TDmPessoa.DataModuleCreate(Sender: TObject);
 begin
   {esta duas linha dizem ao serialize como tratar as variaveis nas consultas sql}
   TDataSetSerializeConfig.GetInstance.CaseNameDefinition := cndLower;
@@ -55,7 +55,7 @@ begin
 
 end;
 
-procedure TDM.CarregarConfgDB(connection : TFDConnection);
+procedure TDmPessoa.CarregarConfgDB(connection : TFDConnection);
 begin
    connection.Params.Clear;
    connection.Params.DriverID := 'FB';
@@ -71,7 +71,7 @@ begin
    connection.LoginPrompt := FALSE;
 end;
 
-function TDM.pessoaListar(filtro: string): TJSONArray;
+function TDmPessoa.pessoaListar(filtro: string): TJSONArray;
 var
   qry : TFDquery;
 begin
@@ -82,8 +82,8 @@ begin
 
     if filtro <> '' then
     begin
-      qry.SQL.Add('where nome like :nome');
-      qry.ParamByName('nome').AsString := '%' + filtro + '%';
+      qry.SQL.Add('where upper(nome) like :nome');
+      qry.ParamByName('nome').asstring := '%' + uppercase(filtro) + '%';
     end;
 
     qry.SQL.Add('order by nome');
@@ -96,7 +96,7 @@ begin
   end;
 end;
 
-function TDM.pessoaListarId(pessoa_id: integer): TJSONObject;
+function TDmPessoa.pessoaListarId(pessoaId: integer): TJSONObject;
 var
   qry : TFDquery;
 begin
@@ -104,9 +104,9 @@ begin
   try
     qry.Connection := Conn;
     qry.SQL.Text :=
-      'select * from pessoa where pessoa_id = :pessoa_id';
+      'select * from pessoa where pessoaId = :pessoaId';
 
-    qry.ParamByName('pessoa_id').AsInteger := pessoa_id;
+    qry.ParamByName('pessoaId').AsInteger := pessoaId;
 
     qry.Open;
 
@@ -118,7 +118,7 @@ end;
 
 
 
-function TDM.pessoaInserir(nome, telefone, setor: string): TJSONObject;
+function TDmPessoa.pessoaInserir(nome, telefone, setor: string): TJSONObject;
 var
   qry: TFDQuery;
 begin
@@ -131,7 +131,7 @@ begin
 
     qry.SQL.Add('INSERT INTO pessoa (nome, telefone, setor)');
     qry.SQL.Add('VALUES (:nome, :telefone, :setor)');
-    qry.SQL.Add('RETURNING pessoa_id');
+    qry.SQL.Add('RETURNING pessoaId');
 
     qry.ParamByName('nome').AsString     := nome;
     qry.ParamByName('telefone').AsString := telefone;
@@ -147,7 +147,7 @@ begin
   end;
 end;
 
-function TDM.pessoaEditar(pessoa_id: integer;
+function TDmPessoa.pessoaEditar(pessoaId: integer;
                           nome, telefone, setor: string): TJSONObject;
 var
   qry : TFDquery;
@@ -158,8 +158,8 @@ begin
 
     qry.SQL.Add('update pessoa');
     qry.SQL.Add(' set nome=:nome, telefone=:telefone, setor=:setor');
-    qry.SQL.Add('where pessoa_id =:pessoa_id');
-    qry.ParamByName('pessoa_id').AsInteger := pessoa_id;
+    qry.SQL.Add('where pessoaId =:pessoaId');
+    qry.ParamByName('pessoaId').AsInteger := pessoaId;
     qry.ParamByName('nome').AsString := nome;
     qry.ParamByName('telefone').AsString := telefone;
     qry.ParamByName('setor').AsString := setor;
@@ -168,13 +168,13 @@ begin
     // devolve um array contendo uma  pessoas com id
     //result := TJSONObject.create(TJSONPair.create('pessoa_id', pessoa_id));
     Result := TJSONObject.Create;
-    Result.AddPair('pessoa_id', TJSONNumber.Create(pessoa_id));
+    Result.AddPair('pessoaId', TJSONNumber.Create(pessoaId));
   finally
     freeandnil(qry);
   end;
 end;
 
-function TDM.pessoaExcluir(pessoa_id: integer): TJSONObject;
+function TDmPessoa.pessoaExcluir(pessoaId: integer): TJSONObject;
 var
   qry : TFDquery;
 begin
@@ -183,14 +183,14 @@ begin
     qry.Connection := conn;
 
     qry.SQL.Add('delete from pessoa');
-    qry.SQL.Add('where pessoa_id =:pessoa_id');
-    qry.ParamByName('pessoa_id').AsInteger := pessoa_id;
+    qry.SQL.Add('where pessoaId =:pessoaId');
+    qry.ParamByName('pessoaId').AsInteger := pessoaId;
     qry.ExecSQL;
 
     // devolve um array contendo uma  pessoas com id
     //result := TJSONObject.create(TJSONPair.create('pessoa_id', pessoa_id));
     Result := TJSONObject.Create;
-    Result.AddPair('pessoa_id', TJSONNumber.Create(pessoa_id));
+    Result.AddPair('pessoaId', TJSONNumber.Create(pessoaId));
   finally
     freeandnil(qry);
   end;

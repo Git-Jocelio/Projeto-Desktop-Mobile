@@ -207,7 +207,7 @@ object FormClienteE: TFormClienteE
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 256
-    Top = 48
+    Left = 328
+    Top = 24
   end
 end

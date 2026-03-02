@@ -14,16 +14,16 @@ uses
 
 type
   TDmPessoa = class(TDataModule)
-    tabPessoa: TFDMemTable;
+    TabPessoa: TFDMemTable;
     procedure DataModuleCreate(Sender: TObject);
   private
   public
     procedure ListarPessoa(memTable: TFDMemTable; filtro: string);
-    procedure ListarPessoaID(memTable: TFDMemTable; pessoa_id: integer);
+    procedure ListarPessoaID(memTable: TFDMemTable; pessoaId: integer);
     //CRUD
     procedure Inserir(nome, telefone, setor: string);
-    procedure Editar(pessoa_id: integer; nome, telefone, setor: string);
-    procedure Excluir(pessoa_id: integer);
+    procedure Editar(pessoaId: integer; nome, telefone, setor: string);
+    procedure Excluir(pessoaId: integer);
   end;
 
 var
@@ -61,13 +61,13 @@ begin
 
 end;
 
-procedure TDmPessoa.ListarPessoaID(memTable: TFDMemTable; pessoa_id: integer);
+procedure TDmPessoa.ListarPessoaID(memTable: TFDMemTable; pessoaId: integer);
 var
   resp : IResponse; // usado para receber respostas do servidor
 begin
   resp := TRequest.New.BaseURL('http://localhost:3000')   // criando uma requisição do servidor
                       .Resource('/pessoa')               // nessa rota
-                      .ResourceSuffix(pessoa_id.ToString)// acrescenta /id da pessoa
+                      .ResourceSuffix(pessoaId.ToString)// acrescenta /id da pessoa
                       .Accept('application/json')        // trabalhar com json
                       .Adapters(TDataSetSerializeAdapter.New(memTable)) // qdo a requisicao voltar vai pega o json e jogar dentro do memtable
                       .Get;                             // passando um Get
@@ -104,7 +104,7 @@ begin
 end;
 
 
-procedure TDmPessoa.Editar(pessoa_id: integer; nome, telefone, setor: string);
+procedure TDmPessoa.Editar(pessoaId: integer; nome, telefone, setor: string);
 var
   resp : IResponse; // usado para receber respostas do servidor
   json : TJSONObject; // usado para criar um objeto json com os dados da pessoa
@@ -119,7 +119,7 @@ begin
 
     resp := TRequest.New.BaseURL('http://localhost:3000') // criando uma requisição do servidor
                         .Resource('/pessoa')              // nessa rota
-                        .ResourceSuffix(pessoa_id.ToString) // acrescenta o parametro pessoa_id recebido na url
+                        .ResourceSuffix(pessoaId.ToString) // acrescenta o parametro pessoa_id recebido na url
                         .AddBody(json.ToJSON)             // passando um json como string com dados da pessoa
                         .Accept('application/json')       // trabalhar com json
                         .Put;                             // passando um Post
@@ -132,14 +132,14 @@ begin
   end;
 end;
 
-procedure TDmPessoa.Excluir(pessoa_id: integer);
+procedure TDmPessoa.Excluir(pessoaId: integer);
 var
   resp : IResponse;   // usado para receber respostas do servidor
 begin
 
     resp := TRequest.New.BaseURL('http://localhost:3000')  // criando uma requisição do servidor
                         .Resource('/pessoa')               // nessa rota
-                        .ResourceSuffix(pessoa_id.ToString) // acrescenta o parametro pessoa_id recebido na url
+                        .ResourceSuffix(pessoaId.ToString) // acrescenta o parametro pessoa_id recebido na url
                         .Accept('application/json')        // trabalhar com json
                         .delete;                              // passando um Post
     // trata erro se houver

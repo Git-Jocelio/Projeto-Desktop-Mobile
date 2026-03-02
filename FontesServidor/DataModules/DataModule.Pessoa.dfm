@@ -1,7 +1,6 @@
-object DM: TDM
-  OnCreate = DataModuleCreate
-  Height = 313
-  Width = 514
+object DmPessoa: TDmPessoa
+  Height = 480
+  Width = 640
   object Conn: TFDConnection
     Params.Strings = (
       
@@ -9,18 +8,18 @@ object DM: TDM
         'sServidor\DB\BANCO.FDB'
       'User_Name=SYSDBA'
       'Password=masterkey'
-      'Port=3050'
+      'Protocol=TCPIP'
       'Server=localhost'
+      'Port=3050'
       'CharacterSet=WIN1252'
       'DriverID=FB')
-    ConnectedStoredUsage = [auRunTime]
+    ConnectedStoredUsage = []
     LoginPrompt = False
-    BeforeConnect = ConnBeforeConnect
-    Left = 152
-    Top = 72
+    Left = 192
+    Top = 216
   end
   object FDPhysFBDriverLink1: TFDPhysFBDriverLink
-    Left = 280
-    Top = 72
+    Left = 312
+    Top = 216
   end
 end

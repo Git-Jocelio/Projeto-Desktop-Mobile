@@ -3,7 +3,7 @@ unit Controllers.Cliente;
 interface
 
 uses Horse,
-     DataModule.Global,  dialogs,
+     DataModule.Pessoa,  dialogs,
      System.SysUtils,
      System.JSON;
 
@@ -25,61 +25,61 @@ begin
    {o que estou dizendo para o horse: quando chegar uma requisição /pessoa
    chame o metodo correspondente. ex. Listar para listar pessoas}
    THorse.Get('/pessoa', Listar);              // lista pessoa pelo nome
-   THorse.Get('/pessoa/:pessoa_id', ListarId); // lista pessoa pelo id
+   THorse.Get('/pessoa/:pessoaId', ListarId); // lista pessoa pelo id
    THorse.Post('/pessoa', Inserir);            // insere uma pessoa
-   THorse.Put('/pessoa/:pessoa_id', Editar);   // edita uma pessoa
-   THorse.Delete('/pessoa/:pessoa_id', Excluir); // excluir uma pessoa
+   THorse.Put('/pessoa/:pessoaId', Editar);   // edita uma pessoa
+   THorse.Delete('/pessoa/:pessoaId', Excluir); // excluir uma pessoa
 end;
 
 procedure Listar(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
-  dm: TDM;
+  dmPessoa: TDmPessoa;
   filtro: string;
 begin
   filtro := Trim(req.Query['filtro']);
 
-  dm := TDM.Create(nil);
+  dmPessoa := TDmPessoa.Create(nil);
   try
     try
       res.Status(200)
-         .Send<TJSONArray>(dm.pessoaListar(filtro));
+         .Send<TJSONArray>(dmPessoa.pessoaListar(filtro));
     except
       on E: Exception do
         res.Status(500).Send(E.Message);
     end;
   finally
-    dm.Free;
+    dmPessoa.Free;
   end;
 end;
 
 
 procedure ListarId (req : THorseRequest; res : THorseResponse; Next : TProc);
 var
-  dm : TDM;
-  pessoa_id: integer;
+  dmPessoa : TDmPessoa;
+  pessoaId: integer;
 begin
-  if not TryStrToInt(req.Params['pessoa_id'], pessoa_id) then
+  if not TryStrToInt(req.Params['pessoaId'], pessoaId) then
   begin
     res.Status(400).Send('ID inválido');
     Exit;
   end;
 
-  dm := TDM.Create(nil);
+  dmPessoa := TDmPessoa.Create(nil);
   try
     try
-      res.Send<TJSONObject>(dm.pessoaListarId(pessoa_id));
+      res.Send<TJSONObject>(dmPessoa.pessoaListarId(pessoaId));
     except
       on E: Exception do
         res.Status(500).Send(E.Message);
     end;
   finally
-    dm.Free;
+    dmPessoa.Free;
   end;
 end;
 
 procedure Inserir(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
-  dm: TDM;
+  dmPessoa: TDmPessoa;
   body: TJSONObject;
   nome, telefone, setor: string;
   jsonRetorno: TJSONObject;
@@ -95,28 +95,28 @@ begin
   telefone := body.GetValue<string>('telefone', '');
   setor    := body.GetValue<string>('setor', '');
 
-  dm := TDM.Create(nil);
+  dmPessoa := TDmPessoa.Create(nil);
   try
     try
-      jsonRetorno := dm.pessoaInserir(nome, telefone, setor);
+      jsonRetorno := dmPessoa.pessoaInserir(nome, telefone, setor);
       res.Status(201).Send<TJSONObject>(jsonRetorno);
     except
       on E: Exception do
         res.Status(500).Send(E.Message);
     end;
   finally
-    dm.Free;
+    dmPessoa.Free;
   end;
 end;
 
 procedure Editar(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
-  dm: TDM;
+  dmPessoa: TDmPessoa;
   body: TJSONObject;
-  pessoa_id: Integer;
+  pessoaId: Integer;
   nome, telefone, setor: string;
 begin
-  if not TryStrToInt(req.Params['pessoa_id'], pessoa_id) then
+  if not TryStrToInt(req.Params['pessoaId'], pessoaId) then
   begin
     res.Status(400).Send('ID inválido');
     Exit;
@@ -133,43 +133,43 @@ begin
   telefone := body.GetValue<string>('telefone', '');
   setor    := body.GetValue<string>('setor', '');
 
-  dm := TDM.Create(nil);
+  dmPessoa := TDmPessoa.Create(nil);
   try
     try
       res.Status(200)
-         .Send<TJSONObject>(dm.pessoaEditar(pessoa_id, nome, telefone, setor));
+         .Send<TJSONObject>(dmPessoa.pessoaEditar(pessoaId, nome, telefone, setor));
     except
       on E: Exception do
         res.Status(500).Send(E.Message);
     end;
   finally
-    dm.Free;
+    dmPessoa.Free;
   end;
 end;
 
 
 procedure Excluir(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
-  dm: TDM;
-  pessoa_id: Integer;
+  dmPessoa: TDmPessoa;
+  pessoaId: Integer;
 begin
-  if not TryStrToInt(req.Params['pessoa_id'], pessoa_id) then
+  if not TryStrToInt(req.Params['pessoaId'], pessoaId) then
   begin
     res.Status(400).Send('ID inválido');
     Exit;
   end;
 
-  dm := TDM.Create(nil);
+  dmPessoa := TDmPessoa.Create(nil);
   try
     try
       res.Status(200)
-         .Send<TJSONObject>(dm.pessoaExcluir(pessoa_id));
+         .Send<TJSONObject>(dmPessoa.pessoaExcluir(pessoaId));
     except
       on E: Exception do
         res.Status(500).Send(E.Message);
     end;
   finally
-    dm.Free;
+    dmPessoa.Free;
   end;
 end;
 

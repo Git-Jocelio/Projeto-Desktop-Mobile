@@ -79,7 +79,7 @@ begin
    TLoading.ExecuteThread(procedure
    begin
       // aqui faremos a requisao ao servidor
-      sleep(1500); // simula tempo de resposta o servidor
+      sleep(800); // simula tempo de resposta o servidor
 
       // simular erro na requisição
       // raise Exception.Create('usuario inválido');
