@@ -10,7 +10,6 @@ uses
   Horse,
   Horse.Jhonson,
   Horse.CORS,
-
   DataModule.Pessoa,
   Controllers.Cliente;
 
@@ -31,17 +30,11 @@ var
 implementation
 
 {$R *.dfm}
-(*
-uses
-  Horse,
-  Horse.Jhonson,
-  Horse.CORS;
- *)
+
 procedure TFormPrincipal.FormShow(Sender: TObject);
 begin
    THorse.use(Jhonson());
    THorse.use(CORS);
-
    // verifica a rota chamada e da andamento a requisição
    Controllers.Cliente.RegistrarRotas;
 

@@ -1,0 +1,44 @@
+desktop_mobile
+│
+├── Servidor
+│   │
+│   └── FontesServidor
+│       │
+│       ├── Controllers
+│       │   ├── Controllers.Cliente.pas
+│       │   └── Controllers.Usuario.pas
+│       │
+│       ├── Service
+│       │   └── Service.Pessoa.pas
+│       │
+│       ├── DataModules
+│       │   ├── DataModule.Pessoa.pas
+│       │   └── DataModule.Pessoa.dfm
+│       │
+│       ├── Config
+│       │   └── Env.Config.pas
+│       │
+│       ├── DB
+│       │   └── BANCO.FDB
+│       │
+│       ├── .env
+│       ├── .gitignore
+│       ├── Servidor.dpr
+│       ├── Servidor.dproj
+│       │
+│       ├── Win32
+│       │   ├── Debug
+│       │   │   ├── Servidor.exe
+│       │   │   └── .env  ← necessário se rodar Win32
+│       │   │
+│       │   └── Release
+│       │
+│       └── Win64
+│           ├── Debug
+│           │   ├── Servidor.exe
+│           │   └── .env  ← necessário se rodar Win64
+│           │
+│           └── Release
+│
+└── app cliente
+    └── fontesVcl

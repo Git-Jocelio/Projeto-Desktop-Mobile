@@ -12,7 +12,8 @@ uses
   DataSet.Serialize.Config, // necessário para tratar varaveis de consulta
   DataSet.Serialize,        // necessário para por transformar um dataset em um array JSON
   System.JSON,              // necessario para retorno do JSON
-  FireDac.Dapt;             // necessario para trabalhar com qry dinanmicas
+  FireDac.Dapt,             // necessario para trabalhar com qry dinanmicas
+  Env.Conf;
 
 type
   TDmPessoa = class(TDataModule)
@@ -21,7 +22,6 @@ type
     procedure DataModuleCreate(Sender: TObject);
     procedure ConnBeforeConnect(Sender: TObject);
   private
-    procedure CarregarConfgDB(connection: TFDConnection);
   public
     function pessoaListar(filtro: string): TJSONArray;
     function pessoaListarId(pessoaId: integer): TJSONObject;
@@ -31,9 +31,6 @@ type
     function pessoaExcluir(pessoaId: integer): TJSONObject;
   end;
 
-//var
-//  DM: TDM;
-
 implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
@@ -42,7 +39,8 @@ implementation
 
 procedure TDmPessoa.ConnBeforeConnect(Sender: TObject);
 begin
-  CarregarConfgDB(Conn);
+  // configura a TFDConnection através arquivo .env
+  TEnvConfig.ConfigurarConexao(Conn);
 end;
 
 procedure TDmPessoa.DataModuleCreate(Sender: TObject);
@@ -53,22 +51,6 @@ begin
 
   Conn.open;
 
-end;
-
-procedure TDmPessoa.CarregarConfgDB(connection : TFDConnection);
-begin
-   connection.Params.Clear;
-   connection.Params.DriverID := 'FB';
-
-   connection.Params.Add('Server=localhost');   // ou 127.0.0.1
-   connection.Params.Add('Port=3050');          // porta padrão
-   connection.Params.Add('Protocol=local');
-
-   connection.Params.Database := 'C:\Users\jgsilva\Documents\Jocelio\desktop_mobile\FontesServidor\DB\BANCO.FDB';
-   connection.Params.UserName := 'SYSDBA';
-   connection.Params.Password := 'masterkey';
-
-   connection.LoginPrompt := FALSE;
 end;
 
 function TDmPessoa.pessoaListar(filtro: string): TJSONArray;

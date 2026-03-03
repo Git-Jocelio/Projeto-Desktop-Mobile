@@ -36,3 +36,7 @@ iOSSimulator/
 
 # Temporary
 *.tmp
+
+# Arquivos de ambiente
+.env
+.env.*

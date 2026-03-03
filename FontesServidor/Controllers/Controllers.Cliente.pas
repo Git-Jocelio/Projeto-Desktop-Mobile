@@ -2,10 +2,14 @@ unit Controllers.Cliente;
 
 interface
 
-uses Horse,
-     DataModule.Pessoa,  dialogs,
-     System.SysUtils,
-     System.JSON;
+uses System.SysUtils,
+     dialogs,
+     DataModule.Pessoa,
+     Horse,
+     Horse.Jhonson,
+     System.JSON,
+     Service.Pessoa;
+
 
 procedure RegistrarRotas;
 procedure Listar(req : THorseRequest; res : THorseResponse; Next : TProc);
@@ -79,11 +83,12 @@ end;
 
 procedure Inserir(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
-  dmPessoa: TDmPessoa;
   body: TJSONObject;
   nome, telefone, setor: string;
   jsonRetorno: TJSONObject;
+  ServicePessoa : TServicePessoa;
 begin
+
   body := req.Body<TJSONObject>;
   if not Assigned(body) then
   begin
@@ -95,18 +100,19 @@ begin
   telefone := body.GetValue<string>('telefone', '');
   setor    := body.GetValue<string>('setor', '');
 
-  dmPessoa := TDmPessoa.Create(nil);
+  ServicePessoa := TServicePessoa.Create;
   try
     try
-      jsonRetorno := dmPessoa.pessoaInserir(nome, telefone, setor);
+      jsonRetorno := ServicePessoa.InserirPessoa(Nome, Telefone, Setor);
       res.Status(201).Send<TJSONObject>(jsonRetorno);
     except
       on E: Exception do
-        res.Status(500).Send(E.Message);
+        res.Status(400).Send(E.Message); // 400 para erros de validação
     end;
   finally
-    dmPessoa.Free;
+    ServicePessoa.Free;
   end;
+
 end;
 
 procedure Editar(req: THorseRequest; res: THorseResponse; Next: TProc);
