@@ -25,8 +25,8 @@ type
     Panel4: TPanel;
     btnFiltrar: TSpeedButton;
     edtFiltrar: TEdit;
-    dbgPessoas: TDBGrid;
-    dsPessoa: TDataSource;
+    dbg: TDBGrid;
+    ds: TDataSource;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
 
@@ -34,7 +34,7 @@ type
     procedure BtnEditarClick(Sender: TObject);
     procedure BtnExcluirClick(Sender: TObject);
     procedure btnFiltrarClick(Sender: TObject);
-    procedure dbgPessoasDblClick(Sender: TObject);
+    procedure dbgDblClick(Sender: TObject);
   private
     bookMark : TBookMark;
     procedure OpenCadCliente(pessoaId: integer);
@@ -60,9 +60,7 @@ procedure TFormCliente.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   action := TCloseAction.caFree;
   FormCliente := nil;
-
 end;
-
 
 procedure TFormCliente.FormShow(Sender: TObject);
 begin
@@ -81,7 +79,7 @@ begin
   OpenCadCliente(0);
 end;
 
-procedure TFormCliente.dbgPessoasDblClick(Sender: TObject);
+procedure TFormCliente.dbgDblClick(Sender: TObject);
 begin
   Editar;
 end;
@@ -91,7 +89,7 @@ begin
   if DmPessoa.tabPessoa.IsEmpty then
     exit;
 
-    bookMark := dbgPessoas.DataSource.DataSet.GetBookmark;
+    bookMark := dbg.DataSource.DataSet.GetBookmark;
 
     OpenCadCliente(DmPessoa.tabPessoa.FieldByName('pessoaId').AsInteger);
 
@@ -147,7 +145,7 @@ procedure TFormCliente.TerminateBusca(Sender: TObject);
 begin
 
   TLoading.Hide;
-  dsPessoa.DataSet := DmPessoa.tabPessoa;
+  ds.DataSet := DmPessoa.tabPessoa;
 
    if (Sender is TThread) then
      if Assigned(TThread(Sender).FatalException) then
@@ -158,8 +156,8 @@ begin
 
    if bookMark<>nil then
    try
-     dbgPessoas.DataSource.DataSet.GotoBookmark(bookMark);
-     dbgPessoas.DataSource.DataSet.FreeBookmark(bookMark);
+     dbg.DataSource.DataSet.GotoBookmark(bookMark);
+     dbg.DataSource.DataSet.FreeBookmark(bookMark);
      bookMark := nil;
    except
      //
@@ -174,7 +172,7 @@ begin
   TLoading.ExecuteThread(procedure
   begin
     sleep(1000);
-    dsPessoa.DataSet := nil; // Evita erro ao redenrizar a tela
+    ds.DataSet := nil; // Evita erro ao redenrizar a tela
     dmPessoa.ListarPessoa( dmPessoa.tabPessoa, uppercase(edtFiltrar.text) );
   end,
   TerminateBusca

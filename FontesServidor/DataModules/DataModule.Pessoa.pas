@@ -49,6 +49,7 @@ begin
   TDataSetSerializeConfig.GetInstance.CaseNameDefinition := cndLower;
   TDataSetSerializeConfig.GetInstance.Import.DecimalSeparator := '.';
 
+  // antes de abrir a conexão, configura os parametros no onBeforeconnect
   Conn.open;
 
 end;

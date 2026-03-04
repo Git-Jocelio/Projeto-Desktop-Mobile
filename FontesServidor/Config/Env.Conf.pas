@@ -70,7 +70,9 @@ class procedure TEnvConfig.ConfigurarConexao(AConnection: TFDConnection);
 var
   Env: TDictionary<string, string>;
 begin
+  // busca o arquivo .env e carrega em um dicionario de dados.
   Env := CarregarEnv;
+  // configura o fdconnection passado por paramentro
   try
     AConnection.Params.Clear;
     AConnection.DriverName := 'FB';

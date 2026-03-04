@@ -13,7 +13,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    function InserirPessoa(const Nome, Telefone, Setor: string): TJSONObject;
+    function InserirEditarPessoa(const PessoaId: integer; const Nome, Telefone, Setor: string): TJSONObject;
   end;
 
 implementation
@@ -31,7 +31,9 @@ begin
   inherited;
 end;
 
-function TServicePessoa.InserirPessoa(const Nome, Telefone, Setor: string): TJSONObject;
+
+
+function TServicePessoa.InserirEditarPessoa(const PessoaId: integer; const Nome, Telefone, Setor: string): TJSONObject;
 begin
   // Validações da regra de negócio
   if Nome.Trim = '' then
@@ -44,9 +46,14 @@ begin
     raise Exception.Create('Setor é obrigatório');
 
   // Aqui chama o DataModule só para persistência
-  Result := FDM.pessoaInserir(Nome, Telefone, Setor);
-
+  if PessoaId = 0 then
+     Result := FDM.pessoaInserir(Nome, Telefone, Setor)
+  else
+     Result := FDM.pessoaEditar(PessoaId, Nome, Telefone, Setor);
 end;
+
+
+
 
 end.
 

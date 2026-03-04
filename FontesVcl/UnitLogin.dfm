@@ -3,9 +3,9 @@ object frmLogin: TfrmLogin
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Login'
-  ClientHeight = 637
-  ClientWidth = 1002
-  Color = clBtnFace
+  ClientHeight = 588
+  ClientWidth = 963
+  Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
@@ -16,8 +16,8 @@ object frmLogin: TfrmLogin
   object ImgFundo: TImage
     Left = 0
     Top = 0
-    Width = 1002
-    Height = 637
+    Width = 963
+    Height = 588
     Align = alClient
     Center = True
     Picture.Data = {
@@ -57227,11 +57227,15 @@ object frmLogin: TfrmLogin
       AFD7216862A52CB9B96E03B270763B4937215F5973AA64D392A049306C28EA10
       43BE0B3B9F2B250DC4BAA3DB1C0FFBDF7EFB2DFFF5DBB76FBFFFFECFF7F7D720
       3EC4B205FF7FA01EEF4E70E3BED60000000049454E44AE426082}
-    ExplicitTop = 1
+    Stretch = True
+    Transparent = True
+    ExplicitLeft = -8
+    ExplicitWidth = 986
+    ExplicitHeight = 620
   end
   object pnLogin: TPanel
-    Left = 112
-    Top = 138
+    Left = 100
+    Top = 106
     Width = 353
     Height = 345
     BevelOuter = bvNone
@@ -57249,7 +57253,7 @@ object frmLogin: TfrmLogin
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      ExplicitWidth = 277
+      ExplicitTop = 1
     end
     object Label2: TLabel
       AlignWithMargins = True
@@ -57269,7 +57273,7 @@ object frmLogin: TfrmLogin
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      ExplicitWidth = 136
+      ExplicitTop = 63
     end
     object Label3: TLabel
       AlignWithMargins = True
@@ -57289,7 +57293,7 @@ object frmLogin: TfrmLogin
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      ExplicitWidth = 44
+      ExplicitTop = 109
     end
     object Senha: TLabel
       AlignWithMargins = True
@@ -57309,7 +57313,7 @@ object frmLogin: TfrmLogin
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      ExplicitWidth = 43
+      ExplicitTop = 190
     end
     object PnlBotaoAcessar: TPanel
       AlignWithMargins = True
@@ -57322,6 +57326,7 @@ object frmLogin: TfrmLogin
       Color = 16744448
       ParentBackground = False
       TabOrder = 0
+      ExplicitTop = 289
       object BtnAcessar: TSpeedButton
         Left = 0
         Top = 0
@@ -57358,6 +57363,7 @@ object frmLogin: TfrmLogin
       Color = 5127481
       ParentBackground = False
       TabOrder = 1
+      ExplicitTop = 130
       object EdtEmail: TEdit
         AlignWithMargins = True
         Left = 10
@@ -57396,6 +57402,7 @@ object frmLogin: TfrmLogin
       Color = 5127481
       ParentBackground = False
       TabOrder = 2
+      ExplicitTop = 211
       object EdtSenha: TEdit
         AlignWithMargins = True
         Left = 10

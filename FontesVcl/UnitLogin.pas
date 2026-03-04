@@ -7,7 +7,10 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.StdCtrls, Vcl.ExtCtrls,
   Vcl.Imaging.pngimage ,
   Vcl.Loading, // unit que carrega um loandin na tela
-  Vcl.Session; // unit com uma classe global para pegar os dados de acesso do usuario
+  Vcl.Session, // unit com uma classe global para pegar os dados de acesso do usuario
+  System.Net.HttpClient,
+  System.Net.URLClient,
+  System.Net.HttpClientComponent;
 type
   TfrmLogin = class(TForm)
     ImgFundo: TImage;
@@ -25,6 +28,7 @@ type
     procedure BtnAcessarClick(Sender: TObject);
   private
     procedure TerminateLogin(Sender: TObject);
+    function ServidorOnline: Boolean;
     { Private declarations }
   public
     { Public declarations }
@@ -79,7 +83,9 @@ begin
    TLoading.ExecuteThread(procedure
    begin
       // aqui faremos a requisao ao servidor
-      sleep(800); // simula tempo de resposta o servidor
+      sleep(600); // simula tempo de resposta o servidor
+      if not ServidorOnline then
+            raise Exception.Create('Servidor não está disponível.');
 
       // simular erro na requisição
       // raise Exception.Create('usuario inválido');
@@ -88,6 +94,30 @@ begin
    );
 
 
+end;
+
+function TfrmLogin.ServidorOnline: Boolean;
+var
+  Http: TNetHTTPClient;
+  Resp: IHTTPResponse;
+begin
+  Result := False;
+
+  Http := TNetHTTPClient.Create(nil);
+  try
+    Http.ConnectionTimeout := 1500; // 2 segundos
+    Http.ResponseTimeout   := 1500;
+
+    try
+      Resp := Http.Get('http://localhost:3000/health');
+      Result := Resp.StatusCode = 200;
+    except
+      Result := False;
+    end;
+
+  finally
+    Http.Free;
+  end;
 end;
 
 end.

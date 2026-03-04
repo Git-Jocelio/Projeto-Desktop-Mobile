@@ -254,7 +254,7 @@ object FormCliente: TFormCliente
       end
     end
   end
-  object dbgPessoas: TDBGrid
+  object dbg: TDBGrid
     Left = 0
     Top = 65
     Width = 1089
@@ -262,7 +262,7 @@ object FormCliente: TFormCliente
     Align = alClient
     BorderStyle = bsNone
     Color = clWhite
-    DataSource = dsPessoa
+    DataSource = ds
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
     TabOrder = 1
     TitleFont.Charset = DEFAULT_CHARSET
@@ -270,7 +270,7 @@ object FormCliente: TFormCliente
     TitleFont.Height = -12
     TitleFont.Name = 'Segoe UI'
     TitleFont.Style = []
-    OnDblClick = dbgPessoasDblClick
+    OnDblClick = dbgDblClick
     Columns = <
       item
         Expanded = False
@@ -345,7 +345,7 @@ object FormCliente: TFormCliente
         Visible = True
       end>
   end
-  object dsPessoa: TDataSource
+  object ds: TDataSource
     AutoEdit = False
     Left = 310
     Top = 120

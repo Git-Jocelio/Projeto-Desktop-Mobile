@@ -31,6 +31,7 @@ type
     imgUsuario: TImage;
     ImgNotificacoes: TImage;
     PnlContainer: TPanel;
+    Label2: TLabel;
     procedure SpeedButton1Click(Sender: TObject);
     procedure btnFecharSubMenuClick(Sender: TObject);
     procedure CategoryButtonsCategories0Items2Click(Sender: TObject);

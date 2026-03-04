@@ -18,6 +18,8 @@ procedure Inserir(req : THorseRequest; res : THorseResponse; Next : TProc);
 procedure Editar(req : THorseRequest; res : THorseResponse; Next : TProc);
 procedure Excluir(req : THorseRequest; res : THorseResponse; Next : TProc);
 
+procedure OnLine(req: THorseRequest; res: THorseResponse; next: TProc);
+
 
 implementation
 
@@ -28,11 +30,19 @@ begin
 
    {o que estou dizendo para o horse: quando chegar uma requisição /pessoa
    chame o metodo correspondente. ex. Listar para listar pessoas}
-   THorse.Get('/pessoa', Listar);              // lista pessoa pelo nome
-   THorse.Get('/pessoa/:pessoaId', ListarId); // lista pessoa pelo id
-   THorse.Post('/pessoa', Inserir);            // insere uma pessoa
-   THorse.Put('/pessoa/:pessoaId', Editar);   // edita uma pessoa
+   THorse.Get('/pessoa', Listar);               // lista pessoa pelo nome
+   THorse.Get('/pessoa/:pessoaId', ListarId);   // lista pessoa pelo id
+   THorse.Post('/pessoa', Inserir);             // insere uma pessoa
+   THorse.Put('/pessoa/:pessoaId', Editar);     // edita uma pessoa
    THorse.Delete('/pessoa/:pessoaId', Excluir); // excluir uma pessoa
+
+   THorse.Get('/health', OnLine);               // lista pessoa pelo nome
+
+end;
+
+procedure OnLine(req: THorseRequest; res: THorseResponse; next: TProc);
+begin
+  res.Send('OK');
 end;
 
 procedure Listar(req: THorseRequest; res: THorseResponse; Next: TProc);
@@ -90,6 +100,7 @@ var
 begin
 
   body := req.Body<TJSONObject>;
+
   if not Assigned(body) then
   begin
     res.Status(400).Send('JSON inválido ou vazio');
@@ -103,7 +114,7 @@ begin
   ServicePessoa := TServicePessoa.Create;
   try
     try
-      jsonRetorno := ServicePessoa.InserirPessoa(Nome, Telefone, Setor);
+      jsonRetorno := ServicePessoa.InserirEditarPessoa( 0, Nome, Telefone, Setor );
       res.Status(201).Send<TJSONObject>(jsonRetorno);
     except
       on E: Exception do
@@ -117,11 +128,15 @@ end;
 
 procedure Editar(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
-  dmPessoa: TDmPessoa;
   body: TJSONObject;
   pessoaId: Integer;
   nome, telefone, setor: string;
+
+  jsonRetorno: TJSONObject;
+  ServicePessoa : TServicePessoa;
+
 begin
+
   if not TryStrToInt(req.Params['pessoaId'], pessoaId) then
   begin
     res.Status(400).Send('ID inválido');
@@ -139,17 +154,17 @@ begin
   telefone := body.GetValue<string>('telefone', '');
   setor    := body.GetValue<string>('setor', '');
 
-  dmPessoa := TDmPessoa.Create(nil);
+  ServicePessoa := TServicePessoa.Create;// nesse momento instância o fdconnection
   try
     try
-      res.Status(200)
-         .Send<TJSONObject>(dmPessoa.pessoaEditar(pessoaId, nome, telefone, setor));
+      jsonRetorno := ServicePessoa.InserirEditarPessoa(PessoaId, nome, telefone, setor);
+      res.Status(200).Send<TJSONObject>(jsonRetorno);
     except
       on E: Exception do
         res.Status(500).Send(E.Message);
     end;
   finally
-    dmPessoa.Free;
+    ServicePessoa.Free;
   end;
 end;
 
