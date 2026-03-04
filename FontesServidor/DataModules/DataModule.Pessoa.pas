@@ -13,12 +13,11 @@ uses
   DataSet.Serialize,        // necessário para por transformar um dataset em um array JSON
   System.JSON,              // necessario para retorno do JSON
   FireDac.Dapt,             // necessario para trabalhar com qry dinanmicas
-  Env.Conf;
+  Env.Conf,
+  DataModule.Servidor;
 
 type
   TDmPessoa = class(TDataModule)
-    Conn: TFDConnection;
-    FDPhysFBDriverLink1: TFDPhysFBDriverLink;
     procedure DataModuleCreate(Sender: TObject);
     procedure ConnBeforeConnect(Sender: TObject);
   private
@@ -40,7 +39,7 @@ implementation
 procedure TDmPessoa.ConnBeforeConnect(Sender: TObject);
 begin
   // configura a TFDConnection através arquivo .env
-  TEnvConfig.ConfigurarConexao(Conn);
+  TEnvConfig.ConfigurarConexao(DmServidor.Conn);
 end;
 
 procedure TDmPessoa.DataModuleCreate(Sender: TObject);
@@ -50,17 +49,19 @@ begin
   TDataSetSerializeConfig.GetInstance.Import.DecimalSeparator := '.';
 
   // antes de abrir a conexão, configura os parametros no onBeforeconnect
-  Conn.open;
+  DmServidor.Conn.open;
 
 end;
 
 function TDmPessoa.pessoaListar(filtro: string): TJSONArray;
 var
+  dmServidor: TDMServidor;
   qry : TFDquery;
 begin
   qry := TFDQuery.Create(nil);
   try
-    qry.Connection := Conn;
+    dmServidor := TDmServidor.Create(nil);
+    qry.Connection := dmServidor.Conn;
     qry.SQL.Text := 'select * from pessoa';
 
     if filtro <> '' then
@@ -76,16 +77,19 @@ begin
     Result := qry.ToJSONArray;
   finally
     qry.Free;
+    dmServidor.Free
   end;
 end;
 
 function TDmPessoa.pessoaListarId(pessoaId: integer): TJSONObject;
 var
+  dmServidor: TDMServidor;
   qry : TFDquery;
 begin
   qry := TFDQuery.Create(nil);
   try
-    qry.Connection := Conn;
+    dmServidor := TDmServidor.Create(nil);
+    qry.Connection := DmServidor.Conn;
     qry.SQL.Text :=
       'select * from pessoa where pessoaId = :pessoaId';
 
@@ -96,6 +100,7 @@ begin
     Result := qry.ToJSONObject;
   finally
     qry.Free;
+    dmServidor.Free;
   end;
 end;
 
@@ -103,6 +108,7 @@ end;
 
 function TDmPessoa.pessoaInserir(nome, telefone, setor: string): TJSONObject;
 var
+  dmServidor: TDMServidor;
   qry: TFDQuery;
 begin
 
@@ -110,7 +116,8 @@ begin
   qry := TFDQuery.Create(nil);
 
   try
-    qry.Connection := conn;
+    dmServidor := TDmServidor.Create(nil);
+    qry.Connection := DmServidor.conn;
 
     qry.SQL.Add('INSERT INTO pessoa (nome, telefone, setor)');
     qry.SQL.Add('VALUES (:nome, :telefone, :setor)');
@@ -127,17 +134,20 @@ begin
 
   finally
     FreeAndNil(qry);
+    dmServidor.Free;
   end;
 end;
 
 function TDmPessoa.pessoaEditar(pessoaId: integer;
                           nome, telefone, setor: string): TJSONObject;
 var
+  dmServidor: TDMServidor;
   qry : TFDquery;
 begin
   try
+    dmServidor := TDmServidor.Create(nil);
     qry := TFDquery.Create(nil);
-    qry.Connection := conn;
+    qry.Connection := DmServidor.conn;
 
     qry.SQL.Add('update pessoa');
     qry.SQL.Add(' set nome=:nome, telefone=:telefone, setor=:setor');
@@ -154,16 +164,19 @@ begin
     Result.AddPair('pessoaId', TJSONNumber.Create(pessoaId));
   finally
     freeandnil(qry);
+    dmServidor.Free;
   end;
 end;
 
 function TDmPessoa.pessoaExcluir(pessoaId: integer): TJSONObject;
 var
+  dmServidor: TDMServidor;
   qry : TFDquery;
 begin
   try
+    dmServidor := TDmServidor.Create(nil);
     qry := TFDquery.Create(nil);
-    qry.Connection := conn;
+    qry.Connection := DmServidor.conn;
 
     qry.SQL.Add('delete from pessoa');
     qry.SQL.Add('where pessoaId =:pessoaId');
@@ -176,6 +189,7 @@ begin
     Result.AddPair('pessoaId', TJSONNumber.Create(pessoaId));
   finally
     freeandnil(qry);
+    dmServidor.Free;
   end;
 end;
 

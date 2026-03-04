@@ -4,7 +4,8 @@ interface
 uses Horse,
      DataModule.Pessoa,  dialogs,
      System.SysUtils,
-     System.JSON;
+     System.JSON,
+     DataModule.Usuario;
 
 procedure RegistrarRotas;
 procedure Login(req : THorseRequest; res : THorseResponse; Next : TProc);
@@ -20,12 +21,12 @@ end;
 
 procedure Login(req : THorseRequest; res : THorseResponse; Next : TProc);
 var
-  dmPessoa: TDmPessoa;
+  dmUsuario: TDmUsuario;
   body: TJSONObject;
-  nome, email: string;
+  email, senha: string;
   jsonRetorno: TJSONObject;
 begin
-  dmPessoa := nil;
+  dmUsuario := nil;
   try
     try
       body := req.Body<TJSONObject>;
@@ -36,13 +37,13 @@ begin
         Exit;
       end;
 
- //     dmUsuario := TDmUsuario.Create(nil);
+      //dmUsuario := TDmUsuario.Create(nil);
 
-      nome  := body.GetValue<string>('nome', '');
       email := body.GetValue<string>('email', '');
+      senha := body.GetValue<string>('senha', '');
 
       // 2. Chama a função e armazena o resultado em uma variável local
-   //   jsonRetorno := dmUsuario.ususarioLogin(nome, email);
+      jsonRetorno := dmUsuario.usuarioLogin(email, senha);
 
       if jsonRetorno.Size = 0 then
       begin
@@ -58,8 +59,8 @@ begin
     end;
   finally
     // 4. Libera o DataModule, mas o jsonRetorno vive até o res.Send terminar
-    if Assigned(dmPessoa) then
-      FreeAndNil(dmPessoa);
+    if Assigned(dmUsuario) then
+      FreeAndNil(dmUsuario);
   end;
 end;
 

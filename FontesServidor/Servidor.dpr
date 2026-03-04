@@ -7,7 +7,9 @@ uses
   Controllers.Usuario in 'Controllers\Controllers.Usuario.pas',
   DataModule.Pessoa in 'DataModules\DataModule.Pessoa.pas' {DmPessoa: TDataModule},
   Service.Pessoa in 'Service\Service.Pessoa.pas',
-  Env.Conf in 'Config\Env.Conf.pas';
+  Env.Conf in 'Config\Env.Conf.pas',
+  DataModule.Servidor in 'DataModules\DataModule.Servidor.pas' {DmServidor: TDataModule},
+  DataModule.Usuario in 'DataModules\DataModule.Usuario.pas' {dmUsuario: TDataModule};
 
 {$R *.res}
 

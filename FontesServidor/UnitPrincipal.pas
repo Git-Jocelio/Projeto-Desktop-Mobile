@@ -11,7 +11,8 @@ uses
   Horse.Jhonson,
   Horse.CORS,
   DataModule.Pessoa,
-  Controllers.Cliente;
+  Controllers.Cliente,
+  Controllers.Usuario;
 
 type
   TFormPrincipal = class(TForm)
@@ -37,6 +38,7 @@ begin
    THorse.use(CORS);
    // verifica a rota chamada e da andamento a requisição
    Controllers.Cliente.RegistrarRotas;
+   Controllers.Usuario.RegistrarRotas;
 
    THorse.Listen(3000);
    lblServidor.caption := 'Servidor Horse respondendo na PORTA : ' + THorse.Port.toString;
