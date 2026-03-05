@@ -54,7 +54,7 @@ object FormPrincipal: TFormPrincipal
       object Image1: TImage
         Left = 55
         Top = 0
-        Width = 120
+        Width = 135
         Height = 55
         Align = alLeft
         Center = True
@@ -62,15 +62,15 @@ object FormPrincipal: TFormPrincipal
       object Label2: TLabel
         Left = 61
         Top = 10
-        Width = 114
-        Height = 37
+        Width = 121
+        Height = 30
         Alignment = taCenter
-        Caption = 'Pedidos'
-        Font.Charset = DEFAULT_CHARSET
+        Caption = 'Suprimentos'
+        Font.Charset = ANSI_CHARSET
         Font.Color = clWhite
-        Font.Height = -27
-        Font.Name = 'Segoe UI'
-        Font.Style = []
+        Font.Height = -21
+        Font.Name = 'Segoe UI Semibold'
+        Font.Style = [fsBold]
         ParentFont = False
       end
     end

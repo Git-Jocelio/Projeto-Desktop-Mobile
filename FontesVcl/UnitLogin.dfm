@@ -57253,7 +57253,7 @@ object frmLogin: TfrmLogin
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      ExplicitTop = 1
+      ExplicitWidth = 277
     end
     object Label2: TLabel
       AlignWithMargins = True
@@ -57273,7 +57273,7 @@ object frmLogin: TfrmLogin
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      ExplicitTop = 63
+      ExplicitWidth = 136
     end
     object Label3: TLabel
       AlignWithMargins = True
@@ -57293,7 +57293,7 @@ object frmLogin: TfrmLogin
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      ExplicitTop = 109
+      ExplicitWidth = 44
     end
     object Senha: TLabel
       AlignWithMargins = True
@@ -57313,7 +57313,7 @@ object frmLogin: TfrmLogin
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      ExplicitTop = 190
+      ExplicitWidth = 43
     end
     object PnlBotaoAcessar: TPanel
       AlignWithMargins = True
@@ -57326,7 +57326,6 @@ object frmLogin: TfrmLogin
       Color = 16744448
       ParentBackground = False
       TabOrder = 0
-      ExplicitTop = 289
       object BtnAcessar: TSpeedButton
         Left = 0
         Top = 0
@@ -57363,7 +57362,6 @@ object frmLogin: TfrmLogin
       Color = 5127481
       ParentBackground = False
       TabOrder = 1
-      ExplicitTop = 130
       object EdtEmail: TEdit
         AlignWithMargins = True
         Left = 10
@@ -57402,7 +57400,6 @@ object frmLogin: TfrmLogin
       Color = 5127481
       ParentBackground = False
       TabOrder = 2
-      ExplicitTop = 211
       object EdtSenha: TEdit
         AlignWithMargins = True
         Left = 10

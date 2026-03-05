@@ -9,9 +9,13 @@ uses
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, DataModele.Pessoa, System.UITypes,
-  Vcl.Loading; // unit que carrega um loandin na tela
+  Vcl.Loading, System.ImageList, Vcl.ImgList; // unit que carrega o load na tela
+
 
 type
+  TDBGridHack = class(TDBGrid);
+
+  type
   TFormCliente = class(TForm)
     PnlHeader: TPanel;
     Label1: TLabel;
@@ -27,14 +31,19 @@ type
     edtFiltrar: TEdit;
     dbg: TDBGrid;
     ds: TDataSource;
+    ImageList: TImageList;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
 
     procedure btnInserirClick(Sender: TObject);
-    procedure BtnEditarClick(Sender: TObject);
     procedure BtnExcluirClick(Sender: TObject);
     procedure btnFiltrarClick(Sender: TObject);
     procedure dbgDblClick(Sender: TObject);
+    procedure dbgDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure dbgMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure dbgKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     bookMark : TBookMark;
     procedure OpenCadCliente(pessoaId: integer);
@@ -51,6 +60,7 @@ var
   FormCliente: TFormCliente;
 
 implementation
+
 
 {$R *.dfm}
 
@@ -84,6 +94,84 @@ begin
   Editar;
 end;
 
+procedure TFormCliente.dbgDrawColumnCell(Sender: TObject; const Rect: TRect;
+  DataCol: Integer; Column: TColumn; State: TGridDrawState);
+var
+  Y: Integer;
+  X: Integer;
+  Espaco: Integer;
+  TotalWidth: Integer;
+begin
+  if Column.FieldName = 'ACOES' then
+  begin
+    dbg.Canvas.FillRect(Rect);
+
+    // centralização vertical
+    Y := Rect.Top + (Rect.Height - ImageList.Height) div 2;
+
+    // espaço entre ícones
+    Espaco := 8;
+
+    // largura total dos ícones
+    TotalWidth := (ImageList.Width * 2) + Espaco;
+
+    // centralização horizontal
+    X := Rect.Left + ((Rect.Width - TotalWidth) div 2);
+
+    // desenha ícones
+    ImageList.Draw(dbg.Canvas, X, Y, 0); // editar
+    ImageList.Draw(dbg.Canvas, X + ImageList.Width + Espaco, Y, 1); // excluir
+  end
+  else
+    dbg.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+end;
+
+procedure TFormCliente.dbgKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  // Tecla DELETE
+  if Key = VK_DELETE then
+  begin
+    BtnExcluirClick(nil);
+    Key := 0; // evita comportamento padrão
+  end;
+
+  // Tecla ENTER (opcional, mas muito usado em ERP)
+  if Key = VK_RETURN then
+  begin
+    Editar;
+    Key := 0;
+  end;
+end;
+
+procedure TFormCliente.dbgMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+var
+  GC: TGridCoord;
+  R: TRect;
+  PosX: Integer;
+begin
+  if Button <> mbLeft then Exit;
+
+  GC := dbg.MouseCoord(X, Y);
+
+  if (GC.X < 1) or (GC.Y < 1) then
+    Exit;
+
+  if dbg.Columns[GC.X - 1].FieldName = 'ACOES' then
+  begin
+     R := TDBGridHack(dbg).CellRect(GC.X, GC.Y);
+
+    // posição do clique dentro da célula
+    PosX := X - R.Left;
+
+    if PosX < 30 then
+      Editar
+    else
+      BtnExcluirClick(nil);
+  end;
+end;
+
 procedure TFormCliente.Editar;
 begin
   if DmPessoa.tabPessoa.IsEmpty then
@@ -95,11 +183,6 @@ begin
 
 end;
 
-
-procedure TFormCliente.BtnEditarClick(Sender: TObject);
-begin
-  Editar;
-end;
 
 procedure TFormCliente.BtnExcluirClick(Sender: TObject);
 begin
@@ -171,7 +254,7 @@ begin
 
   TLoading.ExecuteThread(procedure
   begin
-    sleep(1000);
+    sleep(800);
     ds.DataSet := nil; // Evita erro ao redenrizar a tela
     dmPessoa.ListarPessoa( dmPessoa.tabPessoa, uppercase(edtFiltrar.text) );
   end,
