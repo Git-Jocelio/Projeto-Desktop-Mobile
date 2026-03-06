@@ -15,7 +15,8 @@ uses
   System.JSON,              // necessario para retorno do JSON
   FireDac.Dapt,             // necessario para trabalhar com qry dinanmicas
   Env.Conf,
-  DataModule.Servidor;
+  DataModule.Servidor,
+  uMD5;
 
 type
   TDmUsuario = class(TDataModule)
@@ -51,6 +52,7 @@ end;
 
 function TDmUsuario.usuarioLogin(email, senha: string): TJSONObject;
 var
+  dmServidor: TDMServidor;
   qry: TFDQuery;
 begin
 
@@ -58,13 +60,12 @@ begin
   qry := TFDQuery.Create(nil);
 
   try
+    dmServidor := TDmServidor.Create(nil);
     qry.Connection := DmServidor.conn;
-
-    qry.SQL.Add('SELECT email, senha from Usuario');
-
+    qry.SQL.Add('SELECT usuarioId, email, senha from Usuario where email = :email and senha = :senha');
     qry.ParamByName('email').AsString := email;
-    qry.ParamByName('senha').AsString := senha;
-
+    //qry.ParamByName('senha').AsString :=  umd5.SaltPassword( senha );
+    qry.ParamByName('senha').AsString :=  senha ;
     qry.Open;
 
     if not qry.IsEmpty then
@@ -72,6 +73,7 @@ begin
 
   finally
     FreeAndNil(qry);
+    FreeAndNil(dmServidor);
   end;
 
 end;

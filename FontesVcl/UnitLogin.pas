@@ -41,7 +41,7 @@ implementation
 
 {$R *.dfm}
 
-uses UnitFrmPrincipal;
+uses UnitFrmPrincipal, DataModule.Usuario;
 
 procedure TfrmLogin.TerminateLogin(Sender: TObject);
 begin
@@ -59,13 +59,13 @@ begin
      end;
 
    // pegar dados de acesso do usuario... buscar no servidor
-   TSession.ID_USUARIO := 1;
-   TSession.EMAIL := 'jocelio@teste.com.br';
-   TSession.NOME := 'JOCELIO GOME DA SILVA';
+   TSession.ID_USUARIO := dmUsuario.MemTable.fieldbyname('usuarioId').AsInteger;
+   TSession.EMAIL := dmUsuario.MemTable.fieldbyname('email').AsString;
+   TSession.NOME := dmUsuario.MemTable.fieldbyname('senha').AsString;
 
    // cria o form principal se não existir na memória
    if NOT Assigned(FormPrincipal) then
-    Application.CreateForm(TFormPrincipal, FormPrincipal);
+     Application.CreateForm(TFormPrincipal, FormPrincipal);
 
    // chama o form principal
    FormPrincipal.show;
@@ -82,13 +82,13 @@ begin
 
    TLoading.ExecuteThread(procedure
    begin
-      // aqui faremos a requisao ao servidor
       sleep(600); // simula tempo de resposta o servidor
+
       if not ServidorOnline then
             raise Exception.Create('Servidor não está disponível.');
 
-      // simular erro na requisição
-      // raise Exception.Create('usuario inválido');
+      dmUsuario.Login(dmUsuario.MemTable, EdtEmail.Text, EdtSenha.Text);
+
    end,
    TerminateLogin
    );

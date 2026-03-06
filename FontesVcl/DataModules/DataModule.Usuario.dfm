@@ -1,8 +1,8 @@
-object DmPessoa: TDmPessoa
+object dmUsuario: TdmUsuario
   OnCreate = DataModuleCreate
-  Height = 317
-  Width = 385
-  object TabPessoa: TFDMemTable
+  Height = 286
+  Width = 440
+  object MemTable: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]
@@ -10,7 +10,7 @@ object DmPessoa: TDmPessoa
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 128
-    Top = 112
+    Left = 176
+    Top = 88
   end
 end

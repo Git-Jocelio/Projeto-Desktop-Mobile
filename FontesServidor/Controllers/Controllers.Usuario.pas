@@ -2,7 +2,7 @@ unit Controllers.Usuario;
 
 interface
 uses Horse,
-     DataModule.Pessoa,  dialogs,
+     DataModule.Pessoa,
      System.SysUtils,
      System.JSON,
      DataModule.Usuario;
@@ -43,14 +43,13 @@ begin
       senha := body.GetValue<string>('senha', '');
 
       // 2. Chama a função e armazena o resultado em uma variável local
+      dmUsuario := TDmUsuario.Create(nil);
       jsonRetorno := dmUsuario.usuarioLogin(email, senha);
-
-      if jsonRetorno.Size = 0 then
+      if not Assigned(jsonRetorno) then
       begin
-        res.Status(401).Send('email ou senha inválido');
+        res.Status(401).Send('Email ou senha inválido');
       end
       else
-        // 3. Envia o JSON. O Horse assumirá o controle da liberação deste objeto
         res.Status(201).Send<TJSONObject>(jsonRetorno);
 
     except

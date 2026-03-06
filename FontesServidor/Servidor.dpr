@@ -9,7 +9,8 @@ uses
   Service.Pessoa in 'Service\Service.Pessoa.pas',
   Env.Conf in 'Config\Env.Conf.pas',
   DataModule.Servidor in 'DataModules\DataModule.Servidor.pas' {DmServidor: TDataModule},
-  DataModule.Usuario in 'DataModules\DataModule.Usuario.pas' {dmUsuario: TDataModule};
+  DataModule.Usuario in 'DataModules\DataModule.Usuario.pas' {dmUsuario: TDataModule},
+  uMD5 in 'Utils\uMD5.pas';
 
 {$R *.res}
 

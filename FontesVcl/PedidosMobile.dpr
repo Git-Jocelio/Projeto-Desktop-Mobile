@@ -10,7 +10,8 @@ uses
   Vcl.Navigation in 'Utils\Vcl.Navigation.pas',
   UnitFormCliente in 'UnitFormCliente.pas' {FormCliente},
   UnitFormClienteE in 'UnitFormClienteE.pas' {FormClienteE},
-  DataModele.Pessoa in 'DataModules\DataModele.Pessoa.pas' {DmPessoa: TDataModule};
+  DataModele.Pessoa in 'DataModules\DataModele.Pessoa.pas' {DmPessoa: TDataModule},
+  DataModule.Usuario in 'DataModules\DataModule.Usuario.pas' {dmUsuario: TDataModule};
 
 {$R *.res}
 
@@ -21,5 +22,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfrmLogin, frmLogin);
   Application.CreateForm(TDmPessoa, DmPessoa);
+  Application.CreateForm(TdmUsuario, dmUsuario);
   Application.Run;
 end.

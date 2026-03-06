@@ -247,11 +247,12 @@ object FormCliente: TFormCliente
         BorderStyle = bsNone
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -16
+        Font.Height = -21
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
         TabOrder = 1
+        OnKeyPress = edtFiltrarKeyPress
       end
     end
   end
@@ -281,6 +282,7 @@ object FormCliente: TFormCliente
     OnDblClick = dbgDblClick
     OnKeyDown = dbgKeyDown
     OnMouseUp = dbgMouseUp
+    OnTitleClick = dbgTitleClick
     Columns = <
       item
         Expanded = False

@@ -44,6 +44,8 @@ type
     procedure dbgMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure dbgKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure dbgTitleClick(Column: TColumn);
+    procedure edtFiltrarKeyPress(Sender: TObject; var Key: Char);
   private
     bookMark : TBookMark;
     procedure OpenCadCliente(pessoaId: integer);
@@ -74,7 +76,7 @@ end;
 
 procedure TFormCliente.FormShow(Sender: TObject);
 begin
-  RefreshPessoa;
+  //RefreshPessoa;
 end;
 
 procedure TFormCliente.OpenCadCliente(pessoaId: integer);
@@ -98,29 +100,16 @@ procedure TFormCliente.dbgDrawColumnCell(Sender: TObject; const Rect: TRect;
   DataCol: Integer; Column: TColumn; State: TGridDrawState);
 var
   Y: Integer;
-  X: Integer;
-  Espaco: Integer;
-  TotalWidth: Integer;
 begin
   if Column.FieldName = 'ACOES' then
   begin
     dbg.Canvas.FillRect(Rect);
 
-    // centralização vertical
     Y := Rect.Top + (Rect.Height - ImageList.Height) div 2;
 
-    // espaço entre ícones
-    Espaco := 8;
+    ImageList.Draw(dbg.Canvas, Rect.Left + 30, Y, 0);  // editar
+    ImageList.Draw(dbg.Canvas, Rect.Left + 60, Y, 1);  // excluir
 
-    // largura total dos ícones
-    TotalWidth := (ImageList.Width * 2) + Espaco;
-
-    // centralização horizontal
-    X := Rect.Left + ((Rect.Width - TotalWidth) div 2);
-
-    // desenha ícones
-    ImageList.Draw(dbg.Canvas, X, Y, 0); // editar
-    ImageList.Draw(dbg.Canvas, X + ImageList.Width + Espaco, Y, 1); // excluir
   end
   else
     dbg.DefaultDrawColumnCell(Rect, DataCol, Column, State);
@@ -129,6 +118,7 @@ end;
 procedure TFormCliente.dbgKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
+
   // Tecla DELETE
   if Key = VK_DELETE then
   begin
@@ -142,6 +132,7 @@ begin
     Editar;
     Key := 0;
   end;
+
 end;
 
 procedure TFormCliente.dbgMouseUp(Sender: TObject; Button: TMouseButton;
@@ -165,10 +156,22 @@ begin
     // posição do clique dentro da célula
     PosX := X - R.Left;
 
-    if PosX < 30 then
+    if PosX < 50 then
       Editar
     else
       BtnExcluirClick(nil);
+  end;
+
+end;
+
+
+
+procedure TFormCliente.dbgTitleClick(Column: TColumn);
+begin
+  if (Column.Grid.DataSource.DataSet is TFDMemTable) then
+  begin
+    if Column.FieldName <> 'ACOES' then
+      TFDMemTable(Column.Grid.DataSource.DataSet).IndexFieldNames := Column.FieldName;
   end;
 end;
 
@@ -183,6 +186,12 @@ begin
 
 end;
 
+
+procedure TFormCliente.edtFiltrarKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key = #13 then btnFiltrarClick(nil);
+
+end;
 
 procedure TFormCliente.BtnExcluirClick(Sender: TObject);
 begin
@@ -221,7 +230,11 @@ end;
 
 procedure TFormCliente.btnFiltrarClick(Sender: TObject);
 begin
-  RefreshPessoa;
+
+  if length(trim(edtFiltrar.Text)) >= 4 then
+    RefreshPessoa
+  else
+    ShowMessage('Informe pelo menos 4 caracteres. Após tecle[ENTER] ou Filtar.')
 end;
 
 procedure TFormCliente.TerminateBusca(Sender: TObject);
