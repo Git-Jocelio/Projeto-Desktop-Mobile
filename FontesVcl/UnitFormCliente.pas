@@ -32,7 +32,6 @@ type
     dbg: TDBGrid;
     ds: TDataSource;
     ImageList: TImageList;
-    procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
 
     procedure btnInserirClick(Sender: TObject);
@@ -70,13 +69,9 @@ uses UnitFormClienteE;
 
 procedure TFormCliente.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+  // pode ficar como herança
   action := TCloseAction.caFree;
   FormCliente := nil;
-end;
-
-procedure TFormCliente.FormShow(Sender: TObject);
-begin
-  //RefreshPessoa;
 end;
 
 procedure TFormCliente.OpenCadCliente(pessoaId: integer);
@@ -101,6 +96,7 @@ procedure TFormCliente.dbgDrawColumnCell(Sender: TObject; const Rect: TRect;
 var
   Y: Integer;
 begin
+  // pode ficar como herança
   if Column.FieldName = 'ACOES' then
   begin
     dbg.Canvas.FillRect(Rect);
@@ -118,6 +114,7 @@ end;
 procedure TFormCliente.dbgKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
+  // pode ficar como herança
 
   // Tecla DELETE
   if Key = VK_DELETE then
@@ -142,6 +139,7 @@ var
   R: TRect;
   PosX: Integer;
 begin
+  // pode ficar como herança
   if Button <> mbLeft then Exit;
 
   GC := dbg.MouseCoord(X, Y);
@@ -168,6 +166,7 @@ end;
 
 procedure TFormCliente.dbgTitleClick(Column: TColumn);
 begin
+  // pode ficar como herança
   if (Column.Grid.DataSource.DataSet is TFDMemTable) then
   begin
     if Column.FieldName <> 'ACOES' then
@@ -189,6 +188,7 @@ end;
 
 procedure TFormCliente.edtFiltrarKeyPress(Sender: TObject; var Key: Char);
 begin
+  // pode ficar como herança
   if key = #13 then btnFiltrarClick(nil);
 
 end;

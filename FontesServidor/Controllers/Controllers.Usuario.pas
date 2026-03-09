@@ -3,7 +3,7 @@ unit Controllers.Usuario;
 interface
 uses Horse,
      DataModule.Pessoa,
-     System.SysUtils,
+     System.SysUtils,         dialogs,
      System.JSON,
      DataModule.Usuario;
 
@@ -47,11 +47,14 @@ begin
       jsonRetorno := dmUsuario.usuarioLogin(email, senha);
       if not Assigned(jsonRetorno) then
       begin
+
         res.Status(401).Send('Email ou senha inválido');
       end
       else
+      begin
+//showmessage('usuario valildado');
         res.Status(201).Send<TJSONObject>(jsonRetorno);
-
+      end;
     except
       on E: Exception do
         res.Status(500).Send(E.Message);

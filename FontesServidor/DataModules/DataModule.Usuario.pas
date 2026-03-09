@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.PG,
   FireDAC.Phys.PGDef, FireDAC.VCLUI.Wait, Data.DB, FireDAC.Comp.Client,
   FireDAC.Phys.FB, FireDAC.Phys.FBDef, FireDAC.Phys.IBBase, fireDac.Stan.Param,
-
+dialogs,
   DataSet.Serialize.Config, // necessário para tratar varaveis de consulta
   DataSet.Serialize,        // necessário para por transformar um dataset em um array JSON
   System.JSON,              // necessario para retorno do JSON

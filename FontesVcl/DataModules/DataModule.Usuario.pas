@@ -57,7 +57,7 @@ begin
                         .Post;                             // passando um Post
 
     // trata erro se houver
-    if resp.StatusCode <> 200 then
+    if resp.StatusCode <> 201 then
       raise Exception.Create(resp.content);
 
   finally

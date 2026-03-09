@@ -4,8 +4,8 @@ object FormCliente: TFormCliente
   Align = alClient
   BorderStyle = bsNone
   Caption = 'Clientes'
-  ClientHeight = 476
-  ClientWidth = 1281
+  ClientHeight = 406
+  ClientWidth = 1198
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,18 +15,18 @@ object FormCliente: TFormCliente
   Position = poMainFormCenter
   WindowState = wsMaximized
   OnClose = FormClose
-  OnShow = FormShow
   TextHeight = 15
   object PnlHeader: TPanel
     Left = 0
     Top = 0
-    Width = 1281
+    Width = 1198
     Height = 65
     Align = alTop
     BevelOuter = bvNone
     Color = 16051947
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 1281
     object Label1: TLabel
       AlignWithMargins = True
       Left = 10
@@ -49,7 +49,7 @@ object FormCliente: TFormCliente
     end
     object PnlBotaoInserir: TPanel
       AlignWithMargins = True
-      Left = 1169
+      Left = 1086
       Top = 15
       Width = 102
       Height = 35
@@ -63,6 +63,7 @@ object FormCliente: TFormCliente
       ParentBackground = False
       TabOrder = 0
       Visible = False
+      ExplicitLeft = 1169
       object BtnExcluir: TSpeedButton
         AlignWithMargins = True
         Left = 0
@@ -92,7 +93,7 @@ object FormCliente: TFormCliente
     end
     object Panel2: TPanel
       AlignWithMargins = True
-      Left = 925
+      Left = 842
       Top = 15
       Width = 102
       Height = 35
@@ -105,6 +106,7 @@ object FormCliente: TFormCliente
       Color = 16744448
       ParentBackground = False
       TabOrder = 1
+      ExplicitLeft = 925
       object btnInserir: TSpeedButton
         AlignWithMargins = True
         Left = 0
@@ -134,7 +136,7 @@ object FormCliente: TFormCliente
     end
     object Panel3: TPanel
       AlignWithMargins = True
-      Left = 1047
+      Left = 964
       Top = 15
       Width = 102
       Height = 35
@@ -148,6 +150,7 @@ object FormCliente: TFormCliente
       ParentBackground = False
       TabOrder = 2
       Visible = False
+      ExplicitLeft = 1047
       object BtnEditar: TSpeedButton
         AlignWithMargins = True
         Left = 0
@@ -178,7 +181,7 @@ object FormCliente: TFormCliente
       AlignWithMargins = True
       Left = 119
       Top = 0
-      Width = 746
+      Width = 663
       Height = 65
       Margins.Left = 20
       Margins.Top = 0
@@ -189,9 +192,10 @@ object FormCliente: TFormCliente
       Color = 16051947
       ParentBackground = False
       TabOrder = 3
+      ExplicitWidth = 746
       object Panel4: TPanel
         AlignWithMargins = True
-        Left = 634
+        Left = 551
         Top = 15
         Width = 102
         Height = 35
@@ -204,6 +208,7 @@ object FormCliente: TFormCliente
         Color = 16744448
         ParentBackground = False
         TabOrder = 0
+        ExplicitLeft = 634
         object btnFiltrar: TSpeedButton
           AlignWithMargins = True
           Left = 0
@@ -235,7 +240,7 @@ object FormCliente: TFormCliente
         AlignWithMargins = True
         Left = 15
         Top = 15
-        Width = 619
+        Width = 536
         Height = 35
         Margins.Left = 15
         Margins.Top = 15
@@ -253,14 +258,15 @@ object FormCliente: TFormCliente
         ParentFont = False
         TabOrder = 1
         OnKeyPress = edtFiltrarKeyPress
+        ExplicitWidth = 619
       end
     end
   end
   object dbg: TDBGrid
     Left = 0
     Top = 65
-    Width = 1281
-    Height = 411
+    Width = 1198
+    Height = 341
     Align = alClient
     BorderStyle = bsNone
     Color = clWhite
