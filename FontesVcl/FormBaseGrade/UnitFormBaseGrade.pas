@@ -54,7 +54,7 @@ procedure TFormBaseGrade.dbgDrawColumnCell(Sender: TObject; const Rect: TRect;
 var
   Y: Integer;
 begin
-  // pode ficar como herança
+  // insere imagens na coluna ações
   if Column.FieldName = 'ACOES' then
   begin
     dbg.Canvas.FillRect(Rect);
@@ -76,7 +76,7 @@ var
   R: TRect;
   PosX: Integer;
 begin
-  // pode ficar como herança
+  // atribui ações as imagens editar ou excluir
   if Button <> mbLeft then Exit;
 
   GC := dbg.MouseCoord(X, Y);
@@ -103,6 +103,7 @@ end;
 
 procedure TFormBaseGrade.dbgTitleClick(Column: TColumn);
 begin
+  // ordena ao clicar no titulo
   if (Column.Grid.DataSource.DataSet is TFDMemTable) then
   begin
     if Column.FieldName <> 'ACOES' then

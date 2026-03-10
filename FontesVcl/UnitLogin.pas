@@ -63,13 +63,15 @@ begin
    TSession.ID_USUARIO := dmUsuario.MemTable.fieldbyname('usuarioId').AsInteger;
    TSession.EMAIL := dmUsuario.MemTable.fieldbyname('email').AsString;
    TSession.NOME := dmUsuario.MemTable.fieldbyname('nome').AsString;
-   dmUsuario.Free;
-   // cria o form principal se não existir na memória
+
    if NOT Assigned(FormPrincipal) then
      Application.CreateForm(TFormPrincipal, FormPrincipal);
 
    // chama o form principal
    FormPrincipal.show;
+
+   FreeAndNil(dmUsuario);
+
 end;
 
 procedure TfrmLogin.BtnAcessarClick(Sender: TObject);
@@ -79,10 +81,12 @@ begin
    // mostra um loading na tela
    TLoading.show(Self);
 
+   if not Assigned(dmUsuario) then
+      dmUsuario := TdmUsuario.Create(nil);
+
    { fazer requisição para o servidor dentro de uma thred paralela.
     senão o loading fica rodando e qdo o usuario tentar mudar de foco
     da impressão de tela travada(tela branca) }
-
    TLoading.ExecuteThread(procedure
    begin
       sleep(600); // simula tempo de resposta o servidor
@@ -90,7 +94,6 @@ begin
       if not ServidorOnline then
             raise Exception.Create('Servidor não está disponível.');
 
-      dmUsuario := TdmUsuario.create(nil);
       dmUsuario.Login(dmUsuario.MemTable, EdtEmail.Text, EdtSenha.Text);
 
    end,
@@ -102,8 +105,9 @@ end;
 
 procedure TfrmLogin.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  FreeAndNil(frmLogin);
+
   FreeAndNil(dmUsuario);
+  Action := caFree ;
 end;
 
 function TfrmLogin.ServidorOnline: Boolean;
@@ -111,7 +115,7 @@ var
   Http: TNetHTTPClient;
   Resp: IHTTPResponse;
 begin
-//  Result := False;
+  Result := False;
 
   Http := TNetHTTPClient.Create(nil);
   try

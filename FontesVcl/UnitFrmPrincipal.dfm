@@ -138,7 +138,7 @@ object FormPrincipal: TFormPrincipal
   object svSubMenu: TSplitView
     Left = 200
     Top = 0
-    Width = 0
+    Width = 200
     Height = 620
     Cursor = crHandPoint
     Color = 6969943
@@ -148,7 +148,6 @@ object FormPrincipal: TFormPrincipal
     Font.Height = -17
     Font.Name = 'Segoe UI'
     Font.Style = []
-    Opened = False
     OpenedWidth = 200
     ParentFont = False
     Placement = svpLeft
@@ -156,11 +155,12 @@ object FormPrincipal: TFormPrincipal
     object Panel2: TPanel
       Left = 0
       Top = 0
-      Width = 0
+      Width = 200
       Height = 55
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
+      ExplicitWidth = 0
       object Label1: TLabel
         AlignWithMargins = True
         Left = 17
@@ -191,7 +191,7 @@ object FormPrincipal: TFormPrincipal
       AlignWithMargins = True
       Left = 0
       Top = 55
-      Width = 0
+      Width = 200
       Height = 565
       Margins.Left = 0
       Margins.Top = 0
@@ -228,31 +228,35 @@ object FormPrincipal: TFormPrincipal
       RegularButtonColor = clNone
       SelectedButtonColor = 6969943
       TabOrder = 1
+      ExplicitWidth = 0
     end
   end
   object pnTela: TPanel
-    Left = 200
+    Left = 400
     Top = 0
-    Width = 917
+    Width = 717
     Height = 620
     Align = alClient
     BevelOuter = bvNone
     Color = 16051947
     ParentBackground = False
     TabOrder = 2
+    ExplicitLeft = 200
+    ExplicitWidth = 917
     object pnNavBar: TPanel
       Left = 0
       Top = 0
-      Width = 917
+      Width = 717
       Height = 50
       Align = alTop
       BevelOuter = bvNone
       Color = 15458266
       ParentBackground = False
       TabOrder = 0
+      ExplicitWidth = 917
       object imgUsuario: TImage
         AlignWithMargins = True
-        Left = 697
+        Left = 497
         Top = 0
         Width = 50
         Height = 50
@@ -302,7 +306,7 @@ object FormPrincipal: TFormPrincipal
       end
       object ImgNotificacoes: TImage
         AlignWithMargins = True
-        Left = 637
+        Left = 437
         Top = 0
         Width = 50
         Height = 50
@@ -434,7 +438,7 @@ object FormPrincipal: TFormPrincipal
         ExplicitLeft = 702
       end
       object pnUsuario: TPanel
-        Left = 747
+        Left = 547
         Top = 0
         Width = 170
         Height = 50
@@ -443,6 +447,7 @@ object FormPrincipal: TFormPrincipal
         Color = 15458266
         ParentBackground = False
         TabOrder = 0
+        ExplicitLeft = 747
         object lblEmail: TLabel
           Left = 0
           Top = 25
@@ -485,7 +490,7 @@ object FormPrincipal: TFormPrincipal
       AlignWithMargins = True
       Left = 30
       Top = 70
-      Width = 857
+      Width = 657
       Height = 550
       Margins.Left = 30
       Margins.Top = 20
@@ -494,6 +499,7 @@ object FormPrincipal: TFormPrincipal
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
+      ExplicitWidth = 857
     end
   end
   object ImageList: TImageList

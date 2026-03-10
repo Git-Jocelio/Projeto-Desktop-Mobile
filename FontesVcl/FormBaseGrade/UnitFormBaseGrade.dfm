@@ -22,8 +22,6 @@ object FormBaseGrade: TFormBaseGrade
     Color = 16051947
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = -574
-    ExplicitWidth = 1198
     object Label1: TLabel
       AlignWithMargins = True
       Left = 10
@@ -60,7 +58,6 @@ object FormBaseGrade: TFormBaseGrade
       ParentBackground = False
       TabOrder = 0
       Visible = False
-      ExplicitLeft = 1086
       object BtnExcluir: TSpeedButton
         AlignWithMargins = True
         Left = 0
@@ -102,7 +99,6 @@ object FormBaseGrade: TFormBaseGrade
       Color = 16744448
       ParentBackground = False
       TabOrder = 1
-      ExplicitLeft = 842
       object btnInserir: TSpeedButton
         AlignWithMargins = True
         Left = 0
@@ -145,7 +141,6 @@ object FormBaseGrade: TFormBaseGrade
       ParentBackground = False
       TabOrder = 2
       Visible = False
-      ExplicitLeft = 964
       object BtnEditar: TSpeedButton
         AlignWithMargins = True
         Left = 0
@@ -187,7 +182,6 @@ object FormBaseGrade: TFormBaseGrade
       Color = 16051947
       ParentBackground = False
       TabOrder = 3
-      ExplicitWidth = 663
       object Panel4: TPanel
         AlignWithMargins = True
         Left = 563
@@ -203,7 +197,6 @@ object FormBaseGrade: TFormBaseGrade
         Color = 16744448
         ParentBackground = False
         TabOrder = 0
-        ExplicitLeft = 551
         object btnFiltrar: TSpeedButton
           AlignWithMargins = True
           Left = 0
@@ -252,7 +245,6 @@ object FormBaseGrade: TFormBaseGrade
         ParentFont = False
         TabOrder = 1
         OnKeyPress = edtFiltrarKeyPress
-        ExplicitWidth = 536
       end
     end
   end

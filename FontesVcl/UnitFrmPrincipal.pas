@@ -89,6 +89,7 @@ end;
 
 procedure TFormPrincipal.FormShow(Sender: TObject);
 begin
+  svSubMenu.Opened := false;
   lblNome.Caption  := TSession.NOME;
   lblEmail.Caption := TSession.EMAIL;
 end;
