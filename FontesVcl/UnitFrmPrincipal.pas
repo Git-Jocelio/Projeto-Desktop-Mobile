@@ -89,7 +89,7 @@ end;
 
 procedure TFormPrincipal.FormShow(Sender: TObject);
 begin
-  lblNome.Caption := TSession.NOME;
+  lblNome.Caption  := TSession.NOME;
   lblEmail.Caption := TSession.EMAIL;
 end;
 

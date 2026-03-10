@@ -62,7 +62,7 @@ begin
   try
     dmServidor := TDmServidor.Create(nil);
     qry.Connection := DmServidor.conn;
-    qry.SQL.Add('SELECT usuarioId, email, senha from Usuario where email = :email and senha = :senha');
+    qry.SQL.Add('SELECT usuarioId, nome, email, senha from Usuario where email = :email and senha = :senha');
     qry.ParamByName('email').AsString := email;
     //qry.ParamByName('senha').AsString :=  umd5.SaltPassword( senha );
     qry.ParamByName('senha').AsString :=  senha ;

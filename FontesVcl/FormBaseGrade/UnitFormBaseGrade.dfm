@@ -1,32 +1,29 @@
-object FormCliente: TFormCliente
+object FormBaseGrade: TFormBaseGrade
   Left = 0
   Top = 0
-  Align = alClient
-  BorderStyle = bsNone
-  Caption = 'Clientes'
-  ClientHeight = 469
-  ClientWidth = 1351
-  Color = clWhite
+  Caption = 'Form Base Grade'
+  ClientHeight = 473
+  ClientWidth = 1210
+  Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poMainFormCenter
-  WindowState = wsMaximized
   OnClose = FormClose
-  OnCreate = FormCreate
   TextHeight = 15
   object PnlHeader: TPanel
     Left = 0
     Top = 0
-    Width = 1351
+    Width = 1210
     Height = 65
     Align = alTop
     BevelOuter = bvNone
     Color = 16051947
     ParentBackground = False
     TabOrder = 0
+    ExplicitLeft = -574
+    ExplicitWidth = 1198
     object Label1: TLabel
       AlignWithMargins = True
       Left = 10
@@ -49,7 +46,7 @@ object FormCliente: TFormCliente
     end
     object PnlBotaoInserir: TPanel
       AlignWithMargins = True
-      Left = 1239
+      Left = 1098
       Top = 15
       Width = 102
       Height = 35
@@ -63,6 +60,7 @@ object FormCliente: TFormCliente
       ParentBackground = False
       TabOrder = 0
       Visible = False
+      ExplicitLeft = 1086
       object BtnExcluir: TSpeedButton
         AlignWithMargins = True
         Left = 0
@@ -83,7 +81,6 @@ object FormCliente: TFormCliente
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        OnClick = BtnExcluirClick
         ExplicitLeft = 176
         ExplicitTop = 16
         ExplicitWidth = 23
@@ -92,7 +89,7 @@ object FormCliente: TFormCliente
     end
     object Panel2: TPanel
       AlignWithMargins = True
-      Left = 995
+      Left = 854
       Top = 15
       Width = 102
       Height = 35
@@ -105,6 +102,7 @@ object FormCliente: TFormCliente
       Color = 16744448
       ParentBackground = False
       TabOrder = 1
+      ExplicitLeft = 842
       object btnInserir: TSpeedButton
         AlignWithMargins = True
         Left = 0
@@ -125,7 +123,6 @@ object FormCliente: TFormCliente
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        OnClick = btnInserirClick
         ExplicitLeft = 176
         ExplicitTop = 16
         ExplicitWidth = 23
@@ -134,7 +131,7 @@ object FormCliente: TFormCliente
     end
     object Panel3: TPanel
       AlignWithMargins = True
-      Left = 1117
+      Left = 976
       Top = 15
       Width = 102
       Height = 35
@@ -148,6 +145,7 @@ object FormCliente: TFormCliente
       ParentBackground = False
       TabOrder = 2
       Visible = False
+      ExplicitLeft = 964
       object BtnEditar: TSpeedButton
         AlignWithMargins = True
         Left = 0
@@ -178,7 +176,7 @@ object FormCliente: TFormCliente
       AlignWithMargins = True
       Left = 119
       Top = 0
-      Width = 816
+      Width = 675
       Height = 65
       Margins.Left = 20
       Margins.Top = 0
@@ -189,9 +187,10 @@ object FormCliente: TFormCliente
       Color = 16051947
       ParentBackground = False
       TabOrder = 3
+      ExplicitWidth = 663
       object Panel4: TPanel
         AlignWithMargins = True
-        Left = 704
+        Left = 563
         Top = 15
         Width = 102
         Height = 35
@@ -204,6 +203,7 @@ object FormCliente: TFormCliente
         Color = 16744448
         ParentBackground = False
         TabOrder = 0
+        ExplicitLeft = 551
         object btnFiltrar: TSpeedButton
           AlignWithMargins = True
           Left = 0
@@ -224,7 +224,6 @@ object FormCliente: TFormCliente
           Font.Name = 'Segoe UI'
           Font.Style = []
           ParentFont = False
-          OnClick = btnFiltrarClick
           ExplicitLeft = 176
           ExplicitTop = 16
           ExplicitWidth = 23
@@ -235,7 +234,7 @@ object FormCliente: TFormCliente
         AlignWithMargins = True
         Left = 15
         Top = 15
-        Width = 689
+        Width = 548
         Height = 35
         Margins.Left = 15
         Margins.Top = 15
@@ -253,18 +252,18 @@ object FormCliente: TFormCliente
         ParentFont = False
         TabOrder = 1
         OnKeyPress = edtFiltrarKeyPress
+        ExplicitWidth = 536
       end
     end
   end
   object dbg: TDBGrid
     Left = 0
     Top = 65
-    Width = 1351
-    Height = 404
+    Width = 1210
+    Height = 408
     Align = alClient
     BorderStyle = bsNone
     Color = clWhite
-    DataSource = ds
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -19
@@ -279,8 +278,6 @@ object FormCliente: TFormCliente
     TitleFont.Name = 'Segoe UI'
     TitleFont.Style = []
     OnDrawColumnCell = dbgDrawColumnCell
-    OnDblClick = dbgDblClick
-    OnKeyDown = dbgKeyDown
     OnMouseUp = dbgMouseUp
     OnTitleClick = dbgTitleClick
     Columns = <
@@ -373,12 +370,12 @@ object FormCliente: TFormCliente
   end
   object ds: TDataSource
     AutoEdit = False
-    Left = 86
+    Left = 54
     Top = 152
   end
   object ImageList: TImageList
-    Left = 88
-    Top = 216
+    Left = 120
+    Top = 152
     Bitmap = {
       494C010102000800040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010

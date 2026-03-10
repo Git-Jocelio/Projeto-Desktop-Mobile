@@ -11,7 +11,8 @@ uses
   UnitFormCliente in 'UnitFormCliente.pas' {FormCliente},
   UnitFormClienteE in 'UnitFormClienteE.pas' {FormClienteE},
   DataModele.Pessoa in 'DataModules\DataModele.Pessoa.pas' {DmPessoa: TDataModule},
-  DataModule.Usuario in 'DataModules\DataModule.Usuario.pas' {dmUsuario: TDataModule};
+  DataModule.Usuario in 'DataModules\DataModule.Usuario.pas' {dmUsuario: TDataModule},
+  UnitFormBaseGrade in 'FormBaseGrade\UnitFormBaseGrade.pas' {FormBaseGrade};
 
 {$R *.res}
 
@@ -21,7 +22,5 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfrmLogin, frmLogin);
-  Application.CreateForm(TDmPessoa, DmPessoa);
-  Application.CreateForm(TdmUsuario, dmUsuario);
   Application.Run;
 end.

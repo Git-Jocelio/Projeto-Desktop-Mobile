@@ -8,12 +8,13 @@ uses
   Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.Navigation, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, DataModele.Pessoa, System.UITypes,
-  Vcl.Loading, System.ImageList, Vcl.ImgList; // unit que carrega o load na tela
+  FireDAC.Comp.Client, System.UITypes,
+  Vcl.Loading, // unit que carrega o load na tela
+  DataModele.Pessoa, System.ImageList, Vcl.ImgList;
 
 
-type
-  TDBGridHack = class(TDBGrid);
+  type
+    TDBGridHack = class(TDBGrid);
 
   type
   TFormCliente = class(TForm)
@@ -36,6 +37,7 @@ type
 
     procedure btnInserirClick(Sender: TObject);
     procedure BtnExcluirClick(Sender: TObject);
+
     procedure btnFiltrarClick(Sender: TObject);
     procedure dbgDblClick(Sender: TObject);
     procedure dbgDrawColumnCell(Sender: TObject; const Rect: TRect;
@@ -45,6 +47,7 @@ type
     procedure dbgKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure dbgTitleClick(Column: TColumn);
     procedure edtFiltrarKeyPress(Sender: TObject; var Key: Char);
+    procedure FormCreate(Sender: TObject);
   private
     bookMark : TBookMark;
     procedure OpenCadCliente(pessoaId: integer);
@@ -59,7 +62,7 @@ type
 
 var
   FormCliente: TFormCliente;
-
+  dmPessoa : TDmPessoa;
 implementation
 
 
@@ -71,7 +74,13 @@ procedure TFormCliente.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   // pode ficar como herança
   action := TCloseAction.caFree;
+  FreeAndNil( dmPessoa );
   FormCliente := nil;
+end;
+
+procedure TFormCliente.FormCreate(Sender: TObject);
+begin
+   dmPessoa := TDmPessoa.Create(nil)
 end;
 
 procedure TFormCliente.OpenCadCliente(pessoaId: integer);
@@ -155,9 +164,11 @@ begin
     PosX := X - R.Left;
 
     if PosX < 50 then
-      Editar
+       Editar
+      //dbg.OnDblClick(nil)
     else
-      BtnExcluirClick(nil);
+     //BtnExcluir.OnClick(nil);
+      BtnExcluir.Click;
   end;
 
 end;
@@ -189,7 +200,7 @@ end;
 procedure TFormCliente.edtFiltrarKeyPress(Sender: TObject; var Key: Char);
 begin
   // pode ficar como herança
-  if key = #13 then btnFiltrarClick(nil);
+  if key = #13 then btnFiltrar.Click;
 
 end;
 
@@ -229,6 +240,7 @@ end;
 
 
 procedure TFormCliente.btnFiltrarClick(Sender: TObject);
+
 begin
 
   if length(trim(edtFiltrar.Text)) >= 4 then
@@ -258,13 +270,14 @@ begin
    except
      //
    end;
+
 end;
 
 
 procedure TFormCliente.RefreshPessoa;
+
 begin
   TLoading.Show;
-
   TLoading.ExecuteThread(procedure
   begin
     sleep(800);

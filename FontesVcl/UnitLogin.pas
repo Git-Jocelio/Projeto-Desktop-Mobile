@@ -26,6 +26,7 @@ type
     EdtSenha: TEdit;
     BtnAcessar: TSpeedButton;
     procedure BtnAcessarClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     procedure TerminateLogin(Sender: TObject);
     function ServidorOnline: Boolean;
@@ -58,11 +59,11 @@ begin
        exit;
      end;
 
-   // pegar dados de acesso do usuario... buscar no servidor
+   // pegar dados de acesso do usuario... devolvidos pelo servidor
    TSession.ID_USUARIO := dmUsuario.MemTable.fieldbyname('usuarioId').AsInteger;
    TSession.EMAIL := dmUsuario.MemTable.fieldbyname('email').AsString;
-   TSession.NOME := dmUsuario.MemTable.fieldbyname('senha').AsString;
-
+   TSession.NOME := dmUsuario.MemTable.fieldbyname('nome').AsString;
+   dmUsuario.Free;
    // cria o form principal se não existir na memória
    if NOT Assigned(FormPrincipal) then
      Application.CreateForm(TFormPrincipal, FormPrincipal);
@@ -72,7 +73,9 @@ begin
 end;
 
 procedure TfrmLogin.BtnAcessarClick(Sender: TObject);
+
 begin
+
    // mostra um loading na tela
    TLoading.show(Self);
 
@@ -87,6 +90,7 @@ begin
       if not ServidorOnline then
             raise Exception.Create('Servidor não está disponível.');
 
+      dmUsuario := TdmUsuario.create(nil);
       dmUsuario.Login(dmUsuario.MemTable, EdtEmail.Text, EdtSenha.Text);
 
    end,
@@ -96,12 +100,18 @@ begin
 
 end;
 
+procedure TfrmLogin.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  FreeAndNil(frmLogin);
+  FreeAndNil(dmUsuario);
+end;
+
 function TfrmLogin.ServidorOnline: Boolean;
 var
   Http: TNetHTTPClient;
   Resp: IHTTPResponse;
 begin
-  Result := False;
+//  Result := False;
 
   Http := TNetHTTPClient.Create(nil);
   try
