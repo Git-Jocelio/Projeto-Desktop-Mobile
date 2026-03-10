@@ -162,6 +162,7 @@
             <Form>FormBaseGrade</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Services\Service.Pessoa.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

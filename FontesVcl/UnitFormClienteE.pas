@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
   Vcl.Navigation, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Service.Pessoa;
 
 type
   TFormClienteE = class(TForm)
@@ -47,13 +47,17 @@ uses Vcl.Loading, DataModele.Pessoa;
 procedure TFormClienteE.btnSalvarClick(Sender: TObject);
 begin
     TLoading.Show;
-    TLoading.ExecuteThread(procedure
+
+    TLoading.ExecuteThread(
+    procedure
     begin
-       sleep(1000);
-       if TNavigation.ParamInt > 0 then // alterando
-         DmPessoa.Editar(TNavigation.ParamInt, edtNome.Text, edtTelefone.Text, edtsetor.Text)
-       else
-         DmPessoa.Inserir(edtNome.Text, edtTelefone.Text, edtsetor.Text)
+        sleep(800);
+        TServicePessoa.Salvar(
+                               TNavigation.ParamInt,
+                               edtNome.Text,
+                               edtTelefone.Text,
+                               edtsetor.Text
+                             );
     end,
     TerminateSalvar
     );

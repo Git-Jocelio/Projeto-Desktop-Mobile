@@ -115,6 +115,7 @@ end;
 procedure TFormBaseGrade.edtFiltrarKeyPress(Sender: TObject; var Key: Char);
 begin
   if key = #13 then btnFiltrar.Click;
+  if Key = #27 then Close;;
 
 end;
 
