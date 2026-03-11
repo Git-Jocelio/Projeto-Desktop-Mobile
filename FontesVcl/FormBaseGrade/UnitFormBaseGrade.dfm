@@ -244,6 +244,7 @@ object FormBaseGrade: TFormBaseGrade
         Font.Style = []
         ParentFont = False
         TabOrder = 1
+        TextHint = 'Digite o nome da pessoa'
         OnKeyPress = edtFiltrarKeyPress
       end
     end

@@ -163,6 +163,10 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Services\Service.Pessoa.pas"/>
+        <DCCReference Include="FormBaseEdicao\UnitFormBaseEdicao.pas">
+            <Form>FormBaseEdicao</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

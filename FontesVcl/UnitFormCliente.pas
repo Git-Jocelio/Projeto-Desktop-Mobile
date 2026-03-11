@@ -239,10 +239,10 @@ procedure TFormCliente.btnFiltrarClick(Sender: TObject);
 
 begin
 
-  if length(trim(edtFiltrar.Text)) >= 4 then
+//  if length(trim(edtFiltrar.Text)) >= 4 then
     RefreshPessoa
-  else
-    ShowMessage('Informe pelo menos 4 caracteres. Após tecle[ENTER] ou Filtar.')
+//  else
+//    ShowMessage('Informe pelo menos 4 caracteres. Após tecle[ENTER] ou Filtar.')
 end;
 
 procedure TFormCliente.TerminateBusca;

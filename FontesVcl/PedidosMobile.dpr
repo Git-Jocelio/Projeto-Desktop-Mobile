@@ -13,7 +13,8 @@ uses
   DataModele.Pessoa in 'DataModules\DataModele.Pessoa.pas' {DmPessoa: TDataModule},
   DataModule.Usuario in 'DataModules\DataModule.Usuario.pas' {dmUsuario: TDataModule},
   UnitFormBaseGrade in 'FormBaseGrade\UnitFormBaseGrade.pas' {FormBaseGrade},
-  Service.Pessoa in 'Services\Service.Pessoa.pas';
+  Service.Pessoa in 'Services\Service.Pessoa.pas',
+  UnitFormBaseEdicao in 'FormBaseEdicao\UnitFormBaseEdicao.pas' {FormBaseEdicao};
 
 {$R *.res}
 
