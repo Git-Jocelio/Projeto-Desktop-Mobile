@@ -1,3 +1,4 @@
+```
 Projeto Desktop-Mobile
 
 Sistema desenvolvido em Delphi com arquitetura em camadas, separando aplicação Desktop (VCL) e Servidor REST.
@@ -9,7 +10,7 @@ FontesVcl → Aplicação Desktop (Camada de Apresentação)
 FontesServidor → Servidor REST (Camada de Serviços)
 Banco de Dados: Firebird 2.5
 Comunicação: HTTP utilizando o framework Horse
-```
+
 📂 Estrutura do Projeto
 Projeto-Desktop-Mobile
 │
@@ -59,7 +60,7 @@ Projeto-Desktop-Mobile
 │   └── UnitPrincipal.pas
 │
 └── README.md
-```
+
 📖 Organização das Pastas
 
 🖥 FontesVcl
@@ -127,3 +128,4 @@ Grupo Aussel
 
 Jocelio Gomes da Silva
 Desenvolvedor Delphi
+```
