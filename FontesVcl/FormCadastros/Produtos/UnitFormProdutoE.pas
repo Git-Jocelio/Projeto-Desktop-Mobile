@@ -11,6 +11,12 @@ uses
 
 type
   TFormProdutoE = class(TFormBaseEdicao)
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    edtNome: TEdit;
+    edtsetor: TEdit;
+    ComboBox1: TComboBox;
   private
     { Private declarations }
   public

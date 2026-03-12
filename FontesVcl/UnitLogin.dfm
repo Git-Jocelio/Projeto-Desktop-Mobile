@@ -57383,7 +57383,7 @@ object frmLogin: TfrmLogin
         Font.Style = []
         ParentFont = False
         TabOrder = 0
-        Text = 'jocelio@gmail.com'
+        Text = 'jocelio@teste.com'
       end
     end
     object Panel3: TPanel
