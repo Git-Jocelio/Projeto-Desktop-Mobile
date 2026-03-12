@@ -160,7 +160,6 @@ object FormPrincipal: TFormPrincipal
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitWidth = 0
       object Label1: TLabel
         AlignWithMargins = True
         Left = 17
@@ -220,6 +219,7 @@ object FormPrincipal: TFormPrincipal
             item
               Caption = ' Produtos'
               ImageIndex = 1
+              OnClick = CategorySubMenuButtonsCategories0Items1Click
             end>
           VisibleGutter = False
         end>
@@ -228,7 +228,6 @@ object FormPrincipal: TFormPrincipal
       RegularButtonColor = clNone
       SelectedButtonColor = 6969943
       TabOrder = 1
-      ExplicitWidth = 0
     end
   end
   object pnTela: TPanel
@@ -241,8 +240,6 @@ object FormPrincipal: TFormPrincipal
     Color = 16051947
     ParentBackground = False
     TabOrder = 2
-    ExplicitLeft = 200
-    ExplicitWidth = 917
     object pnNavBar: TPanel
       Left = 0
       Top = 0
@@ -253,7 +250,6 @@ object FormPrincipal: TFormPrincipal
       Color = 15458266
       ParentBackground = False
       TabOrder = 0
-      ExplicitWidth = 917
       object imgUsuario: TImage
         AlignWithMargins = True
         Left = 497
@@ -447,7 +443,6 @@ object FormPrincipal: TFormPrincipal
         Color = 15458266
         ParentBackground = False
         TabOrder = 0
-        ExplicitLeft = 747
         object lblEmail: TLabel
           Left = 0
           Top = 25
@@ -499,7 +494,6 @@ object FormPrincipal: TFormPrincipal
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 857
     end
   end
   object ImageList: TImageList

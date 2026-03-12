@@ -8,19 +8,37 @@ inherited FormProduto: TFormProduto
       Caption = 'Produto'
       ExplicitWidth = 106
     end
+    inherited PnlBotaoInserir: TPanel
+      inherited BtnExcluir: TSpeedButton
+        OnClick = BtnExcluirClick
+      end
+    end
+    inherited Panel2: TPanel
+      inherited btnInserir: TSpeedButton
+        OnClick = btnInserirClick
+      end
+    end
     inherited Panel1: TPanel
       Left = 136
       Width = 658
+      ExplicitLeft = 136
+      ExplicitWidth = 658
       inherited Panel4: TPanel
         Left = 546
+        ExplicitLeft = 546
+        inherited btnFiltrar: TSpeedButton
+          OnClick = btnFiltrarClick
+        end
       end
       inherited edtFiltrar: TEdit
         Width = 531
         TextHint = 'Digite a descri'#231#227'o do produto'
+        ExplicitWidth = 531
       end
     end
   end
   inherited dbg: TDBGrid
+    OnDblClick = dbgDblClick
     Columns = <
       item
         Expanded = False

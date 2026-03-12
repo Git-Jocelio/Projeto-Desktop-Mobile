@@ -1,15 +1,17 @@
 object FormBaseEdicao: TFormBaseEdicao
   Left = 0
   Top = 0
+  BorderStyle = bsNone
   Caption = 'FormBaseEdicao'
-  ClientHeight = 320
-  ClientWidth = 434
-  Color = clBtnFace
+  ClientHeight = 309
+  ClientWidth = 438
+  Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poMainFormCenter
   OnClose = FormClose
   TextHeight = 15
   object lblTitulo: TLabel

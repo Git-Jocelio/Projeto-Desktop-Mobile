@@ -8,7 +8,8 @@ uses
   Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, System.ImageList, Vcl.ImgList,
   Vcl.Loading, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client; // unit que carrega o load na tela
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+   // unit que carrega o load na tela
 type
   TDBGridHack = class(TDBGrid);
 
@@ -38,9 +39,8 @@ type
 
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
-    { Private declarations }
   public
-    { Public declarations }
+     bookMark : TBookMark;
   end;
 
 var

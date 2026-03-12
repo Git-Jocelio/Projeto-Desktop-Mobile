@@ -10,7 +10,9 @@ uses
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, System.UITypes,
   Vcl.Loading, // unit que carrega o load na tela
-  DataModele.Pessoa, System.ImageList, Vcl.ImgList;
+  DataModele.Pessoa,
+  System.ImageList,
+  Vcl.ImgList;
 
 
   type
@@ -154,8 +156,10 @@ end;
 
 procedure TFormCliente.BtnExcluirClick(Sender: TObject);
 begin
+
   if DmPessoa.tabPessoa.IsEmpty then
     exit;
+
  if MessageDlg('Deseja realmente excluir este registro?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
  begin
 
@@ -167,7 +171,9 @@ begin
    TerminateExcluir
    );
  end;
+
 end;
+
 
 
 

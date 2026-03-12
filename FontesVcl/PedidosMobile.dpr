@@ -4,7 +4,6 @@ uses
   Vcl.Forms,
   UnitLogin in 'UnitLogin.pas' {frmLogin},
   UnitFrmPrincipal in 'UnitFrmPrincipal.pas' {FormPrincipal},
-  Vcl.Loading in 'Utils\Vcl.Loading.pas',
   Vcl.Session in 'Utils\Vcl.Session.pas',
   UnitFormPedidos in 'UnitFormPedidos.pas' {FormPedidos},
   Vcl.Navigation in 'Utils\Vcl.Navigation.pas',
@@ -16,7 +15,9 @@ uses
   Service.Pessoa in 'Services\Service.Pessoa.pas',
   UnitFormBaseEdicao in 'FormBaseEdicao\UnitFormBaseEdicao.pas' {FormBaseEdicao},
   UnitFormProduto in 'FormCadastros\Produtos\UnitFormProduto.pas' {FormProduto},
-  DataModule.Produto in 'DataModules\DataModule.Produto.pas' {DmProduto: TDataModule};
+  DataModule.Produto in 'DataModules\DataModule.Produto.pas' {DmProduto: TDataModule},
+  Vcl.Loading in 'Utils\Vcl.Loading.pas',
+  UnitFormProdutoE in 'FormCadastros\Produtos\UnitFormProdutoE.pas' {FormProdutoE};
 
 {$R *.res}
 
