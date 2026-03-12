@@ -23,10 +23,13 @@ type
     Label4: TLabel;
     edtsetor: TEdit;
     MemTable: TFDMemTable;
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+
     procedure btnCancelarClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure btnSalvarClick(Sender: TObject);
+
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+
   private
     procedure TerminateClienteE(Sender: TObject);
     procedure TerminateSalvar(Sender: TObject);

@@ -33,7 +33,6 @@ uses
     dbg: TDBGrid;
     ds: TDataSource;
     ImageList: TImageList;
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
 
     procedure btnInserirClick(Sender: TObject);
     procedure BtnExcluirClick(Sender: TObject);
@@ -47,7 +46,9 @@ uses
     procedure dbgKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure dbgTitleClick(Column: TColumn);
     procedure edtFiltrarKeyPress(Sender: TObject; var Key: Char);
+
     procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     bookMark : TBookMark;
     procedure OpenCadCliente(pessoaId: integer);
@@ -70,15 +71,68 @@ implementation
 
 uses UnitFormClienteE;
 
-procedure TFormCliente.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  // pode ficar como herança
-  action := cafree;
-end;
-
 procedure TFormCliente.FormCreate(Sender: TObject);
 begin
    dmPessoa := TDmPessoa.Create(self)
+end;
+
+
+procedure TFormCliente.RefreshPessoa;
+begin
+  TLoading.Show;
+
+  try
+    ds.DataSet := nil;
+    dmPessoa.ListarPessoa(dmPessoa.tabPessoa, UpperCase(edtFiltrar.Text));
+    ds.DataSet := dmPessoa.tabPessoa;
+  finally
+   TerminateBusca;
+  end;
+
+end;
+
+procedure TFormCliente.TerminateBusca;
+begin
+
+  TLoading.Hide;
+
+  ds.DataSet := dmPessoa.tabPessoa;
+
+  if bookMark <> nil then
+  try
+    dbg.DataSource.DataSet.GotoBookmark(bookMark);
+    dbg.DataSource.DataSet.FreeBookmark(bookMark);
+    bookMark := nil;
+  except
+  end;
+
+end;
+
+procedure TFormCliente.TerminateExcluir(Sender: TObject);
+begin
+
+  TLoading.Hide;
+
+  if (Sender is TThread) then
+    if Assigned(TThread(Sender).FatalException) then
+    begin
+      ShowMessage( Exception(TThread(Sender).FatalException).Message );
+      exit;
+    end;
+
+  RefreshPessoa;
+
+end;
+
+
+procedure TFormCliente.Editar;
+begin
+  if DmPessoa.tabPessoa.IsEmpty then
+    exit;
+
+    bookMark := dbg.DataSource.DataSet.GetBookmark;
+
+    OpenCadCliente(DmPessoa.tabPessoa.FieldByName('pessoaId').AsInteger);
 end;
 
 procedure TFormCliente.OpenCadCliente(pessoaId: integer);
@@ -98,12 +152,48 @@ begin
   Editar;
 end;
 
+procedure TFormCliente.BtnExcluirClick(Sender: TObject);
+begin
+  if DmPessoa.tabPessoa.IsEmpty then
+    exit;
+ if MessageDlg('Deseja realmente excluir este registro?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+ begin
+
+   TLoading.Show;
+   TLoading.ExecuteThread(procedure
+   begin
+      DmPessoa.Excluir(DmPessoa.tabPessoa.FieldByName('pessoaId').AsInteger);
+   end,
+   TerminateExcluir
+   );
+ end;
+end;
+
+
+
+procedure TFormCliente.btnFiltrarClick(Sender: TObject);
+begin
+
+//  if length(trim(edtFiltrar.Text)) >= 4 then
+    RefreshPessoa;
+//  else
+//    ShowMessage('Informe pelo menos 4 caracteres. Após tecle[ENTER] ou Filtar.')
+end;
+
+
+//metodo foi para o formBaseGrade
+procedure TFormCliente.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  action := cafree;
+end;
+
+
+//metodo foi para o formBaseGrade
 procedure TFormCliente.dbgDrawColumnCell(Sender: TObject; const Rect: TRect;
   DataCol: Integer; Column: TColumn; State: TGridDrawState);
 var
   Y: Integer;
 begin
-  // pode ficar como herança
   if Column.FieldName = 'ACOES' then
   begin
     dbg.Canvas.FillRect(Rect);
@@ -118,27 +208,25 @@ begin
     dbg.DefaultDrawColumnCell(Rect, DataCol, Column, State);
 end;
 
+//metodo foi para o formBaseGrade
 procedure TFormCliente.dbgKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  // pode ficar como herança
-
-  // Tecla DELETE
   if Key = VK_DELETE then
   begin
     BtnExcluirClick(nil);
     Key := 0; // evita comportamento padrão
   end;
 
-  // Tecla ENTER (opcional, mas muito usado em ERP)
   if Key = VK_RETURN then
   begin
     Editar;
     Key := 0;
   end;
-
 end;
 
+
+//metodo foi para o formBaseGrade
 procedure TFormCliente.dbgMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 var
@@ -146,7 +234,6 @@ var
   R: TRect;
   PosX: Integer;
 begin
-  // pode ficar como herança
   if Button <> mbLeft then Exit;
 
   GC := dbg.MouseCoord(X, Y);
@@ -172,7 +259,7 @@ begin
 end;
 
 
-
+//metodo foi para o formBaseGrade
 procedure TFormCliente.dbgTitleClick(Column: TColumn);
 begin
   if (Column.Grid.DataSource.DataSet is TFDMemTable) then
@@ -182,101 +269,12 @@ begin
   end;
 end;
 
-procedure TFormCliente.Editar;
-begin
-  if DmPessoa.tabPessoa.IsEmpty then
-    exit;
 
-    bookMark := dbg.DataSource.DataSet.GetBookmark;
-
-    OpenCadCliente(DmPessoa.tabPessoa.FieldByName('pessoaId').AsInteger);
-
-end;
-
-
+//metodo foi para o formBaseGrade
 procedure TFormCliente.edtFiltrarKeyPress(Sender: TObject; var Key: Char);
 begin
   if key = #13 then btnFiltrar.Click;
   if Key = #27 then Close;
 end;
-
-procedure TFormCliente.BtnExcluirClick(Sender: TObject);
-begin
-  if DmPessoa.tabPessoa.IsEmpty then
-    exit;
- if MessageDlg('Deseja realmente excluir este registro?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
- begin
-
-   TLoading.Show;
-   TLoading.ExecuteThread(procedure
-   begin
-      DmPessoa.Excluir(DmPessoa.tabPessoa.FieldByName('pessoaId').AsInteger);
-   end,
-   TerminateExcluir
-   );
- end;
-
-end;
-
-procedure TFormCliente.TerminateExcluir(Sender: TObject);
-begin
-
-  TLoading.Hide;
-
-  if (Sender is TThread) then
-    if Assigned(TThread(Sender).FatalException) then
-    begin
-      ShowMessage( Exception(TThread(Sender).FatalException).Message );
-      exit;
-    end;
-
-  RefreshPessoa;
-
-end;
-
-
-procedure TFormCliente.btnFiltrarClick(Sender: TObject);
-
-begin
-
-//  if length(trim(edtFiltrar.Text)) >= 4 then
-    RefreshPessoa
-//  else
-//    ShowMessage('Informe pelo menos 4 caracteres. Após tecle[ENTER] ou Filtar.')
-end;
-
-procedure TFormCliente.TerminateBusca;
-begin
-
-  TLoading.Hide;
-
-  ds.DataSet := dmPessoa.tabPessoa;
-
-  if bookMark <> nil then
-  try
-    dbg.DataSource.DataSet.GotoBookmark(bookMark);
-    dbg.DataSource.DataSet.FreeBookmark(bookMark);
-    bookMark := nil;
-  except
-  end;
-
-end;
-
-
-procedure TFormCliente.RefreshPessoa;
-begin
-  TLoading.Show;
-
-  try
-    ds.DataSet := nil;
-    dmPessoa.ListarPessoa(dmPessoa.tabPessoa, UpperCase(edtFiltrar.Text));
-    ds.DataSet := dmPessoa.tabPessoa;
-  finally
-   TerminateBusca;
-  end;
-
-end;
-
-
 
 end.

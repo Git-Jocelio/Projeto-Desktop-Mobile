@@ -167,6 +167,15 @@
             <Form>FormBaseEdicao</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="FormCadastros\Produtos\UnitFormProduto.pas">
+            <Form>FormProduto</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="DataModules\DataModule.Produto.pas">
+            <Form>DmProduto</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

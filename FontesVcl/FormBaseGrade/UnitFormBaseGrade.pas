@@ -29,13 +29,14 @@ type
     dbg: TDBGrid;
     ds: TDataSource;
     ImageList: TImageList;
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure edtFiltrarKeyPress(Sender: TObject; var Key: Char);
     procedure dbgDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure dbgMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure dbgTitleClick(Column: TColumn);
+
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public

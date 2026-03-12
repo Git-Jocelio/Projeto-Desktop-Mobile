@@ -14,7 +14,9 @@ uses
   DataModule.Usuario in 'DataModules\DataModule.Usuario.pas' {dmUsuario: TDataModule},
   UnitFormBaseGrade in 'FormBaseGrade\UnitFormBaseGrade.pas' {FormBaseGrade},
   Service.Pessoa in 'Services\Service.Pessoa.pas',
-  UnitFormBaseEdicao in 'FormBaseEdicao\UnitFormBaseEdicao.pas' {FormBaseEdicao};
+  UnitFormBaseEdicao in 'FormBaseEdicao\UnitFormBaseEdicao.pas' {FormBaseEdicao},
+  UnitFormProduto in 'FormCadastros\Produtos\UnitFormProduto.pas' {FormProduto},
+  DataModule.Produto in 'DataModules\DataModule.Produto.pas' {DmProduto: TDataModule};
 
 {$R *.res}
 

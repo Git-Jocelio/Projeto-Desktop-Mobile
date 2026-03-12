@@ -276,7 +276,6 @@ object FormBaseGrade: TFormBaseGrade
     Columns = <
       item
         Expanded = False
-        FieldName = 'PESSOAID'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
@@ -294,7 +293,6 @@ object FormBaseGrade: TFormBaseGrade
       end
       item
         Expanded = False
-        FieldName = 'NOME'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
@@ -312,7 +310,6 @@ object FormBaseGrade: TFormBaseGrade
       end
       item
         Expanded = False
-        FieldName = 'TELEFONE'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
@@ -330,7 +327,6 @@ object FormBaseGrade: TFormBaseGrade
       end
       item
         Expanded = False
-        FieldName = 'SETOR'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
@@ -349,7 +345,6 @@ object FormBaseGrade: TFormBaseGrade
       item
         Alignment = taCenter
         Expanded = False
-        FieldName = 'ACOES'
         Title.Alignment = taCenter
         Title.Caption = 'A'#231#245'es'
         Title.Font.Charset = ANSI_CHARSET
