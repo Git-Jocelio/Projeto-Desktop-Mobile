@@ -21,7 +21,7 @@ type
     PnlBotaoAcessar: TPanel;
     Senha: TLabel;
     Panel2: TPanel;
-    EdtEmail: TEdit;
+    EdtLogin: TEdit;
     Panel3: TPanel;
     EdtSenha: TEdit;
     BtnAcessar: TSpeedButton;
@@ -55,14 +55,14 @@ begin
    if (Sender is TThread) then
      if Assigned(TThread(Sender).FatalException) then
      begin
-       ShowMessage( Exception(TThread(Sender).FatalException).Message );
+       ShowMessage(Exception(TThread(Sender).FatalException).Message );
        exit;
      end;
 
    // pegar dados de acesso do usuario... devolvidos pelo servidor
    TSession.ID_USUARIO := dmUsuario.MemTable.fieldbyname('usuarioId').AsInteger;
-   TSession.EMAIL := dmUsuario.MemTable.fieldbyname('email').AsString;
-   TSession.NOME := dmUsuario.MemTable.fieldbyname('nome').AsString;
+   TSession.EMAIL      := dmUsuario.MemTable.fieldbyname('login').AsString;
+   TSession.NOME       := dmUsuario.MemTable.fieldbyname('nome').AsString;
 
    if NOT Assigned(FormPrincipal) then
      Application.CreateForm(TFormPrincipal, FormPrincipal);
@@ -94,7 +94,7 @@ begin
       if not ServidorOnline then
             raise Exception.Create('Servidor não está disponível.');
 
-      dmUsuario.Login(dmUsuario.MemTable, EdtEmail.Text, EdtSenha.Text);
+      dmUsuario.Login(dmUsuario.MemTable, EdtLogin.Text, EdtSenha.Text);
 
    end,
    TerminateLogin

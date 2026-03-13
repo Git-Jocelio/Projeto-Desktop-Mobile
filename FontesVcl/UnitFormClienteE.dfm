@@ -64,9 +64,9 @@ object FormClienteE: TFormClienteE
   object Label4: TLabel
     Left = 40
     Top = 177
-    Width = 27
+    Width = 29
     Height = 15
-    Caption = 'Setor'
+    Caption = 'Email'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = 8289918
     Font.Height = -12
@@ -186,7 +186,7 @@ object FormClienteE: TFormClienteE
     ParentFont = False
     TabOrder = 1
   end
-  object edtsetor: TEdit
+  object edtEmail: TEdit
     Left = 40
     Top = 198
     Width = 326

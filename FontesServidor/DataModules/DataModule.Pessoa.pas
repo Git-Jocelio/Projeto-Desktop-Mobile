@@ -24,9 +24,8 @@ type
   public
     function pessoaListar(filtro: string): TJSONArray;
     function pessoaListarId(pessoaId: integer): TJSONObject;
-    function pessoaInserir(nome, telefone, setor: string): TJSONObject;
-    function pessoaEditar(pessoaId: integer; nome, telefone,
-      setor: string): TJSONObject;
+    function pessoaInserir(nome, telefone, email: string): TJSONObject;
+    function pessoaEditar(pessoaId: integer; nome, telefone, email: string): TJSONObject;
     function pessoaExcluir(pessoaId: integer): TJSONObject;
   end;
 
@@ -106,7 +105,7 @@ end;
 
 
 
-function TDmPessoa.pessoaInserir(nome, telefone, setor: string): TJSONObject;
+function TDmPessoa.pessoaInserir(nome, telefone, email: string): TJSONObject;
 var
   dmServidor: TDMServidor;
   qry: TFDQuery;
@@ -119,13 +118,13 @@ begin
     dmServidor := TDmServidor.Create(nil);
     qry.Connection := DmServidor.conn;
 
-    qry.SQL.Add('INSERT INTO pessoa (nome, telefone, setor)');
-    qry.SQL.Add('VALUES (:nome, :telefone, :setor)');
+    qry.SQL.Add('INSERT INTO pessoa (nome, telefone, email)');
+    qry.SQL.Add('VALUES (:nome, :telefone, :email)');
     qry.SQL.Add('RETURNING pessoaId');
 
     qry.ParamByName('nome').AsString     := nome;
     qry.ParamByName('telefone').AsString := telefone;
-    qry.ParamByName('setor').AsString    := setor;
+    qry.ParamByName('email').AsString    := email;
 
     qry.Open;
 
@@ -139,7 +138,7 @@ begin
 end;
 
 function TDmPessoa.pessoaEditar(pessoaId: integer;
-                          nome, telefone, setor: string): TJSONObject;
+                          nome, telefone, email: string): TJSONObject;
 var
   dmServidor: TDMServidor;
   qry : TFDquery;
@@ -150,12 +149,12 @@ begin
     qry.Connection := DmServidor.conn;
 
     qry.SQL.Add('update pessoa');
-    qry.SQL.Add(' set nome=:nome, telefone=:telefone, setor=:setor');
+    qry.SQL.Add(' set nome=:nome, telefone=:telefone, email=:email');
     qry.SQL.Add('where pessoaId =:pessoaId');
     qry.ParamByName('pessoaId').AsInteger := pessoaId;
     qry.ParamByName('nome').AsString := nome;
     qry.ParamByName('telefone').AsString := telefone;
-    qry.ParamByName('setor').AsString := setor;
+    qry.ParamByName('email').AsString := email;
     qry.ExecSQL;
 
     // devolve um array contendo uma  pessoas com id

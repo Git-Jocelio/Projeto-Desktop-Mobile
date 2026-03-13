@@ -23,7 +23,7 @@ procedure Login(req : THorseRequest; res : THorseResponse; Next : TProc);
 var
   dmUsuario: TDmUsuario;
   body: TJSONObject;
-  email, senha: string;
+  login, senha: string;
   jsonRetorno: TJSONObject;
 begin
   dmUsuario := nil;
@@ -39,20 +39,19 @@ begin
 
       //dmUsuario := TDmUsuario.Create(nil);
 
-      email := body.GetValue<string>('email', '');
+      login := body.GetValue<string>('login', '');
       senha := body.GetValue<string>('senha', '');
 
       // 2. Chama a função e armazena o resultado em uma variável local
-      dmUsuario := TDmUsuario.Create(nil);
-      jsonRetorno := dmUsuario.usuarioLogin(email, senha);
+      dmUsuario   := TDmUsuario.Create(nil);
+      jsonRetorno := dmUsuario.usuarioLogin(login, senha);
       if not Assigned(jsonRetorno) then
       begin
-
-        res.Status(401).Send('Email ou senha inválido');
+        res.Status(401).Send('Login ou senha inválido');
       end
       else
       begin
-//showmessage('usuario valildado');
+        //showmessage('usuario valildado');
         res.Status(201).Send<TJSONObject>(jsonRetorno);
       end;
     except

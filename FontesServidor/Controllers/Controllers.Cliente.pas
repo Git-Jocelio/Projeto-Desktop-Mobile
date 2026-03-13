@@ -94,7 +94,7 @@ end;
 procedure Inserir(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
   body: TJSONObject;
-  nome, telefone, setor: string;
+  nome, telefone, email: string;
   jsonRetorno: TJSONObject;
   ServicePessoa : TServicePessoa;
 begin
@@ -109,12 +109,12 @@ begin
 
   nome     := body.GetValue<string>('nome', '');
   telefone := body.GetValue<string>('telefone', '');
-  setor    := body.GetValue<string>('setor', '');
+  email    := body.GetValue<string>('email', '');
 
   ServicePessoa := TServicePessoa.Create;
   try
     try
-      jsonRetorno := ServicePessoa.InserirEditarPessoa( 0, Nome, Telefone, Setor );
+      jsonRetorno := ServicePessoa.InserirEditarPessoa( 0, nome, telefone, email );
       res.Status(201).Send<TJSONObject>(jsonRetorno);
     except
       on E: Exception do
@@ -130,7 +130,7 @@ procedure Editar(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
   body: TJSONObject;
   pessoaId: Integer;
-  nome, telefone, setor: string;
+  nome, telefone, email: string;
 
   jsonRetorno: TJSONObject;
   ServicePessoa : TServicePessoa;
@@ -152,12 +152,12 @@ begin
 
   nome     := body.GetValue<string>('nome', '');
   telefone := body.GetValue<string>('telefone', '');
-  setor    := body.GetValue<string>('setor', '');
+  email    := body.GetValue<string>('email', '');
 
   ServicePessoa := TServicePessoa.Create;// nesse momento instância o fdconnection
   try
     try
-      jsonRetorno := ServicePessoa.InserirEditarPessoa(PessoaId, nome, telefone, setor);
+      jsonRetorno := ServicePessoa.InserirEditarPessoa(PessoaId, nome, telefone, email);
       res.Status(200).Send<TJSONObject>(jsonRetorno);
     except
       on E: Exception do

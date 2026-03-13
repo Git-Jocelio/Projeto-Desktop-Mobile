@@ -341,14 +341,14 @@ object FormCliente: TFormCliente
       end
       item
         Expanded = False
-        FieldName = 'SETOR'
+        FieldName = 'EMAIL'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = []
         Title.Alignment = taCenter
-        Title.Caption = 'Setor'
+        Title.Caption = 'Email'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
         Title.Font.Height = -15

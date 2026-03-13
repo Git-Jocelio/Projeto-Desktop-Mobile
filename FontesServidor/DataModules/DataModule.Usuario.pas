@@ -24,7 +24,7 @@ type
     procedure ConnBeforeConnect(Sender: TObject);
   private
   public
-    function usuarioLogin(email, senha: string): TJSONObject;
+    function usuarioLogin(login, senha: string): TJSONObject;
   end;
 
 implementation
@@ -50,27 +50,26 @@ begin
 
 end;
 
-function TDmUsuario.usuarioLogin(email, senha: string): TJSONObject;
+function TDmUsuario.usuarioLogin(login, senha: string): TJSONObject;
 var
   dmServidor: TDMServidor;
   qry: TFDQuery;
 begin
 
-  result := nil; // Inicializa o resultado para evitar lixo de memória
+  result := nil; // Inicializa o result para evitar lixo de memória
   qry := TFDQuery.Create(nil);
 
   try
     dmServidor := TDmServidor.Create(nil);
     qry.Connection := DmServidor.conn;
-    qry.SQL.Add('SELECT usuarioId, nome, email, senha from Usuario where email = :email and senha = :senha');
-    qry.ParamByName('email').AsString := email;
+    qry.SQL.Add('SELECT usuarioId, nome, login, senha from Usuario where login = :login and senha = :senha');
+    qry.ParamByName('login').AsString := login;
     //qry.ParamByName('senha').AsString :=  umd5.SaltPassword( senha );
     qry.ParamByName('senha').AsString :=  senha ;
     qry.Open;
 
     if not qry.IsEmpty then
       result := qry.ToJSONObject;
-
   finally
     FreeAndNil(qry);
     FreeAndNil(dmServidor);

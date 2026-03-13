@@ -57287,14 +57287,14 @@ object frmLogin: TfrmLogin
       Margins.Right = 0
       Margins.Bottom = 0
       Align = alTop
-      Caption = 'E-mail'
+      Caption = 'Login'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = 8289918
       Font.Height = -16
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      ExplicitWidth = 44
+      ExplicitWidth = 39
     end
     object Senha: TLabel
       AlignWithMargins = True
@@ -57363,7 +57363,7 @@ object frmLogin: TfrmLogin
       Color = 5127481
       ParentBackground = False
       TabOrder = 1
-      object EdtEmail: TEdit
+      object EdtLogin: TEdit
         AlignWithMargins = True
         Left = 10
         Top = 10

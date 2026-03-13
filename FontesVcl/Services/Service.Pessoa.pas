@@ -5,7 +5,7 @@ interface
 type
   TServicePessoa = class
   public
-    class procedure Salvar(pessoa_id: Integer; nome, telefone, setor: string);
+    class procedure Salvar(pessoa_id: Integer; nome, telefone, email: string);
   end;
 
 implementation
@@ -14,7 +14,7 @@ uses
   System.SysUtils,
   DataModele.Pessoa;
 
-class procedure TServicePessoa.Salvar(pessoa_id: Integer; nome, telefone, setor: string);
+class procedure TServicePessoa.Salvar(pessoa_id: Integer; nome, telefone, email: string);
 begin
 
   // validações
@@ -24,15 +24,15 @@ begin
   if Trim(telefone) = '' then
      raise Exception.Create('Telefone é obrigatório');
 
-  if Trim(setor) = '' then
-     raise Exception.Create('Setor é obrigatório');
+  if Trim(email) = '' then
+     raise Exception.Create('Email é obrigatório');
 
 
   // decide se insere ou edita
   if pessoa_id > 0 then
-     DmPessoa.Editar(pessoa_id, nome, telefone, setor)
+     DmPessoa.Editar(pessoa_id, nome, telefone, email)
   else
-     DmPessoa.Inserir(nome, telefone, setor);
+     DmPessoa.Inserir(nome, telefone, email);
 
 end;
 
