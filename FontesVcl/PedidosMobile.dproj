@@ -180,6 +180,7 @@
             <Form>FormProdutoE</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Services\Service.Produto.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -2,6 +2,7 @@ inherited FormProdutoE: TFormProdutoE
   Caption = 'FormProdutoE'
   ClientHeight = 252
   ClientWidth = 452
+  OnShow = FormShow
   ExplicitWidth = 452
   ExplicitHeight = 252
   TextHeight = 15
@@ -55,6 +56,7 @@ inherited FormProdutoE: TFormProdutoE
     ExplicitLeft = 114
     ExplicitTop = 198
     inherited btnSalvar: TSpeedButton
+      OnClick = btnSalvarClick
       ExplicitTop = 16
       ExplicitHeight = 30
     end
@@ -68,7 +70,7 @@ inherited FormProdutoE: TFormProdutoE
       ExplicitHeight = 30
     end
   end
-  object edtNome: TEdit [6]
+  object edtDescricao: TEdit [6]
     Left = 36
     Top = 77
     Width = 377
@@ -83,8 +85,8 @@ inherited FormProdutoE: TFormProdutoE
     ParentFont = False
     TabOrder = 2
   end
-  object edtsetor: TEdit [7]
-    Left = 228
+  object edtEstoque: TEdit [7]
+    Left = 222
     Top = 137
     Width = 185
     Height = 29
@@ -97,7 +99,7 @@ inherited FormProdutoE: TFormProdutoE
     ParentFont = False
     TabOrder = 3
   end
-  object ComboBox1: TComboBox [8]
+  object edtUnidade: TComboBox [8]
     Left = 36
     Top = 137
     Width = 180
@@ -109,7 +111,6 @@ inherited FormProdutoE: TFormProdutoE
     Font.Style = []
     ParentFont = False
     TabOrder = 4
-    Text = 'ComboBox1'
     Items.Strings = (
       'PE'#199'A'
       'LATA')

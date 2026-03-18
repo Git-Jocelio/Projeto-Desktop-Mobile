@@ -125,7 +125,7 @@ end;
 procedure TFormProduto.btnInserirClick(Sender: TObject);
 begin
   inherited;
- OpenCadProduto(0);
+  OpenCadProduto(0);
 end;
 
 procedure TFormProduto.dbgDblClick(Sender: TObject);
@@ -145,6 +145,7 @@ end;
 
 procedure TFormProduto.OpenCadProduto(produtoId: integer);
 begin
+  // guardar a chamada d evento(RefreshProduto) no onExecuteOnClose(onClose deste form)
   TNavigation.ExecuteOnClose := RefreshProduto;
   TNavigation.ParamInt := produtoId;
   TNavigation.OpenModal(TFormProdutoE, FormProdutoE);

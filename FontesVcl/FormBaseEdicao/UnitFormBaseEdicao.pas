@@ -36,7 +36,7 @@ implementation
 
 procedure TFormBaseEdicao.btnCancelarClick(Sender: TObject);
 begin
- {aqui o TNavigation vai enteder que aqui é uma tela modal e
+  {aqui o TNavigation vai enteder que aqui é uma tela modal e
   fechará tanto essa tela como a tela sombreada}
   TNavigation.CloseAndCancel(Self);
 end;
@@ -44,7 +44,8 @@ end;
 procedure TFormBaseEdicao.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   action := TCloseAction.caFree;
-  FormBaseEdicao := nil;
+  //FormBaseEdicao := nil;
+  Self := nil;
 end;
 
 end.
