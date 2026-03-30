@@ -10,7 +10,10 @@ uses
   Env.Conf in 'Config\Env.Conf.pas',
   DataModule.Servidor in 'DataModules\DataModule.Servidor.pas' {DmServidor: TDataModule},
   DataModule.Usuario in 'DataModules\DataModule.Usuario.pas' {dmUsuario: TDataModule},
-  uMD5 in 'Utils\uMD5.pas';
+  uMD5 in 'Utils\uMD5.pas',
+  Controllers.Produto in 'Controllers\Controllers.Produto.pas',
+  DataModule.Produto in 'DataModules\DataModule.Produto.pas' {dmProduto: TDataModule},
+  Service.Produto in 'Service\Service.Produto.pas';
 
 {$R *.res}
 

@@ -10,9 +10,10 @@ uses
   Horse,
   Horse.Jhonson,
   Horse.CORS,
-  DataModule.Pessoa,
+//  DataModule.Pessoa,
   Controllers.Cliente,
-  Controllers.Usuario;
+  Controllers.Usuario,
+  Controllers.Produto;
 
 type
   TFormPrincipal = class(TForm)
@@ -32,6 +33,8 @@ implementation
 
 {$R *.dfm}
 
+
+
 procedure TFormPrincipal.FormShow(Sender: TObject);
 begin
    THorse.use(Jhonson());
@@ -39,6 +42,7 @@ begin
    // verifica a rota chamada e da andamento a requisição
    Controllers.Cliente.RegistrarRotas;
    Controllers.Usuario.RegistrarRotas;
+   Controllers.Produto.RegistrarRotas;
 
    THorse.Listen(3000);
    lblServidor.caption := 'Servidor Horse respondendo na PORTA : ' + THorse.Port.toString;

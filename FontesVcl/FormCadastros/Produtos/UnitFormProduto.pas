@@ -42,8 +42,6 @@ begin
    DmProduto := TDmProduto.Create(self)
 end;
 
-
-
 procedure TFormProduto.RefreshProduto;
 begin
   TLoading.Show;

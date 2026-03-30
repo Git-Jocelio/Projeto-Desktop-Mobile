@@ -36,7 +36,8 @@ implementation
 procedure TDmUsuario.ConnBeforeConnect(Sender: TObject);
 begin
   // configura a TFDConnection através arquivo .env
-  TEnvConfig.ConfigurarConexao(DmServidor.Conn);
+  // TEnvConfig.ConfigurarConexao(DmServidor.Conn);
+  TEnvConfig.ConfigurarConexao(TFDConnection(Sender));
 end;
 
 procedure TDmUsuario.DataModuleCreate(Sender: TObject);
@@ -44,10 +45,6 @@ begin
   {esta duas linha dizem ao serialize como tratar as variaveis nas consultas sql}
   TDataSetSerializeConfig.GetInstance.CaseNameDefinition := cndLower;
   TDataSetSerializeConfig.GetInstance.Import.DecimalSeparator := '.';
-
-  // antes de abrir a conexão, configura os parametros no onBeforeconnect
-  DmServidor.Conn.open;
-
 end;
 
 function TDmUsuario.usuarioLogin(login, senha: string): TJSONObject;
@@ -57,10 +54,13 @@ var
 begin
 
   result := nil; // Inicializa o result para evitar lixo de memória
+  dmServidor := TDmServidor.Create(nil);
   qry := TFDQuery.Create(nil);
 
   try
-    dmServidor := TDmServidor.Create(nil);
+    ConnBeforeConnect(DmServidor.Conn);
+    DmServidor.Conn.open;
+
     qry.Connection := DmServidor.conn;
     qry.SQL.Add('SELECT usuarioId, nome, login, senha from Usuario where login = :login and senha = :senha');
     qry.ParamByName('login').AsString := login;

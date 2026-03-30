@@ -39,6 +39,7 @@ inherited FormProduto: TFormProduto
     end
   end
   inherited dbg: TDBGrid
+    DataSource = ds
     OnDblClick = dbgDblClick
     Columns = <
       item
@@ -127,5 +128,8 @@ inherited FormProduto: TFormProduto
         Width = 130
         Visible = True
       end>
+  end
+  inherited ds: TDataSource
+    DataSet = DmProduto.tabProduto
   end
 end

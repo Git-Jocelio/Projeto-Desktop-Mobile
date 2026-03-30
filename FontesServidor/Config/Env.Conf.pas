@@ -32,8 +32,10 @@ var
 begin
   Result := TDictionary<string, string>.Create;
 
-  CaminhoEnv := ExtractFilePath(ParamStr(0)) + '.env';
-
+  //CaminhoEnv := ExtractFilePath(ParamStr(0)) + '.env';
+  //CaminhoEnv := TPath.Combine(ExtractFilePath(ParamStr(0)), 'Config\.env');
+  //CaminhoEnv := ExtractFilePath(ParamStr(0)) + 'Config\.env';
+  CaminhoEnv := 'C:\Users\jgsilva\Documents\Jocelio\desktop_mobile\FontesServidor\Config\.env';
   if not TFile.Exists(CaminhoEnv) then
     raise Exception.Create('.env não encontrado!');
 

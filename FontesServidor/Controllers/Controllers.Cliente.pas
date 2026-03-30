@@ -36,8 +36,7 @@ begin
    THorse.Put('/pessoa/:pessoaId', Editar);     // edita uma pessoa
    THorse.Delete('/pessoa/:pessoaId', Excluir); // excluir uma pessoa
 
-   THorse.Get('/health', OnLine);               // lista pessoa pelo nome
-
+   THorse.Get('/health', OnLine);               // serve para testar a rota
 end;
 
 procedure OnLine(req: THorseRequest; res: THorseResponse; next: TProc);

@@ -5,7 +5,7 @@ object DmServidor: TDmServidor
     Params.Strings = (
       
         'Database=C:\Users\jgsilva\Documents\Jocelio\desktop_mobile\Fonte' +
-        'sServidor\DB\BANCO.FDB'
+        'sServidor\DB\BANCO__.FDB'
       'User_Name=SYSDBA'
       'Password=masterkey'
       'Protocol=TCPIP'

@@ -14,7 +14,7 @@ uses
   System.JSON,              // necessario para retorno do JSON
   FireDac.Dapt,             // necessario para trabalhar com qry dinanmicas
   Env.Conf,
-  DataModule.Servidor;
+  DataModule.Servidor;  // dm que contém o FDConnection
 
 type
   TDmPessoa = class(TDataModule)
@@ -37,8 +37,10 @@ implementation
 
 procedure TDmPessoa.ConnBeforeConnect(Sender: TObject);
 begin
-  // configura a TFDConnection através arquivo .env
-  TEnvConfig.ConfigurarConexao(DmServidor.Conn);
+
+  //TEnvConfig.ConfigurarConexao(DmServidor.Conn);
+  TEnvConfig.ConfigurarConexao(TFDConnection(Sender));
+
 end;
 
 procedure TDmPessoa.DataModuleCreate(Sender: TObject);
@@ -46,9 +48,6 @@ begin
   {esta duas linha dizem ao serialize como tratar as variaveis nas consultas sql}
   TDataSetSerializeConfig.GetInstance.CaseNameDefinition := cndLower;
   TDataSetSerializeConfig.GetInstance.Import.DecimalSeparator := '.';
-
-  // antes de abrir a conexão, configura os parametros no onBeforeconnect
-  DmServidor.Conn.open;
 
 end;
 
@@ -58,9 +57,13 @@ var
   qry : TFDquery;
 begin
   qry := TFDQuery.Create(nil);
+  DmServidor := TDmServidor.Create(nil);
+
   try
-    dmServidor := TDmServidor.Create(nil);
-    qry.Connection := dmServidor.Conn;
+    ConnBeforeConnect(DmServidor.Conn);
+    DmServidor.Conn.open;
+
+    qry.Connection := DmServidor.Conn;
     qry.SQL.Text := 'select * from pessoa';
 
     if filtro <> '' then
@@ -85,9 +88,13 @@ var
   dmServidor: TDMServidor;
   qry : TFDquery;
 begin
+  DmServidor := TDmServidor.Create(nil);
   qry := TFDQuery.Create(nil);
+
   try
-    dmServidor := TDmServidor.Create(nil);
+    ConnBeforeConnect(DmServidor.Conn);
+    DmServidor.Conn.open;
+
     qry.Connection := DmServidor.Conn;
     qry.SQL.Text :=
       'select * from pessoa where pessoaId = :pessoaId';
@@ -99,7 +106,7 @@ begin
     Result := qry.ToJSONObject;
   finally
     qry.Free;
-    dmServidor.Free;
+    dmServidor.Free
   end;
 end;
 
@@ -111,11 +118,15 @@ var
   qry: TFDQuery;
 begin
 
-  result := nil; // Inicializa o resultado para evitar lixo de memória
+  result := nil;
+
+  dmServidor := TDmServidor.Create(nil);
   qry := TFDQuery.Create(nil);
 
   try
-    dmServidor := TDmServidor.Create(nil);
+    ConnBeforeConnect(DmServidor.Conn);
+    DmServidor.Conn.open;
+
     qry.Connection := DmServidor.conn;
 
     qry.SQL.Add('INSERT INTO pessoa (nome, telefone, email)');
@@ -143,9 +154,12 @@ var
   dmServidor: TDMServidor;
   qry : TFDquery;
 begin
+  dmServidor := TDmServidor.Create(nil);
+  qry := TFDquery.Create(nil);
   try
-    dmServidor := TDmServidor.Create(nil);
-    qry := TFDquery.Create(nil);
+    ConnBeforeConnect(DmServidor.Conn);
+    DmServidor.Conn.open;
+
     qry.Connection := DmServidor.conn;
 
     qry.SQL.Add('update pessoa');
@@ -172,9 +186,13 @@ var
   dmServidor: TDMServidor;
   qry : TFDquery;
 begin
+  dmServidor := TDmServidor.Create(nil);
+  qry := TFDquery.Create(nil);
+
   try
-    dmServidor := TDmServidor.Create(nil);
-    qry := TFDquery.Create(nil);
+    ConnBeforeConnect(DmServidor.Conn);
+    DmServidor.Conn.open;
+
     qry.Connection := DmServidor.conn;
 
     qry.SQL.Add('delete from pessoa');
