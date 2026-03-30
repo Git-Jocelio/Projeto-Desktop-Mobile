@@ -3,6 +3,7 @@ inherited FormProduto: TFormProduto
   OnCreate = FormCreate
   TextHeight = 15
   inherited PnlHeader: TPanel
+    ExplicitWidth = 1226
     inherited Label1: TLabel
       Width = 106
       Height = 45
@@ -10,14 +11,19 @@ inherited FormProduto: TFormProduto
       ExplicitWidth = 106
     end
     inherited PnlBotaoInserir: TPanel
+      ExplicitLeft = 1114
       inherited BtnExcluir: TSpeedButton
         OnClick = BtnExcluirClick
       end
     end
     inherited Panel2: TPanel
+      ExplicitLeft = 870
       inherited btnInserir: TSpeedButton
         OnClick = btnInserirClick
       end
+    end
+    inherited Panel3: TPanel
+      ExplicitLeft = 992
     end
     inherited Panel1: TPanel
       Left = 136

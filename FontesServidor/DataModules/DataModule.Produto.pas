@@ -170,8 +170,8 @@ begin
     qry.ParamByName('estoque').AsInteger := estoque;
     qry.ExecSQL;
 
-    // devolve um array contendo uma  pessoas com id
-    //result := TJSONObject.create(TJSONPair.create('pessoa_id', pessoa_id));
+    // devolve um array contendo um produto com id
+    //result := TJSONObject.create(TJSONPair.create('produtoid', produtoid));
     Result := TJSONObject.Create;
     Result.AddPair('produtoId', TJSONNumber.Create(produtoId));
   finally
@@ -195,12 +195,12 @@ begin
     qry.Connection := DmServidor.conn;
 
     qry.SQL.Add('delete from produto');
-    qry.SQL.Add('where produtoId =:pessoaId');
+    qry.SQL.Add('where produtoId =:produtoId');
     qry.ParamByName('produtoId').AsInteger := produtoId;
     qry.ExecSQL;
 
-    // devolve um array contendo uma  pessoas com id
-    //result := TJSONObject.create(TJSONPair.create('pessoa_id', pessoa_id));
+    // devolve um array contendo um produtoId com id
+    //result := TJSONObject.create(TJSONPair.create('produtoId', produtoId));
     Result := TJSONObject.Create;
     Result.AddPair('produtoId', TJSONNumber.Create(produtoId));
   finally

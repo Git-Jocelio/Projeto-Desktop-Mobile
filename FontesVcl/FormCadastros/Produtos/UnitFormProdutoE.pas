@@ -49,7 +49,7 @@ begin
                                TNavigation.ParamInt,
                                edtDescricao.Text,
                                edtUnidade.Text,
-                               strtointdef(edtUnidade.Text,0)
+                               strtointdef(edtEstoque.Text,0)
                              );
     end,
     TerminateSalvar

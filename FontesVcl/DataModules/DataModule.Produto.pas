@@ -38,7 +38,7 @@ var
   resp : IResponse;
 begin
   resp := TRequest.New.BaseURL('http://localhost:3000')
-                      .Resource('/pessoa')
+                      .Resource('/produto')
                       .ResourceSuffix(produtoId.ToString)
                       .Accept('application/json')
                       .Adapters(TDataSetSerializeAdapter.New(memTable))
@@ -67,7 +67,7 @@ end;
 procedure TDmProduto.Inserir(descricao, unidade: string; estoque: integer);
 var
   resp : IResponse; // usado para receber respostas do servidor
-  json : TJSONObject; // usado para criar um objeto json com os dados da pessoa
+  json : TJSONObject; // usado para criar um objeto json com os dados do produto
 begin
 
   try
@@ -78,8 +78,8 @@ begin
     json.AddPair('estoque',estoque);
 
     resp := TRequest.New.BaseURL('http://localhost:3000')   // criando uma requisição do servidor
-                        .Resource('/pessoa')               // nessa rota
-                        .AddBody(json.ToJSON)              // passando um json como string com dados da pessoa
+                        .Resource('/produto')               // nessa rota
+                        .AddBody(json.ToJSON)              // passando um json como string com dados do produto
                         .Accept('application/json')        // trabalhar com json
                         .Post;                             // passando um Post
     // trata erro se houver
@@ -106,9 +106,9 @@ begin
     json.AddPair('estoque',estoque);
 
     resp := TRequest.New.BaseURL('http://localhost:3000') // criando uma requisição do servidor
-                        .Resource('/pessoa')              // nessa rota
-                        .ResourceSuffix(produtoId.ToString) // acrescenta o parametro pessoa_id recebido na url
-                        .AddBody(json.ToJSON)             // passando um json como string com dados da pessoa
+                        .Resource('/produto')              // nessa rota
+                        .ResourceSuffix(produtoId.ToString) // acrescenta o parametro produtoId recebido na url
+                        .AddBody(json.ToJSON)             // passando um json como string com dados do produto
                         .Accept('application/json')       // trabalhar com json
                         .Put;                             // passando um Post
     // trata erro se houver

@@ -256,9 +256,7 @@ begin
 
     if PosX < 50 then
        Editar
-      //dbg.OnDblClick(nil)
     else
-     //BtnExcluir.OnClick(nil);
       BtnExcluir.Click;
   end;
 
