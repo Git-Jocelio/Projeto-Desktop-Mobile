@@ -14,7 +14,7 @@ type
   TFormPrincipal = class(TForm)
     svMenu: TSplitView;
     Panel1: TPanel;
-    SpeedButton1: TSpeedButton;
+    btnMenuRetratil: TSpeedButton;
     Image1: TImage;
     ImageList: TImageList;
     CategoryButtons: TCategoryButtons;
@@ -32,7 +32,7 @@ type
     ImgNotificacoes: TImage;
     PnlContainer: TPanel;
     Label2: TLabel;
-    procedure SpeedButton1Click(Sender: TObject);
+    procedure btnMenuRetratilClick(Sender: TObject);
     procedure btnFecharSubMenuClick(Sender: TObject);
     procedure CategoryButtonsCategories0Items2Click(Sender: TObject);
     procedure CategoryButtonsCategories0Items5Click(Sender: TObject);
@@ -103,7 +103,7 @@ begin
   lblEmail.Caption := TSession.EMAIL;
 end;
 
-procedure TFormPrincipal.SpeedButton1Click(Sender: TObject);
+procedure TFormPrincipal.btnMenuRetratilClick(Sender: TObject);
 begin
   svMenu.opened := not svMenu.opened;
 end;

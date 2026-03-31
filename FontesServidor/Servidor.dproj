@@ -159,6 +159,11 @@
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Service\Service.Produto.pas"/>
+        <DCCReference Include="DataModules\DataModule.Fornecedor.pas">
+            <Form>DmFornecedor</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

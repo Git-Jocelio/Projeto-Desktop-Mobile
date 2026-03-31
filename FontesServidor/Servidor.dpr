@@ -13,7 +13,8 @@ uses
   uMD5 in 'Utils\uMD5.pas',
   Controllers.Produto in 'Controllers\Controllers.Produto.pas',
   DataModule.Produto in 'DataModules\DataModule.Produto.pas' {dmProduto: TDataModule},
-  Service.Produto in 'Service\Service.Produto.pas';
+  Service.Produto in 'Service\Service.Produto.pas',
+  DataModule.Fornecedor in 'DataModules\DataModule.Fornecedor.pas' {DmFornecedor: TDataModule};
 
 {$R *.res}
 

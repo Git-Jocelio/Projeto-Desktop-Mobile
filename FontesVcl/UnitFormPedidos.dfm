@@ -25,28 +25,25 @@ object FormPedidos: TFormPedidos
     Color = 16051947
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = -32
-    ExplicitTop = -6
-    ExplicitWidth = 855
-    object Label1: TLabel
+    object lblTitulo: TLabel
       AlignWithMargins = True
       Left = 10
       Top = 10
-      Width = 167
+      Width = 117
       Height = 45
       Margins.Left = 10
       Margins.Top = 10
       Margins.Right = 0
       Margins.Bottom = 10
       Align = alLeft
-      Caption = 'Pedidos'
+      Caption = 'Compras'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -29
       Font.Name = 'Segoe UI Semibold'
       Font.Style = [fsBold]
       ParentFont = False
-      ExplicitTop = 7
+      ExplicitHeight = 40
     end
     object PnlBotaoInserir: TPanel
       AlignWithMargins = True
@@ -63,9 +60,6 @@ object FormPedidos: TFormPedidos
       Color = 6316270
       ParentBackground = False
       TabOrder = 0
-      ExplicitLeft = 600
-      ExplicitTop = 3
-      ExplicitHeight = 59
       object BtnAcessar: TSpeedButton
         AlignWithMargins = True
         Left = 0
@@ -107,9 +101,6 @@ object FormPedidos: TFormPedidos
       Color = 16744448
       ParentBackground = False
       TabOrder = 1
-      ExplicitLeft = 600
-      ExplicitTop = 3
-      ExplicitHeight = 59
       object SpeedButton1: TSpeedButton
         AlignWithMargins = True
         Left = 0
@@ -151,9 +142,6 @@ object FormPedidos: TFormPedidos
       Color = 16744448
       ParentBackground = False
       TabOrder = 2
-      ExplicitLeft = 600
-      ExplicitTop = 3
-      ExplicitHeight = 59
       object SpeedButton2: TSpeedButton
         AlignWithMargins = True
         Left = 0
@@ -182,9 +170,9 @@ object FormPedidos: TFormPedidos
     end
     object Panel1: TPanel
       AlignWithMargins = True
-      Left = 197
+      Left = 147
       Top = 0
-      Width = 504
+      Width = 554
       Height = 65
       Margins.Left = 20
       Margins.Top = 0
@@ -195,10 +183,11 @@ object FormPedidos: TFormPedidos
       Color = 16051947
       ParentBackground = False
       TabOrder = 3
-      ExplicitWidth = 271
+      ExplicitLeft = 133
+      ExplicitWidth = 568
       object Panel4: TPanel
         AlignWithMargins = True
-        Left = 392
+        Left = 442
         Top = 15
         Width = 102
         Height = 35
@@ -211,9 +200,7 @@ object FormPedidos: TFormPedidos
         Color = 16744448
         ParentBackground = False
         TabOrder = 0
-        ExplicitLeft = 600
-        ExplicitTop = 3
-        ExplicitHeight = 59
+        ExplicitLeft = 456
         object SpeedButton3: TSpeedButton
           AlignWithMargins = True
           Left = 0
@@ -244,7 +231,7 @@ object FormPedidos: TFormPedidos
         AlignWithMargins = True
         Left = 15
         Top = 15
-        Width = 377
+        Width = 427
         Height = 35
         Margins.Left = 15
         Margins.Top = 15
@@ -254,8 +241,7 @@ object FormPedidos: TFormPedidos
         BevelOuter = bvNone
         BorderStyle = bsNone
         TabOrder = 1
-        ExplicitLeft = 0
-        ExplicitWidth = 224
+        ExplicitWidth = 441
       end
     end
   end
@@ -322,6 +308,7 @@ object FormPedidos: TFormPedidos
         Title.Font.Height = -15
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
+        Width = 532
         Visible = True
       end
       item
@@ -338,6 +325,7 @@ object FormPedidos: TFormPedidos
         Title.Font.Height = -15
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
+        Width = 105
         Visible = True
       end>
   end

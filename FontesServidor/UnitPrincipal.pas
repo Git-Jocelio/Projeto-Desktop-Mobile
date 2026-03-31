@@ -13,13 +13,16 @@ uses
 //  DataModule.Pessoa,
   Controllers.Cliente,
   Controllers.Usuario,
-  Controllers.Produto;
+  Controllers.Produto, Vcl.WinXCtrls;
 
 type
   TFormPrincipal = class(TForm)
     lblServidor: TLabel;
     Image1: TImage;
+    Switch: TToggleSwitch;
+    lblSwith: TLabel;
     procedure FormShow(Sender: TObject);
+    procedure SwitchClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -46,6 +49,23 @@ begin
 
    THorse.Listen(3000);
    lblServidor.caption := 'Servidor Horse respondendo na PORTA : ' + THorse.Port.toString;
+
+end;
+
+procedure TFormPrincipal.SwitchClick(Sender: TObject);
+begin
+   if Switch.State = tssOn then
+   begin
+     THorse.Listen(3000);
+     lblServidor.caption := 'Servidor Horse respondendo na PORTA : ' + THorse.Port.toString;
+   end
+   else
+   if Switch.State = tssOff then
+   begin
+     THorse.StopListen;
+     lblServidor.caption := 'Servidor desativado';
+   end;
+
 end;
 
 end.

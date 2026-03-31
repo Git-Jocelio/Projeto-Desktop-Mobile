@@ -10,7 +10,7 @@ uses
   Vcl.Session, // unit com uma classe global para pegar os dados de acesso do usuario
   System.Net.HttpClient,
   System.Net.URLClient,
-  System.Net.HttpClientComponent;
+  System.Net.HttpClientComponent, Vcl.Imaging.jpeg;
 type
   TfrmLogin = class(TForm)
     ImgFundo: TImage;
@@ -100,7 +100,6 @@ begin
    TerminateLogin
    );
 
-
 end;
 
 procedure TfrmLogin.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -119,7 +118,7 @@ begin
 
   Http := TNetHTTPClient.Create(nil);
   try
-    Http.ConnectionTimeout := 1500; // 2 segundos
+    Http.ConnectionTimeout := 1500; // 1,5 segundos
     Http.ResponseTimeout   := 1500;
 
     try
@@ -132,6 +131,7 @@ begin
   finally
     Http.Free;
   end;
+
 end;
 
 end.
