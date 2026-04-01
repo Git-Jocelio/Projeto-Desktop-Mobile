@@ -1,4 +1,4 @@
-unit DataModule.Produto;
+unit DataModule.Fornecedor;
 
 interface
 
@@ -11,21 +11,22 @@ uses
   DataSet.Serialize.Adapter.RESTRequest4D,
   System.JSON ;
 
+
 type
-  TDmProduto = class(TDataModule)
-    tabProduto: TFDMemTable;
+  TDmFornecedor = class(TDataModule)
+    TabFornecedor: TFDMemTable;
   private
   public
-    procedure ListarProduto(memTable: TFDMemTable; filtro: string);
-    procedure ListarProdutoID(memTable: TFDMemTable; produtoId: integer);
-    procedure Inserir(descricao, unidade: string; estoque: integer);
-    procedure Editar(produtoId: integer; descricao, unidade: string;
-      estoque: integer);
-    procedure Excluir(produtoId: integer);
+    procedure ListarFornecedor(memTable: TFDMemTable; filtro: string);
+    procedure ListarFornecedorId(memTable: TFDMemTable; pessoaId: integer);
+    procedure Inserir(nome, telefone, email, contato, telefone_contato: string);
+    procedure Editar(pessoaId: integer; nome, telefone, email, contato,
+      telefone_contato: string);
+    procedure Excluir(pessoaId: integer);
   end;
 
 var
-  DmProduto: TDmProduto;
+  DmFornecedor: TDmFornecedor;
 
 implementation
 
@@ -33,28 +34,13 @@ implementation
 
 {$R *.dfm}
 
-procedure TDmProduto.ListarProdutoID(memTable: TFDMemTable; produtoId: integer);
+
+procedure TDmFornecedor.ListarFornecedor(memTable: TFDMemTable; filtro : string);
 var
   resp : IResponse;
 begin
   resp := TRequest.New.BaseURL('http://localhost:3000')
-                      .Resource('/produto')
-                      .ResourceSuffix(produtoId.ToString)
-                      .Accept('application/json')
-                      .Adapters(TDataSetSerializeAdapter.New(memTable))
-                      .Get;
-  // trata erro se houver
-  if resp.StatusCode <> 200 then
-    raise Exception.Create(resp.content);
-end;
-
-
-procedure TDmProduto.ListarProduto(memTable: TFDMemTable; filtro : string);
-var
-  resp : IResponse;
-begin
-  resp := TRequest.New.BaseURL('http://localhost:3000')
-                      .Resource('/produto')
+                      .Resource('/fornecedor')
                       .AddParam('filtro',filtro)
                       .Accept('application/json')
                       .Adapters(TDataSetSerializeAdapter.New(memTable))
@@ -64,22 +50,40 @@ begin
 
 end;
 
-procedure TDmProduto.Inserir(descricao, unidade: string; estoque: integer);
+procedure TDmFornecedor.ListarFornecedorId(memTable: TFDMemTable; pessoaId: integer);
 var
-  resp : IResponse; // usado para receber respostas do servidor
-  json : TJSONObject; // usado para criar um objeto json com os dados do produto
+  resp : IResponse;
+begin
+  resp := TRequest.New.BaseURL('http://localhost:3000')
+                      .Resource('/fornecedor')
+                      .ResourceSuffix(pessoaId.ToString)
+                      .Accept('application/json')
+                      .Adapters(TDataSetSerializeAdapter.New(memTable))
+                      .Get;
+  if resp.StatusCode <> 200 then
+    raise Exception.Create(resp.content);
+
+end;
+
+
+procedure TDmFornecedor.Inserir(nome, telefone, email, contato, telefone_contato: string );
+var
+  resp : IResponse;
+  json : TJSONObject;
 begin
 
   try
-    // criar um objeto json com os dados do cliente
+    // criar um objeto json com os dados do fornecedor
     json := TJSONObject.Create;
-    json.AddPair('descricao',descricao);
-    json.AddPair('unidade',unidade);
-    json.AddPair('estoque',estoque);
+    json.AddPair('nome',nome);
+    json.AddPair('telefone',telefone);
+    json.AddPair('email',email);
+    json.AddPair('contato',contato);
+    json.AddPair('telefone_contato',telefone_contato);
 
     resp := TRequest.New.BaseURL('http://localhost:3000')   // criando uma requisição do servidor
-                        .Resource('/produto')               // nessa rota
-                        .AddBody(json.ToJSON)              // passando um json como string com dados do produto
+                        .Resource('/fornecedor')           // nessa rota
+                        .AddBody(json.ToJSON)              // passando um json como string com dados do fornecedor
                         .Accept('application/json')        // trabalhar com json
                         .Post;                             // passando um Post
     // trata erro se houver
@@ -91,8 +95,7 @@ begin
   end;
 end;
 
-
-procedure TDmProduto.Editar(produtoId: integer; descricao, unidade: string; estoque: integer);
+procedure TDmFornecedor.Editar(pessoaId: integer; nome, telefone, email, contato, telefone_contato: string );
 var
   resp : IResponse; // usado para receber respostas do servidor
   json : TJSONObject; // usado para criar um objeto json com os dados da pessoa
@@ -101,13 +104,15 @@ begin
   try
     // criar um objeto json com os dados do cliente
     json := TJSONObject.Create;
-    json.AddPair('descricao',descricao);
-    json.AddPair('unidade',unidade);
-    json.AddPair('estoque',estoque);
+    json.AddPair('nome',nome);
+    json.AddPair('telefone',telefone);
+    json.AddPair('email',email);
+    json.AddPair('contato',contato);
+    json.AddPair('telefone_contato',telefone_contato);
 
     resp := TRequest.New.BaseURL('http://localhost:3000') // criando uma requisição do servidor
-                        .Resource('/produto')              // nessa rota
-                        .ResourceSuffix(produtoId.ToString) // acrescenta o parametro produtoId recebido na url
+                        .Resource('/fornecedor')           // nessa rota
+                        .ResourceSuffix(pessoaId.ToString) // acrescenta o parametro produtoId recebido na url
                         .AddBody(json.ToJSON)             // passando um json como string com dados do produto
                         .Accept('application/json')       // trabalhar com json
                         .Put;                             // passando um Post
@@ -120,22 +125,19 @@ begin
   end;
 end;
 
-procedure TDmProduto.Excluir(produtoId: integer);
+procedure TDmFornecedor.Excluir(pessoaId: integer);
 var
   resp : IResponse;
 begin
 
     resp := TRequest.New.BaseURL('http://localhost:3000')
-                        .Resource('/produto')
-                        .ResourceSuffix(produtoId.ToString)
+                        .Resource('/fornecedor')
+                        .ResourceSuffix(pessoaId.ToString)
                         .Accept('application/json')
                         .delete;
     if resp.StatusCode <> 200 then
       raise Exception.Create(resp.content);
 end;
-
-
-
 
 
 end.

@@ -18,7 +18,9 @@ uses
   DataModule.Produto in 'DataModules\DataModule.Produto.pas' {DmProduto: TDataModule},
   Vcl.Loading in 'Utils\Vcl.Loading.pas',
   UnitFormProdutoE in 'FormCadastros\Produtos\UnitFormProdutoE.pas' {FormProdutoE},
-  Service.Produto in 'Services\Service.Produto.pas';
+  Service.Produto in 'Services\Service.Produto.pas',
+  UnitFormFornecedor in 'FormCadastros\Fornecedores\UnitFormFornecedor.pas' {FormFornecedor},
+  DataModule.Fornecedor in 'DataModules\DataModule.Fornecedor.pas' {DmFornecedor: TDataModule};
 
 {$R *.res}
 

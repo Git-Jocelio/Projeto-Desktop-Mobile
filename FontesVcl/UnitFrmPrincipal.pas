@@ -8,7 +8,7 @@ uses
   Vcl.Imaging.pngimage, Vcl.Buttons, System.ImageList, Vcl.ImgList,
   Vcl.CategoryButtons, Vcl.StdCtrls,
   Vcl.Session,
-  Vcl.Navigation;
+  Vcl.Navigation, UnitFormFornecedor;
 
 type
   TFormPrincipal = class(TForm)
@@ -40,6 +40,7 @@ type
     procedure CategoryButtonsCategories0Items1Click(Sender: TObject);
     procedure CategorySubMenuButtonsCategories0Items0Click(Sender: TObject);
     procedure CategorySubMenuButtonsCategories0Items1Click(Sender: TObject);
+    procedure CategorySubMenuButtonsCategories0Items2Click(Sender: TObject);
   private
     procedure CloseSubMenu;
     { Private declarations }
@@ -85,6 +86,14 @@ procedure TFormPrincipal.CategorySubMenuButtonsCategories0Items1Click(
 begin
   CloseSubMenu;
   TNavigation.Open(TFormProduto, FormProduto, PnlContainer);
+
+end;
+
+procedure TFormPrincipal.CategorySubMenuButtonsCategories0Items2Click(
+  Sender: TObject);
+begin
+  CloseSubMenu;
+  TNavigation.Open(TFormFornecedor, FormFornecedor, PnlContainer);
 
 end;
 

@@ -17,10 +17,10 @@ type
     procedure BtnExcluirClick(Sender: TObject);
 
   private
-    procedure Editar;
-    procedure OpenCadProduto(produtoId: integer);
     procedure RefreshProduto;
     procedure TerminateBusca;
+    procedure OpenCadProduto(produtoId: integer);
+    procedure Editar;
     procedure TerminateExcluir(Sender: TObject);
     { Private declarations }
   public
@@ -39,7 +39,7 @@ uses DataModule.Produto, Vcl.Loading, Vcl.Navigation, UnitFormProdutoE;
 procedure TFormProduto.FormCreate(Sender: TObject);
 begin
   inherited;
-   DmProduto := TDmProduto.Create(self)
+  DmProduto := TDmProduto.Create(self)
 end;
 
 procedure TFormProduto.RefreshProduto;
@@ -112,12 +112,7 @@ end;
 procedure TFormProduto.btnFiltrarClick(Sender: TObject);
 begin
   inherited;
-
-  //  if length(trim(edtFiltrar.Text)) >= 4 then
-    RefreshProduto;
-  //  else
-  //    ShowMessage('Informe pelo menos 4 caracteres. Após tecle[ENTER] ou Filtar.')
-
+  RefreshProduto;
 end;
 
 procedure TFormProduto.btnInserirClick(Sender: TObject);
@@ -129,7 +124,7 @@ end;
 procedure TFormProduto.dbgDblClick(Sender: TObject);
 begin
   inherited;
-  Editar;
+  OpenCadProduto(0);
 end;
 
 procedure TFormProduto.Editar;
@@ -143,7 +138,7 @@ end;
 
 procedure TFormProduto.OpenCadProduto(produtoId: integer);
 begin
-  // guardar a chamada d evento(RefreshProduto) no onExecuteOnClose(onClose deste form)
+  // guardar a chamada do evento(RefreshProduto) no onExecuteOnClose(onClose deste form)
   TNavigation.ExecuteOnClose := RefreshProduto;
   TNavigation.ParamInt := produtoId;
   TNavigation.OpenModal(TFormProdutoE, FormProdutoE);

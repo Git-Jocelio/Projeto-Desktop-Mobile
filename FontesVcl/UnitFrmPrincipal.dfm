@@ -224,6 +224,7 @@ object FormPrincipal: TFormPrincipal
             item
               Caption = 'Fornecedores'
               ImageIndex = 5
+              OnClick = CategorySubMenuButtonsCategories0Items2Click
             end>
           VisibleGutter = False
         end>
