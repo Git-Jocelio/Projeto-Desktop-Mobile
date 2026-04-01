@@ -67,7 +67,7 @@ begin
     DmServidor.Conn.open;
 
     qry.Connection := DmServidor.Conn;
-    qry.SQL.Text := 'select p.nome, f.contato, f.telefone from fornecedor f, pessoa p where p.pessoaId = f.pessoaId';
+    qry.SQL.Text := 'select p.nome, f.contato, f.telefone_contato from fornecedor f, pessoa p where p.pessoaId = f.pessoaId';
 
     if filtro <> '' then
     begin

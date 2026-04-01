@@ -14,7 +14,9 @@ uses
   Controllers.Produto in 'Controllers\Controllers.Produto.pas',
   DataModule.Produto in 'DataModules\DataModule.Produto.pas' {dmProduto: TDataModule},
   Service.Produto in 'Service\Service.Produto.pas',
-  DataModule.Fornecedor in 'DataModules\DataModule.Fornecedor.pas' {DmFornecedor: TDataModule};
+  DataModule.Fornecedor in 'DataModules\DataModule.Fornecedor.pas' {DmFornecedor: TDataModule},
+  Service.Fornecedor in 'Service\Service.Fornecedor.pas',
+  Controllers.Fornecedor in 'Controllers\Controllers.Fornecedor.pas';
 
 {$R *.res}
 

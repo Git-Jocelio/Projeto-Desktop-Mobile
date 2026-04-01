@@ -164,6 +164,8 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="Service\Service.Fornecedor.pas"/>
+        <DCCReference Include="Controllers\Controllers.Fornecedor.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

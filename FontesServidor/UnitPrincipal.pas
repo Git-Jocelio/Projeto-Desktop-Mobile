@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Imaging.pngimage,
-  Vcl.ExtCtrls,
+  Vcl.ExtCtrls, Vcl.WinXCtrls,
 
   Horse,
   Horse.Jhonson,
@@ -13,7 +13,8 @@ uses
 //  DataModule.Pessoa,
   Controllers.Cliente,
   Controllers.Usuario,
-  Controllers.Produto, Vcl.WinXCtrls;
+  Controllers.Produto,
+  Controllers.Fornecedor;
 
 type
   TFormPrincipal = class(TForm)
@@ -46,6 +47,7 @@ begin
    Controllers.Cliente.RegistrarRotas;
    Controllers.Usuario.RegistrarRotas;
    Controllers.Produto.RegistrarRotas;
+   controllers.Fornecedor.RegistrarRotas;
 
    THorse.Listen(3000);
    lblServidor.caption := 'Servidor Horse respondendo na PORTA : ' + THorse.Port.toString;
