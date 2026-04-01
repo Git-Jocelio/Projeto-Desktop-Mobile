@@ -65,7 +65,7 @@ begin
    if Switch.State = tssOff then
    begin
      THorse.StopListen;
-     lblServidor.caption := 'Servidor desativado';
+     lblServidor.caption := 'Servidor Desativado';
    end;
 
 end;
