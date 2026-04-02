@@ -20,7 +20,9 @@ uses
   UnitFormProdutoE in 'FormCadastros\Produtos\UnitFormProdutoE.pas' {FormProdutoE},
   Service.Produto in 'Services\Service.Produto.pas',
   UnitFormFornecedor in 'FormCadastros\Fornecedores\UnitFormFornecedor.pas' {FormFornecedor},
-  DataModule.Fornecedor in 'DataModules\DataModule.Fornecedor.pas' {DmFornecedor: TDataModule};
+  DataModule.Fornecedor in 'DataModules\DataModule.Fornecedor.pas' {DmFornecedor: TDataModule},
+  UnitFormFornecedorE in 'FormCadastros\Fornecedores\UnitFormFornecedorE.pas' {FormFornecedorE},
+  Service.Fornecedor in 'Services\Service.Fornecedor.pas';
 
 {$R *.res}
 

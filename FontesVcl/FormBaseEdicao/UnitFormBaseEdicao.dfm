@@ -34,7 +34,7 @@ object FormBaseEdicao: TFormBaseEdicao
     ParentColor = False
     ParentFont = False
   end
-  object Panel2: TPanel
+  object pnlBotaoSalvar: TPanel
     AlignWithMargins = True
     Left = 105
     Top = 254
@@ -73,7 +73,7 @@ object FormBaseEdicao: TFormBaseEdicao
       ExplicitHeight = 35
     end
   end
-  object Panel1: TPanel
+  object pnlBotaoCancelar: TPanel
     AlignWithMargins = True
     Left = 219
     Top = 253

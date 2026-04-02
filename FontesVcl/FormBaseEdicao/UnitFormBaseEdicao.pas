@@ -12,9 +12,9 @@ uses
 type
   TFormBaseEdicao = class(TForm)
     lblTitulo: TLabel;
-    Panel2: TPanel;
+    pnlBotaoSalvar: TPanel;
     btnSalvar: TSpeedButton;
-    Panel1: TPanel;
+    pnlBotaoCancelar: TPanel;
     btnCancelar: TSpeedButton;
     MemTable: TFDMemTable;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

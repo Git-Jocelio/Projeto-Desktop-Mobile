@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, UnitFormBaseGrade, Data.DB,
   System.ImageList, Vcl.ImgList, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls,
-  Vcl.Buttons, Vcl.ExtCtrls, DataModule.Fornecedor, Vcl.Loading, Vcl.Navigation;
+  Vcl.Buttons, Vcl.ExtCtrls, DataModule.Fornecedor, Vcl.Loading, Vcl.Navigation,
+  UnitFormFornecedorE;
 
 type
   TFormFornecedor = class(TFormBaseGrade)
@@ -101,7 +102,7 @@ procedure TFormFornecedor.OpenCadFornecedor(pessoaId: integer);
 begin
   TNavigation.ExecuteOnClose := RefreshFornecedor;
   TNavigation.ParamInt := pessoaId;
- // TNavigation.OpenModal(TFormFornecedorE, FormfornecedorE);
+  TNavigation.OpenModal(TFormFornecedorE, FormFornecedorE);
 end;
 
 

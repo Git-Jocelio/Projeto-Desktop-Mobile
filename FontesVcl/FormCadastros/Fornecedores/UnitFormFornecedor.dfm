@@ -8,7 +8,7 @@ inherited FormFornecedor: TFormFornecedor
   TextHeight = 15
   inherited PnlHeader: TPanel
     Width = 1208
-    ExplicitWidth = 1226
+    ExplicitWidth = 1208
     inherited Label1: TLabel
       Width = 149
       Height = 45
@@ -17,26 +17,27 @@ inherited FormFornecedor: TFormFornecedor
     end
     inherited PnlBotaoInserir: TPanel
       Left = 1096
-      ExplicitLeft = 1114
+      ExplicitLeft = 1096
     end
     inherited Panel2: TPanel
       Left = 852
-      ExplicitLeft = 870
+      ExplicitLeft = 852
       inherited btnInserir: TSpeedButton
         OnClick = btnInserirClick
       end
     end
     inherited Panel3: TPanel
       Left = 974
-      ExplicitLeft = 992
+      ExplicitLeft = 974
     end
     inherited Panel1: TPanel
       Left = 179
       Width = 613
-      ExplicitWidth = 691
+      ExplicitLeft = 179
+      ExplicitWidth = 613
       inherited Panel4: TPanel
         Left = 501
-        ExplicitLeft = 579
+        ExplicitLeft = 501
         inherited btnFiltrar: TSpeedButton
           OnClick = btnFiltrarClick
         end
@@ -44,6 +45,7 @@ inherited FormFornecedor: TFormFornecedor
       inherited edtFiltrar: TEdit
         Width = 486
         TextHint = 'Digite o nome do fornecedor'
+        ExplicitWidth = 486
       end
     end
   end
