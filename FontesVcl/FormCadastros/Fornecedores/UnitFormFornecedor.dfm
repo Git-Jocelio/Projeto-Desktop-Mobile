@@ -56,7 +56,9 @@ inherited FormFornecedor: TFormFornecedor
     OnDblClick = dbgDblClick
     Columns = <
       item
+        Alignment = taCenter
         Expanded = False
+        FieldName = 'pessoaId'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
@@ -74,6 +76,7 @@ inherited FormFornecedor: TFormFornecedor
       end
       item
         Expanded = False
+        FieldName = 'nome'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
@@ -91,6 +94,7 @@ inherited FormFornecedor: TFormFornecedor
       end
       item
         Expanded = False
+        FieldName = 'contato'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
@@ -107,7 +111,9 @@ inherited FormFornecedor: TFormFornecedor
         Visible = True
       end
       item
+        Alignment = taCenter
         Expanded = False
+        FieldName = 'telefone_contato'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13

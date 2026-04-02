@@ -25,11 +25,11 @@ begin
   if Trim(cpf_cnpj) = '' then
      raise Exception.Create('CPF ou CNPJ é obrigatório');
 
-  if Trim(email) = '' then
-     raise Exception.Create('e-mail é obrigatório');
-
   if Trim(telefone) = '' then
      raise Exception.Create('Telefone da empresa é obrigatório');
+
+  if Trim(email) = '' then
+     raise Exception.Create('e-mail é obrigatório');
 
   if Trim(contato) = '' then
      raise Exception.Create('Contato é obrigatório');

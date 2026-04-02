@@ -28,7 +28,7 @@ type
     function fornecedorListar(filtro: string): TJSONArray;
     function fornecedorListarId(pessoaId: integer): TJSONObject;
     function fornecedorInserir(nome, telefone, email, contato,
-                                     telefone_forcecedor: string): TJSONObject;
+                                     telefone_contato: string): TJSONObject;
     function fornecedorEditar(pessoaId: integer; nome,
       telefone, email, contato, telefone_contato: string): TJSONObject;
     function fornecedorExcluir(pessoaId: integer): TJSONObject;
@@ -67,7 +67,7 @@ begin
     DmServidor.Conn.open;
 
     qry.Connection := DmServidor.Conn;
-    qry.SQL.Text := 'select p.nome, f.contato, f.telefone_contato from fornecedor f, pessoa p where p.pessoaId = f.pessoaId';
+    qry.SQL.Text := 'select p.pessoaId, p.nome, f.contato, f.telefone_contato from fornecedor f, pessoa p where p.pessoaId = f.pessoaId';
 
     if filtro <> '' then
     begin
@@ -99,7 +99,7 @@ begin
 
     qry.Connection := DmServidor.Conn;
     qry.SQL.Text :=
-      'select p.*, f.contato, f.telefone from fornecedor f, pessoa p where p.pessoaId = f.pessoaId and p.pessoaid =:pessoaid';
+      'select p.*, f.contato, f.telefone_contato from fornecedor f, pessoa p where p.pessoaId = f.pessoaId and p.pessoaid =:pessoaid';
 
     qry.ParamByName('pessoaId').AsInteger := pessoaId;
 
@@ -115,7 +115,7 @@ end;
 
 
 function TDmFornecedor.fornecedorInserir(nome, telefone, email, contato,
-                                     telefone_forcecedor: string): TJSONObject;
+                                     telefone_contato: string): TJSONObject;
 var
   dmServidor: TDMServidor;
   qry: TFDQuery;
@@ -130,32 +130,46 @@ begin
   try
     ConnBeforeConnect(DmServidor.Conn);
     DmServidor.Conn.open;
+    dmServidor.Conn.StartTransaction;
 
     qry.Connection := DmServidor.conn;
-    //pessoa
-    qry.SQL.Add('INSERT INTO pessoa (nome, telefone, email)');
-    qry.SQL.Add('VALUES (:nome, :telefone, :email)');
-    qry.SQL.Add('RETURNING pessoaId');
+    try
+      //pessoa
+      qry.SQL.Add('INSERT INTO pessoa (nome, telefone, email)');
+      qry.SQL.Add('VALUES (:nome, :telefone, :email)');
+      qry.SQL.Add('RETURNING pessoaId');
 
-    qry.ParamByName('nome').AsString := nome;
-    qry.ParamByName('telefone').AsString := telefone;
-    qry.ParamByName('email').Asstring  := email;
-    qry.Open;
-    newPessoa := qry.fieldByName('pessoaId').Asinteger;
+      qry.ParamByName('nome').AsString := nome;
+      qry.ParamByName('telefone').AsString := telefone;
+      qry.ParamByName('email').Asstring  := email;
+      qry.Open;
+      newPessoa := qry.fieldByName('pessoaId').Asinteger;
 
-    //fornecedor
-    qry.SQL.clear;
-    qry.SQL.Add('INSERT INTO fornecedor (pessoaId, contato, telefone)');
-    qry.SQL.Add('VALUES (:pessoaId, :contato, :telefone)');
+      //fornecedor
+      qry.SQL.clear;
+      qry.SQL.Add('INSERT INTO fornecedor (pessoaId, contato, telefone_contato)');
+      qry.SQL.Add('VALUES (:pessoaId, :contato, :telefone_contato)');
 
-    qry.ParamByName('pessoaId').Asinteger := newPessoa;
-    qry.ParamByName('cotato').AsString := contato;
-    qry.ParamByName('telefone').AsString := telefone_forcecedor;
-    qry.execSQl;
+      qry.ParamByName('pessoaId').Asinteger := newPessoa;
+      qry.ParamByName('contato').AsString := contato;
+      qry.ParamByName('telefone_contato').AsString := telefone_contato;
+      qry.execSQl;
+
+      if DmServidor.Conn.InTransaction then
+          DmServidor.Conn.Commit;
 
 
-    if not qry.IsEmpty then
-      result := qry.ToJSONObject;
+      if not qry.IsEmpty then
+        result := qry.ToJSONObject;
+    except
+      on E: Exception do
+      begin
+
+        if DmServidor.Conn.InTransaction then
+          DmServidor.Conn.Rollback;
+        raise Exception.Create('Erro ao inserir fornecedor: ' + E.Message);
+      end;
+    end;
 
   finally
     FreeAndNil(qry);
@@ -177,29 +191,43 @@ begin
     ConnBeforeConnect(DmServidor.Conn);
     DmServidor.Conn.open;
 
-    qry.Connection := DmServidor.conn;
-    //pessoa
-    qry.SQL.Add('update pessoa');
-    qry.SQL.Add(' set nome=:nome, telefone=:telefone, email=:email');
-    qry.SQL.Add('where pessoaId =:pessoaId');
-    qry.ParamByName('pessoaId').AsInteger := pessoaId;
-    qry.ParamByName('nome').AsString := nome;
-    qry.ParamByName('telefone').AsString := telefone;
-    qry.ParamByName('email').AsString := email;
-    qry.ExecSQL;
-    //fornecedor
-    qry.SQL.clear;
-    qry.SQL.Add('update fornecedor');
-    qry.SQL.Add(' set contato=:contato, telefone=:telefone');
-    qry.SQL.Add('where pessoaId =:pessoaId');
-    qry.ParamByName('pessoaId').AsInteger := pessoaId;
-    qry.ParamByName('contato').AsString := contato;
-    qry.ParamByName('telefone').AsString := telefone_contato;
-    qry.ExecSQL;
+    dmServidor.Conn.StartTransaction;
+    try
+      qry.Connection := DmServidor.conn;
+      //pessoa
+      qry.SQL.Add('update pessoa');
+      qry.SQL.Add(' set nome=:nome, telefone=:telefone, email=:email');
+      qry.SQL.Add('where pessoaId =:pessoaId');
+      qry.ParamByName('pessoaId').AsInteger := pessoaId;
+      qry.ParamByName('nome').AsString := nome;
+      qry.ParamByName('telefone').AsString := telefone;
+      qry.ParamByName('email').AsString := email;
+      qry.ExecSQL;
+      //fornecedor
+      qry.SQL.clear;
+      qry.SQL.Add('update fornecedor');
+      qry.SQL.Add(' set contato=:contato, telefone_contato=:telefone_contato');
+      qry.SQL.Add('where pessoaId =:pessoaId');
+      qry.ParamByName('pessoaId').AsInteger := pessoaId;
+      qry.ParamByName('contato').AsString := contato;
+      qry.ParamByName('telefone_contato').AsString := telefone_contato;
+      qry.ExecSQL;
 
-    // devolve um array contendo um pessoaId
-    Result := TJSONObject.Create;
-    Result.AddPair('pessoaId', TJSONNumber.Create(pessoaId));
+      if DmServidor.Conn.InTransaction then
+          DmServidor.Conn.Commit;
+
+      // devolve um array contendo um pessoaId
+      Result := TJSONObject.Create;
+      Result.AddPair('pessoaId', TJSONNumber.Create(pessoaId));
+    except
+      on E: Exception do
+      begin
+
+        if DmServidor.Conn.InTransaction then
+          DmServidor.Conn.Rollback;
+        raise Exception.Create('Erro ao editar fornecedor: ' + E.Message);
+      end;
+    end;
   finally
     freeandnil(qry);
     dmServidor.Free;
