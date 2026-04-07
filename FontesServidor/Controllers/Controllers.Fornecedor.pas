@@ -28,10 +28,10 @@ begin
     digite a url http://localhost:3000 }
 
    THorse.Get('/fornecedor', Listar);
-   THorse.Get('/fornecedor/:fornecedorId', ListarId);
+   THorse.Get('/fornecedor/:pessoaId', ListarId);
    THorse.Post('/fornecedor', Inserir);
-   //THorse.Put('/fornecedor/:fornecedorId', Editar);
-   //THorse.Delete('/fornecedor/:fornecedorId', Excluir);
+   THorse.Put('/fornecedor/:pessoaId', Editar);
+   THorse.Delete('/fornecedor/:pessoaId', Excluir);
 end;
 
 procedure Listar(req: THorseRequest; res: THorseResponse; Next: TProc);

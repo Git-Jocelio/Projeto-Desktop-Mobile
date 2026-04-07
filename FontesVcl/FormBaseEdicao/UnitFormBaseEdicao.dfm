@@ -69,8 +69,6 @@ object FormBaseEdicao: TFormBaseEdicao
       Font.Style = []
       ParentFont = False
       ExplicitLeft = 2
-      ExplicitTop = 8
-      ExplicitHeight = 35
     end
   end
   object pnlBotaoCancelar: TPanel

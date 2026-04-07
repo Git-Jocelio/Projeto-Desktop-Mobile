@@ -15,6 +15,7 @@ type
     procedure dbgDblClick(Sender: TObject);
     procedure btnInserirClick(Sender: TObject);
     procedure BtnExcluirClick(Sender: TObject);
+    procedure BtnEditarClick(Sender: TObject);
 
   private
     procedure RefreshProduto;
@@ -87,6 +88,12 @@ begin
 
   RefreshProduto;
 
+end;
+
+procedure TFormProduto.BtnEditarClick(Sender: TObject);
+begin
+  inherited;
+  Editar;
 end;
 
 procedure TFormProduto.BtnExcluirClick(Sender: TObject);

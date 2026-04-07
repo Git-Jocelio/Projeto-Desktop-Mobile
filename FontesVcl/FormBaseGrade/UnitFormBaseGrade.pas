@@ -38,6 +38,9 @@ type
     procedure dbgTitleClick(Column: TColumn);
 
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure dbgKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure BtnExcluirClick(Sender: TObject);
+    procedure BtnEditarClick(Sender: TObject);
   private
   public
      bookMark : TBookMark;
@@ -49,6 +52,25 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TFormBaseGrade.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  action := TCloseAction.caFree;
+  FormBaseGrade := nil;
+end;
+
+
+
+
+procedure TFormBaseGrade.BtnEditarClick(Sender: TObject);
+begin
+  // EDITAR
+end;
+
+procedure TFormBaseGrade.BtnExcluirClick(Sender: TObject);
+begin
+  //EXCLUIR
+end;
 
 procedure TFormBaseGrade.dbgDrawColumnCell(Sender: TObject; const Rect: TRect;
   DataCol: Integer; Column: TColumn; State: TGridDrawState);
@@ -68,6 +90,25 @@ begin
   end
   else
     dbg.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+end;
+
+
+
+procedure TFormBaseGrade.dbgKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_DELETE then
+  begin
+    BtnExcluirClick(nil);
+    Key := 0; // evita comportamento padrão
+  end;
+
+  if Key = VK_RETURN then
+  begin
+    //Editar;
+    BtnEditar.Click;
+    Key := 0;
+  end;
 end;
 
 procedure TFormBaseGrade.dbgMouseUp(Sender: TObject; Button: TMouseButton;
@@ -94,7 +135,7 @@ begin
 
     if PosX < 50 then
       // Editar
-      dbg.OnDblClick(nil)
+      BtnEditar.Click
     else
      // BtnExcluir.OnClick(nil);
       BtnExcluir.Click;
@@ -120,10 +161,5 @@ begin
 
 end;
 
-procedure TFormBaseGrade.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  action := TCloseAction.caFree;
-  FormBaseGrade := nil;
-end;
 
 end.

@@ -168,6 +168,7 @@ object FormCliente: TFormCliente
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
+        OnClick = BtnEditarClick
         ExplicitLeft = 176
         ExplicitTop = 16
         ExplicitWidth = 23

@@ -132,6 +132,7 @@ inherited FormFornecedor: TFormFornecedor
       item
         Alignment = taCenter
         Expanded = False
+        FieldName = 'ACOES'
         Title.Alignment = taCenter
         Title.Caption = 'A'#231#245'es'
         Title.Font.Charset = ANSI_CHARSET

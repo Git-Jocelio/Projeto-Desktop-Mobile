@@ -97,7 +97,6 @@ inherited FormFornecedorE: TFormFornecedorE
     ExplicitTop = 421
     inherited btnSalvar: TSpeedButton
       OnClick = btnSalvarClick
-      ExplicitHeight = 30
     end
   end
   inherited pnlBotaoCancelar: TPanel

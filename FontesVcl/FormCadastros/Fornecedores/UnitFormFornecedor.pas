@@ -15,11 +15,14 @@ type
     procedure btnFiltrarClick(Sender: TObject);
     procedure btnInserirClick(Sender: TObject);
     procedure dbgDblClick(Sender: TObject);
+    procedure BtnEditarClick(Sender: TObject);
+    procedure BtnExcluirClick(Sender: TObject);
   private
     procedure RefreshFornecedor;
     procedure TerminateBusca;
     procedure OpenCadFornecedor(pessoaId: integer);
     procedure Editar;
+    procedure TerminateExcluir(Sender: TObject);
   public
   end;
 
@@ -29,6 +32,48 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TFormFornecedor.BtnEditarClick(Sender: TObject);
+begin
+  inherited;
+  Editar;
+end;
+
+procedure TFormFornecedor.BtnExcluirClick(Sender: TObject);
+begin
+  inherited;
+  if DmFornecedor.TabFornecedor.IsEmpty then
+    exit;
+
+ if MessageDlg('Deseja realmente excluir este registro?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+ begin
+
+   TLoading.Show;
+   TLoading.ExecuteThread(procedure
+   begin
+      DmFornecedor.Excluir(DmFornecedor.TabFornecedor.FieldByName('pessoaId').AsInteger);
+   end,
+   TerminateExcluir
+   );
+ end;
+end;
+
+procedure TFormFornecedor.TerminateExcluir(Sender: TObject);
+begin
+
+  TLoading.Hide;
+
+  if (Sender is TThread) then
+    if Assigned(TThread(Sender).FatalException) then
+    begin
+      ShowMessage( Exception(TThread(Sender).FatalException).Message );
+      exit;
+    end;
+
+  RefreshFornecedor;
+
+end;
+
 
 procedure TFormFornecedor.btnFiltrarClick(Sender: TObject);
 begin

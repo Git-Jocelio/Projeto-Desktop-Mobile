@@ -1,10 +1,10 @@
 inherited FormProdutoE: TFormProdutoE
   Caption = 'FormProdutoE'
-  ClientHeight = 252
-  ClientWidth = 452
+  ClientHeight = 313
+  ClientWidth = 478
   OnShow = FormShow
-  ExplicitWidth = 452
-  ExplicitHeight = 252
+  ExplicitWidth = 478
+  ExplicitHeight = 313
   TextHeight = 15
   inherited lblTitulo: TLabel
     Width = 138
@@ -50,24 +50,9 @@ inherited FormProdutoE: TFormProdutoE
     Font.Style = []
     ParentFont = False
   end
-  inherited Panel2: TPanel
-    Left = 114
-    Top = 198
-    ExplicitLeft = 114
-    ExplicitTop = 198
+  inherited pnlBotaoSalvar: TPanel
     inherited btnSalvar: TSpeedButton
       OnClick = btnSalvarClick
-      ExplicitTop = 16
-      ExplicitHeight = 30
-    end
-  end
-  inherited Panel1: TPanel
-    Left = 228
-    Top = 197
-    ExplicitLeft = 228
-    ExplicitTop = 197
-    inherited btnCancelar: TSpeedButton
-      ExplicitHeight = 30
     end
   end
   object edtDescricao: TEdit [6]

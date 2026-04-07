@@ -26,7 +26,6 @@ object FormBaseGrade: TFormBaseGrade
     Color = 16051947
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1210
     object Label1: TLabel
       AlignWithMargins = True
       Left = 10
@@ -63,7 +62,6 @@ object FormBaseGrade: TFormBaseGrade
       ParentBackground = False
       TabOrder = 0
       Visible = False
-      ExplicitLeft = 1098
       object BtnExcluir: TSpeedButton
         AlignWithMargins = True
         Left = 0
@@ -84,6 +82,7 @@ object FormBaseGrade: TFormBaseGrade
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
+        OnClick = BtnExcluirClick
         ExplicitLeft = 176
         ExplicitTop = 16
         ExplicitWidth = 23
@@ -105,7 +104,6 @@ object FormBaseGrade: TFormBaseGrade
       Color = 16744448
       ParentBackground = False
       TabOrder = 1
-      ExplicitLeft = 854
       object btnInserir: TSpeedButton
         AlignWithMargins = True
         Left = 0
@@ -148,7 +146,6 @@ object FormBaseGrade: TFormBaseGrade
       ParentBackground = False
       TabOrder = 2
       Visible = False
-      ExplicitLeft = 976
       object BtnEditar: TSpeedButton
         AlignWithMargins = True
         Left = 0
@@ -169,6 +166,7 @@ object FormBaseGrade: TFormBaseGrade
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
+        OnClick = BtnEditarClick
         ExplicitLeft = 176
         ExplicitTop = 16
         ExplicitWidth = 23
@@ -190,7 +188,6 @@ object FormBaseGrade: TFormBaseGrade
       Color = 16051947
       ParentBackground = False
       TabOrder = 3
-      ExplicitWidth = 675
       object Panel4: TPanel
         AlignWithMargins = True
         Left = 579
@@ -206,7 +203,6 @@ object FormBaseGrade: TFormBaseGrade
         Color = 16744448
         ParentBackground = False
         TabOrder = 0
-        ExplicitLeft = 563
         object btnFiltrar: TSpeedButton
           AlignWithMargins = True
           Left = 0
@@ -281,6 +277,7 @@ object FormBaseGrade: TFormBaseGrade
     TitleFont.Name = 'Segoe UI'
     TitleFont.Style = []
     OnDrawColumnCell = dbgDrawColumnCell
+    OnKeyDown = dbgKeyDown
     OnMouseUp = dbgMouseUp
     OnTitleClick = dbgTitleClick
     Columns = <

@@ -51,6 +51,7 @@ uses
 
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure BtnEditarClick(Sender: TObject);
   private
     bookMark : TBookMark;
     procedure OpenCadCliente(pessoaId: integer);
@@ -154,6 +155,11 @@ begin
   Editar;
 end;
 
+procedure TFormCliente.BtnEditarClick(Sender: TObject);
+begin
+  Editar
+end;
+
 procedure TFormCliente.BtnExcluirClick(Sender: TObject);
 begin
 
@@ -179,11 +185,7 @@ end;
 
 procedure TFormCliente.btnFiltrarClick(Sender: TObject);
 begin
-
-//  if length(trim(edtFiltrar.Text)) >= 4 then
-    RefreshPessoa;
-//  else
-//    ShowMessage('Informe pelo menos 4 caracteres. Após tecle[ENTER] ou Filtar.')
+  RefreshPessoa;
 end;
 
 
@@ -226,7 +228,8 @@ begin
 
   if Key = VK_RETURN then
   begin
-    Editar;
+    //Editar;
+    BtnEditar.Click;
     Key := 0;
   end;
 end;
@@ -255,7 +258,8 @@ begin
     PosX := X - R.Left;
 
     if PosX < 50 then
-       Editar
+       //Editar
+      BtnEditar.Click
     else
       BtnExcluir.Click;
   end;
