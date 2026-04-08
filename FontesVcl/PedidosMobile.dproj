@@ -195,6 +195,14 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Services\Service.Fornecedor.pas"/>
+        <DCCReference Include="FormCadastros\SolicitacaoCompras\UnitFormSolicitacaoComprasE.pas">
+            <Form>FormSolicitacaoComprasE</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="FormCadastros\SolicitacaoCompras\UnitFormSolicitacaoCompras.pas">
+            <Form>FormSolicitacaoCompras</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

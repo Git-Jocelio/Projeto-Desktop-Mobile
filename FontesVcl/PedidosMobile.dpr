@@ -22,7 +22,9 @@ uses
   UnitFormFornecedor in 'FormCadastros\Fornecedores\UnitFormFornecedor.pas' {FormFornecedor},
   DataModule.Fornecedor in 'DataModules\DataModule.Fornecedor.pas' {DmFornecedor: TDataModule},
   UnitFormFornecedorE in 'FormCadastros\Fornecedores\UnitFormFornecedorE.pas' {FormFornecedorE},
-  Service.Fornecedor in 'Services\Service.Fornecedor.pas';
+  Service.Fornecedor in 'Services\Service.Fornecedor.pas',
+  UnitFormSolicitacaoComprasE in 'FormCadastros\SolicitacaoCompras\UnitFormSolicitacaoComprasE.pas' {FormSolicitacaoComprasE},
+  UnitFormSolicitacaoCompras in 'FormCadastros\SolicitacaoCompras\UnitFormSolicitacaoCompras.pas' {FormSolicitacaoCompras};
 
 {$R *.res}
 

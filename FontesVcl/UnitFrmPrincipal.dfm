@@ -17,7 +17,7 @@ object FormPrincipal: TFormPrincipal
   object svMenu: TSplitView
     Left = 0
     Top = 0
-    Width = 200
+    Width = 245
     Height = 620
     Cursor = crHandPoint
     CloseStyle = svcCompact
@@ -28,14 +28,14 @@ object FormPrincipal: TFormPrincipal
     Font.Height = -17
     Font.Name = 'Segoe UI'
     Font.Style = []
-    OpenedWidth = 200
+    OpenedWidth = 245
     ParentFont = False
     Placement = svpLeft
     TabOrder = 0
     object Panel1: TPanel
       Left = 0
       Top = 0
-      Width = 200
+      Width = 245
       Height = 55
       Align = alTop
       BevelOuter = bvNone
@@ -54,7 +54,7 @@ object FormPrincipal: TFormPrincipal
       object Image1: TImage
         Left = 55
         Top = 0
-        Width = 135
+        Width = 154
         Height = 55
         Align = alLeft
         Center = True
@@ -78,7 +78,7 @@ object FormPrincipal: TFormPrincipal
       AlignWithMargins = True
       Left = 0
       Top = 55
-      Width = 200
+      Width = 245
       Height = 565
       Margins.Left = 0
       Margins.Top = 0
@@ -104,7 +104,12 @@ object FormPrincipal: TFormPrincipal
               ImageIndex = 8
             end
             item
-              Caption = ' Ped Compra'
+              Caption = 'Solicita'#231#245'es de Compras'
+              ImageIndex = 1
+              OnClick = CategoryButtonsCategories0Items6Click
+            end
+            item
+              Caption = ' Pedidos de  Compras'
               ImageIndex = 7
               OnClick = CategoryButtonsCategories0Items1Click
             end
@@ -136,7 +141,7 @@ object FormPrincipal: TFormPrincipal
     end
   end
   object svSubMenu: TSplitView
-    Left = 200
+    Left = 245
     Top = 0
     Width = 200
     Height = 620
@@ -212,7 +217,7 @@ object FormPrincipal: TFormPrincipal
           Collapsed = False
           Items = <
             item
-              Caption = ' Pessoas'
+              Caption = 'Colaboradores'
               ImageIndex = 2
               OnClick = CategorySubMenuButtonsCategories0Items0Click
             end
@@ -236,9 +241,9 @@ object FormPrincipal: TFormPrincipal
     end
   end
   object pnTela: TPanel
-    Left = 400
+    Left = 445
     Top = 0
-    Width = 717
+    Width = 672
     Height = 620
     Align = alClient
     BevelOuter = bvNone
@@ -248,7 +253,7 @@ object FormPrincipal: TFormPrincipal
     object pnNavBar: TPanel
       Left = 0
       Top = 0
-      Width = 717
+      Width = 672
       Height = 50
       Align = alTop
       BevelOuter = bvNone
@@ -257,7 +262,7 @@ object FormPrincipal: TFormPrincipal
       TabOrder = 0
       object imgUsuario: TImage
         AlignWithMargins = True
-        Left = 497
+        Left = 452
         Top = 0
         Width = 50
         Height = 50
@@ -307,7 +312,7 @@ object FormPrincipal: TFormPrincipal
       end
       object ImgNotificacoes: TImage
         AlignWithMargins = True
-        Left = 437
+        Left = 392
         Top = 0
         Width = 50
         Height = 50
@@ -439,7 +444,7 @@ object FormPrincipal: TFormPrincipal
         ExplicitLeft = 702
       end
       object pnUsuario: TPanel
-        Left = 547
+        Left = 502
         Top = 0
         Width = 170
         Height = 50
@@ -490,7 +495,7 @@ object FormPrincipal: TFormPrincipal
       AlignWithMargins = True
       Left = 30
       Top = 70
-      Width = 657
+      Width = 612
       Height = 550
       Margins.Left = 30
       Margins.Top = 20

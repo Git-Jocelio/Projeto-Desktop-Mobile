@@ -23,6 +23,8 @@ type
     Label4: TLabel;
     edtEmail: TEdit;
     MemTable: TFDMemTable;
+    Label1: TLabel;
+    ComboBox1: TComboBox;
 
     procedure btnCancelarClick(Sender: TObject);
     procedure btnSalvarClick(Sender: TObject);

@@ -8,7 +8,7 @@ uses
   Vcl.Imaging.pngimage, Vcl.Buttons, System.ImageList, Vcl.ImgList,
   Vcl.CategoryButtons, Vcl.StdCtrls,
   Vcl.Session,
-  Vcl.Navigation, UnitFormFornecedor;
+  Vcl.Navigation, UnitFormFornecedor, UnitFormSolicitacaoCompras;
 
 type
   TFormPrincipal = class(TForm)
@@ -34,13 +34,17 @@ type
     Label2: TLabel;
     procedure btnMenuRetratilClick(Sender: TObject);
     procedure btnFecharSubMenuClick(Sender: TObject);
+    procedure CategoryButtonsCategories0Items1Click(Sender: TObject);
     procedure CategoryButtonsCategories0Items2Click(Sender: TObject);
     procedure CategoryButtonsCategories0Items5Click(Sender: TObject);
-    procedure FormShow(Sender: TObject);
-    procedure CategoryButtonsCategories0Items1Click(Sender: TObject);
+
     procedure CategorySubMenuButtonsCategories0Items0Click(Sender: TObject);
     procedure CategorySubMenuButtonsCategories0Items1Click(Sender: TObject);
     procedure CategorySubMenuButtonsCategories0Items2Click(Sender: TObject);
+
+    procedure FormShow(Sender: TObject);
+    procedure CategoryButtonsCategories0Items6Click(Sender: TObject);
+
   private
     procedure CloseSubMenu;
     { Private declarations }
@@ -59,6 +63,7 @@ uses UnitFormPedidos, UnitFormCliente, UnitFormProduto;
 
 procedure TFormPrincipal.CategoryButtonsCategories0Items1Click(Sender: TObject);
 begin
+  //pedido de compra
   svSubMenu.Opened := FALSE;
   TNavigation.Open(TFormPedidos, FormPedidos, PnlContainer);
 end;
@@ -73,6 +78,12 @@ begin
   Application.Terminate;
 end;
 
+procedure TFormPrincipal.CategoryButtonsCategories0Items6Click(Sender: TObject);
+begin
+  svSubMenu.Opened := FALSE;
+  TNavigation.Open(TFormSolicitacaoCompras, FormSolicitacaoCompras, PnlContainer);
+end;
+
 procedure TFormPrincipal.CategorySubMenuButtonsCategories0Items0Click(
   Sender: TObject);
 begin
@@ -84,6 +95,7 @@ end;
 procedure TFormPrincipal.CategorySubMenuButtonsCategories0Items1Click(
   Sender: TObject);
 begin
+
   CloseSubMenu;
   TNavigation.Open(TFormProduto, FormProduto, PnlContainer);
 

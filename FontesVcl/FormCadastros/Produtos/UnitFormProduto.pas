@@ -131,7 +131,8 @@ end;
 procedure TFormProduto.dbgDblClick(Sender: TObject);
 begin
   inherited;
-  OpenCadProduto(0);
+  //OpenCadProduto(0);
+  editar;
 end;
 
 procedure TFormProduto.Editar;

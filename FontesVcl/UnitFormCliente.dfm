@@ -31,14 +31,14 @@ object FormCliente: TFormCliente
       AlignWithMargins = True
       Left = 10
       Top = 10
-      Width = 89
+      Width = 163
       Height = 45
       Margins.Left = 10
       Margins.Top = 10
       Margins.Right = 0
       Margins.Bottom = 10
       Align = alLeft
-      Caption = 'Pessoa'
+      Caption = 'Colaborador'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -29
@@ -177,9 +177,9 @@ object FormCliente: TFormCliente
     end
     object Panel1: TPanel
       AlignWithMargins = True
-      Left = 119
+      Left = 193
       Top = 0
-      Width = 816
+      Width = 742
       Height = 65
       Margins.Left = 20
       Margins.Top = 0
@@ -190,9 +190,11 @@ object FormCliente: TFormCliente
       Color = 16051947
       ParentBackground = False
       TabOrder = 3
+      ExplicitLeft = 119
+      ExplicitWidth = 816
       object Panel4: TPanel
         AlignWithMargins = True
-        Left = 704
+        Left = 630
         Top = 15
         Width = 102
         Height = 35
@@ -205,6 +207,7 @@ object FormCliente: TFormCliente
         Color = 16744448
         ParentBackground = False
         TabOrder = 0
+        ExplicitLeft = 704
         object btnFiltrar: TSpeedButton
           AlignWithMargins = True
           Left = 0
@@ -236,7 +239,7 @@ object FormCliente: TFormCliente
         AlignWithMargins = True
         Left = 15
         Top = 15
-        Width = 689
+        Width = 615
         Height = 35
         Margins.Left = 15
         Margins.Top = 15
@@ -253,8 +256,9 @@ object FormCliente: TFormCliente
         Font.Style = []
         ParentFont = False
         TabOrder = 1
-        TextHint = 'Digite o nome da pessoa'
+        TextHint = 'Digite o nome de um colaborador'
         OnKeyPress = edtFiltrarKeyPress
+        ExplicitWidth = 689
       end
     end
   end
@@ -301,8 +305,8 @@ object FormCliente: TFormCliente
         Title.Font.Height = -15
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
-        Width = 91
-        Visible = True
+        Width = -1
+        Visible = False
       end
       item
         Expanded = False
@@ -319,7 +323,7 @@ object FormCliente: TFormCliente
         Title.Font.Height = -15
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
-        Width = 361
+        Width = 472
         Visible = True
       end
       item
@@ -337,7 +341,7 @@ object FormCliente: TFormCliente
         Title.Font.Height = -15
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
-        Width = 405
+        Width = 211
         Visible = True
       end
       item
@@ -355,7 +359,7 @@ object FormCliente: TFormCliente
         Title.Font.Height = -15
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
-        Width = 159
+        Width = 332
         Visible = True
       end
       item
