@@ -1,10 +1,13 @@
 inherited FormSolicitacaoCompras: TFormSolicitacaoCompras
   Caption = 'FormSolicitacaoCompras'
+  ClientHeight = 548
   ClientWidth = 1292
   ExplicitWidth = 1292
+  ExplicitHeight = 548
   TextHeight = 15
   inherited PnlHeader: TPanel
     Width = 1292
+    ExplicitWidth = 1292
     inherited Label1: TLabel
       Width = 311
       Height = 45
@@ -13,36 +16,39 @@ inherited FormSolicitacaoCompras: TFormSolicitacaoCompras
     end
     inherited PnlBotaoInserir: TPanel
       Left = 1180
+      ExplicitLeft = 1180
     end
     inherited Panel2: TPanel
       Left = 936
+      ExplicitLeft = 936
       inherited btnInserir: TSpeedButton
         OnClick = btnInserirClick
       end
     end
     inherited Panel3: TPanel
       Left = 1058
+      ExplicitLeft = 1058
     end
     inherited Panel1: TPanel
       Left = 341
       Width = 535
       ExplicitLeft = 341
-      ExplicitWidth = 469
+      ExplicitWidth = 535
       inherited Panel4: TPanel
         Left = 423
-        ExplicitLeft = 357
+        ExplicitLeft = 423
       end
       inherited edtFiltrar: TEdit
         Width = 408
         TextHint = 'Digite o nome do Departamento'
-        ExplicitWidth = 342
+        ExplicitWidth = 408
       end
     end
   end
   inherited dbg: TDBGrid
     Top = 177
     Width = 1292
-    Height = 335
+    Height = 371
     Columns = <
       item
         Expanded = False
@@ -148,7 +154,6 @@ inherited FormSolicitacaoCompras: TFormSolicitacaoCompras
     Color = 16051947
     ParentBackground = False
     TabOrder = 2
-    ExplicitWidth = 1226
     object RadioGroup1: TRadioGroup
       Left = 0
       Top = 0
@@ -169,7 +174,6 @@ inherited FormSolicitacaoCompras: TFormSolicitacaoCompras
         'Rejeitado pelo Gestor')
       ParentFont = False
       TabOrder = 0
-      ExplicitWidth = 1226
     end
   end
   inherited ds: TDataSource

@@ -24,7 +24,8 @@ uses
   UnitFormFornecedorE in 'FormCadastros\Fornecedores\UnitFormFornecedorE.pas' {FormFornecedorE},
   Service.Fornecedor in 'Services\Service.Fornecedor.pas',
   UnitFormSolicitacaoComprasE in 'FormCadastros\SolicitacaoCompras\UnitFormSolicitacaoComprasE.pas' {FormSolicitacaoComprasE},
-  UnitFormSolicitacaoCompras in 'FormCadastros\SolicitacaoCompras\UnitFormSolicitacaoCompras.pas' {FormSolicitacaoCompras};
+  UnitFormSolicitacaoCompras in 'FormCadastros\SolicitacaoCompras\UnitFormSolicitacaoCompras.pas' {FormSolicitacaoCompras},
+  UnitFormSolicitacaoItens in 'FormCadastros\SolicitacaoCompras\UnitFormSolicitacaoItens.pas' {FormSolicitacaoItens};
 
 {$R *.res}
 

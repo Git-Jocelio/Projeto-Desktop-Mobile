@@ -203,6 +203,10 @@
             <Form>FormSolicitacaoCompras</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="FormCadastros\SolicitacaoCompras\UnitFormSolicitacaoItens.pas">
+            <Form>FormSolicitacaoItens</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
