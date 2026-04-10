@@ -9,58 +9,79 @@ uses
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.StorageBin, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, Vcl.Navigation, Vcl.Loading, UnitFormSolicitacaoItens,
-  Vcl.ComCtrls;
+  Vcl.ComCtrls, Vcl.Imaging.pngimage;
 
 type
   TFormSolicitacaoComprasE = class(TForm)
-    lblTitulo: TLabel;
-    Label2: TLabel;
-    edtNome: TEdit;
-    Panel2: TPanel;
-    btnSalvar: TSpeedButton;
-    Panel1: TPanel;
-    btnCancelar: TSpeedButton;
-    Label1: TLabel;
-    ComboBox1: TComboBox;
-    Label5: TLabel;
-    ComboBox2: TComboBox;
-    SpeedButton1: TSpeedButton;
-    SpeedButton2: TSpeedButton;
-    SpeedButton3: TSpeedButton;
-    Memo1: TMemo;
-    Label3: TLabel;
-    Label4: TLabel;
-    Label8: TLabel;
     TabSolicitações: TFDMemTable;
     ds: TDataSource;
     TabSolicitaçõesDESCRICAO_ITEM: TStringField;
     TabSolicitaçõesQUANTIDADE: TFloatField;
     TabSolicitaçõesPRIORIDADE: TStringField;
     TabSolicitaçõesUNIDADE: TStringField;
-    rg_situacao: TRadioGroup;
-    pnl_situacao: TPanel;
-    SpeedButton4: TSpeedButton;
     TabSolicitaçõesCONS_ATIVO: TStringField;
-    Panel3: TPanel;
-    SpeedButton5: TSpeedButton;
+    pnl_fundo: TPanel;
+    Panel5: TPanel;
+    Panel6: TPanel;
+    Label6: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Image1: TImage;
+    Panel7: TPanel;
+    Panel8: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Image2: TImage;
+    Panel10: TPanel;
+    Label10: TLabel;
+    Panel13: TPanel;
+    Label5: TLabel;
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
+    DBGrid1: TDBGrid;
     TabSheet2: TTabSheet;
     DBGrid2: TDBGrid;
-    DBGrid1: TDBGrid;
+    Panel3: TPanel;
+    SpeedButton1: TSpeedButton;
+    ComboBox2: TComboBox;
+    Panel11: TPanel;
+    Memo1: TMemo;
+    Panel9: TPanel;
+    Label9: TLabel;
+    Panel12: TPanel;
+    Memo2: TMemo;
+    lblTitulo: TLabel;
+    Panel14: TPanel;
+    Panel2: TPanel;
+    btnSalvar: TSpeedButton;
     Panel4: TPanel;
     SpeedButton6: TSpeedButton;
+    Panel1: TPanel;
+    btnCancelar: TSpeedButton;
+    pnl_situacao: TPanel;
+    SpeedButton4: TSpeedButton;
+    Panel15: TPanel;
+    Panel16: TPanel;
+    Label8: TLabel;
+    Image3: TImage;
+    Label11: TLabel;
+    GroupBox1: TGroupBox;
+    btn_enviar: TSpeedButton;
+    mmChat: TMemo;
+    edt_mensagem: TEdit;
+    Panel17: TPanel;
+    Label12: TLabel;
+    Edit1: TEdit;
+    Label7: TLabel;
     procedure SpeedButton1Click(Sender: TObject);
-    procedure SpeedButton2Click(Sender: TObject);
-    procedure SpeedButton3Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SpeedButton5Click(Sender: TObject);
     procedure btnSalvarClick(Sender: TObject);
-    procedure rg_situacaoClick(Sender: TObject);
     procedure SpeedButton6Click(Sender: TObject);
     procedure SpeedButton4Click(Sender: TObject);
+    procedure btn_enviarClick(Sender: TObject);
   private
     procedure TerminateSolicitacaoE(Sender: TObject);
     { Private declarations }
@@ -122,6 +143,12 @@ begin
 
 end;
 
+procedure TFormSolicitacaoComprasE.btn_enviarClick(Sender: TObject);
+begin
+  mmChat.Lines.Add( edt_mensagem.Text);
+  edt_mensagem.clear;
+end;
+
 procedure TFormSolicitacaoComprasE.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
@@ -149,27 +176,9 @@ begin
 
 end;
 
-procedure TFormSolicitacaoComprasE.rg_situacaoClick(Sender: TObject);
-begin
-  if rg_situacao.ItemIndex = 0 then pnl_situacao.Color := $000BCFF2;
-  if rg_situacao.ItemIndex = 1 then pnl_situacao.Color := $00408000;
-  if rg_situacao.ItemIndex = 2 then pnl_situacao.Color := clRed;
-end;
-
 procedure TFormSolicitacaoComprasE.SpeedButton1Click(Sender: TObject);
 begin
   showmessage('Abre o formulário para cadastrar um novo cento de custo');
-end;
-
-procedure TFormSolicitacaoComprasE.SpeedButton2Click(Sender: TObject);
-begin
-  showmessage('Abre o formulário para cadastrar uma nova categoria');
-
-end;
-
-procedure TFormSolicitacaoComprasE.SpeedButton3Click(Sender: TObject);
-begin
-  showmessage('Abre formulário de Pesquisa de Colaboradores');
 end;
 
 procedure TFormSolicitacaoComprasE.SpeedButton4Click(Sender: TObject);
