@@ -12,7 +12,7 @@ uses
 type
   TFormPedidos = class(TForm)
     PnlHeader: TPanel;
-    Label1: TLabel;
+    lblTitulo: TLabel;
     PnlBotaoInserir: TPanel;
     BtnAcessar: TSpeedButton;
     Panel2: TPanel;

@@ -3,7 +3,7 @@ object FormClienteE: TFormClienteE
   Top = 0
   BorderStyle = bsNone
   Caption = 'Cadastro de Cliente'
-  ClientHeight = 318
+  ClientHeight = 370
   ClientWidth = 409
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
@@ -19,13 +19,13 @@ object FormClienteE: TFormClienteE
     AlignWithMargins = True
     Left = 10
     Top = 10
-    Width = 124
+    Width = 180
     Height = 30
     Margins.Left = 10
     Margins.Top = 10
     Margins.Right = 0
     Margins.Bottom = 10
-    Caption = 'Novo Cliente'
+    Caption = 'Novo Colaborador'
     Color = 16744448
     Font.Charset = ANSI_CHARSET
     Font.Color = 16744448
@@ -64,6 +64,19 @@ object FormClienteE: TFormClienteE
   object Label4: TLabel
     Left = 40
     Top = 177
+    Width = 29
+    Height = 15
+    Caption = 'Email'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = 8289918
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label1: TLabel
+    Left = 40
+    Top = 241
     Width = 27
     Height = 15
     Caption = 'Setor'
@@ -90,7 +103,7 @@ object FormClienteE: TFormClienteE
   object Panel2: TPanel
     AlignWithMargins = True
     Left = 105
-    Top = 254
+    Top = 318
     Width = 102
     Height = 30
     Margins.Left = 10
@@ -130,7 +143,7 @@ object FormClienteE: TFormClienteE
   object Panel1: TPanel
     AlignWithMargins = True
     Left = 219
-    Top = 253
+    Top = 317
     Width = 102
     Height = 30
     Margins.Left = 10
@@ -186,7 +199,7 @@ object FormClienteE: TFormClienteE
     ParentFont = False
     TabOrder = 1
   end
-  object edtsetor: TEdit
+  object edtEmail: TEdit
     Left = 40
     Top = 198
     Width = 326
@@ -198,6 +211,28 @@ object FormClienteE: TFormClienteE
     Font.Style = []
     ParentFont = False
     TabOrder = 2
+  end
+  object ComboBox1: TComboBox
+    Left = 40
+    Top = 264
+    Width = 326
+    Height = 29
+    Style = csDropDownList
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = 8289918
+    Font.Height = -16
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 5
+    TextHint = 'Selecione um Setor'
+    Items.Strings = (
+      'Financeiro'
+      'Comercial'
+      'Desenvolvimento'
+      'Marketing'
+      'Suporte'
+      'Facilites')
   end
   object MemTable: TFDMemTable
     FetchOptions.AssignedValues = [evMode]

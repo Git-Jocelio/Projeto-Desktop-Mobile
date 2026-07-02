@@ -5,14 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Imaging.pngimage,
-  Vcl.ExtCtrls,
+  Vcl.ExtCtrls;
 
-  Horse,
-  Horse.Jhonson,
-  Horse.CORS,
-  DataModule.Pessoa,
-  Controllers.Cliente,
-  Controllers.Usuario;
 
 type
   TFormPrincipal = class(TForm)
@@ -32,11 +26,26 @@ implementation
 
 {$R *.dfm}
 
+uses
+
+  Horse,
+  Horse.Jhonson,
+  Horse.CORS,
+  Dataset.Serialize.Config,
+  DataModule.Pessoa,
+  Controllers.Cliente,
+  Controllers.Usuario;
+
+
 procedure TFormPrincipal.FormShow(Sender: TObject);
 begin
    THorse.use(Jhonson());
    THorse.use(CORS);
-   // verifica a rota chamada e da andamento a requisição
+
+   TDataSetSerializeConfig.GetInstance.CaseNameDefinition := cndLower;
+   TDataSetSerializeConfig.GetInstance.Import.DecimalSeparator := '.';
+
+   // registrar as rotas
    Controllers.Cliente.RegistrarRotas;
    Controllers.Usuario.RegistrarRotas;
 

@@ -21,8 +21,10 @@ type
     Label3: TLabel;
     edtTelefone: TEdit;
     Label4: TLabel;
-    edtsetor: TEdit;
+    edtEmail: TEdit;
     MemTable: TFDMemTable;
+    Label1: TLabel;
+    ComboBox1: TComboBox;
 
     procedure btnCancelarClick(Sender: TObject);
     procedure btnSalvarClick(Sender: TObject);
@@ -59,7 +61,7 @@ begin
                                TNavigation.ParamInt,
                                edtNome.Text,
                                edtTelefone.Text,
-                               edtsetor.Text
+                               edtEmail.Text
                              );
     end,
     TerminateSalvar
@@ -123,9 +125,9 @@ begin
     end;
 
   // se não der erro, carrega dos edits
-  edtNome.Text := MemTable.FieldByName('nome').AsString;
+  edtNome.Text     := MemTable.FieldByName('nome').AsString;
   edtTelefone.Text := MemTable.FieldByName('telefone').AsString;
-  edtsetor.Text := MemTable.FieldByName('setor').AsString;
+  edtEmail.Text    := MemTable.FieldByName('email').AsString;
 
 end;
 

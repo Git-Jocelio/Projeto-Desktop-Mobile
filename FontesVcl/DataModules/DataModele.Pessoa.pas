@@ -21,8 +21,8 @@ type
     procedure ListarPessoa(memTable: TFDMemTable; filtro: string);
     procedure ListarPessoaID(memTable: TFDMemTable; pessoaId: integer);
     //CRUD
-    procedure Inserir(nome, telefone, setor: string);
-    procedure Editar(pessoaId: integer; nome, telefone, setor: string);
+    procedure Inserir(nome, telefone, email: string);
+    procedure Editar(pessoaId: integer; nome, telefone, email: string);
     procedure Excluir(pessoaId: integer);
   end;
 
@@ -76,7 +76,7 @@ begin
     raise Exception.Create(resp.content);
 end;
 
-procedure TDmPessoa.Inserir(nome, telefone, setor: string);
+procedure TDmPessoa.Inserir(nome, telefone, email: string);
 var
   resp : IResponse; // usado para receber respostas do servidor
   json : TJSONObject; // usado para criar um objeto json com os dados da pessoa
@@ -87,7 +87,7 @@ begin
     json := TJSONObject.Create;
     json.AddPair('nome',nome);
     json.AddPair('telefone',telefone);
-    json.AddPair('setor',setor);
+    json.AddPair('email',email);
 
     resp := TRequest.New.BaseURL('http://localhost:3000')   // criando uma requisição do servidor
                         .Resource('/pessoa')               // nessa rota
@@ -104,7 +104,7 @@ begin
 end;
 
 
-procedure TDmPessoa.Editar(pessoaId: integer; nome, telefone, setor: string);
+procedure TDmPessoa.Editar(pessoaId: integer; nome, telefone, email: string);
 var
   resp : IResponse; // usado para receber respostas do servidor
   json : TJSONObject; // usado para criar um objeto json com os dados da pessoa
@@ -115,7 +115,7 @@ begin
     json := TJSONObject.Create;
     json.AddPair('nome',nome);
     json.AddPair('telefone',telefone);
-    json.AddPair('setor',setor);
+    json.AddPair('email',email);
 
     resp := TRequest.New.BaseURL('http://localhost:3000') // criando uma requisição do servidor
                         .Resource('/pessoa')              // nessa rota

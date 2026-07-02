@@ -2,7 +2,7 @@ object FormPrincipal: TFormPrincipal
   Left = 0
   Top = 0
   BorderStyle = bsDialog
-  Caption = 'Servidor'
+  Caption = ' 64 bits (em D:) '
   ClientHeight = 247
   ClientWidth = 626
   Color = clWhite

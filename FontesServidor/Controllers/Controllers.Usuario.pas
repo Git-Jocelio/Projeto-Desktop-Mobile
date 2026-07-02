@@ -1,4 +1,6 @@
+
 unit Controllers.Usuario;
+// vem da unitPrincipaL e vai para dmUsuarios
 
 interface
 uses Horse,
@@ -8,25 +10,35 @@ uses Horse,
      DataModule.Usuario;
 
 procedure RegistrarRotas;
-procedure Login(req : THorseRequest; res : THorseResponse; Next : TProc);
+procedure Login(req: THorseRequest; res: THorseResponse; Next: TProc);
+procedure InserirUsuario(req: THorseRequest; res: THorseResponse; Next: TProc);
+procedure EditarSenha(req: THorseRequest; res: THorseResponse; Next: TProc);
+procedure listarUsuarioId(req: THorseRequest; res: THorseResponse; Next: TProc);
+procedure EditarUsuario(req: THorseRequest; res: THorseResponse; Next: TProc);
 
 implementation
 
 procedure RegistrarRotas;
 begin
-   {o metodo login por segurança é recomendavel usar o metódo Post, assim
-   login e senha são enviados  via json e não pela url}
-   THorse.Post('/usuario/login', Login);
+  THorse.Post('/usuario/login', Login);
+  THorse.post('/usuario/cadastro', InserirUsuario);
+  THorse.post('/usuario/password', EditarSenha);
+
+  //não passarei o id do usuário pq ele será passado dentro do token JWT
+  THorse.get('/usuario', listarUsuarioId);
+  THorse.put('/usuario', EditarUsuario);
 end;
 
-procedure Login(req : THorseRequest; res : THorseResponse; Next : TProc);
+procedure Login(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
   dmUsuario: TDmUsuario;
   body: TJSONObject;
-  email, senha: string;
+  login, senha: string;
   jsonRetorno: TJSONObject;
 begin
   dmUsuario := nil;
+  jsonRetorno := nil;
+
   try
     try
       body := req.Body<TJSONObject>;
@@ -37,36 +49,49 @@ begin
         Exit;
       end;
 
-      //dmUsuario := TDmUsuario.Create(nil);
-
-      email := body.GetValue<string>('email', '');
+      login := body.GetValue<string>('login', '');
       senha := body.GetValue<string>('senha', '');
 
-      // 2. Chama a função e armazena o resultado em uma variável local
       dmUsuario := TDmUsuario.Create(nil);
-      jsonRetorno := dmUsuario.usuarioLogin(email, senha);
-      if not Assigned(jsonRetorno) then
-      begin
 
-        res.Status(401).Send('Email ou senha inválido');
-      end
+      jsonRetorno := dmUsuario.usuarioLogin(login, senha);
+
+      if Assigned(jsonRetorno) then
+        res.Send<TJSONObject>(jsonRetorno).Status(200)
       else
-      begin
-//showmessage('usuario valildado');
-        res.Status(201).Send<TJSONObject>(jsonRetorno);
-      end;
+        res.Send('Login ou senha inválidos').Status(401);
+
     except
       on E: Exception do
-        res.Status(500).Send(E.Message);
+        res.Send(E.Message).Status(500);
     end;
+
   finally
-    // 4. Libera o DataModule, mas o jsonRetorno vive até o res.Send terminar
-    if Assigned(dmUsuario) then
-      FreeAndNil(dmUsuario);
+    // Não liberar jsonRetorno.
+    // O Horse/Jhonson assume a propriedade do TJSONObject enviado via Send<TJSONObject>.
+    dmUsuario.Free;
   end;
+
 end;
 
+procedure InserirUsuario(req: THorseRequest; res: THorseResponse; Next: TProc);
+begin
 
+end;
 
+procedure EditarSenha(req: THorseRequest; res: THorseResponse; Next: TProc);
+begin
+
+end;
+
+procedure listarUsuarioId(req: THorseRequest; res: THorseResponse; Next: TProc);
+begin
+
+end;
+
+procedure EditarUsuario(req: THorseRequest; res: THorseResponse; Next: TProc);
+begin
+
+end;
 
 end.

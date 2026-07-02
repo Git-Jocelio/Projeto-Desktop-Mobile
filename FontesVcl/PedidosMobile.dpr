@@ -1,6 +1,7 @@
 program PedidosMobile;
 
 uses
+  System.UITypes,
   Vcl.Forms,
   UnitLogin in 'UnitLogin.pas' {frmLogin},
   UnitFrmPrincipal in 'UnitFrmPrincipal.pas' {FormPrincipal},
@@ -17,7 +18,15 @@ uses
   UnitFormProduto in 'FormCadastros\Produtos\UnitFormProduto.pas' {FormProduto},
   DataModule.Produto in 'DataModules\DataModule.Produto.pas' {DmProduto: TDataModule},
   Vcl.Loading in 'Utils\Vcl.Loading.pas',
-  UnitFormProdutoE in 'FormCadastros\Produtos\UnitFormProdutoE.pas' {FormProdutoE};
+  UnitFormProdutoE in 'FormCadastros\Produtos\UnitFormProdutoE.pas' {FormProdutoE},
+  Service.Produto in 'Services\Service.Produto.pas',
+  UnitFormFornecedor in 'FormCadastros\Fornecedores\UnitFormFornecedor.pas' {FormFornecedor},
+  DataModule.Fornecedor in 'DataModules\DataModule.Fornecedor.pas' {DmFornecedor: TDataModule},
+  UnitFormFornecedorE in 'FormCadastros\Fornecedores\UnitFormFornecedorE.pas' {FormFornecedorE},
+  Service.Fornecedor in 'Services\Service.Fornecedor.pas',
+  UnitFormSolicitacaoComprasE in 'FormCadastros\SolicitacaoCompras\UnitFormSolicitacaoComprasE.pas' {FormSolicitacaoComprasE},
+  UnitFormSolicitacaoCompras in 'FormCadastros\SolicitacaoCompras\UnitFormSolicitacaoCompras.pas' {FormSolicitacaoCompras},
+  UnitFormSolicitacaoItens in 'FormCadastros\SolicitacaoCompras\UnitFormSolicitacaoItens.pas' {FormSolicitacaoItens};
 
 {$R *.res}
 
@@ -26,6 +35,18 @@ begin
 
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TfrmLogin, frmLogin);
-  Application.Run;
+
+  frmLogin := TfrmLogin.Create(nil);
+
+  try
+    if frmLogin.ShowModal = mrOk then
+    begin
+      Application.CreateForm(TFormPrincipal, FormPrincipal);
+      Application.Run;
+    end;
+  finally
+    frmLogin.Free;
+  end;
+
+
 end.

@@ -8,13 +8,13 @@ uses
   Vcl.Imaging.pngimage, Vcl.Buttons, System.ImageList, Vcl.ImgList,
   Vcl.CategoryButtons, Vcl.StdCtrls,
   Vcl.Session,
-  Vcl.Navigation;
+  Vcl.Navigation, UnitFormFornecedor, UnitFormSolicitacaoCompras;
 
 type
   TFormPrincipal = class(TForm)
     svMenu: TSplitView;
     Panel1: TPanel;
-    SpeedButton1: TSpeedButton;
+    btnMenuRetratil: TSpeedButton;
     Image1: TImage;
     ImageList: TImageList;
     CategoryButtons: TCategoryButtons;
@@ -32,14 +32,19 @@ type
     ImgNotificacoes: TImage;
     PnlContainer: TPanel;
     Label2: TLabel;
-    procedure SpeedButton1Click(Sender: TObject);
+    procedure btnMenuRetratilClick(Sender: TObject);
     procedure btnFecharSubMenuClick(Sender: TObject);
+    procedure CategoryButtonsCategories0Items1Click(Sender: TObject);
     procedure CategoryButtonsCategories0Items2Click(Sender: TObject);
     procedure CategoryButtonsCategories0Items5Click(Sender: TObject);
-    procedure FormShow(Sender: TObject);
-    procedure CategoryButtonsCategories0Items1Click(Sender: TObject);
+
     procedure CategorySubMenuButtonsCategories0Items0Click(Sender: TObject);
     procedure CategorySubMenuButtonsCategories0Items1Click(Sender: TObject);
+    procedure CategorySubMenuButtonsCategories0Items2Click(Sender: TObject);
+
+    procedure FormShow(Sender: TObject);
+    procedure CategoryButtonsCategories0Items6Click(Sender: TObject);
+
   private
     procedure CloseSubMenu;
     { Private declarations }
@@ -58,6 +63,7 @@ uses UnitFormPedidos, UnitFormCliente, UnitFormProduto;
 
 procedure TFormPrincipal.CategoryButtonsCategories0Items1Click(Sender: TObject);
 begin
+  //pedido de compra
   svSubMenu.Opened := FALSE;
   TNavigation.Open(TFormPedidos, FormPedidos, PnlContainer);
 end;
@@ -72,6 +78,12 @@ begin
   Application.Terminate;
 end;
 
+procedure TFormPrincipal.CategoryButtonsCategories0Items6Click(Sender: TObject);
+begin
+  svSubMenu.Opened := FALSE;
+  TNavigation.Open(TFormSolicitacaoCompras, FormSolicitacaoCompras, PnlContainer);
+end;
+
 procedure TFormPrincipal.CategorySubMenuButtonsCategories0Items0Click(
   Sender: TObject);
 begin
@@ -83,8 +95,17 @@ end;
 procedure TFormPrincipal.CategorySubMenuButtonsCategories0Items1Click(
   Sender: TObject);
 begin
+
   CloseSubMenu;
   TNavigation.Open(TFormProduto, FormProduto, PnlContainer);
+
+end;
+
+procedure TFormPrincipal.CategorySubMenuButtonsCategories0Items2Click(
+  Sender: TObject);
+begin
+  CloseSubMenu;
+  TNavigation.Open(TFormFornecedor, FormFornecedor, PnlContainer);
 
 end;
 
@@ -103,7 +124,7 @@ begin
   lblEmail.Caption := TSession.EMAIL;
 end;
 
-procedure TFormPrincipal.SpeedButton1Click(Sender: TObject);
+procedure TFormPrincipal.btnMenuRetratilClick(Sender: TObject);
 begin
   svMenu.opened := not svMenu.opened;
 end;
