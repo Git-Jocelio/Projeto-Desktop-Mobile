@@ -16,12 +16,14 @@ uses
   FireDac.Dapt,             // necessario para trabalhar com qry dinanmicas
   Env.Conf,
   DataModule.Servidor,
-  uMD5;
+  uMD5, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.Comp.DataSet;
 
 type
   TDmUsuario = class(TDataModule)
+    qry: TFDQuery;
     procedure DataModuleCreate(Sender: TObject);
     procedure ConnBeforeConnect(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
   private
   public
     function usuarioLogin(login, senha: string): TJSONObject;
@@ -42,39 +44,35 @@ end;
 
 procedure TDmUsuario.DataModuleCreate(Sender: TObject);
 begin
+  dmServidor := TDmServidor.Create(nil);
+  ConnBeforeConnect(DmServidor.Conn);
+  qry.Connection := DmServidor.Conn;
+
   {esta duas linha dizem ao serialize como tratar as variaveis nas consultas sql}
   TDataSetSerializeConfig.GetInstance.CaseNameDefinition := cndLower;
   TDataSetSerializeConfig.GetInstance.Import.DecimalSeparator := '.';
 end;
 
+procedure TDmUsuario.DataModuleDestroy(Sender: TObject);
+begin
+  FreeAndNil(DmServidor);
+end;
+
 function TDmUsuario.usuarioLogin(login, senha: string): TJSONObject;
-var
-  dmServidor: TDMServidor;
-  qry: TFDQuery;
 begin
 
   result := nil; // Inicializa o result para evitar lixo de memória
-  dmServidor := TDmServidor.Create(nil);
-  qry := TFDQuery.Create(nil);
 
-  try
-    ConnBeforeConnect(DmServidor.Conn);
-    DmServidor.Conn.open;
+  DmServidor.Conn.open;
 
-    qry.Connection := DmServidor.conn;
-    qry.SQL.Add('SELECT usuarioId, nome, login, senha from Usuario where login = :login and senha = :senha');
-    qry.ParamByName('login').AsString := login;
-    //qry.ParamByName('senha').AsString :=  umd5.SaltPassword( senha );
-    qry.ParamByName('senha').AsString :=  senha ;
-    qry.Open;
+  qry.SQL.Add('SELECT usuarioId, nome, login, senha from Usuario where login = :login and senha = :senha');
+  qry.ParamByName('login').AsString := login;
+  //qry.ParamByName('senha').AsString :=  umd5.SaltPassword( senha );
+  qry.ParamByName('senha').AsString :=  senha ;
+  qry.Open;
 
-
-    if not qry.IsEmpty then
-      result := qry.ToJSONObject;
-  finally
-    FreeAndNil(qry);
-    FreeAndNil(dmServidor);
-  end;
+  if not qry.IsEmpty then
+    result := qry.ToJSONObject;
 
 end;
 

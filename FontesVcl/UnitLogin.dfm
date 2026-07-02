@@ -198,7 +198,7 @@ object frmLogin: TfrmLogin
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      ExplicitWidth = 287
+      ExplicitWidth = 277
     end
     object Label2: TLabel
       AlignWithMargins = True
@@ -271,7 +271,6 @@ object frmLogin: TfrmLogin
       Color = 16744448
       ParentBackground = False
       TabOrder = 0
-      ExplicitWidth = 347
       object BtnAcessar: TSpeedButton
         Left = 0
         Top = 0
@@ -308,7 +307,6 @@ object frmLogin: TfrmLogin
       Color = 5127481
       ParentBackground = False
       TabOrder = 1
-      ExplicitWidth = 353
       object EdtLogin: TEdit
         AlignWithMargins = True
         Left = 10
@@ -330,7 +328,6 @@ object frmLogin: TfrmLogin
         ParentFont = False
         TabOrder = 0
         Text = 'jocelio@teste.com'
-        ExplicitWidth = 333
       end
     end
     object Panel3: TPanel
@@ -348,7 +345,6 @@ object frmLogin: TfrmLogin
       Color = 5127481
       ParentBackground = False
       TabOrder = 2
-      ExplicitWidth = 353
       object EdtSenha: TEdit
         AlignWithMargins = True
         Left = 10
@@ -371,7 +367,6 @@ object frmLogin: TfrmLogin
         PasswordChar = '*'
         TabOrder = 0
         Text = '12345'
-        ExplicitWidth = 333
       end
     end
   end

@@ -58,7 +58,8 @@ begin
    controllers.Fornecedor.RegistrarRotas;
 
    THorse.Listen(3000);
-   lblServidor.caption := 'Servidor Horse respondendo na PORTA : ' + THorse.Port.toString;
+
+   lblServidor.caption := 'Servidor Compras respondendo na PORTA : ' + THorse.Port.toString;
 
    Switch.State := tssOn;
    lblSwith.Caption := 'Servidor Ativo';

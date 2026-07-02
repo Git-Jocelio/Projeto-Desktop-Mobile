@@ -54,14 +54,14 @@ begin
   dmPessoa := TDmPessoa.Create(nil);
   try
     try
-      res.Status(200)
-         .Send<TJSONArray>(dmPessoa.pessoaListar(filtro));
+      res.Send<TJSONArray>(dmPessoa.pessoaListar(filtro)).Status(200);
+
     except
       on E: Exception do
-        res.Status(500).Send(E.Message);
+        res.Send(E.Message).Status(500);
     end;
   finally
-    dmPessoa.Free;
+    freeandnil(dmPessoa);
   end;
 end;
 
@@ -73,17 +73,17 @@ var
 begin
   if not TryStrToInt(req.Params['pessoaId'], pessoaId) then
   begin
-    res.Status(400).Send('ID inválido');
+    res.Send('ID inválido').Status(400);
     Exit;
   end;
 
   dmPessoa := TDmPessoa.Create(nil);
   try
     try
-      res.Send<TJSONObject>(dmPessoa.pessoaListarId(pessoaId));
+      res.Send<TJSONObject>(dmPessoa.pessoaListarId(pessoaId)).Status(200);
     except
       on E: Exception do
-        res.Status(500).Send(E.Message);
+        res.Send(E.Message).Status(500);
     end;
   finally
     dmPessoa.Free;
@@ -93,7 +93,7 @@ end;
 procedure Inserir(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
   body: TJSONObject;
-  nome, telefone, email: string;
+  nome, email, telefone: string;
   jsonRetorno: TJSONObject;
   ServicePessoa : TServicePessoa;
 begin
@@ -102,22 +102,22 @@ begin
 
   if not Assigned(body) then
   begin
-    res.Status(400).Send('JSON inválido ou vazio');
+    res.Send('JSON inválido ou vazio').Status(400);
     Exit;
   end;
 
   nome     := body.GetValue<string>('nome', '');
-  telefone := body.GetValue<string>('telefone', '');
   email    := body.GetValue<string>('email', '');
+  telefone := body.GetValue<string>('telefone', '');
 
   ServicePessoa := TServicePessoa.Create;
   try
     try
-      jsonRetorno := ServicePessoa.InserirEditarPessoa( 0, nome, telefone, email );
-      res.Status(201).Send<TJSONObject>(jsonRetorno);
+      jsonRetorno := ServicePessoa.InserirEditarPessoa( 0, nome, email, telefone );
+      res.Send<TJSONObject>(jsonRetorno).Status(201);
     except
       on E: Exception do
-        res.Status(400).Send(E.Message); // 400 para erros de validação
+        res.Send(E.Message).Status(400); // 400 para erros de validação
     end;
   finally
     ServicePessoa.Free;
@@ -138,14 +138,14 @@ begin
 
   if not TryStrToInt(req.Params['pessoaId'], pessoaId) then
   begin
-    res.Status(400).Send('ID inválido');
+    res.Send('ID inválido').Status(400);
     Exit;
   end;
 
   body := req.Body<TJSONObject>;
   if not Assigned(body) then
   begin
-    res.Status(400).Send('Corpo da requisição vazio ou inválido');
+    res.Send('Corpo da requisição vazio ou inválido').Status(400);
     Exit;
   end;
 
@@ -157,10 +157,10 @@ begin
   try
     try
       jsonRetorno := ServicePessoa.InserirEditarPessoa(PessoaId, nome, telefone, email);
-      res.Status(200).Send<TJSONObject>(jsonRetorno);
+      res.Send<TJSONObject>(jsonRetorno).Status(200);
     except
       on E: Exception do
-        res.Status(500).Send(E.Message);
+        res.Send(E.Message).Status(500);
     end;
   finally
     ServicePessoa.Free;

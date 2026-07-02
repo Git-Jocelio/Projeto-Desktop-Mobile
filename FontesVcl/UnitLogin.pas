@@ -52,9 +52,7 @@ begin
      if Assigned(TThread(Sender).FatalException) then
      begin
        ShowMessage(Exception(TThread(Sender).FatalException).Message );
-       //dmUsuario.Free;
        FreeAndNil(dmUsuario);
-       ModalResult := mrOk;
        Exit;
      end;
 

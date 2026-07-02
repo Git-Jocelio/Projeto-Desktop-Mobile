@@ -59,7 +59,7 @@ begin
       if Assigned(jsonRetorno) then
         res.Send<TJSONObject>(jsonRetorno).Status(200)
       else
-        res.Send('Login ou senha inválidos').Status(401);
+        res.Send('Login e ou Senha inválidos').Status(401);
 
       //dmUsuario := TDmUsuario.Create(nil);
 
@@ -70,14 +70,10 @@ begin
       dmUsuario   := TDmUsuario.Create(nil);
       jsonRetorno := dmUsuario.usuarioLogin(login, senha);
       if not Assigned(jsonRetorno) then
-      begin
-        res.Status(401).Send('Login ou senha inválido');
-      end
+        res.Status(401).Send('Login ou senha inválido')
       else
-      begin
         //showmessage('usuario valildado');
         res.Status(201).Send<TJSONObject>(jsonRetorno);
-      end;
     except
       on E: Exception do
         res.Send(E.Message).Status(500);

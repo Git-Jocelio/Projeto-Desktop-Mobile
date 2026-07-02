@@ -26,9 +26,9 @@ type
   public
     function pessoaListar(filtro: string): TJSONArray;
     function pessoaListarId(pessoaId: integer): TJSONObject;
-    function pessoaInserir(nome, telefone, setor: string): TJSONObject;
+    function pessoaInserir(nome, telefone, email: string): TJSONObject;
     function pessoaEditar(pessoaId: integer;
-                               email,  nome, telefone, setor: string): TJSONObject;
+                          nome, telefone, email  : string): TJSONObject;
 
     function pessoaExcluir(pessoaId: integer): TJSONObject;
   end;
@@ -48,13 +48,10 @@ begin
 end;
 
 procedure TDmPessoa.DataModuleCreate(Sender: TObject);
-var
-  dmServidor: TDMServidor;
-
 begin
   // antes de abrir a conexão, configura os parametros no onBeforeconnect
   dmServidor := TDmServidor.Create(nil);
-  DmServidor.Conn.open;
+  ConnBeforeConnect(DmServidor.Conn);
   qry.Connection := dmServidor.Conn;
 
   {esta duas linha dizem ao serialize como tratar as variaveis nas consultas sql}
@@ -65,145 +62,105 @@ end;
 
 procedure TDmPessoa.DataModuleDestroy(Sender: TObject);
 begin
-  dmServidor.Free;
+  freeandnil(dmServidor);
 end;
 
 function TDmPessoa.pessoaListar(filtro: string): TJSONArray;
 begin
-  qry := TFDQuery.Create(nil);
-  DmServidor := TDmServidor.Create(nil);
 
-  try
-    ConnBeforeConnect(DmServidor.Conn);
-    DmServidor.Conn.open;
+  result := nil;
 
-    qry.Connection := DmServidor.Conn;
+  DmServidor.Conn.open;
 
-    qry.SQL.Text := 'select * from pessoa';
+  qry.SQL.Text := 'select * from pessoa';
 
-    if filtro <> '' then
-    begin
-      qry.SQL.Add('where upper(nome) like :nome');
-      qry.ParamByName('nome').asstring := '%' + uppercase(filtro) + '%';
-    end;
-
-    qry.SQL.Add('order by nome');
-
-    qry.Open;
-
-    Result := qry.ToJSONArray;
-  finally
-    qry.Free;
-    dmServidor.Free
+  if filtro <> '' then
+  begin
+    qry.SQL.Add('where upper(nome) like :nome');
+    qry.ParamByName('nome').asstring := '%' + uppercase(filtro) + '%';
   end;
+
+  qry.SQL.Add('order by nome');
+
+  qry.Open;
+
+  Result := qry.ToJSONArray;
 end;
 
 function TDmPessoa.pessoaListarId(pessoaId: integer): TJSONObject;
 begin
+
+  result := nil;
+
+  DmServidor.Conn.open;
+  qry.Connection := DmServidor.Conn;
   qry.SQL.Text :=
     'select * from pessoa where pessoaId = :pessoaId';
-  DmServidor := TDmServidor.Create(nil);
-  qry := TFDQuery.Create(nil);
 
-  try
-    ConnBeforeConnect(DmServidor.Conn);
-    DmServidor.Conn.open;
+  qry.ParamByName('pessoaId').AsInteger := pessoaId;
+  qry.Open;
 
-    qry.Connection := DmServidor.Conn;
-    qry.SQL.Text :=
-      'select * from pessoa where pessoaId = :pessoaId';
+  Result := qry.ToJSONObject;
 
-    qry.ParamByName('pessoaId').AsInteger := pessoaId;
-
-    qry.Open;
-
-    Result := qry.ToJSONObject;
-  finally
-    qry.Free;
-    dmServidor.Free
-  end;
 end;
 
-function TDmPessoa.pessoaInserir(nome, telefone, setor: string): TJSONObject;
+function TDmPessoa.pessoaInserir(nome, telefone, email: string): TJSONObject;
 begin
-  dmServidor := TDmServidor.Create(nil);
-  qry := TFDQuery.Create(nil);
-
-  try
 
   result := nil; // Inicializa o resultado para evitar lixo de memória
-  dmServidor := TDmServidor.Create(nil);
-  qry.Connection := DmServidor.conn;
+  DmServidor.Conn.open;
 
-  qry.SQL.Add('INSERT INTO pessoa (nome, telefone, setor)');
-  qry.SQL.Add('VALUES (:nome, :telefone, :setor)');
+  qry.SQL.Add('INSERT INTO pessoa (nome, email, telefone)');
+  qry.SQL.Add('VALUES (:nome, :email, :telefone)');
   qry.SQL.Add('RETURNING pessoaId');
 
   qry.ParamByName('nome').AsString     := nome;
+  qry.ParamByName('email').AsString    := email;
   qry.ParamByName('telefone').AsString := telefone;
-  qry.ParamByName('setor').AsString    := setor;
 
   qry.Open;
-  finally
-    qry.Free;
-    dmServidor.Free
-  end;
+
+  Result := TJSONObject.Create;
+  Result.AddPair('pessoaId', TJSONNumber.Create(qry.FieldByName('pessoaId').AsString));
 end;
 
 
 function TDmPessoa.pessoaEditar(pessoaId: integer;
-                               email,  nome, telefone, setor: string): TJSONObject;
+                                 nome, telefone, email: string): TJSONObject;
 begin
-  dmServidor := TDmServidor.Create(nil);
-  qry := TFDquery.Create(nil);
-  try
-    ConnBeforeConnect(DmServidor.Conn);
-    DmServidor.Conn.open;
 
-    qry.Connection := DmServidor.conn;
+  result := nil; // Inicializa o resultado para evitar lixo de memória
+  DmServidor.Conn.open;
 
-    qry.SQL.Add('update pessoa');
-    qry.SQL.Add(' set nome=:nome, telefone=:telefone, email=:email');
-    qry.SQL.Add('where pessoaId =:pessoaId');
-    qry.ParamByName('pessoaId').AsInteger := pessoaId;
-    qry.ParamByName('nome').AsString := nome;
-    qry.ParamByName('telefone').AsString := telefone;
-    qry.ParamByName('email').AsString := email;
-    qry.ExecSQL;
+  qry.SQL.Add('update pessoa');
+  qry.SQL.Add(' set nome=:nome, telefone=:telefone, email=:email');
+  qry.SQL.Add('where pessoaId =:pessoaId');
+  qry.ParamByName('pessoaId').AsInteger := pessoaId;
+  qry.ParamByName('nome').AsString := nome;
+  qry.ParamByName('telefone').AsString := telefone;
+  qry.ParamByName('email').AsString := email;
+  qry.ExecSQL;
 
   Result := TJSONObject.Create;
   Result.AddPair('pessoaId', TJSONNumber.Create(pessoaId));
-  finally
-    qry.Free;
-    dmServidor.Free
-  end;
 end;
 
 function TDmPessoa.pessoaExcluir(pessoaId: integer): TJSONObject;
 begin
-  qry.Connection := DmServidor.conn;
-  dmServidor := TDmServidor.Create(nil);
-  qry := TFDquery.Create(nil);
 
-  try
-    ConnBeforeConnect(DmServidor.Conn);
-    DmServidor.Conn.open;
+  result := nil; // Inicializa o resultado para evitar lixo de memória
+  DmServidor.Conn.open;
 
-    qry.Connection := DmServidor.conn;
+  qry.SQL.Add('delete from pessoa');
+  qry.SQL.Add('where pessoaId =:pessoaId');
+  qry.ParamByName('pessoaId').AsInteger := pessoaId;
+  qry.ExecSQL;
 
-    qry.SQL.Add('delete from pessoa');
-    qry.SQL.Add('where pessoaId =:pessoaId');
-    qry.ParamByName('pessoaId').AsInteger := pessoaId;
-    qry.ExecSQL;
+  // devolve um array contendo uma  pessoas com id
+  //result := TJSONObject.create(TJSONPair.create('pessoa_id', pessoa_id));
+  Result := TJSONObject.Create;
+  Result.AddPair('pessoaId', TJSONNumber.Create(pessoaId));
 
-    // devolve um array contendo uma  pessoas com id
-    //result := TJSONObject.create(TJSONPair.create('pessoa_id', pessoa_id));
-    Result := TJSONObject.Create;
-    Result.AddPair('pessoaId', TJSONNumber.Create(pessoaId));
-  finally
-    qry.Free;
-    dmServidor.Free
-  end;
 end;
 
 
