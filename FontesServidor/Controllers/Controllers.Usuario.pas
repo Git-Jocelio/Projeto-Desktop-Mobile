@@ -61,6 +61,23 @@ begin
       else
         res.Send('Login ou senha inválidos').Status(401);
 
+      //dmUsuario := TDmUsuario.Create(nil);
+
+      login := body.GetValue<string>('login', '');
+      senha := body.GetValue<string>('senha', '');
+
+      // 2. Chama a função e armazena o resultado em uma variável local
+      dmUsuario   := TDmUsuario.Create(nil);
+      jsonRetorno := dmUsuario.usuarioLogin(login, senha);
+      if not Assigned(jsonRetorno) then
+      begin
+        res.Status(401).Send('Login ou senha inválido');
+      end
+      else
+      begin
+        //showmessage('usuario valildado');
+        res.Status(201).Send<TJSONObject>(jsonRetorno);
+      end;
     except
       on E: Exception do
         res.Send(E.Message).Status(500);

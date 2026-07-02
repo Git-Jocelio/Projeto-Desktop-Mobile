@@ -54,7 +54,8 @@ begin
        ShowMessage(Exception(TThread(Sender).FatalException).Message );
        //dmUsuario.Free;
        FreeAndNil(dmUsuario);
-       exit;
+       ModalResult := mrOk;
+       Exit;
      end;
 
    // pegar dados de acesso do usuario... devolvidos pelo servidor
@@ -73,7 +74,7 @@ begin
      FormPrincipal.show;
    *)
 
-   dmUsuario.Free;
+   FreeAndNil(dmUsuario);
 
    ModalResult := mrOk;
 
@@ -101,6 +102,8 @@ begin
    );
 
 end;
+
+
 
 function TfrmLogin.ServidorOnline: Boolean;
 var

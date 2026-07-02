@@ -57240,4 +57240,39 @@ object FormPrincipal: TFormPrincipal
       43BE0B3B9F2B250DC4BAA3DB1C0FFBDF7EFB2DFFF5DBB76FBFFFFECFF7F7D720
       3EC4B205FF7FA01EEF4E70E3BED60000000049454E44AE426082}
   end
+  object lblSwith: TLabel
+    Left = 176
+    Top = 207
+    Width = 99
+    Height = 21
+    Caption = 'Servidor Ativo'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clGray
+    Font.Height = -16
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Switch: TToggleSwitch
+    Left = 281
+    Top = 207
+    Width = 50
+    Height = 20
+    Color = clWhite
+    DoubleBuffered = False
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    FrameColor = clGray
+    ParentDoubleBuffered = False
+    ParentFont = False
+    ParentShowHint = False
+    ShowHint = False
+    ShowStateCaption = False
+    State = tssOn
+    TabOrder = 0
+    OnClick = SwitchClick
+  end
 end
