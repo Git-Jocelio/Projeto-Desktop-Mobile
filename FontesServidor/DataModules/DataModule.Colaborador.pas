@@ -10,7 +10,7 @@ uses
   DataSet.Serialize.Config, // necessário para tratar varaveis de consulta
   DataSet.Serialize,        // necessário para por transformar um dataset em um array JSON
   System.JSON,              // necessario para retorno do JSON
-  Env.Conf,
+  Env.Conf,  dialogs,
   DataModule.Servidor;
 
 
@@ -80,7 +80,7 @@ begin
   qry.SQL.Add('order by p.nome');
 
   qry.Open;
-
+  showmessage(qry.FieldByName('setor').AsString);
   Result := qry.ToJSONArray;
 end;
 

@@ -36,9 +36,9 @@ begin
   //CaminhoEnv := TPath.Combine(ExtractFilePath(ParamStr(0)), 'Config\.env');
   //CaminhoEnv := ExtractFilePath(ParamStr(0)) + 'Config\.env';
   //CaminhoEnv := 'C:\Users\jgsilva\Documents\Jocelio\desktop_mobile\FontesServidor\Config\.env';
-  CaminhoEnv := 'D:\desktop_mobile\FontesServidor\Config.env';
+  CaminhoEnv := 'D:\desktop_mobile\FontesServidor\Config\.env';
   if not TFile.Exists(CaminhoEnv) then
-    raise Exception.Create('.env n„o encontrado!');
+    raise Exception.Create('.env n√£o encontrado!');
 
   Linhas := TStringList.Create;
   try
@@ -66,7 +66,7 @@ begin
 end;
 
 { ========================================== }
-{ CONFIGURA A CONEX√O }
+{ CONFIGURA A CONEX√ÉO }
 { ========================================== }
 
 class procedure TEnvConfig.ConfigurarConexao(AConnection: TFDConnection);
