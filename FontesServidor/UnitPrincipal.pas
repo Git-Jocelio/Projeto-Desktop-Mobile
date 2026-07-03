@@ -40,6 +40,7 @@ uses
   Controllers.Cliente,
   Controllers.Usuario,
   Controllers.Produto,
+  Controllers.Colaborador,
   Controllers.Fornecedor;
 
 
@@ -55,7 +56,8 @@ begin
    Controllers.Cliente.RegistrarRotas;
    Controllers.Usuario.RegistrarRotas;
    Controllers.Produto.RegistrarRotas;
-   controllers.Fornecedor.RegistrarRotas;
+   Controllers.Fornecedor.RegistrarRotas;
+   Controllers.Colaborador.RegistrarRotas;
 
    THorse.Listen(3000);
 

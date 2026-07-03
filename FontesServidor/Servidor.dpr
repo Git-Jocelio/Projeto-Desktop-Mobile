@@ -16,7 +16,10 @@ uses
   Service.Produto in 'Service\Service.Produto.pas',
   DataModule.Fornecedor in 'DataModules\DataModule.Fornecedor.pas' {DmFornecedor: TDataModule},
   Service.Fornecedor in 'Service\Service.Fornecedor.pas',
-  Controllers.Fornecedor in 'Controllers\Controllers.Fornecedor.pas';
+  Controllers.Fornecedor in 'Controllers\Controllers.Fornecedor.pas',
+  Controllers.Colaborador in 'Controllers\Controllers.Colaborador.pas',
+  DataModule.Colaborador in 'DataModules\DataModule.Colaborador.pas' {DmColaborador: TDataModule},
+  Service.Colaborador in 'Service\Service.Colaborador.pas';
 
 {$R *.res}
 
@@ -24,5 +27,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TFormPrincipal, FormPrincipal);
+  Application.CreateForm(TDmColaborador, DmColaborador);
   Application.Run;
 end.

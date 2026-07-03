@@ -12,7 +12,8 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    function InserirEditarFornecedor(const pessoaId: integer; const nome, telefone, email, contato, telefone_contato: string): TJSONObject;
+    function InserirEditarFornecedor(const pessoaId: integer; const nome,
+               telefone, email, contato, telefone_contato: string): TJSONObject;
   end;
 
 
@@ -30,7 +31,8 @@ begin
   inherited;
 end;
 
-function TServiceFornecedor.InserirEditarFornecedor(const pessoaId: integer; const nome, telefone, email, contato, telefone_contato: string): TJSONObject;
+function TServiceFornecedor.InserirEditarFornecedor(const pessoaId: integer;
+   const nome, telefone, email, contato, telefone_contato: string): TJSONObject;
 begin
   // Validações da regra de negócio
   if Nome.Trim = '' then

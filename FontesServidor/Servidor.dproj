@@ -166,6 +166,13 @@
         </DCCReference>
         <DCCReference Include="Service\Service.Fornecedor.pas"/>
         <DCCReference Include="Controllers\Controllers.Fornecedor.pas"/>
+        <DCCReference Include="Controllers\Controllers.Colaborador.pas"/>
+        <DCCReference Include="DataModules\DataModule.Colaborador.pas">
+            <Form>DmColaborador</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Service\Service.Colaborador.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
