@@ -80,7 +80,7 @@ begin
   qry.SQL.Add('order by p.nome');
 
   qry.Open;
-  showmessage(qry.FieldByName('setor').AsString);
+  //showmessage(qry.FieldByName('setor').AsString);
   Result := qry.ToJSONArray;
 end;
 

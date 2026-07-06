@@ -60,7 +60,8 @@ begin
                              );
     end,
     TerminateSalvar
-    );end;
+    );
+end;
 
 procedure TFormFornecedorE.FormShow(Sender: TObject);
 begin

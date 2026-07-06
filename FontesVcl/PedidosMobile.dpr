@@ -8,8 +8,6 @@ uses
   Vcl.Session in 'Utils\Vcl.Session.pas',
   UnitFormPedidos in 'UnitFormPedidos.pas' {FormPedidos},
   Vcl.Navigation in 'Utils\Vcl.Navigation.pas',
-  UnitFormCliente in 'UnitFormCliente.pas' {FormCliente},
-  UnitFormClienteE in 'UnitFormClienteE.pas' {FormClienteE},
   DataModele.Pessoa in 'DataModules\DataModele.Pessoa.pas' {DmPessoa: TDataModule},
   DataModule.Usuario in 'DataModules\DataModule.Usuario.pas' {dmUsuario: TDataModule},
   UnitFormBaseGrade in 'FormBaseGrade\UnitFormBaseGrade.pas' {FormBaseGrade},
@@ -26,7 +24,13 @@ uses
   Service.Fornecedor in 'Services\Service.Fornecedor.pas',
   UnitFormSolicitacaoComprasE in 'FormCadastros\SolicitacaoCompras\UnitFormSolicitacaoComprasE.pas' {FormSolicitacaoComprasE},
   UnitFormSolicitacaoCompras in 'FormCadastros\SolicitacaoCompras\UnitFormSolicitacaoCompras.pas' {FormSolicitacaoCompras},
-  UnitFormSolicitacaoItens in 'FormCadastros\SolicitacaoCompras\UnitFormSolicitacaoItens.pas' {FormSolicitacaoItens};
+  UnitFormSolicitacaoItens in 'FormCadastros\SolicitacaoCompras\UnitFormSolicitacaoItens.pas' {FormSolicitacaoItens},
+  UnitFormPessoa in 'FormCadastros\Pessoa\UnitFormPessoa.pas' {FormPessoa},
+  UnitFormColaborador in 'FormCadastros\Colaboradores\UnitFormColaborador.pas' {FormColaborador},
+  DataModule.Colaborador in 'DataModules\DataModule.Colaborador.pas' {DmColaborador: TDataModule},
+  Service.Colaborador in 'Services\Service.Colaborador.pas',
+  UnitFormColaboradorE in 'FormCadastros\Colaboradores\UnitFormColaboradorE.pas' {FormColaboradorE},
+  UnitFormPessoaE in 'FormCadastros\Pessoa\UnitFormPessoaE.pas' {FormPessoaE};
 
 {$R *.res}
 
@@ -42,7 +46,7 @@ begin
     if frmLogin.ShowModal = mrOk then
     begin
       Application.CreateForm(TFormPrincipal, FormPrincipal);
-      Application.Run;
+  Application.Run;
     end;
   finally
     frmLogin.Free;

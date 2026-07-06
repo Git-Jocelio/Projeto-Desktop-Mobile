@@ -2,8 +2,7 @@ unit Service.Fornecedor;
 
 interface
 
-uses DataModule.Fornecedor,
-     System.SysUtils;
+uses DataModule.Fornecedor, System.SysUtils;
 
 type
   TServiceFornecedor = class

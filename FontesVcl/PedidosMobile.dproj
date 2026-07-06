@@ -136,12 +136,6 @@
             <Form>FormPedidos</Form>
         </DCCReference>
         <DCCReference Include="Utils\Vcl.Navigation.pas"/>
-        <DCCReference Include="UnitFormCliente.pas">
-            <Form>FormCliente</Form>
-        </DCCReference>
-        <DCCReference Include="UnitFormClienteE.pas">
-            <Form>FormClienteE</Form>
-        </DCCReference>
         <DCCReference Include="DataModules\DataModele.Pessoa.pas">
             <Form>DmPessoa</Form>
             <DesignClass>TDataModule</DesignClass>
@@ -171,27 +165,6 @@
         <DCCReference Include="Services\Service.Produto.pas"/>
         <DCCReference Include="FormCadastros\Fornecedores\UnitFormFornecedor.pas">
             <Form>FormFornecedor</Form>
-        </DCCReference>
-        <DCCReference Include="DataModules\DataModule.Fornecedor.pas">
-            <Form>DmFornecedor</Form>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
-        <DCCReference Include="FormCadastros\Fornecedores\UnitFormFornecedorE.pas">
-            <Form>FormFornecedorE</Form>
-        </DCCReference>
-        <DCCReference Include="Services\Service.Fornecedor.pas"/>
-        <DCCReference Include="FormCadastros\SolicitacaoCompras\UnitFormSolicitacaoComprasE.pas">
-            <Form>FormSolicitacaoComprasE</Form>
-        </DCCReference>
-        <DCCReference Include="FormCadastros\SolicitacaoCompras\UnitFormSolicitacaoCompras.pas">
-            <Form>FormSolicitacaoCompras</Form>
-        </DCCReference>
-        <DCCReference Include="FormCadastros\SolicitacaoCompras\UnitFormSolicitacaoItens.pas">
-            <Form>FormSolicitacaoItens</Form>
-        </DCCReference>
-        <DCCReference Include="Services\Service.Produto.pas"/>
-        <DCCReference Include="FormCadastros\Fornecedores\UnitFormFornecedor.pas">
-            <Form>FormFornecedor</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="DataModules\DataModule.Fornecedor.pas">
@@ -214,6 +187,28 @@
         </DCCReference>
         <DCCReference Include="FormCadastros\SolicitacaoCompras\UnitFormSolicitacaoItens.pas">
             <Form>FormSolicitacaoItens</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="FormCadastros\Pessoa\UnitFormPessoa.pas">
+            <Form>FormPessoa</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="FormCadastros\Colaboradores\UnitFormColaborador.pas">
+            <Form>FormColaborador</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="DataModules\DataModule.Colaborador.pas">
+            <Form>DmColaborador</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Services\Service.Colaborador.pas"/>
+        <DCCReference Include="FormCadastros\Colaboradores\UnitFormColaboradorE.pas">
+            <Form>FormColaboradorE</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="FormCadastros\Pessoa\UnitFormPessoaE.pas">
+            <Form>FormPessoaE</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

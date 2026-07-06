@@ -217,7 +217,7 @@ object FormPrincipal: TFormPrincipal
           Collapsed = False
           Items = <
             item
-              Caption = 'Colaboradores'
+              Caption = 'Pessoas'
               ImageIndex = 2
               OnClick = CategorySubMenuButtonsCategories0Items0Click
             end
@@ -230,6 +230,11 @@ object FormPrincipal: TFormPrincipal
               Caption = 'Fornecedores'
               ImageIndex = 5
               OnClick = CategorySubMenuButtonsCategories0Items2Click
+            end
+            item
+              Caption = 'Colaboradores'
+              ImageIndex = 2
+              OnClick = CategorySubMenuButtonsCategories0Items3Click
             end>
           VisibleGutter = False
         end>
