@@ -30,7 +30,8 @@ uses
   DataModule.Colaborador in 'DataModules\DataModule.Colaborador.pas' {DmColaborador: TDataModule},
   Service.Colaborador in 'Services\Service.Colaborador.pas',
   UnitFormColaboradorE in 'FormCadastros\Colaboradores\UnitFormColaboradorE.pas' {FormColaboradorE},
-  UnitFormPessoaE in 'FormCadastros\Pessoa\UnitFormPessoaE.pas' {FormPessoaE};
+  UnitFormPessoaE in 'FormCadastros\Pessoa\UnitFormPessoaE.pas' {FormPessoaE},
+  Vcl.Config in 'Utils\Vcl.Config.pas';
 
 {$R *.res}
 

@@ -18,6 +18,7 @@ type
   TDmColaborador = class(TDataModule)
     qry: TFDQuery;
     procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
   private
     procedure ConnBeforeConnect(Sender: TObject);
     { Private declarations }
@@ -60,12 +61,18 @@ begin
 end;
 
 
+procedure TDmColaborador.DataModuleDestroy(Sender: TObject);
+begin
+  FreeAndNil( dmServidor );
+end;
+
 function TDmColaborador.Listar(filtro: string): TJSONArray;
 begin
   result := nil;
 
   DmServidor.Conn.open;
 
+  qry.SQL.Clear;
   qry.SQL.Text := 'select ' +
                   '  p.*, s.nome as setor '+
                   'from ' +
@@ -91,6 +98,7 @@ begin
 
   DmServidor.Conn.open;
   qry.Connection := DmServidor.Conn;
+  qry.SQL.Clear;
   qry.SQL.Text := 'select ' +
                   '  p.*, s.setorid, s.nome as setor '+
                   'from ' +
@@ -115,6 +123,7 @@ begin
   try
     DmServidor.Conn.StartTransaction;
     //pessoa
+    qry.SQL.Clear;
     qry.SQL.Add('INSERT INTO pessoa (nome, email, telefone)');
     qry.SQL.Add('VALUES (:nome, :email, :telefone)');
     qry.SQL.Add('RETURNING pessoaId');
@@ -133,12 +142,16 @@ begin
     qry.ParamByName('pessoaId').Value := novaPessoa;
     qry.ParamByName('setorId').Value  := setorId;
     qry.ExecSQL;
-    DmServidor.Conn.Commit;
+
+    if DmServidor.Conn.InTransaction then
+        DmServidor.Conn.Commit;
+
     Result := TJSONObject.Create;
-    Result.AddPair('colaboradorId', TJSONNumber.Create(qry.FieldByName('colaboradorId').AsString));
+    Result.AddPair('colaboradorId', TJSONNumber.Create(novaPessoa));
 
   except
     DmServidor.Conn.Rollback;
+    raise;
   end;
 
 end;
@@ -153,6 +166,7 @@ begin
   try
     DmServidor.Conn.StartTransaction;
     //pessoa
+    qry.SQL.Clear;
     qry.SQL.Add('update pessoa');
     qry.SQL.Add('  set nome=:nome, telefone=:telefone, email=:email');
     qry.SQL.Add('where pessoaId =:pessoaId');
@@ -175,7 +189,7 @@ begin
     Result.AddPair('pessoaId', TJSONNumber.Create(pessoaId));
   except
     DmServidor.Conn.Rollback;
-
+     raise;
   end;
 end;
 
@@ -185,6 +199,7 @@ begin
   result := nil; // Inicializa o resultado para evitar lixo de memória
   DmServidor.Conn.open;
 
+  qry.SQL.Clear;
   qry.SQL.Add('delete from colaborador');
   qry.SQL.Add('where pessoaId =:pessoaId');
   qry.ParamByName('pessoaId').AsInteger := pessoaId;

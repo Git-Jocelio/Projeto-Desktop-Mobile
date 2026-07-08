@@ -9,7 +9,7 @@ uses
   DataSet.Serialize.Adapter.RESTRequest4D,
   System.JSON, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Config;
 
 type
   TdmUsuario = class(TDataModule)
@@ -49,7 +49,7 @@ begin
     json.AddPair('login', email);
     json.AddPair('senha', senha);
 
-    resp := TRequest.New.BaseURL('http://localhost:3000')  // criando uma requisição do servidor
+    resp := TRequest.New.BaseURL(URL_BASE)  // criando uma requisição do servidor
                         .Resource('/usuario/login')       // nessa rota
                         .AddBody(json.ToJSON)              // passando um json como string com dados da pessoa
                         .Accept('application/json')        // trabalhar com json

@@ -28,60 +28,40 @@ var
 
 implementation
 
-{$R *.dfm}
+
 
 uses
+  Servidor.Startup;
 
-  Horse,
-  Horse.Jhonson,
-  Horse.CORS,
-  Dataset.Serialize.Config,
-  DataModule.Pessoa,
-  Controllers.Cliente,
-  Controllers.Usuario,
-  Controllers.Produto,
-  Controllers.Colaborador,
-  Controllers.Fornecedor;
+{$R *.dfm}
 
 
 procedure TFormPrincipal.FormShow(Sender: TObject);
 begin
-   THorse.use(Jhonson());
-   THorse.use(CORS);
+  ConfigurarServidor;
+  IniciarServidor(3000);
 
-   TDataSetSerializeConfig.GetInstance.CaseNameDefinition := cndLower;
-   TDataSetSerializeConfig.GetInstance.Import.DecimalSeparator := '.';
 
-   // registrar as rotas
-   Controllers.Cliente.RegistrarRotas;
-   Controllers.Usuario.RegistrarRotas;
-   Controllers.Produto.RegistrarRotas;
-   Controllers.Fornecedor.RegistrarRotas;
-   Controllers.Colaborador.RegistrarRotas;
 
-   THorse.Listen(3000);
-
-   lblServidor.caption := 'Servidor Compras respondendo na PORTA : ' + THorse.Port.toString;
-
-   Switch.State := tssOn;
-   lblSwith.Caption := 'Servidor Ativo';
+  lblServidor.Caption := 'Servidor Compras respondendo na PORTA : ' + PortaServidor.ToString;
+  Switch.State := tssOn;
+  lblSwith.Caption := 'Servidor Ativo';
 
 end;
 
 procedure TFormPrincipal.SwitchClick(Sender: TObject);
 begin
-   if Switch.State = tssOn then
-   begin
-     THorse.Listen(3000);
-     lblServidor.caption := 'Servidor Horse respondendo na PORTA : ' + THorse.Port.toString;
-   end
-   else
-   if Switch.State = tssOff then
-   begin
-     THorse.StopListen;
-     lblServidor.caption := 'Servidor Desativado';
-   end;
-
+  if Switch.State = tssOn then
+  begin
+    ConfigurarServidor;
+    IniciarServidor(3000);
+    lblServidor.Caption := 'Servidor Horse respondendo na PORTA : ' + PortaServidor.ToString;
+  end
+  else
+  begin
+    PararServidor;
+    lblServidor.Caption := 'Servidor Desativado';
+  end;
 end;
 
 end.

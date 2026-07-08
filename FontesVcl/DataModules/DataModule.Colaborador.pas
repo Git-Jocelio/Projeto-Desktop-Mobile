@@ -9,7 +9,7 @@ uses
   DataSet.Serialize.Config,
   RestRequest4D,
   DataSet.Serialize.Adapter.RESTRequest4D,
-  System.JSON;
+  System.JSON, Vcl.Config;
 
 type
   TDmColaborador = class(TDataModule)
@@ -48,7 +48,7 @@ procedure TDmColaborador.Listar(memTable: TFDMemTable; filtro: string);
 var
   resp : IResponse;
 begin
-  resp := TRequest.New.BaseURL('http://localhost:3000')
+  resp := TRequest.New.BaseURL(URL_BASE)
                       .Resource('/colaborador')
                       .AddParam('filtro',filtro)
                       .Accept('application/json')
@@ -64,7 +64,7 @@ procedure TDmColaborador.ListarId(memTable: TFDMemTable; pessoaId: integer);
 var
   resp : IResponse;
 begin
-  resp := TRequest.New.BaseURL('http://localhost:3000')
+  resp := TRequest.New.BaseURL(URL_BASE)
                       .Resource('/colaborador')
                       .ResourceSuffix(pessoaId.ToString)
                       .Accept('application/json')
@@ -89,7 +89,7 @@ begin
     json.AddPair('telefone',telefone);
     json.AddPair('setorID',setorID);
 
-    resp := TRequest.New.BaseURL('http://localhost:3000')
+    resp := TRequest.New.BaseURL(URL_BASE)
                         .Resource('/colaborador')
                         .AddBody(json.ToJSON)
                         .Accept('application/json')
@@ -118,7 +118,7 @@ begin
     json.AddPair('telefone',telefone);
     json.AddPair('setorID',setorID);
 
-    resp := TRequest.New.BaseURL('http://localhost:3000')
+    resp := TRequest.New.BaseURL(URL_BASE)
                         .Resource('/colaborador')
                         .ResourceSuffix(pessoaId.ToString)
                         .AddBody(json.ToJSON)
@@ -139,7 +139,7 @@ var
   resp : IResponse;
 begin
 
-    resp := TRequest.New.BaseURL('http://localhost:3000')
+    resp := TRequest.New.BaseURL(URL_BASE)
                         .Resource('/colaborador')
                         .ResourceSuffix(pessoaId.ToString)
                         .Accept('application/json')

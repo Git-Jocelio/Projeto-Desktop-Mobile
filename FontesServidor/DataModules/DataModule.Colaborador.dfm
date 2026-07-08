@@ -1,5 +1,6 @@
 object DmColaborador: TDmColaborador
   OnCreate = DataModuleCreate
+  OnDestroy = DataModuleDestroy
   Height = 480
   Width = 640
   object qry: TFDQuery

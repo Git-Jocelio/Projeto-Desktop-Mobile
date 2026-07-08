@@ -10,7 +10,7 @@ uses
   DataSet.Serialize.Config,  // transforma json em dataset
   RestRequest4D, // usado para receber respostas do servidor
   DataSet.Serialize.Adapter.RESTRequest4D,
-  System.JSON ;
+  System.JSON, Vcl.Config ;
 
 type
   TDmPessoa = class(TDataModule)
@@ -47,7 +47,7 @@ procedure TDmPessoa.ListarPessoa(memTable: TFDMemTable; filtro : string);
 var
   resp : IResponse; // usado para receber respostas do servidor
 begin
-  resp := TRequest.New.BaseURL('http://localhost:3000') // criando uma requisição do servidor
+  resp := TRequest.New.BaseURL(URL_BASE) // criando uma requisição do servidor
                       .Resource('/pessoa')              // nessa rota
                       .AddParam('filtro',filtro)        // nesse filtro
                       .Accept('application/json')       // trabalhar com json
@@ -65,7 +65,7 @@ procedure TDmPessoa.ListarPessoaID(memTable: TFDMemTable; pessoaId: integer);
 var
   resp : IResponse; // usado para receber respostas do servidor
 begin
-  resp := TRequest.New.BaseURL('http://localhost:3000')   // criando uma requisição do servidor
+  resp := TRequest.New.BaseURL(URL_BASE)   // criando uma requisição do servidor
                       .Resource('/pessoa')               // nessa rota
                       .ResourceSuffix(pessoaId.ToString)// acrescenta /id da pessoa
                       .Accept('application/json')        // trabalhar com json
@@ -89,7 +89,7 @@ begin
     json.AddPair('telefone',telefone);
     json.AddPair('email',email);
 
-    resp := TRequest.New.BaseURL('http://localhost:3000')   // criando uma requisição do servidor
+    resp := TRequest.New.BaseURL(URL_BASE)   // criando uma requisição do servidor
                         .Resource('/pessoa')               // nessa rota
                         .AddBody(json.ToJSON)              // passando um json como string com dados da pessoa
                         .Accept('application/json')        // trabalhar com json
@@ -117,7 +117,7 @@ begin
     json.AddPair('telefone',telefone);
     json.AddPair('email',email);
 
-    resp := TRequest.New.BaseURL('http://localhost:3000') // criando uma requisição do servidor
+    resp := TRequest.New.BaseURL(URL_BASE) // criando uma requisição do servidor
                         .Resource('/pessoa')              // nessa rota
                         .ResourceSuffix(pessoaId.ToString) // acrescenta o parametro pessoa_id recebido na url
                         .AddBody(json.ToJSON)             // passando um json como string com dados da pessoa
@@ -137,7 +137,7 @@ var
   resp : IResponse;   // usado para receber respostas do servidor
 begin
 
-    resp := TRequest.New.BaseURL('http://localhost:3000')  // criando uma requisição do servidor
+    resp := TRequest.New.BaseURL(URL_BASE)  // criando uma requisição do servidor
                         .Resource('/pessoa')               // nessa rota
                         .ResourceSuffix(pessoaId.ToString) // acrescenta o parametro pessoa_id recebido na url
                         .Accept('application/json')        // trabalhar com json

@@ -9,7 +9,7 @@ uses
   DataSet.Serialize.Config,
   RestRequest4D,
   DataSet.Serialize.Adapter.RESTRequest4D,
-  System.JSON ;
+  System.JSON, Vcl.Config ;
 
 
 type
@@ -39,7 +39,8 @@ procedure TDmFornecedor.ListarFornecedor(memTable: TFDMemTable; filtro : string)
 var
   resp : IResponse;
 begin
-  resp := TRequest.New.BaseURL('http://localhost:3000')
+  //resp := TRequest.New.BaseURL('http://localhost:3000')
+  resp := TRequest.New.BaseURL(URL_BASE)
                       .Resource('/fornecedor')
                       .AddParam('filtro',filtro)
                       .Accept('application/json')
@@ -54,7 +55,7 @@ procedure TDmFornecedor.ListarFornecedorId(memTable: TFDMemTable; pessoaId: inte
 var
   resp : IResponse;
 begin
-  resp := TRequest.New.BaseURL('http://localhost:3000')
+  resp := TRequest.New.BaseURL(URL_BASE)
                       .Resource('/fornecedor')
                       .ResourceSuffix(pessoaId.ToString)
                       .Accept('application/json')
@@ -81,7 +82,7 @@ begin
     json.AddPair('contato',contato);
     json.AddPair('telefone_contato',telefone_contato);
 
-    resp := TRequest.New.BaseURL('http://localhost:3000')   // criando uma requisição do servidor
+    resp := TRequest.New.BaseURL(URL_BASE)   // criando uma requisição do servidor
                         .Resource('/fornecedor')           // nessa rota
                         .AddBody(json.ToJSON)              // passando um json como string com dados do fornecedor
                         .Accept('application/json')        // trabalhar com json
@@ -110,7 +111,7 @@ begin
     json.AddPair('contato',contato);
     json.AddPair('telefone_contato',telefone_contato);
 
-    resp := TRequest.New.BaseURL('http://localhost:3000') // criando uma requisição do servidor
+    resp := TRequest.New.BaseURL(URL_BASE) // criando uma requisição do servidor
                         .Resource('/fornecedor')           // nessa rota
                         .ResourceSuffix(pessoaId.ToString) // acrescenta o parametro produtoId recebido na url
                         .AddBody(json.ToJSON)             // passando um json como string com dados do produto
@@ -130,7 +131,7 @@ var
   resp : IResponse;
 begin
 
-    resp := TRequest.New.BaseURL('http://localhost:3000')
+    resp := TRequest.New.BaseURL(URL_BASE)
                         .Resource('/fornecedor')
                         .ResourceSuffix(pessoaId.ToString)
                         .Accept('application/json')

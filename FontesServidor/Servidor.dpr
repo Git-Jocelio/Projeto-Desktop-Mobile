@@ -19,7 +19,8 @@ uses
   Controllers.Fornecedor in 'Controllers\Controllers.Fornecedor.pas',
   Controllers.Colaborador in 'Controllers\Controllers.Colaborador.pas',
   DataModule.Colaborador in 'DataModules\DataModule.Colaborador.pas' {DmColaborador: TDataModule},
-  Service.Colaborador in 'Service\Service.Colaborador.pas';
+  Service.Colaborador in 'Service\Service.Colaborador.pas',
+  Servidor.Startup in 'Server\Servidor.Startup.pas';
 
 {$R *.res}
 

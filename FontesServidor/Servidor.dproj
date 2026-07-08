@@ -173,6 +173,7 @@
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Service\Service.Colaborador.pas"/>
+        <DCCReference Include="Server\Servidor.Startup.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

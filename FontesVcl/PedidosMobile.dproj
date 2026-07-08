@@ -211,6 +211,7 @@
             <Form>FormPessoaE</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Utils\Vcl.Config.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
