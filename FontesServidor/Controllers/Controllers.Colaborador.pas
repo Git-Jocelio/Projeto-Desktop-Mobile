@@ -139,7 +139,8 @@ begin
   nome     := body.GetValue<string>('nome', '');
   telefone := body.GetValue<string>('telefone', '');
   email    := body.GetValue<string>('email', '');
-  setorID    := body.GetValue<integer>('setorID', 0);
+  setorID  := body.GetValue<integer>('setorID', 0);
+
 
   ServiceColaborador := TServiceColaborador.Create;// nesse momento instância o fdconnection
   try

@@ -13,10 +13,15 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnInserirClick(Sender: TObject);
+    procedure btnFiltrarClick(Sender: TObject);
+    procedure dbgDblClick(Sender: TObject);
+    procedure BtnExcluirClick(Sender: TObject);
   private
     procedure OpenCadColaborador(pessoaId: integer);
     procedure RefreshColaborador;
     procedure TerminateBusca;
+    procedure Editar;
+    procedure TerminateExcluir(Sender: TObject);
     { Private declarations }
   public
     { Public declarations }
@@ -32,11 +37,70 @@ implementation
 
 uses DataModule.Colaborador, UnitFormColaboradorE;
 
+procedure TFormColaborador.TerminateExcluir(Sender: TObject);
+begin
+
+  TLoading.Hide;
+
+  if (Sender is TThread) then
+    if Assigned(TThread(Sender).FatalException) then
+    begin
+      ShowMessage( Exception(TThread(Sender).FatalException).Message );
+      exit;
+    end;
+
+  RefreshColaborador;
+
+end;
+
+
+
+procedure TFormColaborador.BtnExcluirClick(Sender: TObject);
+begin
+  if DmColaborador.TabColaborador.IsEmpty then
+    exit;
+
+ if MessageDlg('Deseja realmente excluir este registro?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+ begin
+
+   TLoading.Show;
+   TLoading.ExecuteThread(procedure
+   begin
+      DmColaborador.Excluir(DmColaborador.TabColaborador.FieldByName('pessoaId').AsInteger);
+   end,
+   TerminateExcluir
+   );
+ end;
+
+end;
+
+procedure TFormColaborador.btnFiltrarClick(Sender: TObject);
+begin
+  inherited;
+  RefreshColaborador;
+end;
 
 procedure TFormColaborador.btnInserirClick(Sender: TObject);
 begin
   inherited;
   OpenCadColaborador(0);
+end;
+
+procedure TFormColaborador.Editar;
+begin
+  if DmColaborador.TabColaborador.IsEmpty then
+    exit;
+
+    bookMark := dbg.DataSource.DataSet.GetBookmark;
+    OpenCadColaborador(DmColaborador.TabColaborador.FieldByName('pessoaId').AsInteger);
+end;
+
+
+
+procedure TFormColaborador.dbgDblClick(Sender: TObject);
+begin
+  inherited;
+  Editar;
 end;
 
 procedure TFormColaborador.FormCreate(Sender: TObject);
@@ -86,8 +150,8 @@ begin
     ds.DataSet := DmColaborador.TabColaborador;
     if ds.DataSet.IsEmpty then
       ShowMessage('Nenhum registro encontrado!')
-  finally
-   TerminateBusca;
+    finally
+     TerminateBusca;
   end;
 
 end;

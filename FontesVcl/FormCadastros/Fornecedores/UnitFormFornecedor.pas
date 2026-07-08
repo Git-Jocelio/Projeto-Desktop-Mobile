@@ -56,6 +56,8 @@ begin
    TerminateExcluir
    );
  end;
+
+
 end;
 
 procedure TFormFornecedor.TerminateExcluir(Sender: TObject);
@@ -121,7 +123,7 @@ begin
     if ds.DataSet.IsEmpty then
       ShowMessage('Nenhum registro encontrado!')
   finally
-   TerminateBusca;
+    TerminateBusca;
   end;
 
 end;

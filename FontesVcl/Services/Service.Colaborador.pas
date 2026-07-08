@@ -31,7 +31,7 @@ begin
 
 
   if setorID <=0 then
-     raise Exception.Create('Informe o setor.');
+     raise Exception.Create('Informe o setor');
 
 
 

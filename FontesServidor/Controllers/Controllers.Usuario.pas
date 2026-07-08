@@ -53,35 +53,19 @@ begin
       senha := body.GetValue<string>('senha', '');
 
       dmUsuario := TDmUsuario.Create(nil);
-
       jsonRetorno := dmUsuario.usuarioLogin(login, senha);
 
-      if Assigned(jsonRetorno) then
-        res.Send<TJSONObject>(jsonRetorno).Status(200)
-      else
-        res.Send('Login e ou Senha inválidos').Status(401);
-
-      //dmUsuario := TDmUsuario.Create(nil);
-
-      login := body.GetValue<string>('login', '');
-      senha := body.GetValue<string>('senha', '');
-
-      // 2. Chama a função e armazena o resultado em uma variável local
-      dmUsuario   := TDmUsuario.Create(nil);
-      jsonRetorno := dmUsuario.usuarioLogin(login, senha);
       if not Assigned(jsonRetorno) then
-        res.Status(401).Send('Login ou senha inválido')
+            res.Status(401).Send('Login ou senha inválido')
       else
-        //showmessage('usuario valildado');
-        res.Status(201).Send<TJSONObject>(jsonRetorno);
+            res.Status(200).Send<TJSONObject>(jsonRetorno);
+
     except
       on E: Exception do
         res.Send(E.Message).Status(500);
     end;
 
   finally
-    // Não liberar jsonRetorno.
-    // O Horse/Jhonson assume a propriedade do TJSONObject enviado via Send<TJSONObject>.
     dmUsuario.Free;
   end;
 

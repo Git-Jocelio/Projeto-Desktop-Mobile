@@ -92,7 +92,7 @@ begin
   DmServidor.Conn.open;
   qry.Connection := DmServidor.Conn;
   qry.SQL.Text := 'select ' +
-                  '  p.*, s.nome as setor '+
+                  '  p.*, s.setorid, s.nome as setor '+
                   'from ' +
                   '  pessoa p, colaborador c, setor s ' +
                   'where ' +

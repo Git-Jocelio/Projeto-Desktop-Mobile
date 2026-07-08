@@ -1,10 +1,10 @@
 inherited FormFornecedorE: TFormFornecedorE
   Caption = 'FormFornecedorE'
-  ClientHeight = 485
-  ClientWidth = 395
+  ClientHeight = 470
+  ClientWidth = 410
   OnShow = FormShow
-  ExplicitWidth = 395
-  ExplicitHeight = 485
+  ExplicitWidth = 410
+  ExplicitHeight = 470
   TextHeight = 15
   inherited lblTitulo: TLabel
     Width = 169
