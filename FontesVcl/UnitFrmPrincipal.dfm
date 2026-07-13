@@ -121,6 +121,7 @@ object FormPrincipal: TFormPrincipal
             item
               Caption = ' Meu Perfil'
               ImageIndex = 5
+              OnClick = CategoryButtonsCategories0Items4Click
             end
             item
               Caption = ' Configura'#231#245'es'

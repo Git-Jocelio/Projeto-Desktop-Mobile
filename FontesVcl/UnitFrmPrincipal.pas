@@ -45,6 +45,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure CategoryButtonsCategories0Items6Click(Sender: TObject);
     procedure CategorySubMenuButtonsCategories0Items3Click(Sender: TObject);
+    procedure CategoryButtonsCategories0Items4Click(Sender: TObject);
 
   private
     procedure CloseSubMenu;
@@ -61,7 +62,7 @@ implementation
 {$R *.dfm}
 
 uses UnitFormPedidos, UnitFormProduto, UnitFormPessoa, UnitFormFornecedor,
-      UnitFormSolicitacaoCompras, UnitFormColaborador;
+      UnitFormSolicitacaoCompras, UnitFormColaborador, UnitFormPerfilE;
 
 procedure TFormPrincipal.CategoryButtonsCategories0Items1Click(Sender: TObject);
 begin
@@ -73,6 +74,12 @@ end;
 procedure TFormPrincipal.CategoryButtonsCategories0Items2Click(Sender: TObject);
 begin
   svSubMenu.Opened := TRUE;
+end;
+
+procedure TFormPrincipal.CategoryButtonsCategories0Items4Click(Sender: TObject);
+begin
+  svSubMenu.Opened := FALSE;
+  TNavigation.OpenModal(TFormPerfilE, FormPerfilE);
 end;
 
 procedure TFormPrincipal.CategoryButtonsCategories0Items5Click(Sender: TObject);

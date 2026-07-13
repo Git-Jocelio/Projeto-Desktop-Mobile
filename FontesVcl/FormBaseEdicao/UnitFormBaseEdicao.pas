@@ -44,7 +44,6 @@ end;
 procedure TFormBaseEdicao.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   action := TCloseAction.caFree;
-  //FormBaseEdicao := nil;
   Self := nil;
 end;
 

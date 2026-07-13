@@ -1,10 +1,10 @@
 inherited FormPessoaE: TFormPessoaE
   Caption = 'Nome'
-  ClientHeight = 318
-  ClientWidth = 418
+  ClientHeight = 320
+  ClientWidth = 420
   OnShow = FormShow
-  ExplicitWidth = 418
-  ExplicitHeight = 318
+  ExplicitWidth = 420
+  ExplicitHeight = 320
   TextHeight = 15
   inherited lblTitulo: TLabel
     Width = 121

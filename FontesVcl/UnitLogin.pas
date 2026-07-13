@@ -11,22 +11,64 @@ uses
   System.Net.HttpClient,
   System.Net.URLClient,
   System.Net.HttpClientComponent,
-  Vcl.Imaging.jpeg;
+  Vcl.Imaging.jpeg, Vcl.ComCtrls;
 type
   TfrmLogin = class(TForm)
-    ImgFundo: TImage;
+    PageControl: TPageControl;
+    tbsBoasVindas: TTabSheet;
+    TabLogin: TTabSheet;
+    tbsNovaConta: TTabSheet;
     pnLogin: TPanel;
     Label1: TLabel;
-    Label2: TLabel;
     Label3: TLabel;
-    PnlBotaoAcessar: TPanel;
     Senha: TLabel;
+    PnlBotaoAcessar: TPanel;
+    BtnAcessar: TSpeedButton;
     Panel2: TPanel;
     EdtLogin: TEdit;
     Panel3: TPanel;
     EdtSenha: TEdit;
-    BtnAcessar: TSpeedButton;
+    pnlDireito: TPanel;
+    pnlTopo: TPanel;
+    pnlCentro: TPanel;
+    Label4: TLabel;
+    Panel6: TPanel;
+    pnlRodape: TPanel;
+    imgLogoSistema: TImage;
+    Panel1: TPanel;
+    SpeedButton1: TSpeedButton;
+    Panel4: TPanel;
+    SpeedButton2: TSpeedButton;
+    Panel5: TPanel;
+    Panel7: TPanel;
+    Panel8: TPanel;
+    Panel9: TPanel;
+    Image1: TImage;
+    Panel10: TPanel;
+    Panel11: TPanel;
+    Panel12: TPanel;
+    Panel13: TPanel;
+    pnlNovaconta: TPanel;
+    Label5: TLabel;
+    Image2: TImage;
+    Panel15: TPanel;
+    Label6: TLabel;
+    Label9: TLabel;
+    Panel14: TPanel;
+    Edit1: TEdit;
+    Panel16: TPanel;
+    Edit2: TEdit;
+    Panel17: TPanel;
+    Edit3: TEdit;
+    Panel18: TPanel;
+    Edit4: TEdit;
+    SpeedButton3: TSpeedButton;
     procedure BtnAcessarClick(Sender: TObject);
+    procedure SpeedButton2Click(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure Label6Click(Sender: TObject);
+    procedure Label9Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     procedure TerminateLogin(Sender: TObject);
     function ServidorOnline: Boolean;
@@ -61,17 +103,6 @@ begin
    TSession.EMAIL      := dmUsuario.MemTable.fieldbyname('login').AsString;
    TSession.NOME       := dmUsuario.MemTable.fieldbyname('nome').AsString;
 
-
-   // FormPrincipal is already created automatically, so there is no need to create it again.
-
-   (*
-     if NOT Assigned(FormPrincipal) then
-       Application.CreateForm(TFormPrincipal, FormPrincipal);
-
-    chama o form principal
-     FormPrincipal.show;
-   *)
-
    FreeAndNil(dmUsuario);
 
    ModalResult := mrOk;
@@ -103,6 +134,21 @@ end;
 
 
 
+procedure TfrmLogin.FormShow(Sender: TObject);
+begin
+  PageControl.ActivePageIndex := 1;
+end;
+
+procedure TfrmLogin.Label6Click(Sender: TObject);
+begin
+  PageControl.TabIndex := 2;
+end;
+
+procedure TfrmLogin.Label9Click(Sender: TObject);
+begin
+  PageControl.TabIndex := 1;
+end;
+
 function TfrmLogin.ServidorOnline: Boolean;
 var
   Http: TNetHTTPClient;
@@ -126,6 +172,16 @@ begin
     Http.Free;
   end;
 
+end;
+
+procedure TfrmLogin.SpeedButton1Click(Sender: TObject);
+begin
+  PageControl.TabIndex := 2;
+end;
+
+procedure TfrmLogin.SpeedButton2Click(Sender: TObject);
+begin
+  PageControl.TabIndex := 1;
 end;
 
 end.
