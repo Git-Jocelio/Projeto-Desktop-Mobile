@@ -5,9 +5,9 @@ unit Controllers.Usuario;
 interface
 uses Horse,
      DataModule.Pessoa,
-     System.SysUtils,         dialogs,
-     System.JSON,
-     DataModule.Usuario;
+     System.SysUtils,
+     System.JSON,Service.Usuario,
+     Controllers.JWT;
 
 procedure RegistrarRotas;
 procedure Login(req: THorseRequest; res: THorseResponse; Next: TProc);
@@ -18,56 +18,61 @@ procedure EditarUsuario(req: THorseRequest; res: THorseResponse; Next: TProc);
 
 implementation
 
+
 procedure RegistrarRotas;
 begin
   THorse.Post('/usuario/login', Login);
-  THorse.post('/usuario/cadastro', InserirUsuario);
-  THorse.post('/usuario/password', EditarSenha);
+  THorse.Post('/usuario/cadastro', InserirUsuario);
+  THorse.Post('/usuario/password', EditarSenha);
 
   //não passarei o id do usuário pq ele será passado dentro do token JWT
-  THorse.get('/usuario', listarUsuarioId);
-  THorse.put('/usuario', EditarUsuario);
+  THorse.Get('/usuario', listarUsuarioId);
+  THorse.Put('/usuario', EditarUsuario);
 end;
 
 procedure Login(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
-  dmUsuario: TDmUsuario;
   body: TJSONObject;
   login, senha: string;
   jsonRetorno: TJSONObject;
 begin
-  dmUsuario := nil;
+  //dmUsuario := nil;
   jsonRetorno := nil;
 
   try
-    try
-      body := req.Body<TJSONObject>;
+    body := req.Body<TJSONObject>;
 
-      if not Assigned(body) then
-      begin
-        res.Send('JSON inválido ou vazio').Status(400);
-        Exit;
-      end;
-
-      login := body.GetValue<string>('login', '');
-      senha := body.GetValue<string>('senha', '');
-
-      dmUsuario := TDmUsuario.Create(nil);
-      jsonRetorno := dmUsuario.usuarioLogin(login, senha);
-
-      if not Assigned(jsonRetorno) then
-            res.Status(401).Send('Login ou senha inválido')
-      else
-            res.Status(200).Send<TJSONObject>(jsonRetorno);
-
-    except
-      on E: Exception do
-        res.Send(E.Message).Status(500);
+    if not Assigned(body) then
+    begin
+      res.Send('JSON inválido ou vazio').Status(400);
+      Exit;
     end;
 
-  finally
-    dmUsuario.Free;
+    login := body.GetValue<string>('login', '');
+    senha := body.GetValue<string>('senha', '');
+
+    //jsonRetorno := dmUsuario.usuarioLogin(login, senha);
+    jsonRetorno := Service.Usuario.Login(login, senha);
+
+    if jsonRetorno.Count = 0 then
+    begin
+      res.Status(401).Send('Login ou senha inválido');
+      FreeAndNil(jsonRetorno);
+    end
+    else
+    begin
+      // gerar token JWT.. curso Poupei, aula 04, miunuto 31"25
+      jsonRetorno.AddPair('token',
+                      Criar_Token(jsonRetorno.GetValue<integer>('id_usuario')));
+
+      res.Send<TJSONObject>(jsonRetorno).Status(200);
+
+    end;
+  except
+    on E: Exception do
+      res.Send(E.Message).Status(500);
   end;
+
 
 end;
 

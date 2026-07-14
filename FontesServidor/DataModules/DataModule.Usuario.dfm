@@ -1,4 +1,4 @@
-object dmUsuario: TdmUsuario
+object DmUsuario: TDmUsuario
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
   Height = 327

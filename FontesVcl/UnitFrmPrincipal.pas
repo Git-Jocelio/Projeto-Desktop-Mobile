@@ -159,6 +159,7 @@ end;
 procedure TFormPrincipal.CloseSubMenu;
 begin
   svSubMenuCadastros.Opened := NOT svSubMenuCadastros.Opened;
+  svSubMenuSeguranca.Opened := NOT svSubMenuSeguranca.Opened;
 
   CategoryButtons.SelectedItem := nil;
   svMenu.SetFocus;

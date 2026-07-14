@@ -147,14 +147,14 @@
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="DataModules\DataModule.Usuario.pas">
-            <Form>dmUsuario</Form>
+            <Form>DmUsuario</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Utils\uMD5.pas"/>
         <DCCReference Include="Controllers\Controllers.Produto.pas"/>
         <DCCReference Include="DataModules\DataModule.Produto.pas">
-            <Form>dmProduto</Form>
+            <Form>DmProduto</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
@@ -174,6 +174,8 @@
         </DCCReference>
         <DCCReference Include="Service\Service.Colaborador.pas"/>
         <DCCReference Include="Server\Servidor.Startup.pas"/>
+        <DCCReference Include="Controllers\Controllers.JWT.pas"/>
+        <DCCReference Include="Service\Service.Usuario.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

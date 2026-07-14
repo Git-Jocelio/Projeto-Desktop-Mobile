@@ -27,8 +27,7 @@ end;
 
 destructor TServiceProduto.Destroy;
 begin
-  FDM.Free;
-  inherited;
+  freeandnil(FDM);
 end;
 
 

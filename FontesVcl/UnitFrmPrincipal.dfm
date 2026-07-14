@@ -32,7 +32,6 @@ object FormPrincipal: TFormPrincipal
     ParentFont = False
     Placement = svpLeft
     TabOrder = 0
-    ExplicitHeight = 620
     object Panel1: TPanel
       Left = 0
       Top = 0
@@ -41,8 +40,6 @@ object FormPrincipal: TFormPrincipal
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitLeft = -144
-      ExplicitTop = 8
       object btnMenuRetratil: TSpeedButton
         Left = 0
         Top = 0
@@ -107,7 +104,7 @@ object FormPrincipal: TFormPrincipal
               ImageIndex = 8
             end
             item
-              Caption = 'Solicita'#231#245'es de Compras'
+              Caption = ' Solicita'#231#245'es de Compras'
               ImageIndex = 1
               OnClick = CategoryButtonsCategories0Items1Click
             end
@@ -132,7 +129,7 @@ object FormPrincipal: TFormPrincipal
               OnClick = CategoryButtonsCategories0Items5Click
             end
             item
-              Caption = 'Sair do Sistema'
+              Caption = ' Sair do Sistema'
               ImageIndex = 3
               OnClick = CategoryButtonsCategories0Items6Click
             end>
@@ -143,10 +140,6 @@ object FormPrincipal: TFormPrincipal
       RegularButtonColor = clNone
       SelectedButtonColor = 6969943
       TabOrder = 1
-      ExplicitLeft = -24
-      ExplicitTop = 47
-      ExplicitWidth = 45
-      ExplicitHeight = 668
     end
   end
   object svSubMenuCadastros: TSplitView
@@ -166,7 +159,6 @@ object FormPrincipal: TFormPrincipal
     ParentFont = False
     Placement = svpLeft
     TabOrder = 1
-    ExplicitHeight = 620
     object Panel2: TPanel
       Left = 0
       Top = 0
@@ -253,7 +245,6 @@ object FormPrincipal: TFormPrincipal
       RegularButtonColor = clNone
       SelectedButtonColor = 6969943
       TabOrder = 1
-      ExplicitTop = 58
     end
   end
   object pnTela: TPanel
@@ -266,9 +257,6 @@ object FormPrincipal: TFormPrincipal
     Color = 16051947
     ParentBackground = False
     TabOrder = 2
-    ExplicitLeft = 704
-    ExplicitWidth = 714
-    ExplicitHeight = 723
     object pnNavBar: TPanel
       Left = 0
       Top = 0
@@ -279,7 +267,6 @@ object FormPrincipal: TFormPrincipal
       Color = 15458266
       ParentBackground = False
       TabOrder = 0
-      ExplicitWidth = 672
       object imgUsuario: TImage
         AlignWithMargins = True
         Left = 553
@@ -473,7 +460,6 @@ object FormPrincipal: TFormPrincipal
         Color = 15458266
         ParentBackground = False
         TabOrder = 0
-        ExplicitLeft = 502
         object lblEmail: TLabel
           Left = 0
           Top = 25
@@ -525,8 +511,6 @@ object FormPrincipal: TFormPrincipal
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 612
-      ExplicitHeight = 550
     end
   end
   object svSubMenuSeguranca: TSplitView
@@ -546,8 +530,6 @@ object FormPrincipal: TFormPrincipal
     ParentFont = False
     Placement = svpLeft
     TabOrder = 3
-    ExplicitLeft = 661
-    ExplicitTop = 8
     object Panel3: TPanel
       Left = 0
       Top = 0
@@ -626,8 +608,6 @@ object FormPrincipal: TFormPrincipal
       RegularButtonColor = clNone
       SelectedButtonColor = 6969943
       TabOrder = 1
-      ExplicitLeft = 64
-      ExplicitTop = 58
     end
   end
   object ImageList: TImageList

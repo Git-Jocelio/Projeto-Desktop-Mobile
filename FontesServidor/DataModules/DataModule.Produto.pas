@@ -17,7 +17,7 @@ uses
   DataModule.Servidor;
 
 type
-  TdmProduto = class(TDataModule)
+  TDmProduto = class(TDataModule)
     procedure DataModuleCreate(Sender: TObject);
     procedure ConnBeforeConnect(Sender: TObject);
   private
@@ -33,7 +33,7 @@ type
   end;
 
 var
-  dmProduto: TdmProduto;
+  DmProduto: TDmProduto;
 
 implementation
 
@@ -41,19 +41,19 @@ implementation
 
 {$R *.dfm}
 
-procedure TdmProduto.ConnBeforeConnect(Sender: TObject);
+procedure TDmProduto.ConnBeforeConnect(Sender: TObject);
 begin
   TEnvConfig.ConfigurarConexao(TFDConnection(Sender));
 end;
 
 
-procedure TdmProduto.DataModuleCreate(Sender: TObject);
+procedure TDmProduto.DataModuleCreate(Sender: TObject);
 begin
   TDataSetSerializeConfig.GetInstance.CaseNameDefinition := cndLower;
   TDataSetSerializeConfig.GetInstance.Import.DecimalSeparator := '.';
 end;
 
-function TdmProduto.produtoInserir(descricao, unidade: string; estoque: integer): TJSONObject;
+function TDmProduto.produtoInserir(descricao, unidade: string; estoque: integer): TJSONObject;
 var
   dmServidor: TDMServidor;
   qry: TFDQuery;
@@ -89,7 +89,7 @@ begin
   end;
 end;
 
-function TdmProduto.produtoListar(filtro: string): TJSONArray;
+function TDmProduto.produtoListar(filtro: string): TJSONArray;
 var
   dmServidor: TDMServidor;
   qry : TFDquery;
@@ -120,7 +120,7 @@ begin
   end;
 end;
 
-function TdmProduto.produtoListarId(produtoId: integer): TJSONObject;
+function TDmProduto.produtoListarId(produtoId: integer): TJSONObject;
 var
   dmServidor: TDMServidor;
   qry : TFDquery;
@@ -147,7 +147,7 @@ begin
   end;
 end;
 
-function TdmProduto.produtoEditar(produtoId: integer;
+function TDmProduto.produtoEditar(produtoId: integer;
                           descricao, unidade: string; estoque: integer): TJSONObject;
 var
   dmServidor: TDMServidor;
@@ -180,7 +180,7 @@ begin
   end;
 end;
 
-function TdmProduto.produtoExcluir(produtoId: integer): TJSONObject;
+function TDmProduto.produtoExcluir(produtoId: integer): TJSONObject;
 var
   dmServidor: TDMServidor;
   qry : TFDquery;

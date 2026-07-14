@@ -9,10 +9,10 @@ uses
   Service.Pessoa in 'Service\Service.Pessoa.pas',
   Env.Conf in 'Config\Env.Conf.pas',
   DataModule.Servidor in 'DataModules\DataModule.Servidor.pas' {DmServidor: TDataModule},
-  DataModule.Usuario in 'DataModules\DataModule.Usuario.pas' {dmUsuario: TDataModule},
+  DataModule.Usuario in 'DataModules\DataModule.Usuario.pas' {DmUsuario: TDataModule},
   uMD5 in 'Utils\uMD5.pas',
   Controllers.Produto in 'Controllers\Controllers.Produto.pas',
-  DataModule.Produto in 'DataModules\DataModule.Produto.pas' {dmProduto: TDataModule},
+  DataModule.Produto in 'DataModules\DataModule.Produto.pas' {DmProduto: TDataModule},
   Service.Produto in 'Service\Service.Produto.pas',
   DataModule.Fornecedor in 'DataModules\DataModule.Fornecedor.pas' {DmFornecedor: TDataModule},
   Service.Fornecedor in 'Service\Service.Fornecedor.pas',
@@ -20,7 +20,9 @@ uses
   Controllers.Colaborador in 'Controllers\Controllers.Colaborador.pas',
   DataModule.Colaborador in 'DataModules\DataModule.Colaborador.pas' {DmColaborador: TDataModule},
   Service.Colaborador in 'Service\Service.Colaborador.pas',
-  Servidor.Startup in 'Server\Servidor.Startup.pas';
+  Servidor.Startup in 'Server\Servidor.Startup.pas',
+  Controllers.JWT in 'Controllers\Controllers.JWT.pas',
+  Service.Usuario in 'Service\Service.Usuario.pas';
 
 {$R *.res}
 
@@ -28,6 +30,5 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TFormPrincipal, FormPrincipal);
-  Application.CreateForm(TDmColaborador, DmColaborador);
   Application.Run;
 end.
