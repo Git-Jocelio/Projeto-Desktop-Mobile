@@ -2,8 +2,8 @@ object FormPrincipal: TFormPrincipal
   Left = 0
   Top = 0
   Caption = 'Pedidos Mobile'
-  ClientHeight = 620
-  ClientWidth = 1117
+  ClientHeight = 779
+  ClientWidth = 1418
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object FormPrincipal: TFormPrincipal
     Left = 0
     Top = 0
     Width = 245
-    Height = 620
+    Height = 779
     Cursor = crHandPoint
     CloseStyle = svcCompact
     Color = 5585461
@@ -32,6 +32,7 @@ object FormPrincipal: TFormPrincipal
     ParentFont = False
     Placement = svpLeft
     TabOrder = 0
+    ExplicitHeight = 620
     object Panel1: TPanel
       Left = 0
       Top = 0
@@ -40,6 +41,8 @@ object FormPrincipal: TFormPrincipal
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
+      ExplicitLeft = -144
+      ExplicitTop = 8
       object btnMenuRetratil: TSpeedButton
         Left = 0
         Top = 0
@@ -79,7 +82,7 @@ object FormPrincipal: TFormPrincipal
       Left = 0
       Top = 55
       Width = 245
-      Height = 565
+      Height = 724
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -106,17 +109,17 @@ object FormPrincipal: TFormPrincipal
             item
               Caption = 'Solicita'#231#245'es de Compras'
               ImageIndex = 1
-              OnClick = CategoryButtonsCategories0Items6Click
+              OnClick = CategoryButtonsCategories0Items1Click
             end
             item
               Caption = ' Pedidos de  Compras'
               ImageIndex = 7
-              OnClick = CategoryButtonsCategories0Items1Click
+              OnClick = CategoryButtonsCategories0Items2Click
             end
             item
               Caption = ' Cadastros'
               ImageIndex = 6
-              OnClick = CategoryButtonsCategories0Items2Click
+              OnClick = CategoryButtonsCategories0Items3Click
             end
             item
               Caption = ' Meu Perfil'
@@ -126,11 +129,12 @@ object FormPrincipal: TFormPrincipal
             item
               Caption = ' Configura'#231#245'es'
               ImageIndex = 4
+              OnClick = CategoryButtonsCategories0Items5Click
             end
             item
-              Caption = ' Sair do Sistema'
+              Caption = 'Sair do Sistema'
               ImageIndex = 3
-              OnClick = CategoryButtonsCategories0Items5Click
+              OnClick = CategoryButtonsCategories0Items6Click
             end>
           VisibleGutter = False
         end>
@@ -139,13 +143,17 @@ object FormPrincipal: TFormPrincipal
       RegularButtonColor = clNone
       SelectedButtonColor = 6969943
       TabOrder = 1
+      ExplicitLeft = -24
+      ExplicitTop = 47
+      ExplicitWidth = 45
+      ExplicitHeight = 668
     end
   end
-  object svSubMenu: TSplitView
+  object svSubMenuCadastros: TSplitView
     Left = 245
     Top = 0
     Width = 200
-    Height = 620
+    Height = 779
     Cursor = crHandPoint
     Color = 6969943
     CompactWidth = 0
@@ -158,6 +166,7 @@ object FormPrincipal: TFormPrincipal
     ParentFont = False
     Placement = svpLeft
     TabOrder = 1
+    ExplicitHeight = 620
     object Panel2: TPanel
       Left = 0
       Top = 0
@@ -197,7 +206,7 @@ object FormPrincipal: TFormPrincipal
       Left = 0
       Top = 55
       Width = 200
-      Height = 565
+      Height = 724
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -244,31 +253,36 @@ object FormPrincipal: TFormPrincipal
       RegularButtonColor = clNone
       SelectedButtonColor = 6969943
       TabOrder = 1
+      ExplicitTop = 58
     end
   end
   object pnTela: TPanel
-    Left = 445
+    Left = 645
     Top = 0
-    Width = 672
-    Height = 620
+    Width = 773
+    Height = 779
     Align = alClient
     BevelOuter = bvNone
     Color = 16051947
     ParentBackground = False
     TabOrder = 2
+    ExplicitLeft = 704
+    ExplicitWidth = 714
+    ExplicitHeight = 723
     object pnNavBar: TPanel
       Left = 0
       Top = 0
-      Width = 672
+      Width = 773
       Height = 50
       Align = alTop
       BevelOuter = bvNone
       Color = 15458266
       ParentBackground = False
       TabOrder = 0
+      ExplicitWidth = 672
       object imgUsuario: TImage
         AlignWithMargins = True
-        Left = 452
+        Left = 553
         Top = 0
         Width = 50
         Height = 50
@@ -318,7 +332,7 @@ object FormPrincipal: TFormPrincipal
       end
       object ImgNotificacoes: TImage
         AlignWithMargins = True
-        Left = 392
+        Left = 493
         Top = 0
         Width = 50
         Height = 50
@@ -450,7 +464,7 @@ object FormPrincipal: TFormPrincipal
         ExplicitLeft = 702
       end
       object pnUsuario: TPanel
-        Left = 502
+        Left = 603
         Top = 0
         Width = 170
         Height = 50
@@ -459,6 +473,7 @@ object FormPrincipal: TFormPrincipal
         Color = 15458266
         ParentBackground = False
         TabOrder = 0
+        ExplicitLeft = 502
         object lblEmail: TLabel
           Left = 0
           Top = 25
@@ -501,8 +516,8 @@ object FormPrincipal: TFormPrincipal
       AlignWithMargins = True
       Left = 30
       Top = 70
-      Width = 612
-      Height = 550
+      Width = 713
+      Height = 709
       Margins.Left = 30
       Margins.Top = 20
       Margins.Right = 30
@@ -510,6 +525,109 @@ object FormPrincipal: TFormPrincipal
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
+      ExplicitWidth = 612
+      ExplicitHeight = 550
+    end
+  end
+  object svSubMenuSeguranca: TSplitView
+    Left = 445
+    Top = 0
+    Width = 200
+    Height = 779
+    Cursor = crHandPoint
+    Color = 6969943
+    CompactWidth = 0
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -17
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    OpenedWidth = 200
+    ParentFont = False
+    Placement = svpLeft
+    TabOrder = 3
+    ExplicitLeft = 661
+    ExplicitTop = 8
+    object Panel3: TPanel
+      Left = 0
+      Top = 0
+      Width = 200
+      Height = 55
+      Align = alTop
+      BevelOuter = bvNone
+      TabOrder = 0
+      object Label3: TLabel
+        AlignWithMargins = True
+        Left = 17
+        Top = 14
+        Width = 89
+        Height = 25
+        Caption = 'Seguran'#231'a'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWhite
+        Font.Height = -19
+        Font.Name = 'Segoe UI Semibold'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object SpeedButton1: TSpeedButton
+        Left = 145
+        Top = 5
+        Width = 49
+        Height = 45
+        ImageIndex = 9
+        Images = ImageList
+        HotImageIndex = 0
+        Flat = True
+        OnClick = btnFecharSubMenuClick
+      end
+    end
+    object CategorysubMenuSeguranca: TCategoryButtons
+      AlignWithMargins = True
+      Left = 0
+      Top = 55
+      Width = 200
+      Height = 724
+      Margins.Left = 0
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      Align = alClient
+      BevelEdges = []
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BorderStyle = bsNone
+      ButtonFlow = cbfVertical
+      ButtonHeight = 50
+      ButtonWidth = 200
+      ButtonOptions = [boFullSize, boShowCaptions, boCaptionOnlyBorder]
+      Categories = <
+        item
+          Caption = ' ImageList'
+          Color = clNone
+          Collapsed = False
+          Items = <
+            item
+              Caption = 'Usu'#225'rios'
+              ImageIndex = 2
+            end
+            item
+              Caption = ' Perfis'
+              ImageIndex = 1
+            end
+            item
+              Caption = 'Permiss'#245'es'
+              ImageIndex = 4
+            end>
+          VisibleGutter = False
+        end>
+      HotButtonColor = 6969943
+      Images = ImageList
+      RegularButtonColor = clNone
+      SelectedButtonColor = 6969943
+      TabOrder = 1
+      ExplicitLeft = 64
+      ExplicitTop = 58
     end
   end
   object ImageList: TImageList
