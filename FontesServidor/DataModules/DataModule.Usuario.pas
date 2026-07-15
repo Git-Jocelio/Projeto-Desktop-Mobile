@@ -29,6 +29,7 @@ type
     function usuarioLogin(login, senha: string): TJSONObject;
     function InserirUsuario(nome, telefone, email, senha: string;
                             pessoaid, setorid: integer): TJSONObject;
+    procedure EditarSenha(usuarioid: integer; senha: string);
   end;
 
 implementation
@@ -140,6 +141,20 @@ begin
   end;
 end;
 
+procedure TDmUsuario.EditarSenha(usuarioid: integer; senha: string);
+begin
+
+
+  DmServidor.Conn.open;
+
+  qry.SQL.clear;
+  qry.SQL.Add('update usuario set senha =:senha where usuarioid =:usuarioid ');
+  qry.ParamByName('usuarioid').AsInteger := usuarioid;
+  qry.ParamByName('senha').AsString := senha ;
+  qry.ExecSQL;
+
+
+end;
 
 
 end.

@@ -7,7 +7,7 @@ uses Horse,
      DataModule.Pessoa, dialogs,
      System.SysUtils,
      System.JSON,Service.Usuario,
-     Controllers.JWT;
+     Controllers.JWT, Horse.JWT;
 
 procedure RegistrarRotas;
 procedure Login(req: THorseRequest; res: THorseResponse; Next: TProc);
@@ -21,13 +21,21 @@ implementation
 
 procedure RegistrarRotas;
 begin
+  // rotas abertas
   THorse.Post('/usuario/login', Login);
   THorse.Post('/usuario/cadastro', InserirUsuario);
-  THorse.Post('/usuario/password', EditarSenha);
+  // rotas protejidas
+  THorse.AddCallback(HorseJWT( Controllers.JWT.SECRET,
+                     THorseJWTConfig.New.SessionClass(TMyClaims)))
+        .Post('/usuario/password', EditarSenha);
 
-  //não passarei o id do usuário pq ele será passado dentro do token JWT
-  THorse.Get('/usuario', listarUsuarioId);
-  THorse.Put('/usuario', EditarUsuario);
+  THorse.AddCallback(HorseJWT( Controllers.JWT.SECRET,
+                     THorseJWTConfig.New.SessionClass(TMyClaims)))
+        .Get('/usuario', listarUsuarioId);
+
+  THorse.AddCallback(HorseJWT( Controllers.JWT.SECRET,
+                     THorseJWTConfig.New.SessionClass(TMyClaims)))
+        .Put('/usuario', EditarUsuario);
 end;
 
 procedure Login(req: THorseRequest; res: THorseResponse; Next: TProc);
@@ -108,11 +116,33 @@ begin
     on E: Exception do
       res.Send(E.Message).Status(500);
   end;
-
 end;
 
 procedure EditarSenha(req: THorseRequest; res: THorseResponse; Next: TProc);
+var
+  body: TJSONObject;
+  usuarioid: integer;
+  senha: string;
 begin
+
+  try
+    body := req.Body<TJSONObject>;
+
+    if not Assigned(body) then
+    begin
+      res.Send('JSON inválido ou vazio').Status(400);
+      Exit;
+    end;
+
+    senha := body.GetValue<string>('senha', '');
+    usuarioid := Get_Usuario_Request(req);
+    Service.Usuario.EditarSenha( usuarioid, senha );
+
+    res.Send('OK');
+  except
+    on E: Exception do
+      res.Send(E.Message).Status(500);
+  end;
 
 end;
 

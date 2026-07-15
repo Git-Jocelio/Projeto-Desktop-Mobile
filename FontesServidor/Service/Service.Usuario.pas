@@ -10,6 +10,7 @@ uses
   function Login(Login, Senha : string): TJSONObject;
   function InserirUsuario(nome, telefone, email, senha: string; pessoaId,
                             setorId: integer): TJSONObject;
+  procedure EditarSenha(usuarioid: integer; senha: string);
 
 implementation
 
@@ -43,6 +44,19 @@ begin
   end;
 end;
 
+procedure EditarSenha(usuarioid: integer; senha: string);
+var
+  dm : TDmUsuario;
+begin
+
+  try
+    dm := TDmUsuario.Create(nil);
+
+    dm.EditarSenha(usuarioid, SaltPassword(Senha));
+  finally
+    FreeAndNil(dm);
+  end;
+end;
 
 end.
 
