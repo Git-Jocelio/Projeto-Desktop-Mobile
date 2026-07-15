@@ -30,6 +30,9 @@ type
     function InserirUsuario(nome, telefone, email, senha: string;
                             pessoaid, setorid: integer): TJSONObject;
     procedure EditarSenha(usuarioid: integer; senha: string);
+    function listarUsuarioId(usuarioid: integer): TJSONObject;
+    procedure EditarUsuario(usuarioid: integer; login, nome: string;
+      setorid: integer);
   end;
 
 implementation
@@ -144,7 +147,6 @@ end;
 procedure TDmUsuario.EditarSenha(usuarioid: integer; senha: string);
 begin
 
-
   DmServidor.Conn.open;
 
   qry.SQL.clear;
@@ -153,8 +155,44 @@ begin
   qry.ParamByName('senha').AsString := senha ;
   qry.ExecSQL;
 
+end;
+
+function TDmUsuario.listarUsuarioId(usuarioid: integer): TJSONObject;
+begin
+
+  result := nil; // Inicializa o result para evitar lixo de memória
+
+  DmServidor.Conn.open;
+
+  qry.SQL.clear;
+  qry.SQL.Add('select ');
+  qry.SQL.Add('  pessoaid, setorid, nome, login ');
+  qry.SQL.Add('from ');
+  qry.SQL.Add('  usuario ');
+  qry.SQL.Add('where ');
+  qry.SQL.Add('  usuarioid = :usuarioid ');
+  qry.ParamByName('usuarioid').AsInteger := usuarioid;
+  qry.Open;
+
+  if not qry.IsEmpty then
+    result := qry.ToJSONObject;
 
 end;
+
+procedure TDmUsuario.EditarUsuario(usuarioid: integer; login, nome: string; setorid:integer);
+begin
+
+  DmServidor.Conn.open;
+
+  qry.SQL.clear;
+  qry.SQL.Add('update usuario set ');
+  qry.SQL.Add('  login =:login, nome =:nome, setorid=:setorid ');
+  qry.SQL.Add('  where usuarioid =:usuarioid ');
+  qry.ParamByName('usuarioid').AsInteger := usuarioid;
+  qry.ExecSQL;
+
+end;
+
 
 
 end.

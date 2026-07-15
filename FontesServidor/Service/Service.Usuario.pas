@@ -11,6 +11,8 @@ uses
   function InserirUsuario(nome, telefone, email, senha: string; pessoaId,
                             setorId: integer): TJSONObject;
   procedure EditarSenha(usuarioid: integer; senha: string);
+  function listarUsuarioId(usuarioid: integer): TJSONObject;
+  procedure EditarUsuario(usuarioid: integer; login, nome: string; setorid:integer);
 
 implementation
 
@@ -57,6 +59,35 @@ begin
     FreeAndNil(dm);
   end;
 end;
+
+function listarUsuarioId(usuarioid: integer): TJSONObject;
+var
+  dm : TDmUsuario;
+begin
+
+  try
+    dm := TDmUsuario.Create(nil);
+
+    result := dm.listarUsuarioId(usuarioid);
+  finally
+    FreeAndNil(dm);
+  end;
+end;
+
+procedure EditarUsuario(usuarioid: integer; login, nome: string; setorid:integer);
+var
+  dm : TDmUsuario;
+begin
+
+  try
+    dm := TDmUsuario.Create(nil);
+
+    dm.EditarUsuario(usuarioid, login, nome, setorid);
+  finally
+    FreeAndNil(dm);
+  end;
+end;
+
 
 end.
 

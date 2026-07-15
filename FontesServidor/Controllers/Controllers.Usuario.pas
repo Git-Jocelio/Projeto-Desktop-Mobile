@@ -147,12 +147,48 @@ begin
 end;
 
 procedure listarUsuarioId(req: THorseRequest; res: THorseResponse; Next: TProc);
+var
+  usuarioid: integer;
 begin
+
+  try
+    usuarioid := Get_Usuario_Request(req);
+
+    res.Send<TJSONObject>( Service.Usuario.listarUsuarioId( usuarioid ));
+  except
+    on E: Exception do
+      res.Send(E.Message).Status(500);
+  end;
 
 end;
 
 procedure EditarUsuario(req: THorseRequest; res: THorseResponse; Next: TProc);
+var
+  body: TJSONObject;
+  usuarioid: integer;
+  login, nome: string;
+  setorid: integer;
 begin
+
+  try
+    if not Assigned(body) then
+    begin
+      res.Send('JSON inválido ou vazio').Status(400);
+      Exit;
+    end;
+
+    usuarioid := Get_Usuario_Request(req);
+    login := body.GetValue<string>('login', '');
+    nome := body.GetValue<string>('nome', '');
+    setorid := body.GetValue<integer>('setorid', 0);
+
+    Service.Usuario.EditarUsuario( usuarioid, login, nome, setorid );
+
+    res.Send('OK');
+  except
+    on E: Exception do
+      res.Send(E.Message).Status(500);
+  end;
 
 end;
 
