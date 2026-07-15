@@ -27,6 +27,8 @@ type
   private
   public
     function usuarioLogin(login, senha: string): TJSONObject;
+    function InserirUsuario(nome, telefone, email, senha: string;
+                            pessoaid, setorid: integer): TJSONObject;
   end;
 
 implementation
@@ -81,6 +83,62 @@ begin
 
 end;
 
+function TDmUsuario.InserirUsuario(nome, telefone, email, senha: string; pessoaid, setorid: integer): TJSONObject;
+var
+  novaPessoa, novoUsuario: integer;
+begin
+
+  result := nil;
+  DmServidor.Conn.open;
+
+  try
+    DmServidor.Conn.StartTransaction;
+
+    if pessoaid <= 0 then
+    begin
+      qry.SQL.clear;
+      qry.SQL.Add('insert into pessoa ');
+      qry.SQL.Add('  (nome, telefone, email) ');
+      qry.SQL.Add('values ');
+      qry.SQL.Add('  (:nome, :telefone, :email) ');
+      qry.SQL.Add('returning pessoaid ');
+      qry.ParamByName('nome').AsString := nome;
+      qry.ParamByName('telefone').AsString := telefone;
+      qry.ParamByName('email').AsString := email ;
+      qry.active := true;
+      novaPessoa:= qry.FieldByName('pessoaid').AsInteger;
+    end;
+
+    qry.SQL.clear;
+    qry.SQL.Add('insert into usuario ');
+    qry.SQL.Add('  (login, senha, nome, pessoaid, setorid) ');
+    qry.SQL.Add('values ');
+    qry.SQL.Add('  (:login, :senha, :nome, :pessoaid, :setorid) ');
+    qry.SQL.Add('returning usuarioid ');
+    qry.ParamByName('login').AsString := email;
+    qry.ParamByName('senha').AsString := senha;
+    qry.ParamByName('nome').AsString := nome ;
+    if pessoaid <= 0 then
+      qry.ParamByName('pessoaid').AsInteger := novaPessoa
+    else
+      qry.ParamByName('pessoaid').AsInteger := pessoaid;
+    qry.ParamByName('setorid').AsInteger := setorid ;
+    qry.active := true;
+    novoUsuario:= qry.FieldByName('usuarioid').AsInteger;
+
+    if DmServidor.Conn.InTransaction then
+        DmServidor.Conn.Commit;
+
+    Result := TJSONObject.Create;
+    Result.AddPair('usuarioid', TJSONNumber.Create(novoUsuario));
+
+
+  except
+    DmServidor.Conn.Rollback;
+    raise;
+
+  end;
+end;
 
 
 

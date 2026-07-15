@@ -36,7 +36,6 @@ var
   login, senha: string;
   jsonRetorno: TJSONObject;
 begin
-  //dmUsuario := nil;
   jsonRetorno := nil;
 
   try
@@ -73,8 +72,42 @@ begin
 
 end;
 
+//15/05/2026
 procedure InserirUsuario(req: THorseRequest; res: THorseResponse; Next: TProc);
+var
+  body: TJSONObject;
+  nome, telefone, email, senha: string;
+  pessoaid, setorid: integer;
+  jsonRetorno: TJSONObject;
 begin
+  jsonRetorno := nil;
+
+  try
+    body := req.Body<TJSONObject>;
+
+    if not Assigned(body) then
+    begin
+      res.Send('JSON inválido ou vazio').Status(400);
+      Exit;
+    end;
+
+    nome  := body.GetValue<string>('nome', '');
+    telefone  := body.GetValue<string>('telefone', '');
+    email := body.GetValue<string>('email', '');
+    senha := body.GetValue<string>('senha', '');
+    pessoaid := body.GetValue<integer>('pessoaid', 0);
+    setorid := body.GetValue<integer>('setorid', 0);
+
+    jsonRetorno := Service.Usuario.InserirUsuario(nome, telefone, email, senha, pessoaid, setorid);
+
+    // gerar token JWT.. curso Poupei, aula 04, miunuto 31"25
+     jsonRetorno.AddPair('token',
+                      Criar_Token(jsonRetorno.GetValue<integer>('usuarioid')));
+     res.Send<TJSONObject>(jsonRetorno).Status(201);
+  except
+    on E: Exception do
+      res.Send(E.Message).Status(500);
+  end;
 
 end;
 

@@ -8,6 +8,8 @@ uses
   datamodule.Usuario, uMD5;
 
   function Login(Login, Senha : string): TJSONObject;
+  function InserirUsuario(nome, telefone, email, senha: string; pessoaId,
+                            setorId: integer): TJSONObject;
 
 implementation
 
@@ -25,6 +27,22 @@ begin
     FreeAndNil(dm);
   end;
 end;
+
+
+function InserirUsuario(nome, telefone, email, senha: string; pessoaId, setorId: integer): TJSONObject;
+var
+  dm : TDmUsuario;
+begin
+
+  try
+    dm := TDmUsuario.Create(nil);
+
+    Result := dm.InserirUsuario(nome, telefone, email, SaltPassword(Senha), pessoaId, setorId);
+  finally
+    FreeAndNil(dm);
+  end;
+end;
+
 
 end.
 
