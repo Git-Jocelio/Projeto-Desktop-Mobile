@@ -41,8 +41,6 @@ begin
   ConfigurarServidor;
   IniciarServidor(3000);
 
-
-
   lblServidor.Caption := 'Servidor Compras respondendo na PORTA : ' + PortaServidor.ToString;
   Switch.State := tssOn;
   lblSwith.Caption := 'Servidor Ativo';

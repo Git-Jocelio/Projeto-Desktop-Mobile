@@ -65,10 +65,15 @@ begin
 
   DmServidor.Conn.open;
 
-  qry.SQL.Add('SELECT usuarioId, nome, login from Usuario where login = :login and senha = :senha');
+  qry.SQL.clear;
+  qry.SQL.Add('select ');
+  qry.SQL.Add('  pessoaid, usuarioid, nome, login ');
+  qry.SQL.Add('from ');
+  qry.SQL.Add('  usuario ');
+  qry.SQL.Add('where ');
+  qry.SQL.Add('  login = :login and senha = :senha');
   qry.ParamByName('login').AsString := login;
-  //qry.ParamByName('senha').AsString :=  umd5.SaltPassword( senha );
-  qry.ParamByName('senha').AsString :=  senha ;
+  qry.ParamByName('senha').AsString := senha ;
   qry.Open;
 
   if not qry.IsEmpty then

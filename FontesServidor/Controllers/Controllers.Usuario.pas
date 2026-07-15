@@ -4,7 +4,7 @@ unit Controllers.Usuario;
 
 interface
 uses Horse,
-     DataModule.Pessoa,
+     DataModule.Pessoa, dialogs,
      System.SysUtils,
      System.JSON,Service.Usuario,
      Controllers.JWT;
@@ -51,10 +51,10 @@ begin
     login := body.GetValue<string>('login', '');
     senha := body.GetValue<string>('senha', '');
 
-    //jsonRetorno := dmUsuario.usuarioLogin(login, senha);
     jsonRetorno := Service.Usuario.Login(login, senha);
 
-    if jsonRetorno.Count = 0 then
+    //if jsonRetorno.Count = 0 then --> assim se usuario digitou email ou senha errado não funciona
+    if not Assigned(jsonRetorno) then
     begin
       res.Status(401).Send('Login ou senha inválido');
       FreeAndNil(jsonRetorno);
@@ -63,16 +63,13 @@ begin
     begin
       // gerar token JWT.. curso Poupei, aula 04, miunuto 31"25
       jsonRetorno.AddPair('token',
-                      Criar_Token(jsonRetorno.GetValue<integer>('id_usuario')));
-
+                      Criar_Token(jsonRetorno.GetValue<integer>('usuarioid')));
       res.Send<TJSONObject>(jsonRetorno).Status(200);
-
     end;
   except
     on E: Exception do
       res.Send(E.Message).Status(500);
   end;
-
 
 end;
 
