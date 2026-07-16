@@ -6,8 +6,9 @@ uses
   System.SysUtils, System.Classes,
   DataSet.Serialize.Config,  // transforma json em dataset
   RestRequest4D,             // usado para receber respostas do servidor
-  DataSet.Serialize.Adapter.RESTRequest4D,
-  System.JSON, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  DataSet.Serialize.Adapter.RESTRequest4D, //json para dataset
+  System.JSON,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Config;
 
@@ -17,7 +18,8 @@ type
     procedure DataModuleCreate(Sender: TObject);
   private
   public
-    procedure Login(MemTable: TFDMemTable;email, senha: string);
+    procedure Login(email, senha: string);
+    procedure CriarConta(nome, telefone, email, senha: string);
   end;
 
 var
@@ -36,34 +38,64 @@ begin
 end;
 
 
-procedure TdmUsuario.Login(MemTable: TFDMemTable; email, senha: string);
+procedure TdmUsuario.Login(email, senha: string);
 var
-  resp : IResponse;   // usado para receber respostas do servidor
-  json : TJSONObject; // usado para criar um objeto json com os dados da pessoa
+  Res : IResponse;
+  json : TJSONObject;
 begin
 
   try
-    // criar um objeto json com os dados do cliente
+    //criar um objeto json com os dados do cliente
     json := TJSONObject.Create;
 
     json.AddPair('login', email);
     json.AddPair('senha', senha);
 
-    resp := TRequest.New.BaseURL(URL_BASE)  // criando uma requisição do servidor
-                        .Resource('/usuario/login')       // nessa rota
-                        .AddBody(json.ToJSON)              // passando um json como string com dados da pessoa
-                        .Accept('application/json')        // trabalhar com json
-                        .Adapters(TDataSetSerializeAdapter.New(MemTable)) // popula a memtable dados do json recebido
-                        .Post;                             // passando um Post
+    Res := TRequest.New.BaseURL(URL_BASE)                 // criando uma requisição do servidor
+                       .Resource('/usuario/login')        // nessa rota
+                       .AddBody(json.ToJSON)              // passando um json como string com dados da pessoa
+                       .Accept('application/json')        // trabalhar com json
+                       .Adapters(TDataSetSerializeAdapter.New(MemTable)) // popula a memtable dados do json recebido
+                       .Post;                             // passando um Post
 
-    // trata erro se houver
-    if resp.StatusCode <> 200 then
-      raise Exception.Create(resp.content);
+    if Res.StatusCode <> 200 then
+      raise Exception.Create(Res.content);
 
   finally
     freeandnil(json);
   end;
 end;
+
+procedure TdmUsuario.CriarConta(nome, telefone, email, senha: string);
+var
+  Res : IResponse;
+  json : TJSONObject;
+begin
+
+  try
+    //criar um objeto json com os dados do cliente
+    json := TJSONObject.Create;
+
+    json.AddPair('nome', nome);
+    json.AddPair('telefone', telefone);
+    json.AddPair('email', email);
+    json.AddPair('senha', senha);
+
+    Res := TRequest.New.BaseURL(URL_BASE)                 // criando uma requisição do servidor
+                       .Resource('/usuario/cadastro')        // nessa rota
+                       .AddBody(json.ToJSON)              // passando um json como string com dados da pessoa
+                       .Accept('application/json')        // trabalhar com json
+                       .Adapters(TDataSetSerializeAdapter.New(MemTable)) // popula a memtable dados do json recebido
+                       .Post;                             // passando um Post
+
+    if Res.StatusCode <> 201 then
+      raise Exception.Create(Res.content);
+
+  finally
+    freeandnil(json);
+  end;
+end;
+
 
 
 end.

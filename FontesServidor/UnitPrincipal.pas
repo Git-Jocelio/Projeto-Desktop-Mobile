@@ -7,8 +7,6 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Imaging.pngimage,
   Vcl.WinXCtrls, Vcl.ExtCtrls;
 
-//  DataModule.Pessoa,
-
 type
   TFormPrincipal = class(TForm)
     lblServidor: TLabel;
@@ -28,13 +26,10 @@ var
 
 implementation
 
-
-
 uses
   Servidor.Startup;
 
 {$R *.dfm}
-
 
 procedure TFormPrincipal.FormShow(Sender: TObject);
 begin

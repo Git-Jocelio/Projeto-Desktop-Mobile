@@ -53,25 +53,27 @@ type
     Image2: TImage;
     Panel15: TPanel;
     Label6: TLabel;
-    Label9: TLabel;
+    edtVoltarParaLogin: TLabel;
     Panel14: TPanel;
-    Edit1: TEdit;
+    edtNome: TEdit;
     Panel16: TPanel;
-    Edit2: TEdit;
+    edtEmail: TEdit;
     Panel17: TPanel;
-    Edit3: TEdit;
+    edtCriarSenha: TEdit;
     Panel18: TPanel;
-    Edit4: TEdit;
-    SpeedButton3: TSpeedButton;
+    edtCriarSenha2: TEdit;
+    btnCriarconta: TSpeedButton;
     procedure BtnAcessarClick(Sender: TObject);
     procedure SpeedButton2Click(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure Label6Click(Sender: TObject);
-    procedure Label9Click(Sender: TObject);
+    procedure edtVoltarParaLoginClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure btnCriarcontaClick(Sender: TObject);
   private
     procedure TerminateLogin(Sender: TObject);
     function ServidorOnline: Boolean;
+    procedure TerminateCriarConta(Sender: TObject);
     { Private declarations }
   public
     { Public declarations }
@@ -102,6 +104,8 @@ begin
    TSession.ID_USUARIO := dmUsuario.MemTable.fieldbyname('usuarioId').AsInteger;
    TSession.EMAIL      := dmUsuario.MemTable.fieldbyname('login').AsString;
    TSession.NOME       := dmUsuario.MemTable.fieldbyname('nome').AsString;
+   TSession.TOKEN      := '123';
+   TSession.STATUS     := 'TESTE';
 
    FreeAndNil(dmUsuario);
 
@@ -112,7 +116,7 @@ end;
 procedure TfrmLogin.BtnAcessarClick(Sender: TObject);
 begin
 
-   TLoading.show(Self);
+   TLoading.show(frmLogin);
 
    if not Assigned(dmUsuario) then
       dmUsuario := TdmUsuario.Create(nil);
@@ -124,7 +128,7 @@ begin
       if not ServidorOnline then
             raise Exception.Create('Servidor não está disponível.');
 
-      dmUsuario.Login(dmUsuario.MemTable, EdtLogin.Text, EdtSenha.Text);
+      dmUsuario.Login(EdtLogin.Text, EdtSenha.Text);
 
    end,
    TerminateLogin
@@ -144,7 +148,57 @@ begin
   PageControl.TabIndex := 2;
 end;
 
-procedure TfrmLogin.Label9Click(Sender: TObject);
+procedure TfrmLogin.TerminateCriarConta(Sender: TObject);
+begin
+   TLoading.Hide;
+
+   if (Sender is TThread) then
+     if Assigned(TThread(Sender).FatalException) then
+     begin
+       ShowMessage(Exception(TThread(Sender).FatalException).Message );
+       FreeAndNil(dmUsuario);
+       Exit;
+     end;
+
+   // pegar dados de acesso do usuario... devolvidos pelo servidor
+   TSession.ID_USUARIO := dmUsuario.MemTable.fieldbyname('usuarioId').AsInteger;
+   TSession.EMAIL      := dmUsuario.MemTable.fieldbyname('email').AsString;
+   TSession.NOME       := dmUsuario.MemTable.fieldbyname('nome').AsString;
+   TSession.TOKEN      := '123';
+   TSession.STATUS     := 'TESTE';
+
+   FreeAndNil(dmUsuario);
+
+   ModalResult := mrOk;
+
+end;
+
+
+
+procedure TfrmLogin.btnCriarcontaClick(Sender: TObject);
+begin
+
+   TLoading.show(frmLogin);
+
+   if not Assigned(dmUsuario) then
+      dmUsuario := TdmUsuario.Create(nil);
+
+   TLoading.ExecuteThread(procedure
+   begin
+      sleep(600);
+
+      if not ServidorOnline then
+            raise Exception.Create('Servidor não está disponível.');
+
+      dmUsuario.CriarConta(EdtNome.Text, '11-95936-5875', edtEmail.Text,  EdtSenha.Text);
+
+   end,
+   TerminateCriarConta
+   );
+
+end;
+
+procedure TfrmLogin.edtVoltarParaLoginClick(Sender: TObject);
 begin
   PageControl.TabIndex := 1;
 end;
