@@ -24,6 +24,7 @@ begin
   // rotas abertas
   THorse.Post('/usuario/login', Login);
   THorse.Post('/usuario/cadastro', InserirUsuario);
+
   // rotas protejidas
   THorse.AddCallback(HorseJWT( Controllers.JWT.SECRET,
                      THorseJWTConfig.New.SessionClass(TMyClaims)))
@@ -162,6 +163,9 @@ begin
 
 end;
 
+
+
+
 procedure EditarUsuario(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
   body: TJSONObject;
@@ -171,6 +175,7 @@ var
 begin
 
   try
+    body := req.Body<TJSONObject>;
     if not Assigned(body) then
     begin
       res.Send('JSON inválido ou vazio').Status(400);

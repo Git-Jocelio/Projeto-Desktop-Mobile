@@ -35,13 +35,24 @@ end;
 function InserirUsuario(nome, telefone, email, senha: string; pessoaId, setorId: integer): TJSONObject;
 var
   dm : TDmUsuario;
+  json_retorno : TJSONObject;
 begin
+
+  if (nome='') or (telefone='') or (email='') or (senha='') then
+    raise Exception.Create('Informe todos os campos: Nome, Telefone, Email, Senha ');
 
   try
     dm := TDmUsuario.Create(nil);
 
+    json_retorno := dm.listarUsuarioByEmail(email);
+
+    if json_retorno.Count  > 0 then
+      raise Exception.Create('Já existe um email cadastrado para essa conta');
+
+
     Result := dm.InserirUsuario(nome, telefone, email, SaltPassword(Senha), pessoaId, setorId);
   finally
+    FreeAndNil(json_retorno);
     FreeAndNil(dm);
   end;
 end;

@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.PG,
   FireDAC.Phys.PGDef, FireDAC.VCLUI.Wait, Data.DB, FireDAC.Comp.Client,
   FireDAC.Phys.FB, FireDAC.Phys.FBDef, FireDAC.Phys.IBBase, fireDac.Stan.Param,
-  dialogs,
+  dialogs, System.Math,
   DataSet.Serialize.Config, // necessário para tratar varaveis de consulta
   DataSet.Serialize,        // necessário para por transformar um dataset em um array JSON
   System.JSON,              // necessario para retorno do JSON
@@ -33,6 +33,7 @@ type
     function listarUsuarioId(usuarioid: integer): TJSONObject;
     procedure EditarUsuario(usuarioid: integer; login, nome: string;
       setorid: integer);
+    function listarUsuarioByEmail(email: string): TJSONObject;
   end;
 
 implementation
@@ -73,7 +74,7 @@ begin
 
   qry.SQL.clear;
   qry.SQL.Add('select ');
-  qry.SQL.Add('  pessoaid, usuarioid, nome, login ');
+  qry.SQL.Add('  pessoaid, usuarioid, nome, login, setorid ');
   qry.SQL.Add('from ');
   qry.SQL.Add('  usuario ');
   qry.SQL.Add('where ');
@@ -122,10 +123,7 @@ begin
     qry.ParamByName('login').AsString := email;
     qry.ParamByName('senha').AsString := senha;
     qry.ParamByName('nome').AsString := nome ;
-    if pessoaid <= 0 then
-      qry.ParamByName('pessoaid').AsInteger := novaPessoa
-    else
-      qry.ParamByName('pessoaid').AsInteger := pessoaid;
+    qry.ParamByName('pessoaid').AsInteger := IfThen(pessoaid <=0, novaPessoa, pessoaid );
     qry.ParamByName('setorid').AsInteger := setorid ;
     qry.active := true;
     novoUsuario:= qry.FieldByName('usuarioid').AsInteger;
@@ -136,12 +134,11 @@ begin
     Result := TJSONObject.Create;
     Result.AddPair('usuarioid', TJSONNumber.Create(novoUsuario));
 
-
   except
     DmServidor.Conn.Rollback;
     raise;
-
   end;
+
 end;
 
 procedure TDmUsuario.EditarSenha(usuarioid: integer; senha: string);
@@ -179,6 +176,30 @@ begin
 
 end;
 
+function TDmUsuario.listarUsuarioByEmail(email: string): TJSONObject;
+begin
+
+  result := nil;
+
+  DmServidor.Conn.open;
+
+  qry.SQL.clear;
+  qry.SQL.Add('select ');
+  qry.SQL.Add('  email ');
+  qry.SQL.Add('from ');
+  qry.SQL.Add('  pessoa ');
+  qry.SQL.Add('where ');
+  qry.SQL.Add('  email = :email ');
+  qry.ParamByName('email').value := email;
+  qry.Open;
+
+  if not qry.IsEmpty then
+    result := qry.ToJSONObject;
+
+end;
+
+
+
 procedure TDmUsuario.EditarUsuario(usuarioid: integer; login, nome: string; setorid:integer);
 begin
 
@@ -188,11 +209,14 @@ begin
   qry.SQL.Add('update usuario set ');
   qry.SQL.Add('  login =:login, nome =:nome, setorid=:setorid ');
   qry.SQL.Add('  where usuarioid =:usuarioid ');
-  qry.ParamByName('usuarioid').AsInteger := usuarioid;
+
+  qry.ParamByName('usuarioid').Value := usuarioid;
+  qry.ParamByName('login').Value := login;
+  qry.ParamByName('nome').Value := nome;
+  qry.ParamByName('setorid').Value := setorid;
+
   qry.ExecSQL;
 
 end;
-
-
 
 end.
