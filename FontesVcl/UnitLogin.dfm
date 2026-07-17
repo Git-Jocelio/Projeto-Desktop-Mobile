@@ -1078,7 +1078,6 @@ object frmLogin: TfrmLogin
             Font.Name = 'Segoe UI'
             Font.Style = []
             ParentFont = False
-            PasswordChar = '*'
             TabOrder = 0
             TextHint = 'Nome completo'
           end
@@ -1117,7 +1116,6 @@ object frmLogin: TfrmLogin
             Font.Name = 'Segoe UI'
             Font.Style = []
             ParentFont = False
-            PasswordChar = '*'
             TabOrder = 0
             TextHint = 'E-mail'
           end

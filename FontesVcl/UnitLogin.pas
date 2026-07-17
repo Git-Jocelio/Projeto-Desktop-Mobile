@@ -6,12 +6,13 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.StdCtrls, Vcl.ExtCtrls,
   Vcl.Imaging.pngimage,
-  Vcl.Loading, // unit que carrega um loandin na tela
-  Vcl.Session, // unit com uma classe global para pegar os dados de acesso do usuario
+  Vcl.Loading,
+  Vcl.Session,
   System.Net.HttpClient,
   System.Net.URLClient,
   System.Net.HttpClientComponent,
-  Vcl.Imaging.jpeg, Vcl.ComCtrls;
+  Vcl.Imaging.jpeg,
+  Vcl.ComCtrls;
 type
   TfrmLogin = class(TForm)
     PageControl: TPageControl;
@@ -74,6 +75,7 @@ type
     procedure TerminateLogin(Sender: TObject);
     function ServidorOnline: Boolean;
     procedure TerminateCriarConta(Sender: TObject);
+    function ValidarDados: boolean;
     { Private declarations }
   public
     { Public declarations }
@@ -86,7 +88,7 @@ implementation
 
 {$R *.dfm}
 
-uses UnitFrmPrincipal, DataModule.Usuario;
+uses UnitFrmPrincipal, DataModule.Usuario, Vcl.Config;
 
 procedure TfrmLogin.TerminateLogin(Sender: TObject);
 begin
@@ -162,9 +164,9 @@ begin
 
    // pegar dados de acesso do usuario... devolvidos pelo servidor
    TSession.ID_USUARIO := dmUsuario.MemTable.fieldbyname('usuarioId').AsInteger;
-   TSession.EMAIL      := dmUsuario.MemTable.fieldbyname('email').AsString;
    TSession.NOME       := dmUsuario.MemTable.fieldbyname('nome').AsString;
-   TSession.TOKEN      := '123';
+   TSession.EMAIL      := dmUsuario.MemTable.fieldbyname('email').AsString;
+   TSession.TOKEN      := dmUsuario.MemTable.fieldbyname('token').AsString;
    TSession.STATUS     := 'TESTE';
 
    FreeAndNil(dmUsuario);
@@ -173,28 +175,47 @@ begin
 
 end;
 
+function TfrmLogin.ValidarDados: boolean;
+begin
+  result := false;
 
+  if  (edtNome.Text = '') or (edtEmail.Text = '') or (edtCriarSenha.Text = '') or (edtCriarSenha2.Text = '') then
+  begin
+    ShowMessage('Informe todos dados : Nome, Email, Senha e confirme a senha' );
+    exit;
+  end;
+
+  if (edtCriarSenha.Text) <> (edtCriarSenha2.Text) then
+  begin
+    ShowMessage('Senhas não conferem, digite novamente');
+    exit;
+  end;
+
+  result := true;
+end;
 
 procedure TfrmLogin.btnCriarcontaClick(Sender: TObject);
 begin
 
-   TLoading.show(frmLogin);
+  if not ValidarDados then exit;
 
-   if not Assigned(dmUsuario) then
+  TLoading.show(frmLogin);
+
+  if not Assigned(dmUsuario) then
       dmUsuario := TdmUsuario.Create(nil);
 
-   TLoading.ExecuteThread(procedure
-   begin
-      sleep(600);
+  TLoading.ExecuteThread(procedure
+  begin
+    sleep(600);
 
-      if not ServidorOnline then
-            raise Exception.Create('Servidor não está disponível.');
+    if not ServidorOnline then
+      raise Exception.Create('Servidor não está disponível.');
 
-      dmUsuario.CriarConta(EdtNome.Text, '11-95936-5875', edtEmail.Text,  EdtSenha.Text);
+    dmUsuario.CriarConta(EdtNome.Text, edtEmail.Text,  EdtSenha.Text);
 
-   end,
-   TerminateCriarConta
-   );
+  end,
+ TerminateCriarConta
+ );
 
 end;
 
@@ -216,7 +237,7 @@ begin
     Http.ResponseTimeout   := 1500;
 
     try
-      Resp := Http.Get('http://localhost:3000/health');
+      Resp := Http.Get( URL_BASE +'/health' );
       Result := Resp.StatusCode = 200;
     except
       Result := False;

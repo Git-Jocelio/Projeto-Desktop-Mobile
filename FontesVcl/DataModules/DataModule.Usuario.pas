@@ -19,7 +19,7 @@ type
   private
   public
     procedure Login(email, senha: string);
-    procedure CriarConta(nome, telefone, email, senha: string);
+    procedure CriarConta(nome, email, senha: string);
   end;
 
 var
@@ -66,20 +66,23 @@ begin
   end;
 end;
 
-procedure TdmUsuario.CriarConta(nome, telefone, email, senha: string);
+procedure TdmUsuario.CriarConta(nome, email, senha: string);
 var
   Res : IResponse;
   json : TJSONObject;
+  pessoaid: integer;
 begin
 
   try
+    pessoaid:= 0; // novo usuario
+
     //criar um objeto json com os dados do cliente
     json := TJSONObject.Create;
 
     json.AddPair('nome', nome);
-    json.AddPair('telefone', telefone);
     json.AddPair('email', email);
     json.AddPair('senha', senha);
+    json.AddPair('pessoaid', pessoaid.ToString);
 
     Res := TRequest.New.BaseURL(URL_BASE)                 // criando uma requisição do servidor
                        .Resource('/usuario/cadastro')        // nessa rota
