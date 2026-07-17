@@ -102,9 +102,9 @@ begin
 
    // pegar dados de acesso do usuario... devolvidos pelo servidor
    TSession.ID_USUARIO := dmUsuario.MemTable.fieldbyname('usuarioId').AsInteger;
-   TSession.EMAIL      := dmUsuario.MemTable.fieldbyname('login').AsString;
    TSession.NOME       := dmUsuario.MemTable.fieldbyname('nome').AsString;
-   TSession.TOKEN      := '123';
+   TSession.EMAIL      := dmUsuario.MemTable.fieldbyname('login').AsString;
+   TSession.TOKEN      := dmUsuario.MemTable.fieldbyname('token').AsString;
    TSession.STATUS     := 'TESTE';
 
    FreeAndNil(dmUsuario);

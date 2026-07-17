@@ -37,6 +37,8 @@ var
   dm : TDmUsuario;
   json_retorno: TJSONObject;
 begin
+  dm := nil;
+  json_Retorno:= nil;
 
   if (nome='') or (telefone='') or (email='') or (senha='') then
     raise Exception.Create('Informe todos os campos: Nome, Telefone, Email, Senha ');
@@ -44,12 +46,13 @@ begin
   try
     dm := TDmUsuario.Create(nil);
     json_retorno := dm.listarUsuarioByEmail(email);
-    //if json_retorno.Count  > 0 then
-    if not Assigned(json_Retorno) then
+
+    if Assigned(json_Retorno) then
       raise Exception.Create('Já existe um email cadastrado para essa conta');
 
     Result := dm.InserirUsuario(nome, telefone, email, SaltPassword(Senha), pessoaId, setorId);
   finally
+    FreeAndNil(json_Retorno);
     FreeAndNil(dm);
   end;
 end;

@@ -70,9 +70,13 @@ begin
     else
     begin
       // gerar token JWT.. curso Poupei, aula 04, miunuto 31"25
+      // gera o token e acrescenta no json
       jsonRetorno.AddPair('token',
                       Criar_Token(jsonRetorno.GetValue<integer>('usuarioid')));
       res.Send<TJSONObject>(jsonRetorno).Status(200);
+
+
+
     end;
   except
     on E: Exception do

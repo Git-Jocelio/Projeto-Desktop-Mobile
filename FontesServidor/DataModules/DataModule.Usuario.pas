@@ -119,7 +119,7 @@ begin
     qry.SQL.Add('  (login, senha, nome, pessoaid, setorid) ');
     qry.SQL.Add('values ');
     qry.SQL.Add('  (:login, :senha, :nome, :pessoaid, :setorid) ');
-    qry.SQL.Add('returning usuarioid ');
+    qry.SQL.Add('returning usuarioid, nome, login, pessoaid, setorid ');
     qry.ParamByName('login').AsString := email;
     qry.ParamByName('senha').AsString := senha;
     qry.ParamByName('nome').AsString := nome ;
@@ -133,6 +133,10 @@ begin
 
     Result := TJSONObject.Create;
     Result.AddPair('usuarioid', TJSONNumber.Create(novoUsuario));
+    Result.AddPair('pessoaid', qry.FieldByName('pessoaid').AsString);
+    Result.AddPair('nome', qry.FieldByName('nome').AsString);
+    Result.AddPair('email', qry.FieldByName('login').AsString);
+    Result.AddPair('setorid', qry.FieldByName('setorid').AsString);
 
   except
     DmServidor.Conn.Rollback;
