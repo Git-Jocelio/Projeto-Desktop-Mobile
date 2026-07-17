@@ -27,12 +27,11 @@ type
   private
   public
     function usuarioLogin(login, senha: string): TJSONObject;
-    function InserirUsuario(nome, telefone, email, senha: string;
-                            pessoaid, setorid: integer): TJSONObject;
+    function InserirUsuario(nome, email, senha: string;
+                              pessoaid: integer): TJSONObject;
     procedure EditarSenha(usuarioid: integer; senha: string);
     function listarUsuarioId(usuarioid: integer): TJSONObject;
-    procedure EditarUsuario(usuarioid: integer; login, nome: string;
-      setorid: integer);
+    procedure EditarUsuario(usuarioid: integer; login, nome: string);
     function listarUsuarioByEmail(email: string): TJSONObject;
   end;
 
@@ -74,7 +73,7 @@ begin
 
   qry.SQL.clear;
   qry.SQL.Add('select ');
-  qry.SQL.Add('  pessoaid, usuarioid, nome, login, setorid ');
+  qry.SQL.Add('  pessoaid, usuarioid, nome, login ');
   qry.SQL.Add('from ');
   qry.SQL.Add('  usuario ');
   qry.SQL.Add('where ');
@@ -88,7 +87,8 @@ begin
 
 end;
 
-function TDmUsuario.InserirUsuario(nome, telefone, email, senha: string; pessoaid, setorid: integer): TJSONObject;
+function TDmUsuario.InserirUsuario(nome, email, senha: string;
+                                       pessoaid: integer): TJSONObject;
 var
   novaPessoa, novoUsuario: integer;
 begin
@@ -103,12 +103,11 @@ begin
     begin
       qry.SQL.clear;
       qry.SQL.Add('insert into pessoa ');
-      qry.SQL.Add('  (nome, telefone, email) ');
+      qry.SQL.Add('  (nome, email) ');
       qry.SQL.Add('values ');
-      qry.SQL.Add('  (:nome, :telefone, :email) ');
+      qry.SQL.Add('  (:nome, :email) ');
       qry.SQL.Add('returning pessoaid ');
       qry.ParamByName('nome').AsString := nome;
-      qry.ParamByName('telefone').AsString := telefone;
       qry.ParamByName('email').AsString := email ;
       qry.active := true;
       novaPessoa:= qry.FieldByName('pessoaid').AsInteger;
@@ -116,15 +115,14 @@ begin
 
     qry.SQL.clear;
     qry.SQL.Add('insert into usuario ');
-    qry.SQL.Add('  (login, senha, nome, pessoaid, setorid) ');
+    qry.SQL.Add('  (login, senha, nome, pessoaid) ');
     qry.SQL.Add('values ');
-    qry.SQL.Add('  (:login, :senha, :nome, :pessoaid, :setorid) ');
-    qry.SQL.Add('returning usuarioid, nome, login, pessoaid, setorid ');
+    qry.SQL.Add('  (:login, :senha, :nome, :pessoaid )');
+    qry.SQL.Add('returning usuarioid, nome, login, pessoaid ');
     qry.ParamByName('login').AsString := email;
     qry.ParamByName('senha').AsString := senha;
     qry.ParamByName('nome').AsString := nome ;
     qry.ParamByName('pessoaid').AsInteger := IfThen(pessoaid <=0, novaPessoa, pessoaid );
-    qry.ParamByName('setorid').AsInteger := setorid ;
     qry.active := true;
     novoUsuario:= qry.FieldByName('usuarioid').AsInteger;
 
@@ -136,7 +134,6 @@ begin
     Result.AddPair('pessoaid', qry.FieldByName('pessoaid').AsString);
     Result.AddPair('nome', qry.FieldByName('nome').AsString);
     Result.AddPair('email', qry.FieldByName('login').AsString);
-    Result.AddPair('setorid', qry.FieldByName('setorid').AsString);
 
   except
     DmServidor.Conn.Rollback;
@@ -167,7 +164,7 @@ begin
 
   qry.SQL.clear;
   qry.SQL.Add('select ');
-  qry.SQL.Add('  pessoaid, setorid, nome, login ');
+  qry.SQL.Add('  pessoaid, nome, login ');
   qry.SQL.Add('from ');
   qry.SQL.Add('  usuario ');
   qry.SQL.Add('where ');
@@ -202,22 +199,19 @@ begin
 
 end;
 
-
-
-procedure TDmUsuario.EditarUsuario(usuarioid: integer; login, nome: string; setorid:integer);
+procedure TDmUsuario.EditarUsuario(usuarioid: integer; login, nome: string);
 begin
 
   DmServidor.Conn.open;
 
   qry.SQL.clear;
   qry.SQL.Add('update usuario set ');
-  qry.SQL.Add('  login =:login, nome =:nome, setorid=:setorid ');
+  qry.SQL.Add('  login =:login, nome =:nome ');
   qry.SQL.Add('  where usuarioid =:usuarioid ');
 
   qry.ParamByName('usuarioid').Value := usuarioid;
   qry.ParamByName('login').Value := login;
   qry.ParamByName('nome').Value := nome;
-  qry.ParamByName('setorid').Value := setorid;
 
   qry.ExecSQL;
 

@@ -8,11 +8,10 @@ uses
   datamodule.Usuario, uMD5;
 
   function Login(Login, Senha : string): TJSONObject;
-  function InserirUsuario(nome, telefone, email, senha: string; pessoaId,
-                            setorId: integer): TJSONObject;
+  function InserirUsuario(nome, email, senha: string; pessoaId: integer): TJSONObject;
   procedure EditarSenha(usuarioid: integer; senha: string);
   function listarUsuarioId(usuarioid: integer): TJSONObject;
-  procedure EditarUsuario(usuarioid: integer; login, nome: string; setorid:integer);
+  procedure EditarUsuario(usuarioid: integer; login, nome: string);
 
 implementation
 
@@ -32,7 +31,7 @@ begin
 end;
 
 
-function InserirUsuario(nome, telefone, email, senha: string; pessoaId, setorId: integer): TJSONObject;
+function InserirUsuario(nome, email, senha: string; pessoaId: integer): TJSONObject;
 var
   dm : TDmUsuario;
   json_retorno: TJSONObject;
@@ -40,8 +39,8 @@ begin
   dm := nil;
   json_Retorno:= nil;
 
-  if (nome='') or (telefone='') or (email='') or (senha='') then
-    raise Exception.Create('Informe todos os campos: Nome, Telefone, Email, Senha ');
+  if (nome='')  or (email='') or (senha='') then
+    raise Exception.Create('Informe todos os campos: Nome, Email, Senha ');
 
   try
     dm := TDmUsuario.Create(nil);
@@ -50,7 +49,7 @@ begin
     if Assigned(json_Retorno) then
       raise Exception.Create('Já existe um email cadastrado para essa conta');
 
-    Result := dm.InserirUsuario(nome, telefone, email, SaltPassword(Senha), pessoaId, setorId);
+    Result := dm.InserirUsuario(nome, email, SaltPassword(Senha), pessoaId);
   finally
     FreeAndNil(json_Retorno);
     FreeAndNil(dm);
@@ -85,7 +84,7 @@ begin
   end;
 end;
 
-procedure EditarUsuario(usuarioid: integer; login, nome: string; setorid:integer);
+procedure EditarUsuario(usuarioid: integer; login, nome: string);
 var
   dm : TDmUsuario;
 begin
@@ -93,7 +92,7 @@ begin
   try
     dm := TDmUsuario.Create(nil);
 
-    dm.EditarUsuario(usuarioid, login, nome, setorid);
+    dm.EditarUsuario(usuarioid, login, nome);
   finally
     FreeAndNil(dm);
   end;
