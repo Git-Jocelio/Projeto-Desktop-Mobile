@@ -8,7 +8,7 @@ uses
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, FireDAC.Stan.Intf,
   DataSet.Serialize.Config,  // transforma json em dataset
-  RestRequest4D, // usado para receber respostas do servidor
+  RestRequest4D,             // usado para receber respostas do servidor
   DataSet.Serialize.Adapter.RESTRequest4D,
   System.JSON, Vcl.Config ;
 
@@ -47,12 +47,19 @@ procedure TDmPessoa.ListarPessoa(memTable: TFDMemTable; filtro : string);
 var
   resp : IResponse; // usado para receber respostas do servidor
 begin
-  resp := TRequest.New.BaseURL(URL_BASE) // criando uma requisição do servidor
-                      .Resource('/pessoa')              // nessa rota
-                      .AddParam('filtro',filtro)        // nesse filtro
-                      .Accept('application/json')       // trabalhar com json
-                      .Adapters(TDataSetSerializeAdapter.New(memTable)) // qdo a requisicao voltar vai pegar o json e jogar dentro do memtable
-                      .Get;                             // passando um Get
+
+  // limpar o dataset
+  if MemTable.Active then
+    MemTable.emptydataset;
+
+  MemTable.FieldDefs.Clear;
+
+  resp := TRequest.New.BaseURL(URL_BASE)
+                      .Resource('/pessoa')
+                      .AddParam('filtro',filtro)
+                      .Accept('application/json')
+                      .Adapters(TDataSetSerializeAdapter.New(memTable))
+                      .Get;
 
 
   // trata erro se houver
@@ -65,12 +72,19 @@ procedure TDmPessoa.ListarPessoaID(memTable: TFDMemTable; pessoaId: integer);
 var
   resp : IResponse; // usado para receber respostas do servidor
 begin
-  resp := TRequest.New.BaseURL(URL_BASE)   // criando uma requisição do servidor
-                      .Resource('/pessoa')               // nessa rota
-                      .ResourceSuffix(pessoaId.ToString)// acrescenta /id da pessoa
-                      .Accept('application/json')        // trabalhar com json
-                      .Adapters(TDataSetSerializeAdapter.New(memTable)) // qdo a requisicao voltar vai pega o json e jogar dentro do memtable
-                      .Get;                             // passando um Get
+
+  // limpar o dataset
+  if MemTable.Active then
+    MemTable.emptydataset;
+
+  MemTable.FieldDefs.Clear;
+
+  resp := TRequest.New.BaseURL(URL_BASE)
+                      .Resource('/pessoa')
+                      .ResourceSuffix(pessoaId.ToString)
+                      .Accept('application/json')
+                      .Adapters(TDataSetSerializeAdapter.New(memTable))
+                      .Get;
   // trata erro se houver
   if resp.StatusCode <> 200 then
     raise Exception.Create(resp.content);
@@ -78,8 +92,8 @@ end;
 
 procedure TDmPessoa.Inserir(nome, telefone, email: string);
 var
-  resp : IResponse; // usado para receber respostas do servidor
-  json : TJSONObject; // usado para criar um objeto json com os dados da pessoa
+  resp : IResponse;
+  json : TJSONObject;
 begin
 
   try
@@ -89,11 +103,11 @@ begin
     json.AddPair('telefone',telefone);
     json.AddPair('email',email);
 
-    resp := TRequest.New.BaseURL(URL_BASE)   // criando uma requisição do servidor
-                        .Resource('/pessoa')               // nessa rota
-                        .AddBody(json.ToJSON)              // passando um json como string com dados da pessoa
-                        .Accept('application/json')        // trabalhar com json
-                        .Post;                             // passando um Post
+    resp := TRequest.New.BaseURL(URL_BASE)
+                        .Resource('/pessoa')
+                        .AddBody(json.ToJSON)
+                        .Accept('application/json')
+                        .Post;
     // trata erro se houver
     if resp.StatusCode <> 201 then
       raise Exception.Create(resp.content);
@@ -106,8 +120,8 @@ end;
 
 procedure TDmPessoa.Editar(pessoaId: integer; nome, telefone, email: string);
 var
-  resp : IResponse; // usado para receber respostas do servidor
-  json : TJSONObject; // usado para criar um objeto json com os dados da pessoa
+  resp : IResponse;
+  json : TJSONObject;
 begin
 
   try
@@ -117,12 +131,12 @@ begin
     json.AddPair('telefone',telefone);
     json.AddPair('email',email);
 
-    resp := TRequest.New.BaseURL(URL_BASE) // criando uma requisição do servidor
-                        .Resource('/pessoa')              // nessa rota
-                        .ResourceSuffix(pessoaId.ToString) // acrescenta o parametro pessoa_id recebido na url
-                        .AddBody(json.ToJSON)             // passando um json como string com dados da pessoa
-                        .Accept('application/json')       // trabalhar com json
-                        .Put;                             // passando um Post
+    resp := TRequest.New.BaseURL(URL_BASE)
+                        .Resource('/pessoa')
+                        .ResourceSuffix(pessoaId.ToString)
+                        .AddBody(json.ToJSON)
+                        .Accept('application/json')
+                        .Put;
     // trata erro se houver
     if resp.StatusCode <> 200 then
       raise Exception.Create(resp.content);
@@ -134,14 +148,14 @@ end;
 
 procedure TDmPessoa.Excluir(pessoaId: integer);
 var
-  resp : IResponse;   // usado para receber respostas do servidor
+  resp : IResponse;
 begin
 
-    resp := TRequest.New.BaseURL(URL_BASE)  // criando uma requisição do servidor
-                        .Resource('/pessoa')               // nessa rota
-                        .ResourceSuffix(pessoaId.ToString) // acrescenta o parametro pessoa_id recebido na url
-                        .Accept('application/json')        // trabalhar com json
-                        .delete;                              // passando um Post
+    resp := TRequest.New.BaseURL(URL_BASE)
+                        .Resource('/pessoa')
+                        .ResourceSuffix(pessoaId.ToString)
+                        .Accept('application/json')
+                        .delete;
     // trata erro se houver
     if resp.StatusCode <> 200 then
       raise Exception.Create(resp.content);

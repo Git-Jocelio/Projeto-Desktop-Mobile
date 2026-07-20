@@ -216,6 +216,7 @@
             <Form>FormPerfilE</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Services\Service.Usuario.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

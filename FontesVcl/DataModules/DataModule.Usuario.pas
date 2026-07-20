@@ -20,6 +20,7 @@ type
   public
     procedure Login(email, senha: string);
     procedure CriarConta(nome, email, senha: string);
+    procedure AlterarSenha( senha: string);
   end;
 
 var
@@ -28,6 +29,8 @@ var
 implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
+
+uses Vcl.Session;
 
 {$R *.dfm}
 
@@ -44,6 +47,12 @@ var
   json : TJSONObject;
 begin
 
+  // limpar o dataset
+  if MemTable.Active then
+    MemTable.emptydataset;
+
+  MemTable.FieldDefs.Clear;
+
   try
     //criar um objeto json com os dados do cliente
     json := TJSONObject.Create;
@@ -57,6 +66,41 @@ begin
                        .Accept('application/json')        // trabalhar com json
                        .Adapters(TDataSetSerializeAdapter.New(MemTable)) // popula a memtable dados do json recebido
                        .Post;                             // passando um Post
+
+    if Res.StatusCode <> 200 then
+      raise Exception.Create(Res.content);
+
+  finally
+    freeandnil(json);
+  end;
+end;
+
+procedure TdmUsuario.AlterarSenha(senha: string);
+var
+  Res : IResponse;
+  json : TJSONObject;
+begin
+
+  // limpar o dataset
+  if MemTable.Active then
+    MemTable.emptydataset;
+
+  MemTable.FieldDefs.Clear;
+
+  try
+    //criar um objeto json com os dados do cliente
+    json := TJSONObject.Create;
+
+    json.AddPair('senha', senha);
+    json.AddPair('usuarioid', TSession.ID_USUARIO);
+
+    Res := TRequest.New.BaseURL(URL_BASE)
+                       .Resource('/usuario/password')
+                       .AddBody(json.ToJSON)
+                       .TokenBearer(TSession.TOKEN)
+                       .Accept('application/json')
+                       .Adapters(TDataSetSerializeAdapter.New(MemTable))
+                       .Post;
 
     if Res.StatusCode <> 200 then
       raise Exception.Create(Res.content);
@@ -85,7 +129,7 @@ begin
     json.AddPair('pessoaid', pessoaid.ToString);
 
     Res := TRequest.New.BaseURL(URL_BASE)                 // criando uma requisição do servidor
-                       .Resource('/usuario/cadastro')        // nessa rota
+                       .Resource('/usuario/cadastro')     // nessa rota
                        .AddBody(json.ToJSON)              // passando um json como string com dados da pessoa
                        .Accept('application/json')        // trabalhar com json
                        .Adapters(TDataSetSerializeAdapter.New(MemTable)) // popula a memtable dados do json recebido

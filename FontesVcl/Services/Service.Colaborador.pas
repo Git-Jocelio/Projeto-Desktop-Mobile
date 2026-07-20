@@ -1,6 +1,7 @@
 unit Service.Colaborador;
 
 interface
+
 uses  System.SysUtils;
 
 type
@@ -8,7 +9,6 @@ type
   public
     class procedure Salvar(pessoa_id: Integer; nome, email, telefone: string; setorID: integer);
   end;
-
 
 implementation
 
@@ -32,8 +32,6 @@ begin
 
   if setorID <=0 then
      raise Exception.Create('Informe o setor');
-
-
 
   // decide se insere ou edita
   if pessoa_id > 0 then

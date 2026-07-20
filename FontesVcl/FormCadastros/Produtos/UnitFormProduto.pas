@@ -16,6 +16,7 @@ type
     procedure btnInserirClick(Sender: TObject);
     procedure BtnExcluirClick(Sender: TObject);
     procedure BtnEditarClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
 
   private
     procedure RefreshProduto;
@@ -36,6 +37,13 @@ implementation
 {$R *.dfm}
 
 uses DataModule.Produto, Vcl.Loading, Vcl.Navigation, UnitFormProdutoE;
+
+procedure TFormProduto.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  FreeAndNil(DmProduto);
+  inherited;
+
+end;
 
 procedure TFormProduto.FormCreate(Sender: TObject);
 begin

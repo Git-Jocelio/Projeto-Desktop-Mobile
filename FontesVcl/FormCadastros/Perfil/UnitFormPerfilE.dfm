@@ -1,15 +1,15 @@
 inherited FormPerfilE: TFormPerfilE
   Caption = 'FormPerfilE'
-  ClientHeight = 441
+  ClientHeight = 397
   ClientWidth = 416
   OnShow = FormShow
   ExplicitWidth = 416
-  ExplicitHeight = 441
+  ExplicitHeight = 397
   TextHeight = 15
   inherited lblTitulo: TLabel
-    Width = 109
-    Caption = 'Editar Perfil'
-    ExplicitWidth = 109
+    Width = 191
+    Caption = 'Alterar minha senha'
+    ExplicitWidth = 191
   end
   object Nome: TLabel [1]
     Left = 46
@@ -65,16 +65,20 @@ inherited FormPerfilE: TFormPerfilE
   end
   inherited pnlBotaoSalvar: TPanel
     Left = 103
-    Top = 373
+    Top = 353
     Anchors = [akRight, akBottom]
-    ExplicitTop = 418
+    ExplicitLeft = 103
+    ExplicitTop = 403
+    inherited btnSalvar: TSpeedButton
+      OnClick = btnSalvarClick
+    end
   end
   inherited pnlBotaoCancelar: TPanel
     Left = 218
-    Top = 373
+    Top = 353
     Anchors = [akRight, akBottom]
     ExplicitLeft = 218
-    ExplicitTop = 373
+    ExplicitTop = 403
     inherited btnCancelar: TSpeedButton
       ExplicitHeight = 30
     end
@@ -84,6 +88,7 @@ inherited FormPerfilE: TFormPerfilE
     Top = 106
     Width = 326
     Height = 29
+    Enabled = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = 8289918
     Font.Height = -16
@@ -97,6 +102,7 @@ inherited FormPerfilE: TFormPerfilE
     Top = 165
     Width = 326
     Height = 29
+    Enabled = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = 8289918
     Font.Height = -16

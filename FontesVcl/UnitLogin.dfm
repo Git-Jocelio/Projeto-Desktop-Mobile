@@ -31,9 +31,9 @@ object frmLogin: TfrmLogin
     object tbsBoasVindas: TTabSheet
       Caption = 'tbsBoasVindas'
       object pnlDireito: TPanel
-        Left = 419
+        Left = 415
         Top = 65
-        Width = 152
+        Width = 156
         Height = 427
         Align = alRight
         BevelOuter = bvNone
@@ -53,9 +53,9 @@ object frmLogin: TfrmLogin
         TabOrder = 1
       end
       object pnlCentro: TPanel
-        Left = 161
+        Left = 156
         Top = 65
-        Width = 258
+        Width = 259
         Height = 427
         Align = alClient
         BevelOuter = bvNone
@@ -66,8 +66,8 @@ object frmLogin: TfrmLogin
           AlignWithMargins = True
           Left = 10
           Top = 180
-          Width = 238
-          Height = 145
+          Width = 218
+          Height = 120
           Margins.Left = 10
           Margins.Top = 20
           Margins.Right = 10
@@ -76,19 +76,17 @@ object frmLogin: TfrmLogin
           Alignment = taCenter
           Caption = 'Gerenciar sua empresa nunca foi t'#227'o f'#225'cil'
           Font.Charset = ANSI_CHARSET
-          Font.Color = 15624520
+          Font.Color = clBlack
           Font.Height = -29
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
           WordWrap = True
-          ExplicitWidth = 218
-          ExplicitHeight = 120
         end
         object imgLogoSistema: TImage
           Left = 0
           Top = 0
-          Width = 258
+          Width = 259
           Height = 160
           Align = alTop
           Center = True
@@ -243,12 +241,13 @@ object frmLogin: TfrmLogin
             B0D8B1AC0D606B160B03590162C164B1AC96A2C806C960B2282580C80481B32A
             00080204A1450A012A128C50950D942509460128C2D18A103000189630504180
             0806C806401141062004808A08020FFFD9}
+          ExplicitWidth = 258
         end
         object Panel1: TPanel
           AlignWithMargins = True
           Left = 3
           Top = 379
-          Width = 252
+          Width = 253
           Height = 45
           Align = alBottom
           BevelInner = bvLowered
@@ -260,7 +259,7 @@ object frmLogin: TfrmLogin
             AlignWithMargins = True
             Left = 5
             Top = 5
-            Width = 242
+            Width = 243
             Height = 35
             Cursor = crHandPoint
             Align = alClient
@@ -283,7 +282,7 @@ object frmLogin: TfrmLogin
           AlignWithMargins = True
           Left = 3
           Top = 328
-          Width = 252
+          Width = 253
           Height = 45
           Align = alBottom
           BevelOuter = bvNone
@@ -293,7 +292,7 @@ object frmLogin: TfrmLogin
           object SpeedButton2: TSpeedButton
             Left = 0
             Top = 0
-            Width = 252
+            Width = 253
             Height = 45
             Cursor = crHandPoint
             Align = alClient
@@ -316,7 +315,7 @@ object frmLogin: TfrmLogin
       object Panel6: TPanel
         Left = 0
         Top = 65
-        Width = 161
+        Width = 156
         Height = 427
         Align = alLeft
         BevelOuter = bvNone
@@ -341,9 +340,9 @@ object frmLogin: TfrmLogin
       ImageIndex = 1
       object pnLogin: TPanel
         AlignWithMargins = True
-        Left = 164
+        Left = 159
         Top = 68
-        Width = 252
+        Width = 253
         Height = 493
         Align = alClient
         BevelOuter = bvNone
@@ -353,13 +352,13 @@ object frmLogin: TfrmLogin
         object Label1: TLabel
           Left = 0
           Top = 210
-          Width = 252
+          Width = 253
           Height = 40
           Align = alBottom
           Alignment = taCenter
           Caption = 'Acessar sua conta'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = 15624520
+          Font.Color = clBlack
           Font.Height = -29
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
@@ -370,7 +369,7 @@ object frmLogin: TfrmLogin
           AlignWithMargins = True
           Left = 0
           Top = 265
-          Width = 252
+          Width = 253
           Height = 21
           Margins.Left = 0
           Margins.Top = 15
@@ -390,7 +389,7 @@ object frmLogin: TfrmLogin
           AlignWithMargins = True
           Left = 0
           Top = 346
-          Width = 252
+          Width = 253
           Height = 21
           Margins.Left = 0
           Margins.Top = 15
@@ -409,7 +408,7 @@ object frmLogin: TfrmLogin
         object Image1: TImage
           Left = 0
           Top = 0
-          Width = 252
+          Width = 253
           Height = 160
           Align = alTop
           Center = True
@@ -564,12 +563,13 @@ object frmLogin: TfrmLogin
             B0D8B1AC0D606B160B03590162C164B1AC96A2C806C960B2282580C80481B32A
             00080204A1450A012A128C50950D942509460128C2D18A103000189630504180
             0806C806401141062004808A08020FFFD9}
+          ExplicitWidth = 252
         end
         object PnlBotaoAcessar: TPanel
           AlignWithMargins = True
           Left = 0
           Top = 445
-          Width = 252
+          Width = 253
           Height = 45
           Margins.Left = 0
           Margins.Right = 0
@@ -581,7 +581,7 @@ object frmLogin: TfrmLogin
           object BtnAcessar: TSpeedButton
             Left = 0
             Top = 0
-            Width = 252
+            Width = 253
             Height = 45
             Cursor = crHandPoint
             Margins.Left = 0
@@ -607,7 +607,7 @@ object frmLogin: TfrmLogin
         object Panel2: TPanel
           Left = 0
           Top = 286
-          Width = 252
+          Width = 253
           Height = 45
           Align = alBottom
           BevelOuter = bvNone
@@ -618,7 +618,7 @@ object frmLogin: TfrmLogin
             AlignWithMargins = True
             Left = 10
             Top = 10
-            Width = 232
+            Width = 233
             Height = 25
             Margins.Left = 10
             Margins.Top = 10
@@ -641,7 +641,7 @@ object frmLogin: TfrmLogin
           AlignWithMargins = True
           Left = 0
           Top = 367
-          Width = 252
+          Width = 253
           Height = 45
           Margins.Left = 0
           Margins.Top = 0
@@ -656,7 +656,7 @@ object frmLogin: TfrmLogin
             AlignWithMargins = True
             Left = 10
             Top = 10
-            Width = 232
+            Width = 233
             Height = 25
             Margins.Left = 10
             Margins.Top = 10
@@ -725,7 +725,7 @@ object frmLogin: TfrmLogin
       object Panel8: TPanel
         Left = 0
         Top = 65
-        Width = 161
+        Width = 156
         Height = 499
         Align = alLeft
         BevelOuter = bvNone
@@ -734,9 +734,9 @@ object frmLogin: TfrmLogin
         TabOrder = 3
       end
       object Panel9: TPanel
-        Left = 419
+        Left = 415
         Top = 65
-        Width = 152
+        Width = 156
         Height = 499
         Align = alRight
         BevelOuter = bvNone
@@ -837,7 +837,7 @@ object frmLogin: TfrmLogin
           Alignment = taCenter
           Caption = 'Criar nova conta'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = 15624520
+          Font.Color = clBlack
           Font.Height = -25
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]

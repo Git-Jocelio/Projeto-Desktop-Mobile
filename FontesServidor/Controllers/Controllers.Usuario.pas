@@ -42,8 +42,8 @@ end;
 procedure Login(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
   body: TJSONObject;
-  login, senha: string;
   jsonRetorno: TJSONObject;
+  login, senha: string;
 begin
   jsonRetorno := nil;
 
@@ -74,8 +74,6 @@ begin
       jsonRetorno.AddPair('token',
                       Criar_Token(jsonRetorno.GetValue<integer>('usuarioid')));
       res.Send<TJSONObject>(jsonRetorno).Status(200);
-
-
 
     end;
   except
@@ -139,6 +137,7 @@ begin
     end;
 
     senha := body.GetValue<string>('senha', '');
+    // pega o id do usuario contido dentro do json
     usuarioid := Get_Usuario_Request(req);
     Service.Usuario.EditarSenha( usuarioid, senha );
 

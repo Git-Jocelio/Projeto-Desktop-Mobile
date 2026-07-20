@@ -32,7 +32,8 @@ uses
   UnitFormColaboradorE in 'FormCadastros\Colaboradores\UnitFormColaboradorE.pas' {FormColaboradorE},
   UnitFormPessoaE in 'FormCadastros\Pessoa\UnitFormPessoaE.pas' {FormPessoaE},
   Vcl.Config in 'Utils\Vcl.Config.pas',
-  UnitFormPerfilE in 'FormCadastros\Perfil\UnitFormPerfilE.pas' {FormPerfilE};
+  UnitFormPerfilE in 'FormCadastros\Perfil\UnitFormPerfilE.pas' {FormPerfilE},
+  Service.Usuario in 'Services\Service.Usuario.pas';
 
 {$R *.res}
 

@@ -142,7 +142,7 @@ end;
 
 procedure TfrmLogin.FormShow(Sender: TObject);
 begin
-  PageControl.ActivePageIndex := 1;
+  PageControl.ActivePageIndex := 0;
 end;
 
 procedure TfrmLogin.Label6Click(Sender: TObject);

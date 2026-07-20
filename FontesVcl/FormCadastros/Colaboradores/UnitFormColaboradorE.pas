@@ -69,6 +69,7 @@ begin
       exit;
     end;
 
+
    TNavigation.Close(self);
 end;
 
