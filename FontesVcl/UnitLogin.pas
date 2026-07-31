@@ -37,9 +37,9 @@ type
     pnlRodape: TPanel;
     imgLogoSistema: TImage;
     Panel1: TPanel;
-    SpeedButton1: TSpeedButton;
+    btnAtivarconta: TSpeedButton;
     Panel4: TPanel;
-    SpeedButton2: TSpeedButton;
+    btnAcessarLogin: TSpeedButton;
     Panel5: TPanel;
     Panel7: TPanel;
     Panel8: TPanel;
@@ -60,17 +60,17 @@ type
     Panel16: TPanel;
     edtEmail: TEdit;
     Panel17: TPanel;
-    edtCriarSenha: TEdit;
+    edtSenhaProvisoria: TEdit;
     Panel18: TPanel;
-    edtCriarSenha2: TEdit;
-    btnCriarconta: TSpeedButton;
+    edtNovaSenha: TEdit;
+    btnAlterarSenha: TSpeedButton;
     procedure BtnAcessarClick(Sender: TObject);
-    procedure SpeedButton2Click(Sender: TObject);
-    procedure SpeedButton1Click(Sender: TObject);
+    procedure btnAcessarLoginClick(Sender: TObject);
+    procedure btnAtivarcontaClick(Sender: TObject);
     procedure Label6Click(Sender: TObject);
     procedure edtVoltarParaLoginClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure btnCriarcontaClick(Sender: TObject);
+    procedure btnAlterarSenhaClick(Sender: TObject);
   private
     procedure TerminateLogin(Sender: TObject);
     function ServidorOnline: Boolean;
@@ -179,22 +179,22 @@ function TfrmLogin.ValidarDados: boolean;
 begin
   result := false;
 
-  if  (edtNome.Text = '') or (edtEmail.Text = '') or (edtCriarSenha.Text = '') or (edtCriarSenha2.Text = '') then
+  if  (edtNome.Text = '') or (edtEmail.Text = '') or (edtSenhaProvisoria.Text = '') or (edtNovaSenha.Text = '') then
   begin
     ShowMessage('Informe todos dados : Nome, Email, Senha e confirme a senha' );
     exit;
   end;
 
-  if (edtCriarSenha.Text) <> (edtCriarSenha2.Text) then
+  if (edtSenhaProvisoria.Text) = (edtNovaSenha.Text) then
   begin
-    ShowMessage('Senhas não conferem, digite novamente');
+    ShowMessage('A nova senha deve ser diferente da provisória, digite novamente');
     exit;
   end;
 
   result := true;
 end;
 
-procedure TfrmLogin.btnCriarcontaClick(Sender: TObject);
+procedure TfrmLogin.btnAlterarSenhaClick(Sender: TObject);
 begin
 
   if not ValidarDados then exit;
@@ -249,12 +249,12 @@ begin
 
 end;
 
-procedure TfrmLogin.SpeedButton1Click(Sender: TObject);
+procedure TfrmLogin.btnAtivarcontaClick(Sender: TObject);
 begin
   PageControl.TabIndex := 2;
 end;
 
-procedure TfrmLogin.SpeedButton2Click(Sender: TObject);
+procedure TfrmLogin.btnAcessarLoginClick(Sender: TObject);
 begin
   PageControl.TabIndex := 1;
 end;

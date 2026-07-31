@@ -19,7 +19,7 @@ object frmLogin: TfrmLogin
     Top = 0
     Width = 579
     Height = 666
-    ActivePage = tbsNovaConta
+    ActivePage = TabLogin
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -66,8 +66,8 @@ object frmLogin: TfrmLogin
           AlignWithMargins = True
           Left = 10
           Top = 180
-          Width = 218
-          Height = 120
+          Width = 239
+          Height = 145
           Margins.Left = 10
           Margins.Top = 20
           Margins.Right = 10
@@ -82,6 +82,8 @@ object frmLogin: TfrmLogin
           Font.Style = [fsBold]
           ParentFont = False
           WordWrap = True
+          ExplicitWidth = 218
+          ExplicitHeight = 120
         end
         object imgLogoSistema: TImage
           Left = 0
@@ -255,7 +257,7 @@ object frmLogin: TfrmLogin
           Color = clWhite
           ParentBackground = False
           TabOrder = 0
-          object SpeedButton1: TSpeedButton
+          object btnAtivarconta: TSpeedButton
             AlignWithMargins = True
             Left = 5
             Top = 5
@@ -263,15 +265,15 @@ object frmLogin: TfrmLogin
             Height = 35
             Cursor = crHandPoint
             Align = alClient
-            Caption = 'Criar uma nova conta'
+            Caption = 'Ativar minha conta'
             Flat = True
             Font.Charset = DEFAULT_CHARSET
             Font.Color = 15624520
-            Font.Height = -19
+            Font.Height = -16
             Font.Name = 'Segoe UI'
             Font.Style = []
             ParentFont = False
-            OnClick = SpeedButton1Click
+            OnClick = btnAtivarcontaClick
             ExplicitLeft = 176
             ExplicitTop = 16
             ExplicitWidth = 23
@@ -289,7 +291,7 @@ object frmLogin: TfrmLogin
           Color = 15624520
           ParentBackground = False
           TabOrder = 1
-          object SpeedButton2: TSpeedButton
+          object btnAcessarLogin: TSpeedButton
             Left = 0
             Top = 0
             Width = 253
@@ -304,7 +306,7 @@ object frmLogin: TfrmLogin
             Font.Name = 'Segoe UI'
             Font.Style = []
             ParentFont = False
-            OnClick = SpeedButton2Click
+            OnClick = btnAcessarLoginClick
             ExplicitLeft = 176
             ExplicitTop = 16
             ExplicitWidth = 23
@@ -710,7 +712,7 @@ object frmLogin: TfrmLogin
           Margins.Bottom = 0
           Align = alBottom
           Alignment = taCenter
-          Caption = 'N'#227'o tenho uma conta. Criar uma conta'
+          Caption = 'Alterar Senha ou Ativar Conta'
           Font.Charset = ANSI_CHARSET
           Font.Color = 15624520
           Font.Height = -15
@@ -719,7 +721,7 @@ object frmLogin: TfrmLogin
           ParentFont = False
           WordWrap = True
           OnClick = Label6Click
-          ExplicitWidth = 256
+          ExplicitWidth = 196
         end
       end
       object Panel8: TPanel
@@ -746,7 +748,7 @@ object frmLogin: TfrmLogin
       end
     end
     object tbsNovaConta: TTabSheet
-      Caption = 'tbsNovaConta'
+      Caption = 'tbsAlterarSenha'
       ImageIndex = 2
       object Panel10: TPanel
         Left = 0
@@ -792,7 +794,7 @@ object frmLogin: TfrmLogin
           Margins.Bottom = 0
           Align = alBottom
           Alignment = taCenter
-          Caption = 'J'#225' tenho uma conta. Fazer login'
+          Caption = 'Voltar para Login'
           Font.Charset = ANSI_CHARSET
           Font.Color = 15624520
           Font.Height = -15
@@ -801,7 +803,7 @@ object frmLogin: TfrmLogin
           ParentFont = False
           WordWrap = True
           OnClick = edtVoltarParaLoginClick
-          ExplicitWidth = 208
+          ExplicitWidth = 114
         end
       end
       object Panel13: TPanel
@@ -835,14 +837,14 @@ object frmLogin: TfrmLogin
           Margins.Bottom = 10
           Align = alBottom
           Alignment = taCenter
-          Caption = 'Criar nova conta'
+          Caption = 'Alterar minha senha'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -25
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
-          ExplicitWidth = 192
+          ExplicitWidth = 237
         end
         object Image2: TImage
           Left = 0
@@ -1018,7 +1020,7 @@ object frmLogin: TfrmLogin
           Color = 15624520
           ParentBackground = False
           TabOrder = 0
-          object btnCriarconta: TSpeedButton
+          object btnAlterarSenha: TSpeedButton
             Left = 0
             Top = 0
             Width = 252
@@ -1029,7 +1031,7 @@ object frmLogin: TfrmLogin
             Margins.Right = 0
             Margins.Bottom = 0
             Align = alClient
-            Caption = 'Criar conta'
+            Caption = 'Alterar senha'
             Flat = True
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWhite
@@ -1037,7 +1039,7 @@ object frmLogin: TfrmLogin
             Font.Name = 'Segoe UI'
             Font.Style = []
             ParentFont = False
-            OnClick = btnCriarcontaClick
+            OnClick = btnAlterarSenhaClick
             ExplicitLeft = 176
             ExplicitTop = 16
             ExplicitWidth = 23
@@ -1135,7 +1137,7 @@ object frmLogin: TfrmLogin
           Color = 15624520
           ParentBackground = False
           TabOrder = 3
-          object edtCriarSenha: TEdit
+          object edtSenhaProvisoria: TEdit
             AlignWithMargins = True
             Left = 10
             Top = 10
@@ -1156,7 +1158,7 @@ object frmLogin: TfrmLogin
             ParentFont = False
             PasswordChar = '*'
             TabOrder = 0
-            TextHint = 'Senha'
+            TextHint = 'Senha provis'#243'ria'
           end
         end
         object Panel18: TPanel
@@ -1174,7 +1176,7 @@ object frmLogin: TfrmLogin
           Color = 15624520
           ParentBackground = False
           TabOrder = 4
-          object edtCriarSenha2: TEdit
+          object edtNovaSenha: TEdit
             AlignWithMargins = True
             Left = 10
             Top = 10
@@ -1195,7 +1197,7 @@ object frmLogin: TfrmLogin
             ParentFont = False
             PasswordChar = '*'
             TabOrder = 0
-            TextHint = 'Confirme sua senha'
+            TextHint = 'Confirme nova senha'
           end
         end
       end
