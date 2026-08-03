@@ -87,7 +87,7 @@ end;
 procedure InserirUsuario(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
   body: TJSONObject;
-  nome, telefone, email, senha: string;
+  nome, cpf, telefone, email, senha, ativo, primeiro_acesso, alterar_senha: string;
   pessoaid: integer;
   jsonRetorno: TJSONObject;
 begin
@@ -102,13 +102,19 @@ begin
       Exit;
     end;
 
-    nome  := body.GetValue<string>('nome', '');
-    telefone  := body.GetValue<string>('telefone', '');
+    pessoaid := body.GetValue<integer>('pessoaid', 0);
+    cpf := body.GetValue<string>('cpf', '');
+    nome := body.GetValue<string>('nome', '');
+    telefone := body.GetValue<string>('telefone', '');
     email := body.GetValue<string>('email', '');
     senha := body.GetValue<string>('senha', '');
-    pessoaid := body.GetValue<integer>('pessoaid', 0);
+    ativo := body.GetValue<string>('ativo', 'N');
+    primeiro_acesso := body.GetValue<string>('primeiro_acesso', '');
+    alterar_senha := body.GetValue<string>('alterar_senha', '');
 
-    jsonRetorno := Service.Usuario.InserirUsuario(nome, email, senha, pessoaid);
+    jsonRetorno := Service.Usuario.InserirUsuario(nome, cpf, telefone, email,
+                                                  senha, primeiro_acesso,
+                                                  alterar_senha,pessoaid);
 
     // gerar token JWT.. curso Poupei, aula 04, miunuto 31"25
      jsonRetorno.AddPair('token',

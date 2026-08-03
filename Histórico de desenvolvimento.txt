@@ -1,0 +1,43 @@
+31/07/2026
+estou desenvolvendo a parte de login e controle de acesso ao sistema
+resumo:
+RH
+ ↓
+Cadastra o colaborador
+ ↓
+Administrador
+ ↓
+Cria o usuário
+ ↓
+Vincula os perfis
+ ↓
+Define uma senha provisória
+ ↓
+Usuário faz o primeiro acesso
+ ↓
+Sistema identifica a senha provisória
+ ↓
+Tela "Alterar minha senha"
+ ↓
+Acesso liberado
+
+de acordo com as regras de negocio já definidas...
+próximo passo:
+
+- Ajustar a tabela de usuários de acordo com imagem MER no caso remover o campo nome,
+  pois da tem na tabela de pessoas. 
+  ok removido em 03/08/2026
+
+
+Após isso
+Ajustar o front e o back end.
+ok ajustado em 03/08/2026 
+- Ajustar o backend para atender a tela de ativar conta
+
+- Criar a tela cadastro de usuário
+- Criar a tela de perfil de usuário
+
+03/08/2026
+retirado o campo nome da tabela usuário
+refaturado o front e o back para atender as mudanças
+acrescentado novos campos ao endpoint de inserir usuário

@@ -27,8 +27,8 @@ type
   private
   public
     function usuarioLogin(login, senha: string): TJSONObject;
-    function InserirUsuario(nome, email, senha: string;
-                              pessoaid: integer): TJSONObject;
+    function InserirUsuario(nome, cpf, telefone, email, senha: string;
+                                       pessoaid: integer): TJSONObject;
     procedure EditarSenha(usuarioid: integer; senha: string);
     function listarUsuarioId(usuarioid: integer): TJSONObject;
     procedure EditarUsuario(usuarioid: integer; login, nome: string);
@@ -73,11 +73,12 @@ begin
 
   qry.SQL.clear;
   qry.SQL.Add('select ');
-  qry.SQL.Add('  pessoaid, usuarioid, nome, login ');
+  qry.SQL.Add('  u.pessoaid, u.usuarioid, p.nome, u.login ');
   qry.SQL.Add('from ');
-  qry.SQL.Add('  usuario ');
+  qry.SQL.Add('  usuario u, pessoa p');
   qry.SQL.Add('where ');
-  qry.SQL.Add('  login = :login and senha = :senha');
+  qry.SQL.Add('  p.pessoaid = u.pessoaid ');
+  qry.SQL.Add('  and login = :login and senha = :senha');
   qry.ParamByName('login').AsString := login;
   qry.ParamByName('senha').AsString := senha ;
   qry.Open;
@@ -87,7 +88,7 @@ begin
 
 end;
 
-function TDmUsuario.InserirUsuario(nome, email, senha: string;
+function TDmUsuario.InserirUsuario(nome, cpf, telefone, email, senha: string;
                                        pessoaid: integer): TJSONObject;
 var
   novaPessoa, novoUsuario: integer;
@@ -103,11 +104,13 @@ begin
     begin
       qry.SQL.clear;
       qry.SQL.Add('insert into pessoa ');
-      qry.SQL.Add('  (nome, email) ');
+      qry.SQL.Add('  (nome, cpf, telefone, email) ');
       qry.SQL.Add('values ');
-      qry.SQL.Add('  (:nome, :email) ');
+      qry.SQL.Add('  (:nome, :cpf, :telefone, :email) ');
       qry.SQL.Add('returning pessoaid ');
       qry.ParamByName('nome').AsString := nome;
+      qry.ParamByName('cpf').AsString := cpf;
+      qry.ParamByName('telefone').AsString := telefone;
       qry.ParamByName('email').AsString := email ;
       qry.active := true;
       novaPessoa:= qry.FieldByName('pessoaid').AsInteger;
@@ -115,14 +118,16 @@ begin
 
     qry.SQL.clear;
     qry.SQL.Add('insert into usuario ');
-    qry.SQL.Add('  (login, senha, nome, pessoaid) ');
+    qry.SQL.Add('  (login, senha, pessoaid, ativo, primeiro_acesso, alterar_senha) ');
     qry.SQL.Add('values ');
-    qry.SQL.Add('  (:login, :senha, :nome, :pessoaid )');
-    qry.SQL.Add('returning usuarioid, nome, login, pessoaid ');
+    qry.SQL.Add('  (:login, :senha, :pessoaid, :ativo, :primeiro_acesso, :alterar_senha )');
+    qry.SQL.Add('returning usuarioid, login, pessoaid ');
     qry.ParamByName('login').AsString := email;
     qry.ParamByName('senha').AsString := senha;
-    qry.ParamByName('nome').AsString := nome ;
     qry.ParamByName('pessoaid').AsInteger := IfThen(pessoaid <=0, novaPessoa, pessoaid );
+    qry.ParamByName('ativo').AsString := 'S' ;
+    qry.ParamByName('primeiro_acesso').AsString := 'N' ;
+    qry.ParamByName('alterar_senha').AsString := 'N' ;
     qry.active := true;
     novoUsuario:= qry.FieldByName('usuarioid').AsInteger;
 
@@ -132,7 +137,6 @@ begin
     Result := TJSONObject.Create;
     Result.AddPair('usuarioid', TJSONNumber.Create(novoUsuario));
     Result.AddPair('pessoaid', qry.FieldByName('pessoaid').AsString);
-    Result.AddPair('nome', qry.FieldByName('nome').AsString);
     Result.AddPair('email', qry.FieldByName('login').AsString);
 
   except
@@ -206,12 +210,13 @@ begin
 
   qry.SQL.clear;
   qry.SQL.Add('update usuario set ');
-  qry.SQL.Add('  login =:login, nome =:nome ');
+  //qry.SQL.Add('  login =:login, nome =:nome ');
+  qry.SQL.Add('  login =:login ');
   qry.SQL.Add('  where usuarioid =:usuarioid ');
 
   qry.ParamByName('usuarioid').Value := usuarioid;
   qry.ParamByName('login').Value := login;
-  qry.ParamByName('nome').Value := nome;
+  //qry.ParamByName('nome').Value := nome;
 
   qry.ExecSQL;
 

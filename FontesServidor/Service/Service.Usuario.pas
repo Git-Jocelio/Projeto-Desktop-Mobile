@@ -8,7 +8,11 @@ uses
   datamodule.Usuario, uMD5;
 
   function Login(Login, Senha : string): TJSONObject;
-  function InserirUsuario(nome, email, senha: string; pessoaId: integer): TJSONObject;
+
+  function InserirUsuario(nome, cpf, telefone, email, senha, primeiro_acesso,
+                        alterar_senha: string; pessoaId: integer): TJSONObject;
+
+
   procedure EditarSenha(usuarioid: integer; senha: string);
   function listarUsuarioId(usuarioid: integer): TJSONObject;
   procedure EditarUsuario(usuarioid: integer; login, nome: string);
@@ -30,8 +34,8 @@ begin
   end;
 end;
 
-
-function InserirUsuario(nome, email, senha: string; pessoaId: integer): TJSONObject;
+function InserirUsuario(nome, cpf, telefone, email, senha, primeiro_acesso,
+                        alterar_senha: string; pessoaId: integer): TJSONObject;
 var
   dm : TDmUsuario;
   json_retorno: TJSONObject;
@@ -39,7 +43,7 @@ begin
   dm := nil;
   json_Retorno:= nil;
 
-  if (nome='')  or (email='') or (senha='') then
+  if (nome='')  or (email='') or (senha='') or (cpf='') then
     raise Exception.Create('Informe todos os campos: Nome, Email, Senha ');
 
   try
@@ -49,7 +53,7 @@ begin
     if Assigned(json_Retorno) then
       raise Exception.Create('Já existe um email cadastrado para essa conta');
 
-    Result := dm.InserirUsuario(nome, email, SaltPassword(Senha), pessoaId);
+    Result := dm.InserirUsuario(nome, cpf, telefone, email, SaltPassword(Senha), pessoaId);
   finally
     FreeAndNil(json_Retorno);
     FreeAndNil(dm);
