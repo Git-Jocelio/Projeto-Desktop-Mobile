@@ -21,6 +21,7 @@
 
 # History
 __history/
+__recovery/
 *.~pas
 *.~dfm
 
