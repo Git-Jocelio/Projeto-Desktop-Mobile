@@ -3,41 +3,44 @@ inherited FormUsuario: TFormUsuario
   ClientWidth = 1300
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  OnShow = FormShow
   ExplicitWidth = 1300
   TextHeight = 15
   inherited PnlHeader: TPanel
     Width = 1300
-    ExplicitWidth = 1173
+    ExplicitWidth = 1300
     inherited Label1: TLabel
       Width = 280
+      Height = 45
       Caption = ' Usu'#225'rios do sistema '
       ExplicitWidth = 280
     end
     inherited PnlBotaoInserir: TPanel
       Left = 1188
-      ExplicitLeft = 1061
+      ExplicitLeft = 1188
     end
     inherited Panel2: TPanel
       Left = 944
-      ExplicitLeft = 817
+      ExplicitLeft = 944
+      inherited btnInserir: TSpeedButton
+        OnClick = btnInserirClick
+      end
     end
     inherited Panel3: TPanel
       Left = 1066
-      ExplicitLeft = 939
+      ExplicitLeft = 1066
     end
     inherited Panel1: TPanel
       Left = 310
       Width = 574
       ExplicitLeft = 310
-      ExplicitWidth = 447
+      ExplicitWidth = 574
       inherited Panel4: TPanel
         Left = 462
-        ExplicitLeft = 335
+        ExplicitLeft = 462
       end
       inherited edtFiltrar: TEdit
         Width = 447
-        ExplicitWidth = 320
+        ExplicitWidth = 447
       end
     end
   end

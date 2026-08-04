@@ -10,18 +10,24 @@ uses
   System.JSON,
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Config;
+  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Config,
+  FireDAC.Stan.Async, FireDAC.DApt;
 
 type
   TdmUsuario = class(TDataModule)
     MemTable: TFDMemTable;
+    TabColaboradores: TFDMemTable;
     procedure DataModuleCreate(Sender: TObject);
   private
   public
+    //endpoints para usuários
     procedure Login(email, senha: string);
     procedure CriarConta(nome, email, senha: string);
     procedure AlterarSenha( senha: string);
     procedure ListarTodos;
+
+    // colaborador
+    procedure ListarColaboradores;
   end;
 
 var
@@ -142,6 +148,27 @@ begin
   finally
     freeandnil(json);
   end;
+end;
+
+procedure TdmUsuario.ListarColaboradores;
+var
+  Res : IResponse;
+begin
+  // limpar o dataset
+  if TabColaboradores.Active then
+    TabColaboradores.emptydataset;
+
+  TabColaboradores.FieldDefs.Clear;
+
+  Res := TRequest.New.BaseURL(URL_BASE)
+                 .Resource('/colaborador')
+                 .TokenBearer(TSession.TOKEN)
+                 .Accept('application/json')
+                 .Adapters(TDataSetSerializeAdapter.New(TabColaboradores))
+                 .Get;
+  if Res.StatusCode <> 200 then
+    raise Exception.Create(Res.content);
+
 end;
 
 procedure TdmUsuario.ListarTodos;

@@ -34,7 +34,8 @@ uses
   Vcl.Config in 'Utils\Vcl.Config.pas',
   UnitFormPerfilE in 'FormCadastros\Perfil\UnitFormPerfilE.pas' {FormPerfilE},
   Service.Usuario in 'Services\Service.Usuario.pas',
-  UnitFormUsuario in 'FormCadastros\Usuarios\UnitFormUsuario.pas' {FormUsuario};
+  UnitFormUsuario in 'FormCadastros\Usuarios\UnitFormUsuario.pas' {FormUsuario},
+  UnitFormUsuarioE in 'FormCadastros\Usuarios\UnitFormUsuarioE.pas' {FormUsuarioE};
 
 {$R *.res}
 

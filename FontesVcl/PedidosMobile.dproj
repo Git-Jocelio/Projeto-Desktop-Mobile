@@ -221,6 +221,10 @@
             <Form>FormUsuario</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="FormCadastros\Usuarios\UnitFormUsuarioE.pas">
+            <Form>FormUsuarioE</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

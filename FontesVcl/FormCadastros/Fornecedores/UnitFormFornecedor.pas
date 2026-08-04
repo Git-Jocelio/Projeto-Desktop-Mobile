@@ -152,7 +152,4 @@ begin
   TNavigation.OpenModal(TFormFornecedorE, FormFornecedorE);
 end;
 
-
-
-
 end.

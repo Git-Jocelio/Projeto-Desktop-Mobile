@@ -6,16 +6,18 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, UnitFormBaseGrade, Data.DB,
   System.ImageList, Vcl.ImgList, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls,
-  Vcl.Buttons, Vcl.ExtCtrls;
+  Vcl.Buttons, Vcl.ExtCtrls, Vcl.Navigation;
 
 type
   TFormUsuario = class(TFormBaseGrade)
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure btnInserirClick(Sender: TObject);
   private
     procedure Listartodos;
-    procedure TerminateListartodos;
+    procedure TerminateListartodos(Sender: TObject);
+    procedure OpenCadUsuario(pessoaId: integer);
   public
     { Public declarations }
   end;
@@ -27,10 +29,10 @@ implementation
 
 {$R *.dfm}
 
-uses DataModule.Usuario, Vcl.Loading;
+uses DataModule.Usuario, Vcl.Loading, UnitFormUsuarioE;
 
 
-procedure TFormUsuario.TerminateListartodos;
+procedure TFormUsuario.TerminateListartodos(Sender: TObject);
 begin
   TLoading.Hide;
   ds.DataSet := DmUsuario.MemTable;
@@ -40,19 +42,22 @@ end;
 procedure TFormUsuario.ListarTodos;
 begin
   TLoading.Show;
-
-  try
-    ds.DataSet := nil;
-    DmUsuario.ListarTodos;
-    ds.DataSet := DmUsuario.MemTable;
-    if ds.DataSet.IsEmpty then
-      ShowMessage('Nenhum registro encontrado!')
-  finally
-     TerminateListartodos;
-  end;
-
+  ds.DataSet := nil;
+  TLoading.ExecuteThread(procedure
+  begin
+     sleep(1000);
+     DmUsuario.ListarTodos;
+  end,
+  TerminateListartodos
+  );
 end;
 
+
+procedure TFormUsuario.btnInserirClick(Sender: TObject);
+begin
+  inherited;
+  OpenCadUsuario(0);
+end;
 
 procedure TFormUsuario.FormCreate(Sender: TObject);
 begin
@@ -65,14 +70,21 @@ procedure TFormUsuario.FormDestroy(Sender: TObject);
 begin
   inherited;
     FreeAndNil(dmUsuario);
-
 end;
 
 procedure TFormUsuario.FormShow(Sender: TObject);
 begin
   inherited;
   ListarTodos;
-
 end;
+
+procedure TFormUsuario.OpenCadUsuario(pessoaId: integer);
+begin
+  TNavigation.ExecuteOnClose := ListarTodos;
+  TNavigation.ParamInt := pessoaId;
+  TNavigation.OpenModal(TFormUsuarioE, FormUsuarioE);
+end;
+
+
 
 end.
