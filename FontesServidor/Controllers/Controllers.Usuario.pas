@@ -84,10 +84,12 @@ begin
 end;
 
 //15/05/2026
+//gerar um usuário para um colaborador
 procedure InserirUsuario(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
   body: TJSONObject;
-  nome, cpf, telefone, email, senha, ativo, primeiro_acesso, alterar_senha: string;
+  //nome, cpf, telefone,
+  email, senha, ativo, primeiro_acesso, alterar_senha: string;
   pessoaid: integer;
   jsonRetorno: TJSONObject;
 begin
@@ -103,18 +105,18 @@ begin
     end;
 
     pessoaid := body.GetValue<integer>('pessoaid', 0);
-    cpf := body.GetValue<string>('cpf', '');
-    nome := body.GetValue<string>('nome', '');
-    telefone := body.GetValue<string>('telefone', '');
+    //cpf := body.GetValue<string>('cpf', '');
+    //nome := body.GetValue<string>('nome', '');
+    //telefone := body.GetValue<string>('telefone', '');
     email := body.GetValue<string>('email', '');
     senha := body.GetValue<string>('senha', '');
     ativo := body.GetValue<string>('ativo', 'N');
     primeiro_acesso := body.GetValue<string>('primeiro_acesso', '');
     alterar_senha := body.GetValue<string>('alterar_senha', '');
 
-    jsonRetorno := Service.Usuario.InserirUsuario(nome, cpf, telefone, email,
-                                                  senha, primeiro_acesso,
-                                                  alterar_senha,pessoaid);
+    //jsonRetorno := Service.Usuario.InserirUsuario(nome, cpf, telefone, email,
+    jsonRetorno := Service.Usuario.InserirUsuario(email, senha, primeiro_acesso,
+                                                  alterar_senha, pessoaid);
 
     // gerar token JWT.. curso Poupei, aula 04, miunuto 31"25
      jsonRetorno.AddPair('token',

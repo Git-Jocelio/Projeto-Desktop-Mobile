@@ -9,8 +9,8 @@ uses
 
   function Login(Login, Senha : string): TJSONObject;
 
-  function InserirUsuario(nome, cpf, telefone, email, senha, primeiro_acesso,
-                        alterar_senha: string; pessoaId: integer): TJSONObject;
+  function InserirUsuario(email, senha, primeiro_acesso, alterar_senha: string;
+                           pessoaId: integer): TJSONObject;
 
 
   procedure EditarSenha(usuarioid: integer; senha: string);
@@ -34,8 +34,9 @@ begin
   end;
 end;
 
-function InserirUsuario(nome, cpf, telefone, email, senha, primeiro_acesso,
-                        alterar_senha: string; pessoaId: integer): TJSONObject;
+//function InserirUsuario(nome, cpf, telefone, email, senha, primeiro_acesso,
+function InserirUsuario(email, senha, primeiro_acesso, alterar_senha: string;
+                         pessoaId: integer): TJSONObject;
 var
   dm : TDmUsuario;
   json_retorno: TJSONObject;
@@ -43,8 +44,8 @@ begin
   dm := nil;
   json_Retorno:= nil;
 
-  if (nome='')  or (email='') or (senha='') or (cpf='') then
-    raise Exception.Create('Informe todos os campos: Nome, Email, Senha ');
+  if (email='') or (senha='') then
+    raise Exception.Create('Informe todos os campos: Email, Senha ');
 
   try
     dm := TDmUsuario.Create(nil);
@@ -53,7 +54,7 @@ begin
     if Assigned(json_Retorno) then
       raise Exception.Create('Já existe um email cadastrado para essa conta');
 
-    Result := dm.InserirUsuario(nome, cpf, telefone, email, SaltPassword(Senha), pessoaId);
+    Result := dm.InserirUsuario( email, SaltPassword(Senha), pessoaId);
   finally
     FreeAndNil(json_Retorno);
     FreeAndNil(dm);

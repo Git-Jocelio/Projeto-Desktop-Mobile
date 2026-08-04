@@ -27,8 +27,7 @@ type
   private
   public
     function usuarioLogin(login, senha: string): TJSONObject;
-    function InserirUsuario(nome, cpf, telefone, email, senha: string;
-                                       pessoaid: integer): TJSONObject;
+    function InserirUsuario( email, senha: string; pessoaid: integer): TJSONObject;
     procedure EditarSenha(usuarioid: integer; senha: string);
     function listarUsuarioId(usuarioid: integer): TJSONObject;
     procedure EditarUsuario(usuarioid: integer; login, nome: string);
@@ -88,10 +87,12 @@ begin
 
 end;
 
-function TDmUsuario.InserirUsuario(nome, cpf, telefone, email, senha: string;
-                                       pessoaid: integer): TJSONObject;
+
+// cria um usuário para um colaborador!
+function TDmUsuario.InserirUsuario( email, senha: string; pessoaid: integer): TJSONObject;
 var
-  novaPessoa, novoUsuario: integer;
+  //novaPessoa, novoUsuario: integer;
+  novoUsuario: integer;
 begin
 
   result := nil;
@@ -99,7 +100,7 @@ begin
 
   try
     DmServidor.Conn.StartTransaction;
-
+    (*
     if pessoaid <= 0 then
     begin
       qry.SQL.clear;
@@ -115,7 +116,7 @@ begin
       qry.active := true;
       novaPessoa:= qry.FieldByName('pessoaid').AsInteger;
     end;
-
+    *)
     qry.SQL.clear;
     qry.SQL.Add('insert into usuario ');
     qry.SQL.Add('  (login, senha, pessoaid, ativo, primeiro_acesso, alterar_senha) ');
@@ -124,7 +125,8 @@ begin
     qry.SQL.Add('returning usuarioid, login, pessoaid ');
     qry.ParamByName('login').AsString := email;
     qry.ParamByName('senha').AsString := senha;
-    qry.ParamByName('pessoaid').AsInteger := IfThen(pessoaid <=0, novaPessoa, pessoaid );
+    //qry.ParamByName('pessoaid').AsInteger := IfThen(pessoaid <=0, novaPessoa, pessoaid );
+    qry.ParamByName('pessoaid').AsInteger := pessoaid;
     qry.ParamByName('ativo').AsString := 'S' ;
     qry.ParamByName('primeiro_acesso').AsString := 'N' ;
     qry.ParamByName('alterar_senha').AsString := 'N' ;
