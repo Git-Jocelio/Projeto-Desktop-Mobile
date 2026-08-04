@@ -1,6 +1,6 @@
 object DmFornecedor: TDmFornecedor
-  Height = 410
-  Width = 624
+  Height = 313
+  Width = 437
   object TabFornecedor: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -9,7 +9,7 @@ object DmFornecedor: TDmFornecedor
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 264
-    Top = 168
+    Left = 152
+    Top = 96
   end
 end

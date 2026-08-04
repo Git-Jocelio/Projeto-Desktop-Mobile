@@ -29,9 +29,10 @@ type
     function usuarioLogin(login, senha: string): TJSONObject;
     function InserirUsuario( email, senha: string; pessoaid: integer): TJSONObject;
     procedure EditarSenha(usuarioid: integer; senha: string);
-    function listarUsuarioId(usuarioid: integer): TJSONObject;
     procedure EditarUsuario(usuarioid: integer; login, nome: string);
+    function listarUsuarioId(usuarioid: integer): TJSONObject;
     function listarUsuarioByEmail(email: string): TJSONObject;
+    function listarTodos: TJSONArray;
   end;
 
 implementation
@@ -91,7 +92,6 @@ end;
 // cria um usuário para um colaborador!
 function TDmUsuario.InserirUsuario( email, senha: string; pessoaid: integer): TJSONObject;
 var
-  //novaPessoa, novoUsuario: integer;
   novoUsuario: integer;
 begin
 
@@ -100,23 +100,6 @@ begin
 
   try
     DmServidor.Conn.StartTransaction;
-    (*
-    if pessoaid <= 0 then
-    begin
-      qry.SQL.clear;
-      qry.SQL.Add('insert into pessoa ');
-      qry.SQL.Add('  (nome, cpf, telefone, email) ');
-      qry.SQL.Add('values ');
-      qry.SQL.Add('  (:nome, :cpf, :telefone, :email) ');
-      qry.SQL.Add('returning pessoaid ');
-      qry.ParamByName('nome').AsString := nome;
-      qry.ParamByName('cpf').AsString := cpf;
-      qry.ParamByName('telefone').AsString := telefone;
-      qry.ParamByName('email').AsString := email ;
-      qry.active := true;
-      novaPessoa:= qry.FieldByName('pessoaid').AsInteger;
-    end;
-    *)
     qry.SQL.clear;
     qry.SQL.Add('insert into usuario ');
     qry.SQL.Add('  (login, senha, pessoaid, ativo, primeiro_acesso, alterar_senha) ');
@@ -125,7 +108,6 @@ begin
     qry.SQL.Add('returning usuarioid, login, pessoaid ');
     qry.ParamByName('login').AsString := email;
     qry.ParamByName('senha').AsString := senha;
-    //qry.ParamByName('pessoaid').AsInteger := IfThen(pessoaid <=0, novaPessoa, pessoaid );
     qry.ParamByName('pessoaid').AsInteger := pessoaid;
     qry.ParamByName('ativo').AsString := 'S' ;
     qry.ParamByName('primeiro_acesso').AsString := 'N' ;
@@ -170,11 +152,12 @@ begin
 
   qry.SQL.clear;
   qry.SQL.Add('select ');
-  qry.SQL.Add('  pessoaid, nome, login ');
+  qry.SQL.Add('  p.pessoaid, p.nome, u.login ');
   qry.SQL.Add('from ');
-  qry.SQL.Add('  usuario ');
+  qry.SQL.Add('  pessoa p, usuario u ');
   qry.SQL.Add('where ');
-  qry.SQL.Add('  usuarioid = :usuarioid ');
+  qry.SQL.Add('  p.pessoaid = u.pessoaid ');
+  qry.SQL.Add('  and u.usuarioid = :usuarioid ');
   qry.ParamByName('usuarioid').AsInteger := usuarioid;
   qry.Open;
 
@@ -209,19 +192,38 @@ procedure TDmUsuario.EditarUsuario(usuarioid: integer; login, nome: string);
 begin
 
   DmServidor.Conn.open;
-
   qry.SQL.clear;
   qry.SQL.Add('update usuario set ');
-  //qry.SQL.Add('  login =:login, nome =:nome ');
   qry.SQL.Add('  login =:login ');
   qry.SQL.Add('  where usuarioid =:usuarioid ');
-
   qry.ParamByName('usuarioid').Value := usuarioid;
   qry.ParamByName('login').Value := login;
-  //qry.ParamByName('nome').Value := nome;
-
   qry.ExecSQL;
 
 end;
+
+function TDmUsuario.listarTodos: TJSONArray;
+begin
+
+  result := nil;
+
+  DmServidor.Conn.open;
+
+  qry.SQL.clear;
+  qry.SQL.Add('select ');
+  qry.SQL.Add('  p.pessoaid, p.nome, p.telefone, p.email, p.cpf, ');
+  qry.SQL.Add('  u.login, u.ativo ');
+  qry.SQL.Add('from ');
+  qry.SQL.Add('  pessoa p, usuario u');
+  qry.SQL.Add('where ');
+  qry.SQL.Add('  p.pessoaid = u.pessoaid ');
+  qry.SQL.Add('order by p.nome ');
+  qry.Open;
+
+  if not qry.IsEmpty then
+    result := qry.ToJSONArray;
+
+end;
+
 
 end.

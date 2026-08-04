@@ -15,6 +15,7 @@ object FormBaseGrade: TFormBaseGrade
   Position = poMainFormCenter
   WindowState = wsMaximized
   OnClose = FormClose
+  OnShow = FormShow
   TextHeight = 15
   object PnlHeader: TPanel
     Left = 0

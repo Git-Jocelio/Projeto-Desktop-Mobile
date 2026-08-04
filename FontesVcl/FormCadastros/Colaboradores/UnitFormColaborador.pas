@@ -10,21 +10,21 @@ uses
 
 type
   TFormColaborador = class(TFormBaseGrade)
-    procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
     procedure btnInserirClick(Sender: TObject);
     procedure btnFiltrarClick(Sender: TObject);
     procedure dbgDblClick(Sender: TObject);
     procedure BtnExcluirClick(Sender: TObject);
+
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+
   private
     procedure OpenCadColaborador(pessoaId: integer);
     procedure RefreshColaborador;
     procedure TerminateBusca;
     procedure Editar;
     procedure TerminateExcluir(Sender: TObject);
-    { Private declarations }
   public
-    { Public declarations }
   end;
 
 var
@@ -139,7 +139,6 @@ begin
 
 end;
 
-
 procedure TFormColaborador.RefreshColaborador;
 begin
   TLoading.Show;
@@ -150,7 +149,7 @@ begin
     ds.DataSet := DmColaborador.TabColaborador;
     if ds.DataSet.IsEmpty then
       ShowMessage('Nenhum registro encontrado!')
-    finally
+  finally
      TerminateBusca;
   end;
 

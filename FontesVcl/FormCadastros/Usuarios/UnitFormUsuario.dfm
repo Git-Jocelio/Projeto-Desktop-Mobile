@@ -1,122 +1,143 @@
-inherited FormProduto: TFormProduto
-  Caption = 'Produtos'
+inherited FormUsuario: TFormUsuario
+  Caption = 'FormUsuario'
+  ClientWidth = 1300
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  ExplicitWidth = 1300
   TextHeight = 15
   inherited PnlHeader: TPanel
+    Width = 1300
+    ExplicitWidth = 1173
     inherited Label1: TLabel
-      Width = 106
-      Caption = 'Produto'
-      ExplicitWidth = 106
+      Width = 280
+      Caption = ' Usu'#225'rios do sistema '
+      ExplicitWidth = 280
+    end
+    inherited PnlBotaoInserir: TPanel
+      Left = 1188
+      ExplicitLeft = 1061
     end
     inherited Panel2: TPanel
-      inherited btnInserir: TSpeedButton
-        OnClick = btnInserirClick
-      end
+      Left = 944
+      ExplicitLeft = 817
+    end
+    inherited Panel3: TPanel
+      Left = 1066
+      ExplicitLeft = 939
     end
     inherited Panel1: TPanel
-      Left = 136
-      Width = 674
-      ExplicitLeft = 136
-      ExplicitWidth = 674
+      Left = 310
+      Width = 574
+      ExplicitLeft = 310
+      ExplicitWidth = 447
       inherited Panel4: TPanel
-        Left = 562
-        ExplicitLeft = 562
-        inherited btnFiltrar: TSpeedButton
-          OnClick = btnFiltrarClick
-        end
+        Left = 462
+        ExplicitLeft = 335
       end
       inherited edtFiltrar: TEdit
-        Width = 547
-        TextHint = 'Digite a descri'#231#227'o do produto'
-        ExplicitWidth = 547
+        Width = 447
+        ExplicitWidth = 320
       end
     end
   end
   inherited dbg: TDBGrid
-    DataSource = ds
-    OnDblClick = dbgDblClick
+    Width = 1300
     Columns = <
       item
         Expanded = False
-        FieldName = 'PRODUTOID'
+        FieldName = 'PESSOAID'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = []
         Title.Alignment = taCenter
-        Title.Caption = 'Cod. Produto'
+        Title.Caption = 'Cod. Pessoa'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
-        Title.Font.Height = -15
+        Title.Font.Height = -16
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
-        Width = 91
+        Width = 99
         Visible = True
       end
       item
         Expanded = False
-        FieldName = 'DESCRICAO'
+        FieldName = 'NOME'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = []
         Title.Alignment = taCenter
-        Title.Caption = 'Descri'#231#227'o'
+        Title.Caption = 'Colaborador'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
-        Title.Font.Height = -15
+        Title.Font.Height = -16
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
-        Width = 361
+        Width = 399
         Visible = True
       end
       item
         Expanded = False
-        FieldName = 'UNIDADE'
+        FieldName = 'LOGIN'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = []
         Title.Alignment = taCenter
-        Title.Caption = 'Unidade'
+        Title.Caption = 'Login'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
-        Title.Font.Height = -15
+        Title.Font.Height = -16
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
-        Width = 405
+        Width = 184
         Visible = True
       end
       item
         Expanded = False
-        FieldName = 'ESTOQUE'
+        FieldName = 'EMAIL'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = []
         Title.Alignment = taCenter
-        Title.Caption = 'Qtde Estoque'
+        Title.Caption = 'Email'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
-        Title.Font.Height = -15
+        Title.Font.Height = -16
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
-        Width = 159
+        Width = 370
         Visible = True
       end
       item
         Alignment = taCenter
         Expanded = False
-        FieldName = 'ACOES'
+        FieldName = 'ATIVO'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = []
+        Title.Alignment = taCenter
+        Title.Caption = 'Ativo'
+        Title.Font.Charset = ANSI_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -16
+        Title.Font.Name = 'Segoe UI Semibold'
+        Title.Font.Style = [fsBold]
+        Width = 74
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'ACOES'
         Title.Alignment = taCenter
         Title.Caption = 'A'#231#245'es'
         Title.Font.Charset = ANSI_CHARSET
@@ -124,11 +145,11 @@ inherited FormProduto: TFormProduto
         Title.Font.Height = -15
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
-        Width = 130
+        Width = 112
         Visible = True
       end>
   end
   inherited ds: TDataSource
-    DataSet = DmProduto.tabProduto
+    DataSet = dmUsuario.MemTable
   end
 end

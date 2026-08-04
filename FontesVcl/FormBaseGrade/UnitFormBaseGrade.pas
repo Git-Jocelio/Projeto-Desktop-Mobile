@@ -41,6 +41,7 @@ type
     procedure dbgKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure BtnExcluirClick(Sender: TObject);
     procedure BtnEditarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
   public
      bookMark : TBookMark;
@@ -61,6 +62,11 @@ end;
 
 
 
+
+procedure TFormBaseGrade.FormShow(Sender: TObject);
+begin
+  dbg.DataSource := ds;
+end;
 
 procedure TFormBaseGrade.BtnEditarClick(Sender: TObject);
 begin

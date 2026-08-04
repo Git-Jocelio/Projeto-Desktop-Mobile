@@ -41,3 +41,7 @@ ok ajustado em 03/08/2026
 retirado o campo nome da tabela usuário
 refaturado o front e o back para atender as mudanças
 acrescentado novos campos ao endpoint de inserir usuário
+
+04/08/2026
+ ajustei novamente a api de criar um usuário para um colaborador
+ agora vou cria a tela de criar usuário para um colaborador

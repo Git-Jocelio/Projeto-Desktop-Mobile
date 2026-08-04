@@ -15,6 +15,7 @@ uses
 
   procedure EditarSenha(usuarioid: integer; senha: string);
   function listarUsuarioId(usuarioid: integer): TJSONObject;
+  function listarTodos: TJSONArray;
   procedure EditarUsuario(usuarioid: integer; login, nome: string);
 
 implementation
@@ -88,6 +89,22 @@ begin
     FreeAndNil(dm);
   end;
 end;
+
+
+function listarTodos: TJSONArray;
+var
+  dm : TDmUsuario;
+begin
+
+  try
+    dm := TDmUsuario.Create(nil);
+
+    result := dm.listarTodos;
+  finally
+    FreeAndNil(dm);
+  end;
+end;
+
 
 procedure EditarUsuario(usuarioid: integer; login, nome: string);
 var

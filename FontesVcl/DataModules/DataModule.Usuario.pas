@@ -21,6 +21,7 @@ type
     procedure Login(email, senha: string);
     procedure CriarConta(nome, email, senha: string);
     procedure AlterarSenha( senha: string);
+    procedure ListarTodos;
   end;
 
 var
@@ -60,7 +61,7 @@ begin
     json.AddPair('login', email);
     json.AddPair('senha', senha);
 
-    Res := TRequest.New.BaseURL(URL_BASE)                 // criando uma requisição do servidor
+    Res := TRequest.New.BaseURL(URL_BASE)             // criando uma requisição do servidor
                    .Resource('/usuario/login')        // nessa rota
                    .AddBody(json.ToJSON)              // passando um json como string com dados da pessoa
                    .Accept('application/json')        // trabalhar com json
@@ -143,6 +144,28 @@ begin
   end;
 end;
 
+procedure TdmUsuario.ListarTodos;
+var
+  Res : IResponse;
+begin
+
+  // limpar o dataset
+  if MemTable.Active then
+    MemTable.emptydataset;
+
+  MemTable.FieldDefs.Clear;
+
+  Res := TRequest.New.BaseURL(URL_BASE)
+                 .Resource('/usuario')
+                 .TokenBearer(TSession.TOKEN)
+                 .Accept('application/json')
+                 .Adapters(TDataSetSerializeAdapter.New(MemTable))
+                 .Get;
+
+  if Res.StatusCode <> 200 then
+    raise Exception.Create(Res.content);
+
+end;
 
 
 end.
