@@ -9,8 +9,10 @@ type
   private
   public
     class procedure SalvarSenha( senha: string);
-    class procedure CriarConta(email, senha, ativo, primeiro_acesso,
+    class procedure CriarConta(login, senha, ativo, primeiro_acesso,
       alterar_senha: string; pessoaid: integer);
+    class procedure AlterarUsuario(login, ativo: string; pessoaid: integer);
+
   end;
 
 implementation
@@ -18,6 +20,23 @@ implementation
 { TServiceUsuario }
 
 uses DataModule.Usuario;
+
+class procedure TServiceUsuario.AlterarUsuario(login, ativo: string;
+  pessoaid: integer);
+var
+  dmUsuario : TdmUsuario;
+begin
+  // validações
+  if Trim(login) = '' then
+     raise Exception.Create('Informe umlogin');
+  dmUsuario := TdmUsuario.Create(nil);
+  try
+    dmUsuario.AlterarUsuario(login, ativo, pessoaid);
+  finally
+    dmUsuario.Free;
+  end;
+
+end;
 
 class procedure TServiceUsuario.SalvarSenha( senha: string );
 var
@@ -36,20 +55,20 @@ begin
 end;
 
 
-class procedure TServiceUsuario.CriarConta( email, senha, ativo, primeiro_acesso, alterar_senha: string; pessoaid: integer );
+class procedure TServiceUsuario.CriarConta( login, senha, ativo, primeiro_acesso, alterar_senha: string; pessoaid: integer );
 var
   dmUsuario : TdmUsuario;
 begin
   // validações
-  if Trim(email) = '' then// trocar por login...
-     raise Exception.Create('Informe um email válido');
+  if Trim(login) = '' then// trocar por login...
+     raise Exception.Create('Informe um login válido');
 
   if Trim(senha) = '' then
      raise Exception.Create('Informe uma senha válida');
 
   dmUsuario := TdmUsuario.Create(nil);
   try
-    dmUsuario.CriarConta(email, senha, ativo, primeiro_acesso, alterar_senha, pessoaid);
+    dmUsuario.CriarConta(login, senha, ativo, primeiro_acesso, alterar_senha, pessoaid);
   finally
     dmUsuario.Free;
   end;

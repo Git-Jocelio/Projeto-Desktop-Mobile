@@ -23,12 +23,12 @@ type
     procedure FormShow(Sender: TObject);
     procedure btnSalvarClick(Sender: TObject);
   private
+    FOperacao: string;
     procedure ListarColaboradores;
     function Validar: boolean;
     procedure TerminateSalvar(Sender: TObject);
-    { Private declarations }
   public
-    { Public declarations }
+    property Operacao: string read FOperacao write FOperacao;
   end;
 
 var
@@ -60,25 +60,31 @@ begin
 
   if not Validar then exit;
 
-  // incluir ou alterar...?????
   TLoading.Show;
-
   TLoading.ExecuteThread(
   procedure
   begin
-      sleep(500);
+    sleep(500);
+    if Operacao = 'opIncluir' then
       TServiceUsuario.CriarConta(
                              edtLogin.Text,
                              edtSenha.Text,
                              ifThen(cbAtivo.Checked,'S','N'),
-                             'N',//primeiro acesso
-                             'N',// alterar senha
-                             cbxColaboradores.KeyValue // pessoaid
-                             );
+                             'N', //primeiro acesso
+                             'N', //alterar senha
+                             cbxColaboradores.KeyValue //pessoaid
+                             )
+   else
+   if Operacao = 'opAlterar' then
+     TServiceUsuario.AlterarUsuario(
+                             edtLogin.Text,
+                             ifThen(cbAtivo.Checked,'S','N'),
+                             cbxColaboradores.KeyValue //pessoaid
+                             )
+
   end,
   TerminateSalvar
   );
-
 end;
 
 procedure TFormUsuarioE.FormShow(Sender: TObject);

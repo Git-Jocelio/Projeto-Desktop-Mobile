@@ -22,9 +22,10 @@ type
   public
     //endpoints para usuários
     procedure Login(email, senha: string);
-    procedure CriarConta(email, senha, ativo, primeiro_acesso,
+    procedure CriarConta(login, senha, ativo, primeiro_acesso,
                           alterar_senha: string; pessoaid:integer);
     procedure AlterarSenha( senha: string);
+    procedure AlterarUsuario(login, ativo: string; pessoaid:integer);
     procedure ListarTodos;
 
     // colaborador
@@ -118,7 +119,7 @@ begin
   end;
 end;
 
-procedure TdmUsuario.CriarConta(email, senha, ativo, primeiro_acesso, alterar_senha: string; pessoaid:integer);
+procedure TdmUsuario.AlterarUsuario(login, ativo: string; pessoaid: integer);
 var
   Res : IResponse;
   json : TJSONObject;
@@ -129,7 +130,38 @@ begin
     //criar um objeto json com os dados do usuario
     json := TJSONObject.Create;
 
-    json.AddPair('email', email);
+    json.AddPair('login', login);
+    json.AddPair('ativo', ativo);
+    json.AddPair('pessoaid', pessoaid.ToString);
+
+    Res := TRequest.New.BaseURL(URL_BASE)                 // criando uma requisição do servidor
+                       .Resource('/usuario')     // nessa rota
+                       .AddBody(json.ToJSON)              // passando o json criado acima com dados da requisição
+                       .Accept('application/json')        // trabalhar com json
+                     //  .Adapters(TDataSetSerializeAdapter.New(MemTable)) // popula a memtable dados do json recebido
+                       .Post;                             // passando um Post
+
+    if Res.StatusCode <> 201 then
+      raise Exception.Create(Res.content);
+
+  finally
+    freeandnil(json);
+  end;
+end;
+
+procedure TdmUsuario.CriarConta(login, senha, ativo, primeiro_acesso,
+                                 alterar_senha: string; pessoaid:integer);
+var
+  Res : IResponse;
+  json : TJSONObject;
+begin
+
+  try
+
+    //criar um objeto json com os dados do usuario
+    json := TJSONObject.Create;
+
+    json.AddPair('login', login);
     json.AddPair('senha', senha);
     json.AddPair('ativo', ativo);
     json.AddPair('primeiro_acesso', primeiro_acesso);
