@@ -7,7 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, UnitFormBaseEdicao, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, Vcl.Buttons, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.DBCtrls;
+  FireDAC.Comp.Client, Vcl.Buttons, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.DBCtrls,
+  Vcl.Loading, Vcl.Navigation, System.StrUtils;
 
 type
   TFormUsuarioE = class(TFormBaseEdicao)
@@ -20,8 +21,11 @@ type
     dsColaboradores: TDataSource;
     cbxColaboradores: TDBLookupComboBox;
     procedure FormShow(Sender: TObject);
+    procedure btnSalvarClick(Sender: TObject);
   private
     procedure ListarColaboradores;
+    function Validar: boolean;
+    procedure TerminateSalvar(Sender: TObject);
     { Private declarations }
   public
     { Public declarations }
@@ -34,12 +38,79 @@ implementation
 
 {$R *.dfm}
 
-uses DataModule.Usuario;
+uses DataModule.Usuario, Service.Usuario;
+
+procedure TFormUsuarioE.TerminateSalvar(Sender: TObject);
+begin
+  TLoading.Hide;
+  if (Sender is TThread) then
+    if Assigned(TThread(Sender).FatalException) then
+    begin
+      ShowMessage( Exception(TThread(Sender).FatalException).Message );
+      exit;
+    end;
+  TNavigation.Close(self);
+end;
+
+
+procedure TFormUsuarioE.btnSalvarClick(Sender: TObject);
+
+begin
+  inherited;
+
+  if not Validar then exit;
+
+  // incluir ou alterar...?????
+  TLoading.Show;
+
+  TLoading.ExecuteThread(
+  procedure
+  begin
+      sleep(500);
+      TServiceUsuario.CriarConta(
+                             edtLogin.Text,
+                             edtSenha.Text,
+                             ifThen(cbAtivo.Checked,'S','N'),
+                             'N',//primeiro acesso
+                             'N',// alterar senha
+                             cbxColaboradores.KeyValue // pessoaid
+                             );
+  end,
+  TerminateSalvar
+  );
+
+end;
 
 procedure TFormUsuarioE.FormShow(Sender: TObject);
 begin
   inherited;
   ListarColaboradores;
+end;
+
+function TFormUsuarioE.Validar: boolean;
+begin
+  result := false;
+  if cbxColaboradores.Text = '' then
+  begin
+    ShowMessage('Selecione um colaborador.');
+    cbxColaboradores.SetFocus;
+    exit;
+  end;
+
+  if edtLogin.Text = '' then
+  begin
+    ShowMessage('Informe um Login.');
+    edtLogin.SetFocus;
+    exit;
+  end;
+
+  if edtSenha.Text = '' then
+  begin
+    ShowMessage('Informe um senha.');
+    edtSenha.SetFocus;
+    exit;
+  end;
+  result := true;
 end;
 
 

@@ -83,18 +83,14 @@ end;
 
 procedure TFormFornecedorE.TerminateSalvar(Sender: TObject);
 begin
-
   TLoading.Hide;
-
   if (Sender is TThread) then
     if Assigned(TThread(Sender).FatalException) then
     begin
       ShowMessage( Exception(TThread(Sender).FatalException).Message );
       exit;
     end;
-
-   TNavigation.Close(self);
-
+  TNavigation.Close(self);
 end;
 
 

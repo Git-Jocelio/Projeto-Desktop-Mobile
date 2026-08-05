@@ -19,7 +19,7 @@ object frmLogin: TfrmLogin
     Top = 0
     Width = 579
     Height = 666
-    ActivePage = TabLogin
+    ActivePage = tbsNovaConta
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -784,7 +784,7 @@ object frmLogin: TfrmLogin
           AlignWithMargins = True
           Left = 10
           Top = 46
-          Width = 114
+          Width = 551
           Height = 20
           Margins.Left = 10
           Margins.Top = 20
@@ -801,6 +801,7 @@ object frmLogin: TfrmLogin
           ParentFont = False
           WordWrap = True
           OnClick = edtVoltarParaLoginClick
+          ExplicitWidth = 114
         end
       end
       object Panel13: TPanel
@@ -829,7 +830,7 @@ object frmLogin: TfrmLogin
           AlignWithMargins = True
           Left = 3
           Top = 149
-          Width = 237
+          Width = 246
           Height = 35
           Margins.Bottom = 10
           Align = alBottom
@@ -841,6 +842,7 @@ object frmLogin: TfrmLogin
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
+          ExplicitWidth = 237
         end
         object Image2: TImage
           Left = 0

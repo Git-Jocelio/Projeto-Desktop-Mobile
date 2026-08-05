@@ -22,7 +22,8 @@ type
   public
     //endpoints para usuários
     procedure Login(email, senha: string);
-    procedure CriarConta(nome, email, senha: string);
+    procedure CriarConta(email, senha, ativo, primeiro_acesso,
+                          alterar_senha: string; pessoaid:integer);
     procedure AlterarSenha( senha: string);
     procedure ListarTodos;
 
@@ -117,29 +118,29 @@ begin
   end;
 end;
 
-procedure TdmUsuario.CriarConta(nome, email, senha: string);
+procedure TdmUsuario.CriarConta(email, senha, ativo, primeiro_acesso, alterar_senha: string; pessoaid:integer);
 var
   Res : IResponse;
   json : TJSONObject;
-  pessoaid: integer;
 begin
 
   try
-    pessoaid:= 0; // novo usuario
 
-    //criar um objeto json com os dados do cliente
+    //criar um objeto json com os dados do usuario
     json := TJSONObject.Create;
 
-    json.AddPair('nome', nome);
     json.AddPair('email', email);
     json.AddPair('senha', senha);
+    json.AddPair('ativo', ativo);
+    json.AddPair('primeiro_acesso', primeiro_acesso);
+    json.AddPair('alterar_senha', alterar_senha);
     json.AddPair('pessoaid', pessoaid.ToString);
 
     Res := TRequest.New.BaseURL(URL_BASE)                 // criando uma requisição do servidor
                        .Resource('/usuario/cadastro')     // nessa rota
-                       .AddBody(json.ToJSON)              // passando um json como string com dados da pessoa
+                       .AddBody(json.ToJSON)              // passando o json criado acima com dados da requisição
                        .Accept('application/json')        // trabalhar com json
-                       .Adapters(TDataSetSerializeAdapter.New(MemTable)) // popula a memtable dados do json recebido
+                     //  .Adapters(TDataSetSerializeAdapter.New(MemTable)) // popula a memtable dados do json recebido
                        .Post;                             // passando um Post
 
     if Res.StatusCode <> 201 then

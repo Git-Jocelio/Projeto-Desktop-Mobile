@@ -56,6 +56,7 @@ inherited FormUsuarioE: TFormUsuarioE
     ExplicitLeft = 118
     ExplicitTop = 281
     inherited btnSalvar: TSpeedButton
+      OnClick = btnSalvarClick
       ExplicitTop = -24
     end
   end
@@ -89,6 +90,7 @@ inherited FormUsuarioE: TFormUsuarioE
     Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
+    PasswordChar = '*'
     TabOrder = 3
   end
   object cbAtivo: TCheckBox [8]
@@ -121,9 +123,13 @@ inherited FormUsuarioE: TFormUsuarioE
     ParentFont = False
     TabOrder = 5
   end
+  inherited MemTable: TFDMemTable
+    Left = 304
+    Top = 56
+  end
   object dsColaboradores: TDataSource
     DataSet = dmUsuario.TabColaboradores
-    Left = 376
-    Top = 232
+    Left = 192
+    Top = 56
   end
 end
