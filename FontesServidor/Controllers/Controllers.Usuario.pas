@@ -94,7 +94,7 @@ end;
 procedure InserirUsuario(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
   body: TJSONObject;
-  email, senha, ativo, primeiro_acesso, alterar_senha: string;
+  login, senha, ativo, primeiro_acesso, alterar_senha: string;
   pessoaid: integer;
   jsonRetorno: TJSONObject;
 begin
@@ -110,13 +110,13 @@ begin
     end;
 
     pessoaid := body.GetValue<integer>('pessoaid', 0);
-    email := body.GetValue<string>('email', '');
+    login := body.GetValue<string>('login', '');
     senha := body.GetValue<string>('senha', '');
     ativo := body.GetValue<string>('ativo', 'N');
     primeiro_acesso := body.GetValue<string>('primeiro_acesso', '');
     alterar_senha := body.GetValue<string>('alterar_senha', '');
 
-    jsonRetorno := Service.Usuario.InserirUsuario(email, senha, primeiro_acesso,
+    jsonRetorno := Service.Usuario.InserirUsuario(login, senha, primeiro_acesso,
                                                   alterar_senha, pessoaid);
 
     // gerar token JWT.. curso Poupei, aula 04, miunuto 31"25
@@ -192,7 +192,7 @@ procedure EditarUsuario(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
   body: TJSONObject;
   usuarioid: integer;
-  login, nome: string;
+  login, ativo: string;
 begin
 
   try
@@ -205,9 +205,9 @@ begin
 
     usuarioid := Get_Usuario_Request(req);
     login := body.GetValue<string>('login', '');
-    nome := body.GetValue<string>('nome', '');
+    ativo := body.GetValue<string>('ativo', '');
 
-    Service.Usuario.EditarUsuario( usuarioid, login, nome );
+    Service.Usuario.EditarUsuario( usuarioid, login, ativo );
 
     res.Send('OK');
   except

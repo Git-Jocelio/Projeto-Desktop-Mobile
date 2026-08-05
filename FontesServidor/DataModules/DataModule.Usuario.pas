@@ -27,9 +27,9 @@ type
   private
   public
     function usuarioLogin(login, senha: string): TJSONObject;
-    function InserirUsuario( email, senha: string; pessoaid: integer): TJSONObject;
+    function InserirUsuario( login, senha: string; pessoaid: integer): TJSONObject;
     procedure EditarSenha(usuarioid: integer; senha: string);
-    procedure EditarUsuario(usuarioid: integer; login, nome: string);
+    procedure EditarUsuario(usuarioid: integer; login, ativo: string);
     function listarUsuarioId(usuarioid: integer): TJSONObject;
     function listarUsuarioByEmail(email: string): TJSONObject;
     function listarTodos: TJSONArray;
@@ -90,7 +90,7 @@ end;
 
 
 // cria um usuário para um colaborador!
-function TDmUsuario.InserirUsuario( email, senha: string; pessoaid: integer): TJSONObject;
+function TDmUsuario.InserirUsuario( login, senha: string; pessoaid: integer): TJSONObject;
 var
   novoUsuario: integer;
 begin
@@ -106,7 +106,7 @@ begin
     qry.SQL.Add('values ');
     qry.SQL.Add('  (:login, :senha, :pessoaid, :ativo, :primeiro_acesso, :alterar_senha )');
     qry.SQL.Add('returning usuarioid, login, pessoaid ');
-    qry.ParamByName('login').AsString := email;
+    qry.ParamByName('login').AsString := login;
     qry.ParamByName('senha').AsString := senha;
     qry.ParamByName('pessoaid').AsInteger := pessoaid;
     qry.ParamByName('ativo').AsString := 'S' ;
@@ -121,7 +121,7 @@ begin
     Result := TJSONObject.Create;
     Result.AddPair('usuarioid', TJSONNumber.Create(novoUsuario));
     Result.AddPair('pessoaid', qry.FieldByName('pessoaid').AsString);
-    Result.AddPair('email', qry.FieldByName('login').AsString);
+    Result.AddPair('login', qry.FieldByName('login').AsString);
 
   except
     DmServidor.Conn.Rollback;
@@ -188,16 +188,20 @@ begin
 
 end;
 
-procedure TDmUsuario.EditarUsuario(usuarioid: integer; login, nome: string);
+procedure TDmUsuario.EditarUsuario(usuarioid: integer; login, ativo: string);
 begin
 
   DmServidor.Conn.open;
   qry.SQL.clear;
   qry.SQL.Add('update usuario set ');
-  qry.SQL.Add('  login =:login ');
-  qry.SQL.Add('  where usuarioid =:usuarioid ');
+  qry.SQL.Add('  login =:login, ');
+  qry.SQL.Add('  ativo =:ativo, ');
+  qry.SQL.Add('  data_ultima_troca =:data_ultima_troca ');
+  qry.SQL.Add('where usuarioid =:usuarioid ');
   qry.ParamByName('usuarioid').Value := usuarioid;
   qry.ParamByName('login').Value := login;
+  qry.ParamByName('ativo').Value := ativo;
+  qry.ParamByName('data_ultima_troca').Value := Now;
   qry.ExecSQL;
 
 end;
