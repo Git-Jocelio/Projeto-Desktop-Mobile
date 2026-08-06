@@ -14,9 +14,7 @@ type
   TFormUsuarioE = class(TFormBaseEdicao)
     Label4: TLabel;
     Label2: TLabel;
-    Label6: TLabel;
     edtLogin: TEdit;
-    edtSenha: TEdit;
     cbAtivo: TCheckBox;
     dsColaboradores: TDataSource;
     cbxColaboradores: TDBLookupComboBox;
@@ -27,6 +25,7 @@ type
     procedure ListarColaboradores;
     function Validar: boolean;
     procedure TerminateSalvar(Sender: TObject);
+    procedure TerminateUsuarioE(Sender: TObject);
   public
     property Operacao: string read FOperacao write FOperacao;
   end;
@@ -68,10 +67,10 @@ begin
     if Operacao = 'opIncluir' then
       TServiceUsuario.CriarConta(
                              edtLogin.Text,
-                             edtSenha.Text,
+                             //edtSenha.Text,
+                             '12345678',// senha inicial ao criar um usuario
                              ifThen(cbAtivo.Checked,'S','N'),
                              'N', //primeiro acesso
-                             'N', //alterar senha
                              cbxColaboradores.KeyValue //pessoaid
                              )
    else
@@ -87,10 +86,46 @@ begin
   );
 end;
 
+procedure TFormUsuarioE.TerminateUsuarioE(Sender: TObject);
+begin
+  TLoading.Hide;
+
+  if (Sender is TThread) then
+    if Assigned(TThread(Sender).FatalException) then
+    begin
+      ShowMessage( Exception(TThread(Sender).FatalException).Message );
+      exit;
+    end;
+
+  // se não der erro, carrega dos edits
+  cbxColaboradores.KeyValue := MemTable.FieldByName('pessoaid').AsInteger;
+  edtLogin.Text := MemTable.FieldByName('login').AsString;
+  cbAtivo.Checked := MemTable.FieldByName('ativo').AsString = 'S';
+end;
+
+
 procedure TFormUsuarioE.FormShow(Sender: TObject);
 begin
   inherited;
+  // busca colaboradores no banco para listar no combobox
   ListarColaboradores;
+
+  if TNavigation.ParamInt > 0 then
+  begin
+
+    lblTitulo.Caption := lblTitulo.Caption + ' - Editar';
+    cbxColaboradores.Enabled := false;
+
+    TLoading.Show;
+    TLoading.ExecuteThread(procedure
+    begin
+       sleep(500);
+       dmUsuario.ListarId(MemTable, TNavigation.ParamInt);
+    end,
+    TerminateUsuarioE
+    );
+  end;
+
 end;
 
 function TFormUsuarioE.Validar: boolean;
@@ -110,12 +145,6 @@ begin
     exit;
   end;
 
-  if edtSenha.Text = '' then
-  begin
-    ShowMessage('Informe um senha.');
-    edtSenha.SetFocus;
-    exit;
-  end;
   result := true;
 end;
 

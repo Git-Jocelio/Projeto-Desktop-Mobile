@@ -53,8 +53,6 @@ begin
 
 end;
 
-
-
 procedure TFormColaborador.BtnExcluirClick(Sender: TObject);
 begin
   if DmColaborador.TabColaborador.IsEmpty then
@@ -94,8 +92,6 @@ begin
     bookMark := dbg.DataSource.DataSet.GetBookmark;
     OpenCadColaborador(DmColaborador.TabColaborador.FieldByName('pessoaId').AsInteger);
 end;
-
-
 
 procedure TFormColaborador.dbgDblClick(Sender: TObject);
 begin

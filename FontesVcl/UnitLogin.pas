@@ -211,7 +211,7 @@ begin
     if not ServidorOnline then
       raise Exception.Create('Servidor não está disponível.');
 
-    dmUsuario.CriarConta(EdtLogin.Text, EdtSenha.Text,'S','N','N', TSession.ID_USUARIO);
+    dmUsuario.CriarConta(EdtLogin.Text, EdtSenha.Text,'S','N', TSession.ID_USUARIO);
 
   end,
  TerminateCriarConta

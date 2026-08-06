@@ -14,10 +14,12 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnInserirClick(Sender: TObject);
+    procedure dbgDblClick(Sender: TObject);
   private
     procedure Listartodos;
     procedure TerminateListartodos(Sender: TObject);
     procedure OpenCadUsuario(pessoaId: integer);
+    procedure Editar;
   public
     { Public declarations }
   end;
@@ -84,6 +86,22 @@ begin
   TNavigation.ParamInt := pessoaId;
   TNavigation.OpenModal(TFormUsuarioE, FormUsuarioE);
 end;
+
+procedure TFormUsuario.dbgDblClick(Sender: TObject);
+begin
+  inherited;
+  Editar;
+end;
+
+procedure TFormUsuario.Editar;
+begin
+  if dmUsuario.MemTable.IsEmpty then
+    exit;
+
+    bookMark := dbg.DataSource.DataSet.GetBookmark;
+    OpenCadUsuario(dmUsuario.MemTable.FieldByName('pessoaid').AsInteger);
+end;
+
 
 
 

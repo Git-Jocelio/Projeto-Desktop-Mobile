@@ -9,7 +9,7 @@ uses
 
   function Login(Login, Senha : string): TJSONObject;
 
-  function InserirUsuario(login, senha, primeiro_acesso, alterar_senha: string;
+  function InserirUsuario(login, senha, primeiro_acesso: string;
                            pessoaId: integer): TJSONObject;
 
 
@@ -35,7 +35,7 @@ begin
   end;
 end;
 
-function InserirUsuario(login, senha, primeiro_acesso, alterar_senha: string;
+function InserirUsuario(login, senha, primeiro_acesso: string;
                          pessoaId: integer): TJSONObject;
 var
   dm : TDmUsuario;
@@ -65,10 +65,8 @@ procedure EditarSenha(usuarioid: integer; senha: string);
 var
   dm : TDmUsuario;
 begin
-
   try
     dm := TDmUsuario.Create(nil);
-
     dm.EditarSenha(usuarioid, SaltPassword(Senha));
   finally
     FreeAndNil(dm);
@@ -79,10 +77,8 @@ function listarUsuarioId(usuarioid: integer): TJSONObject;
 var
   dm : TDmUsuario;
 begin
-
   try
     dm := TDmUsuario.Create(nil);
-
     result := dm.listarUsuarioId(usuarioid);
   finally
     FreeAndNil(dm);
@@ -94,10 +90,8 @@ function listarTodos: TJSONArray;
 var
   dm : TDmUsuario;
 begin
-
   try
     dm := TDmUsuario.Create(nil);
-
     result := dm.listarTodos;
   finally
     FreeAndNil(dm);

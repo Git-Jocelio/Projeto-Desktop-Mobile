@@ -33,7 +33,7 @@ begin
 
   THorse.AddCallback(HorseJWT( Controllers.JWT.SECRET,
                      THorseJWTConfig.New.SessionClass(TMyClaims)))
-        .Get('/usuario', listarUsuarioId);
+        .Get('/usuario/:id', listarUsuarioId);
 
   THorse.AddCallback(HorseJWT( Controllers.JWT.SECRET,
                      THorseJWTConfig.New.SessionClass(TMyClaims)))
@@ -94,7 +94,7 @@ end;
 procedure InserirUsuario(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
   body: TJSONObject;
-  login, senha, ativo, primeiro_acesso, alterar_senha: string;
+  login, senha, ativo, primeiro_acesso: string;
   pessoaid: integer;
   jsonRetorno: TJSONObject;
 begin
@@ -114,10 +114,9 @@ begin
     senha := body.GetValue<string>('senha', '');
     ativo := body.GetValue<string>('ativo', 'N');
     primeiro_acesso := body.GetValue<string>('primeiro_acesso', '');
-    alterar_senha := body.GetValue<string>('alterar_senha', '');
 
     jsonRetorno := Service.Usuario.InserirUsuario(login, senha, primeiro_acesso,
-                                                  alterar_senha, pessoaid);
+                                                  pessoaid);
 
     // gerar token JWT.. curso Poupei, aula 04, miunuto 31"25
     jsonRetorno.AddPair('token',
@@ -162,16 +161,13 @@ procedure listarUsuarioId(req: THorseRequest; res: THorseResponse; Next: TProc);
 var
   usuarioid: integer;
 begin
-
   try
     usuarioid := Get_Usuario_Request(req);
-
     res.Send<TJSONObject>( Service.Usuario.listarUsuarioId( usuarioid ));
   except
     on E: Exception do
       res.Send(E.Message).Status(500);
   end;
-
 end;
 
 procedure listarTodos(req: THorseRequest; res: THorseResponse; Next: TProc);

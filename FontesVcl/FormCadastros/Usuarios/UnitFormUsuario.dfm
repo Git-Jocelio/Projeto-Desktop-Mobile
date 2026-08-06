@@ -46,6 +46,7 @@ inherited FormUsuario: TFormUsuario
   end
   inherited dbg: TDBGrid
     Width = 1300
+    OnDblClick = dbgDblClick
     Columns = <
       item
         Expanded = False

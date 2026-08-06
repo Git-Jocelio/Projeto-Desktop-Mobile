@@ -352,7 +352,7 @@ object frmLogin: TfrmLogin
         object Label1: TLabel
           Left = 0
           Top = 210
-          Width = 253
+          Width = 244
           Height = 40
           Align = alBottom
           Alignment = taCenter
@@ -363,13 +363,12 @@ object frmLogin: TfrmLogin
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
-          ExplicitWidth = 244
         end
         object Label3: TLabel
           AlignWithMargins = True
           Left = 0
           Top = 265
-          Width = 253
+          Width = 39
           Height = 21
           Margins.Left = 0
           Margins.Top = 15
@@ -383,13 +382,12 @@ object frmLogin: TfrmLogin
           Font.Name = 'Segoe UI'
           Font.Style = []
           ParentFont = False
-          ExplicitWidth = 39
         end
         object Senha: TLabel
           AlignWithMargins = True
           Left = 0
           Top = 346
-          Width = 253
+          Width = 43
           Height = 21
           Margins.Left = 0
           Margins.Top = 15
@@ -403,7 +401,6 @@ object frmLogin: TfrmLogin
           Font.Name = 'Segoe UI'
           Font.Style = []
           ParentFont = False
-          ExplicitWidth = 43
         end
         object Image1: TImage
           Left = 0
@@ -702,7 +699,7 @@ object frmLogin: TfrmLogin
           AlignWithMargins = True
           Left = 10
           Top = 52
-          Width = 551
+          Width = 196
           Height = 20
           Margins.Left = 10
           Margins.Top = 20
@@ -719,7 +716,6 @@ object frmLogin: TfrmLogin
           ParentFont = False
           WordWrap = True
           OnClick = Label6Click
-          ExplicitWidth = 196
         end
       end
       object Panel8: TPanel
@@ -784,7 +780,7 @@ object frmLogin: TfrmLogin
           AlignWithMargins = True
           Left = 10
           Top = 46
-          Width = 551
+          Width = 114
           Height = 20
           Margins.Left = 10
           Margins.Top = 20
@@ -801,7 +797,6 @@ object frmLogin: TfrmLogin
           ParentFont = False
           WordWrap = True
           OnClick = edtVoltarParaLoginClick
-          ExplicitWidth = 114
         end
       end
       object Panel13: TPanel
@@ -830,7 +825,7 @@ object frmLogin: TfrmLogin
           AlignWithMargins = True
           Left = 3
           Top = 149
-          Width = 246
+          Width = 237
           Height = 35
           Margins.Bottom = 10
           Align = alBottom
@@ -842,7 +837,6 @@ object frmLogin: TfrmLogin
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
-          ExplicitWidth = 237
         end
         object Image2: TImage
           Left = 0

@@ -102,16 +102,15 @@ begin
     DmServidor.Conn.StartTransaction;
     qry.SQL.clear;
     qry.SQL.Add('insert into usuario ');
-    qry.SQL.Add('  (login, senha, pessoaid, ativo, primeiro_acesso, alterar_senha) ');
+    qry.SQL.Add('  (login, senha, pessoaid, ativo, primeiro_acesso) ');
     qry.SQL.Add('values ');
-    qry.SQL.Add('  (:login, :senha, :pessoaid, :ativo, :primeiro_acesso, :alterar_senha )');
+    qry.SQL.Add('  (:login, :senha, :pessoaid, :ativo, :primeiro_acesso )');
     qry.SQL.Add('returning usuarioid, login, pessoaid ');
     qry.ParamByName('login').AsString := login;
     qry.ParamByName('senha').AsString := senha;
     qry.ParamByName('pessoaid').AsInteger := pessoaid;
     qry.ParamByName('ativo').AsString := 'S' ;
     qry.ParamByName('primeiro_acesso').AsString := 'N' ;
-    qry.ParamByName('alterar_senha').AsString := 'N' ;
     qry.active := true;
     novoUsuario:= qry.FieldByName('usuarioid').AsInteger;
 
@@ -152,7 +151,7 @@ begin
 
   qry.SQL.clear;
   qry.SQL.Add('select ');
-  qry.SQL.Add('  p.pessoaid, p.nome, u.login ');
+  qry.SQL.Add('  p.pessoaid, p.nome, u.login, ativo, primeiro_acesso ');
   qry.SQL.Add('from ');
   qry.SQL.Add('  pessoa p, usuario u ');
   qry.SQL.Add('where ');

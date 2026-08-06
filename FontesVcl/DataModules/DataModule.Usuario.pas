@@ -22,11 +22,12 @@ type
   public
     //endpoints para usuários
     procedure Login(email, senha: string);
-    procedure CriarConta(login, senha, ativo, primeiro_acesso,
-                          alterar_senha: string; pessoaid:integer);
+    procedure CriarConta(login, senha, ativo, primeiro_acesso: string;
+                         pessoaid:integer);
     procedure AlterarSenha( senha: string);
     procedure AlterarUsuario(login, ativo: string; pessoaid:integer);
     procedure ListarTodos;
+    procedure ListarId(memTable: TFDMemTable; pessoaId: integer);
 
     // colaborador
     procedure ListarColaboradores;
@@ -134,12 +135,12 @@ begin
     json.AddPair('ativo', ativo);
     json.AddPair('pessoaid', pessoaid.ToString);
 
-    Res := TRequest.New.BaseURL(URL_BASE)                 // criando uma requisição do servidor
-                       .Resource('/usuario')     // nessa rota
-                       .AddBody(json.ToJSON)              // passando o json criado acima com dados da requisição
-                       .Accept('application/json')        // trabalhar com json
-                     //  .Adapters(TDataSetSerializeAdapter.New(MemTable)) // popula a memtable dados do json recebido
-                       .Post;                             // passando um Post
+    Res := TRequest.New.BaseURL(URL_BASE)
+                       .Resource('/usuario')
+                       .AddBody(json.ToJSON)
+                       .Accept('application/json')
+                       .Adapters(TDataSetSerializeAdapter.New(MemTable))
+                       .Post;
 
     if Res.StatusCode <> 201 then
       raise Exception.Create(Res.content);
@@ -149,8 +150,8 @@ begin
   end;
 end;
 
-procedure TdmUsuario.CriarConta(login, senha, ativo, primeiro_acesso,
-                                 alterar_senha: string; pessoaid:integer);
+procedure TdmUsuario.CriarConta(login, senha, ativo, primeiro_acesso: string;
+                                pessoaid:integer);
 var
   Res : IResponse;
   json : TJSONObject;
@@ -165,7 +166,6 @@ begin
     json.AddPair('senha', senha);
     json.AddPair('ativo', ativo);
     json.AddPair('primeiro_acesso', primeiro_acesso);
-    json.AddPair('alterar_senha', alterar_senha);
     json.AddPair('pessoaid', pessoaid.ToString);
 
     Res := TRequest.New.BaseURL(URL_BASE)                 // criando uma requisição do servidor
@@ -226,6 +226,23 @@ begin
     raise Exception.Create(Res.content);
 
 end;
+
+
+procedure TdmUsuario.ListarId(memTable: TFDMemTable; pessoaId: integer);
+var
+  resp : IResponse;
+begin
+  resp := TRequest.New.BaseURL(URL_BASE)
+                      .Resource('/usuario/' + pessoaId.ToString)
+                      .TokenBearer(TSession.TOKEN)
+                      .Accept('application/json')
+                      .Adapters(TDataSetSerializeAdapter.New(memTable))
+                      .Get;
+  // trata erro se houver
+  if resp.StatusCode <> 200 then
+    raise Exception.Create(resp.content);
+end;
+
 
 
 end.

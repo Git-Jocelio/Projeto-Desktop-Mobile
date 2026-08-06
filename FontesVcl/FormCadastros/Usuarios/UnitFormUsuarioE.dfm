@@ -37,19 +37,6 @@ inherited FormUsuarioE: TFormUsuarioE
     Font.Style = []
     ParentFont = False
   end
-  object Label6: TLabel [3]
-    Left = 274
-    Top = 160
-    Width = 32
-    Height = 15
-    Caption = 'Senha'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = 8289918
-    Font.Height = -12
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    ParentFont = False
-  end
   inherited pnlBotaoSalvar: TPanel
     Left = 118
     Top = 281
@@ -66,7 +53,7 @@ inherited FormUsuarioE: TFormUsuarioE
     ExplicitLeft = 232
     ExplicitTop = 280
   end
-  object edtLogin: TEdit [6]
+  object edtLogin: TEdit [5]
     Left = 24
     Top = 181
     Width = 233
@@ -79,23 +66,9 @@ inherited FormUsuarioE: TFormUsuarioE
     ParentFont = False
     TabOrder = 2
   end
-  object edtSenha: TEdit [7]
-    Left = 274
-    Top = 181
-    Width = 183
-    Height = 29
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = 8289918
-    Font.Height = -16
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    ParentFont = False
-    PasswordChar = '*'
-    TabOrder = 3
-  end
-  object cbAtivo: TCheckBox [8]
-    Left = 24
-    Top = 240
+  object cbAtivo: TCheckBox [6]
+    Left = 328
+    Top = 160
     Width = 97
     Height = 17
     Caption = 'Ativo'
@@ -105,9 +78,9 @@ inherited FormUsuarioE: TFormUsuarioE
     Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
-    TabOrder = 4
+    TabOrder = 3
   end
-  object cbxColaboradores: TDBLookupComboBox [9]
+  object cbxColaboradores: TDBLookupComboBox [7]
     Left = 24
     Top = 107
     Width = 433
@@ -121,7 +94,7 @@ inherited FormUsuarioE: TFormUsuarioE
     ListField = 'NOME'
     ListSource = dsColaboradores
     ParentFont = False
-    TabOrder = 5
+    TabOrder = 4
   end
   inherited MemTable: TFDMemTable
     Left = 304

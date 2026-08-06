@@ -9,8 +9,8 @@ type
   private
   public
     class procedure SalvarSenha( senha: string);
-    class procedure CriarConta(login, senha, ativo, primeiro_acesso,
-      alterar_senha: string; pessoaid: integer);
+    class procedure CriarConta(login, senha, ativo, primeiro_acesso: string;
+                               pessoaid: integer);
     class procedure AlterarUsuario(login, ativo: string; pessoaid: integer);
 
   end;
@@ -22,7 +22,7 @@ implementation
 uses DataModule.Usuario;
 
 class procedure TServiceUsuario.AlterarUsuario(login, ativo: string;
-  pessoaid: integer);
+                                                pessoaid: integer);
 var
   dmUsuario : TdmUsuario;
 begin
@@ -55,7 +55,8 @@ begin
 end;
 
 
-class procedure TServiceUsuario.CriarConta( login, senha, ativo, primeiro_acesso, alterar_senha: string; pessoaid: integer );
+class procedure TServiceUsuario.CriarConta(login, senha, ativo,
+                                           primeiro_acesso: string; pessoaid: integer );
 var
   dmUsuario : TdmUsuario;
 begin
@@ -68,7 +69,7 @@ begin
 
   dmUsuario := TdmUsuario.Create(nil);
   try
-    dmUsuario.CriarConta(login, senha, ativo, primeiro_acesso, alterar_senha, pessoaid);
+    dmUsuario.CriarConta(login, senha, ativo, primeiro_acesso, pessoaid);
   finally
     dmUsuario.Free;
   end;
