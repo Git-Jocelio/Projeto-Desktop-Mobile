@@ -7,9 +7,9 @@ inherited FormPerfilE: TFormPerfilE
   ExplicitHeight = 397
   TextHeight = 15
   inherited lblTitulo: TLabel
-    Width = 191
-    Caption = 'Alterar minha senha'
-    ExplicitWidth = 191
+    Width = 297
+    Caption = 'Alterar minha senha de usu'#225'rio'
+    ExplicitWidth = 297
   end
   object Nome: TLabel [1]
     Left = 46
@@ -27,9 +27,9 @@ inherited FormPerfilE: TFormPerfilE
   object Email: TLabel [2]
     Left = 46
     Top = 144
-    Width = 29
+    Width = 30
     Height = 15
-    Caption = 'Email'
+    Caption = 'Login'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = 8289918
     Font.Height = -12
@@ -68,7 +68,7 @@ inherited FormPerfilE: TFormPerfilE
     Top = 353
     Anchors = [akRight, akBottom]
     ExplicitLeft = 103
-    ExplicitTop = 403
+    ExplicitTop = 353
     inherited btnSalvar: TSpeedButton
       OnClick = btnSalvarClick
     end
@@ -78,7 +78,7 @@ inherited FormPerfilE: TFormPerfilE
     Top = 353
     Anchors = [akRight, akBottom]
     ExplicitLeft = 218
-    ExplicitTop = 403
+    ExplicitTop = 353
     inherited btnCancelar: TSpeedButton
       ExplicitHeight = 30
     end

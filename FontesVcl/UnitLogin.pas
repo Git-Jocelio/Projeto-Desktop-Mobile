@@ -18,7 +18,7 @@ type
     PageControl: TPageControl;
     tbsBoasVindas: TTabSheet;
     TabLogin: TTabSheet;
-    tbsNovaConta: TTabSheet;
+    tbsAtivarConta: TTabSheet;
     pnLogin: TPanel;
     Label1: TLabel;
     Label3: TLabel;
@@ -37,7 +37,7 @@ type
     pnlRodape: TPanel;
     imgLogoSistema: TImage;
     Panel1: TPanel;
-    btnAtivarconta: TSpeedButton;
+    btnAtivarConta: TSpeedButton;
     Panel4: TPanel;
     btnAcessarLogin: TSpeedButton;
     Panel5: TPanel;
@@ -56,21 +56,19 @@ type
     Label6: TLabel;
     edtVoltarParaLogin: TLabel;
     Panel14: TPanel;
-    edtNome: TEdit;
-    Panel16: TPanel;
-    edtEmail: TEdit;
     Panel17: TPanel;
-    edtSenhaProvisoria: TEdit;
-    Panel18: TPanel;
     edtNovaSenha: TEdit;
-    btnAlterarSenha: TSpeedButton;
+    Panel18: TPanel;
+    edtConfirmarNovaSenha: TEdit;
+    btnAtivarAcesso: TSpeedButton;
+    lblLogin: TLabel;
     procedure BtnAcessarClick(Sender: TObject);
     procedure btnAcessarLoginClick(Sender: TObject);
-    procedure btnAtivarcontaClick(Sender: TObject);
+    procedure btnAtivarContaClick(Sender: TObject);
     procedure Label6Click(Sender: TObject);
     procedure edtVoltarParaLoginClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure btnAlterarSenhaClick(Sender: TObject);
+    procedure btnAtivarAcessoClick(Sender: TObject);
   private
     procedure TerminateLogin(Sender: TObject);
     function ServidorOnline: Boolean;
@@ -179,13 +177,13 @@ function TfrmLogin.ValidarDados: boolean;
 begin
   result := false;
 
-  if  (edtNome.Text = '') or (edtEmail.Text = '') or (edtSenhaProvisoria.Text = '') or (edtNovaSenha.Text = '') then
+  if (edtNovaSenha.Text = '') or (edtConfirmarNovaSenha.Text = '') then
   begin
-    ShowMessage('Informe todos dados : Nome, Email, Senha e confirme a senha' );
+    ShowMessage('Informe todos dados : Senha provisória, nova senha e confirmação da nova senha' );
     exit;
   end;
 
-  if (edtSenhaProvisoria.Text) = (edtNovaSenha.Text) then
+  if (edtNovaSenha.Text) = (edtConfirmarNovaSenha.Text) then
   begin
     ShowMessage('A nova senha deve ser diferente da provisória, digite novamente');
     exit;
@@ -194,7 +192,7 @@ begin
   result := true;
 end;
 
-procedure TfrmLogin.btnAlterarSenhaClick(Sender: TObject);
+procedure TfrmLogin.btnAtivarAcessoClick(Sender: TObject);
 begin
 
   if not ValidarDados then exit;
@@ -249,7 +247,7 @@ begin
 
 end;
 
-procedure TfrmLogin.btnAtivarcontaClick(Sender: TObject);
+procedure TfrmLogin.btnAtivarContaClick(Sender: TObject);
 begin
   PageControl.TabIndex := 2;
 end;

@@ -10,9 +10,9 @@ procedure RegistrarRotas;
 procedure Login(req: THorseRequest; res: THorseResponse; Next: TProc);
 procedure InserirUsuario(req: THorseRequest; res: THorseResponse; Next: TProc);
 procedure EditarSenha(req: THorseRequest; res: THorseResponse; Next: TProc);
+procedure EditarUsuario(req: THorseRequest; res: THorseResponse; Next: TProc);
 procedure listarUsuarioId(req: THorseRequest; res: THorseResponse; Next: TProc);
 procedure listarTodos(req: THorseRequest; res: THorseResponse; Next: TProc);
-procedure EditarUsuario(req: THorseRequest; res: THorseResponse; Next: TProc);
 
 implementation
 

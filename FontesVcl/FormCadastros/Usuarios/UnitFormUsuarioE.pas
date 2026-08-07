@@ -66,7 +66,7 @@ begin
         if Operacao = 'opIncluir' then
           TServiceUsuario.CriarConta(
                                  edtLogin.Text,
-                                 '12345678',// senha inicial ao criar um usuario
+                                  '12345678',// senha inicial ao criar um usuario
                                  ifThen(cbAtivo.Checked,'S','N'),
                                  'N', //primeiro acesso
                                  cbxColaboradores.KeyValue //pessoaid
