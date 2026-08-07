@@ -108,7 +108,6 @@ begin
 
   try
     dm := TDmUsuario.Create(nil);
-
     dm.EditarUsuario(usuarioid, login, ativo);
   finally
     FreeAndNil(dm);

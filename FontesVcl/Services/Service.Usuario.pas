@@ -11,7 +11,7 @@ type
     class procedure SalvarSenha( senha: string);
     class procedure CriarConta(login, senha, ativo, primeiro_acesso: string;
                                pessoaid: integer);
-    class procedure AlterarUsuario(login, ativo: string; pessoaid: integer);
+    class procedure AlterarUsuario(login, ativo: string; usuarioid: integer);
 
   end;
 
@@ -22,7 +22,7 @@ implementation
 uses DataModule.Usuario;
 
 class procedure TServiceUsuario.AlterarUsuario(login, ativo: string;
-                                                pessoaid: integer);
+                                                usuarioid: integer);
 var
   dmUsuario : TdmUsuario;
 begin
@@ -31,7 +31,7 @@ begin
      raise Exception.Create('Informe umlogin');
   dmUsuario := TdmUsuario.Create(nil);
   try
-    dmUsuario.AlterarUsuario(login, ativo, pessoaid);
+    dmUsuario.AlterarUsuario(login, ativo, usuarioid);
   finally
     dmUsuario.Free;
   end;

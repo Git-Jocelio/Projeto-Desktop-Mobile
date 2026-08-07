@@ -37,7 +37,7 @@ implementation
 
 {$R *.dfm}
 
-uses DataModule.Usuario, Service.Usuario;
+uses DataModule.Usuario, Service.Usuario, Vcl.Session;
 
 procedure TFormUsuarioE.TerminateSalvar(Sender: TObject);
 begin
@@ -48,6 +48,7 @@ begin
       ShowMessage( Exception(TThread(Sender).FatalException).Message );
       exit;
     end;
+
   TNavigation.Close(self);
 end;
 
@@ -56,33 +57,32 @@ procedure TFormUsuarioE.btnSalvarClick(Sender: TObject);
 
 begin
   inherited;
-
   if not Validar then exit;
-
   TLoading.Show;
   TLoading.ExecuteThread(
-  procedure
-  begin
-    sleep(500);
-    if Operacao = 'opIncluir' then
-      TServiceUsuario.CriarConta(
-                             edtLogin.Text,
-                             //edtSenha.Text,
-                             '12345678',// senha inicial ao criar um usuario
-                             ifThen(cbAtivo.Checked,'S','N'),
-                             'N', //primeiro acesso
-                             cbxColaboradores.KeyValue //pessoaid
-                             )
-   else
-   if Operacao = 'opAlterar' then
-     TServiceUsuario.AlterarUsuario(
-                             edtLogin.Text,
-                             ifThen(cbAtivo.Checked,'S','N'),
-                             cbxColaboradores.KeyValue //pessoaid
-                             )
+      procedure
+      begin
+        sleep(500);
+        if Operacao = 'opIncluir' then
+          TServiceUsuario.CriarConta(
+                                 edtLogin.Text,
+                                 '12345678',// senha inicial ao criar um usuario
+                                 ifThen(cbAtivo.Checked,'S','N'),
+                                 'N', //primeiro acesso
+                                 cbxColaboradores.KeyValue //pessoaid
+                                 )
+       else
+       if Operacao = 'opAlterar' then
+       begin
 
-  end,
-  TerminateSalvar
+         TServiceUsuario.AlterarUsuario(
+                                 edtLogin.Text,
+                                 ifThen(cbAtivo.Checked,'S','N'),
+                                 TSession.ID_USUARIO
+                                 );
+       end;
+      end,
+      TerminateSalvar
   );
 end;
 
@@ -101,18 +101,21 @@ begin
   cbxColaboradores.KeyValue := MemTable.FieldByName('pessoaid').AsInteger;
   edtLogin.Text := MemTable.FieldByName('login').AsString;
   cbAtivo.Checked := MemTable.FieldByName('ativo').AsString = 'S';
+
 end;
 
 
 procedure TFormUsuarioE.FormShow(Sender: TObject);
 begin
   inherited;
+
+
   // busca colaboradores no banco para listar no combobox
   ListarColaboradores;
 
   if TNavigation.ParamInt > 0 then
   begin
-
+    Operacao := 'opAlterar';
     lblTitulo.Caption := lblTitulo.Caption + ' - Editar';
     cbxColaboradores.Enabled := false;
 
@@ -124,7 +127,8 @@ begin
     end,
     TerminateUsuarioE
     );
-  end;
+  end
+  else Operacao := 'opIncluir';
 
 end;
 

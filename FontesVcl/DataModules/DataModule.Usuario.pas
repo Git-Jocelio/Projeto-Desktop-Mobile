@@ -25,7 +25,7 @@ type
     procedure CriarConta(login, senha, ativo, primeiro_acesso: string;
                          pessoaid:integer);
     procedure AlterarSenha( senha: string);
-    procedure AlterarUsuario(login, ativo: string; pessoaid:integer);
+    procedure AlterarUsuario(login, ativo: string; usuarioid:integer);
     procedure ListarTodos;
     procedure ListarId(memTable: TFDMemTable; pessoaId: integer);
 
@@ -50,13 +50,11 @@ begin
   TDataSetSerializeConfig.GetInstance.Import.DecimalSeparator := '.';
 end;
 
-
 procedure TdmUsuario.Login(email, senha: string);
 var
   Res : IResponse;
   json : TJSONObject;
 begin
-
   // limpar o dataset
   if MemTable.Active then
     MemTable.emptydataset;
@@ -90,7 +88,6 @@ var
   Res : IResponse;
   json : TJSONObject;
 begin
-
   // limpar o dataset
   if MemTable.Active then
     MemTable.emptydataset;
@@ -120,29 +117,27 @@ begin
   end;
 end;
 
-procedure TdmUsuario.AlterarUsuario(login, ativo: string; pessoaid: integer);
+procedure TdmUsuario.AlterarUsuario(login, ativo: string; usuarioid: integer);
 var
   Res : IResponse;
   json : TJSONObject;
 begin
-
   try
-
     //criar um objeto json com os dados do usuario
     json := TJSONObject.Create;
 
     json.AddPair('login', login);
     json.AddPair('ativo', ativo);
-    json.AddPair('pessoaid', pessoaid.ToString);
+    json.AddPair('usuarioid', usuarioid.ToString);
 
     Res := TRequest.New.BaseURL(URL_BASE)
                        .Resource('/usuario')
+                       .TokenBearer(TSession.TOKEN)
                        .AddBody(json.ToJSON)
                        .Accept('application/json')
                        .Adapters(TDataSetSerializeAdapter.New(MemTable))
-                       .Post;
-
-    if Res.StatusCode <> 201 then
+                       .Put;
+    if Res.StatusCode <> 200 then
       raise Exception.Create(Res.content);
 
   finally
@@ -156,9 +151,7 @@ var
   Res : IResponse;
   json : TJSONObject;
 begin
-
   try
-
     //criar um objeto json com os dados do usuario
     json := TJSONObject.Create;
 
@@ -208,7 +201,6 @@ procedure TdmUsuario.ListarTodos;
 var
   Res : IResponse;
 begin
-
   // limpar o dataset
   if MemTable.Active then
     MemTable.emptydataset;
@@ -224,9 +216,7 @@ begin
 
   if Res.StatusCode <> 200 then
     raise Exception.Create(Res.content);
-
 end;
-
 
 procedure TdmUsuario.ListarId(memTable: TFDMemTable; pessoaId: integer);
 var
@@ -242,7 +232,5 @@ begin
   if resp.StatusCode <> 200 then
     raise Exception.Create(resp.content);
 end;
-
-
 
 end.

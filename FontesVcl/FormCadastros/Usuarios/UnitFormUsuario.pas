@@ -102,7 +102,4 @@ begin
     OpenCadUsuario(dmUsuario.MemTable.FieldByName('pessoaid').AsInteger);
 end;
 
-
-
-
 end.
