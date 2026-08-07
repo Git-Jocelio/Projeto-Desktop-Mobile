@@ -31,7 +31,7 @@ type
     procedure EditarSenha(usuarioid: integer; senha: string);
     procedure EditarUsuario(usuarioid: integer; login, ativo: string);
     function listarUsuarioId(usuarioid: integer): TJSONObject;
-    function listarUsuarioByEmail(email: string): TJSONObject;
+    function listarUsuarioByLogin(login: string): TJSONObject;
     function listarTodos: TJSONArray;
   end;
 
@@ -165,31 +165,20 @@ begin
 
 end;
 
-function TDmUsuario.listarUsuarioByEmail(email: string): TJSONObject;
+function TDmUsuario.listarUsuarioByLogin(login: string): TJSONObject;
 begin
-
   result := nil;
-
   DmServidor.Conn.open;
-
   qry.SQL.clear;
-  qry.SQL.Add('select ');
-  qry.SQL.Add('  email ');
-  qry.SQL.Add('from ');
-  qry.SQL.Add('  pessoa ');
-  qry.SQL.Add('where ');
-  qry.SQL.Add('  email = :email ');
-  qry.ParamByName('email').value := email;
+  qry.SQL.Add('select login from usuario where login =:login');
+  qry.ParamByName('login').value := login;
   qry.Open;
-
   if not qry.IsEmpty then
     result := qry.ToJSONObject;
-
 end;
 
 procedure TDmUsuario.EditarUsuario(usuarioid: integer; login, ativo: string);
 begin
-
   DmServidor.Conn.open;
   qry.SQL.clear;
   qry.SQL.Add('update usuario set ');
@@ -202,16 +191,12 @@ begin
   qry.ParamByName('ativo').Value := ativo;
   qry.ParamByName('data_ultima_troca').Value := Now;
   qry.ExecSQL;
-
 end;
 
 function TDmUsuario.listarTodos: TJSONArray;
 begin
-
   result := nil;
-
   DmServidor.Conn.open;
-
   qry.SQL.clear;
   qry.SQL.Add('select ');
   qry.SQL.Add('  p.pessoaid, p.nome, p.telefone, p.email, p.cpf, ');
@@ -225,7 +210,6 @@ begin
 
   if not qry.IsEmpty then
     result := qry.ToJSONArray;
-
 end;
 
 

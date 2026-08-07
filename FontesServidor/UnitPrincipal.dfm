@@ -4,7 +4,7 @@ object FormPrincipal: TFormPrincipal
   BorderStyle = bsDialog
   Caption = ' 64 bits (em D:) '
   ClientHeight = 247
-  ClientWidth = 626
+  ClientWidth = 604
   Color = clWhite
   Font.Charset = ANSI_CHARSET
   Font.Color = clWindowText
@@ -15,7 +15,7 @@ object FormPrincipal: TFormPrincipal
   OnShow = FormShow
   TextHeight = 37
   object lblServidor: TLabel
-    Left = 176
+    Left = 185
     Top = 96
     Width = 375
     Height = 30
@@ -57241,7 +57241,7 @@ object FormPrincipal: TFormPrincipal
       3EC4B205FF7FA01EEF4E70E3BED60000000049454E44AE426082}
   end
   object lblSwith: TLabel
-    Left = 176
+    Left = 185
     Top = 207
     Width = 99
     Height = 21
@@ -57254,7 +57254,7 @@ object FormPrincipal: TFormPrincipal
     ParentFont = False
   end
   object Switch: TToggleSwitch
-    Left = 281
+    Left = 290
     Top = 207
     Width = 50
     Height = 20

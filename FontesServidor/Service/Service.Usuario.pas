@@ -49,10 +49,10 @@ begin
 
   try
     dm := TDmUsuario.Create(nil);
-    json_retorno := dm.listarUsuarioByEmail(login);
+    json_retorno := dm.listarUsuarioByLogin(login);
 
     if Assigned(json_Retorno) then
-      raise Exception.Create('Já existe um email cadastrado para essa conta');
+      raise Exception.Create('Já existe um login cadastrado para essa conta');
 
     Result := dm.InserirUsuario( login, SaltPassword(Senha), pessoaId);
   finally
