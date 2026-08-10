@@ -17,6 +17,7 @@ uses
   function listarUsuarioId(usuarioid: integer): TJSONObject;
   function listarTodos: TJSONArray;
   procedure EditarUsuario(usuarioid: integer; login, ativo: string);
+  procedure AtivarConta(usuarioid: integer; senha: string);
 
 implementation
 
@@ -68,6 +69,19 @@ begin
   try
     dm := TDmUsuario.Create(nil);
     dm.EditarSenha(usuarioid, SaltPassword(Senha));
+  finally
+    FreeAndNil(dm);
+  end;
+end;
+
+
+procedure AtivarConta(usuarioid: integer; senha: string);
+var
+  dm : TDmUsuario;
+begin
+  try
+    dm := TDmUsuario.Create(nil);
+    dm.AtivarConta(usuarioid, SaltPassword(Senha));
   finally
     FreeAndNil(dm);
   end;

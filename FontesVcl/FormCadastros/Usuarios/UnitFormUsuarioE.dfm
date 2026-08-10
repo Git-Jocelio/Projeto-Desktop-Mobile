@@ -67,14 +67,14 @@ inherited FormUsuarioE: TFormUsuarioE
     TabOrder = 2
   end
   object cbAtivo: TCheckBox [6]
-    Left = 328
-    Top = 160
+    Left = 407
+    Top = 181
     Width = 97
     Height = 17
     Caption = 'Ativo'
     Font.Charset = ANSI_CHARSET
     Font.Color = 8289918
-    Font.Height = -12
+    Font.Height = -13
     Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False

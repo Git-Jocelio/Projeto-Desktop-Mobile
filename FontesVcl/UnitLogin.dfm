@@ -673,7 +673,6 @@ object frmLogin: TfrmLogin
             Font.Name = 'Segoe UI'
             Font.Style = []
             ParentFont = False
-            PasswordChar = '*'
             TabOrder = 0
             Text = 'admin'
           end
@@ -829,7 +828,6 @@ object frmLogin: TfrmLogin
         Color = clWhite
         ParentBackground = False
         TabOrder = 4
-        ExplicitHeight = 499
         object Label5: TLabel
           AlignWithMargins = True
           Left = 3
@@ -846,7 +844,6 @@ object frmLogin: TfrmLogin
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
-          ExplicitTop = 149
           ExplicitWidth = 223
         end
         object Image2: TImage
@@ -1023,7 +1020,6 @@ object frmLogin: TfrmLogin
           Color = 15624520
           ParentBackground = False
           TabOrder = 0
-          ExplicitTop = 454
           object btnAtivarAcesso: TSpeedButton
             Left = 0
             Top = 0
@@ -1065,7 +1061,6 @@ object frmLogin: TfrmLogin
           Color = 15624520
           ParentBackground = False
           TabOrder = 1
-          ExplicitTop = 194
           object lblLogin: TLabel
             AlignWithMargins = True
             Left = 10
@@ -1103,7 +1098,6 @@ object frmLogin: TfrmLogin
           Color = 15624520
           ParentBackground = False
           TabOrder = 2
-          ExplicitTop = 314
           object edtNovaSenha: TEdit
             AlignWithMargins = True
             Left = 10
@@ -1143,7 +1137,6 @@ object frmLogin: TfrmLogin
           Color = 15624520
           ParentBackground = False
           TabOrder = 3
-          ExplicitTop = 374
           object edtConfirmarNovaSenha: TEdit
             AlignWithMargins = True
             Left = 10

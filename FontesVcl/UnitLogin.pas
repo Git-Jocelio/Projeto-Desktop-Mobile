@@ -72,7 +72,7 @@ type
   private
     procedure TerminateLogin(Sender: TObject);
     function ServidorOnline: Boolean;
-    procedure TerminateCriarConta(Sender: TObject);
+    procedure TerminateAtivarConta(Sender: TObject);
     function ValidarDados: boolean;
     { Private declarations }
   public
@@ -86,7 +86,9 @@ implementation
 
 {$R *.dfm}
 
-uses UnitFrmPrincipal, DataModule.Usuario, Vcl.Config;
+uses UnitFrmPrincipal, DataModule.Usuario, Vcl.Config, Service.Usuario;
+
+
 
 procedure TfrmLogin.TerminateLogin(Sender: TObject);
 begin
@@ -100,14 +102,25 @@ begin
        Exit;
      end;
 
-   // pegar dados de acesso do usuario... devolvidos pelo servidor
+   //pegar dados de acesso do usuario... devolvidos pelo servidor
    TSession.ID_USUARIO := dmUsuario.MemTable.fieldbyname('usuarioId').AsInteger;
-   TSession.NOME       := dmUsuario.MemTable.fieldbyname('nome').AsString;
-   TSession.EMAIL      := dmUsuario.MemTable.fieldbyname('login').AsString;
-   TSession.TOKEN      := dmUsuario.MemTable.fieldbyname('token').AsString;
-   TSession.STATUS     := 'TESTE';
+   TSession.NOME := dmUsuario.MemTable.fieldbyname('nome').AsString;
+   TSession.EMAIL := dmUsuario.MemTable.fieldbyname('login').AsString;
+   TSession.PRIMEIRO_ACESSO := dmUsuario.MemTable.fieldbyname('primeiro_acesso').AsString;
+   TSession.TOKEN := dmUsuario.MemTable.fieldbyname('token').AsString;
+   TSession.STATUS := 'TESTE';
 
    FreeAndNil(dmUsuario);
+
+   // Primeiro acesso?
+   if TSession.PRIMEIRO_ACESSO = 'S' then
+   begin
+     PageControl.ActivePage := tbsAtivarConta;
+     lblLogin.Caption := EdtLogin.Text;
+
+     Exit;
+   end;
+
 
    ModalResult := mrOk;
 
@@ -115,25 +128,18 @@ end;
 
 procedure TfrmLogin.BtnAcessarClick(Sender: TObject);
 begin
-
    TLoading.show(frmLogin);
-
    if not Assigned(dmUsuario) then
       dmUsuario := TdmUsuario.Create(nil);
-
    TLoading.ExecuteThread(procedure
    begin
       sleep(600);
-
       if not ServidorOnline then
             raise Exception.Create('Servidor não está disponível.');
-
       dmUsuario.Login(EdtLogin.Text, EdtSenha.Text);
-
    end,
    TerminateLogin
    );
-
 end;
 
 
@@ -148,10 +154,9 @@ begin
   PageControl.TabIndex := 2;
 end;
 
-procedure TfrmLogin.TerminateCriarConta(Sender: TObject);
+procedure TfrmLogin.TerminateAtivarConta(Sender: TObject);
 begin
    TLoading.Hide;
-
    if (Sender is TThread) then
      if Assigned(TThread(Sender).FatalException) then
      begin
@@ -159,18 +164,11 @@ begin
        FreeAndNil(dmUsuario);
        Exit;
      end;
-
    // pegar dados de acesso do usuario... devolvidos pelo servidor
-   TSession.ID_USUARIO := dmUsuario.MemTable.fieldbyname('usuarioId').AsInteger;
-   TSession.NOME       := dmUsuario.MemTable.fieldbyname('nome').AsString;
-   TSession.EMAIL      := dmUsuario.MemTable.fieldbyname('email').AsString;
-   TSession.TOKEN      := dmUsuario.MemTable.fieldbyname('token').AsString;
-   TSession.STATUS     := 'TESTE';
-
+   TSession.PRIMEIRO_ACESSO := 'N';
    FreeAndNil(dmUsuario);
-
+   ShowMessage('Conta ativada com sucesso!');
    ModalResult := mrOk;
-
 end;
 
 function TfrmLogin.ValidarDados: boolean;
@@ -183,9 +181,10 @@ begin
     exit;
   end;
 
-  if (edtNovaSenha.Text) = (edtConfirmarNovaSenha.Text) then
+  if (edtNovaSenha.Text) <> (edtConfirmarNovaSenha.Text) then
   begin
-    ShowMessage('A nova senha deve ser diferente da provisória, digite novamente');
+    ShowMessage('As senhas informadas não conferem... ');
+    edtNovaSenha.SetFocus;
     exit;
   end;
 
@@ -194,27 +193,19 @@ end;
 
 procedure TfrmLogin.btnAtivarAcessoClick(Sender: TObject);
 begin
-
   if not ValidarDados then exit;
-
   TLoading.show(frmLogin);
-
   if not Assigned(dmUsuario) then
       dmUsuario := TdmUsuario.Create(nil);
-
   TLoading.ExecuteThread(procedure
   begin
     sleep(600);
-
     if not ServidorOnline then
       raise Exception.Create('Servidor não está disponível.');
-
-    dmUsuario.CriarConta(EdtLogin.Text, EdtSenha.Text,'S','N', TSession.ID_USUARIO);
-
+    TServiceUsuario.AtivarConta(EdtSenha.Text);
   end,
- TerminateCriarConta
- );
-
+  TerminateAtivarConta
+  );
 end;
 
 procedure TfrmLogin.edtVoltarParaLoginClick(Sender: TObject);

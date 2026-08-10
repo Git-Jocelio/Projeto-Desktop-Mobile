@@ -33,6 +33,7 @@ type
     function listarUsuarioId(usuarioid: integer): TJSONObject;
     function listarUsuarioByLogin(login: string): TJSONObject;
     function listarTodos: TJSONArray;
+    procedure AtivarConta(usuarioid: integer; senha: string);
   end;
 
 implementation
@@ -73,7 +74,7 @@ begin
 
   qry.SQL.clear;
   qry.SQL.Add('select ');
-  qry.SQL.Add('  u.pessoaid, u.usuarioid, p.nome, u.login ');
+  qry.SQL.Add('  u.pessoaid, u.usuarioid, p.nome, u.login, primeiro_acesso ');
   qry.SQL.Add('from ');
   qry.SQL.Add('  usuario u, pessoa p');
   qry.SQL.Add('where ');
@@ -109,8 +110,8 @@ begin
     qry.ParamByName('login').AsString := login;
     qry.ParamByName('senha').AsString := senha;
     qry.ParamByName('pessoaid').AsInteger := pessoaid;
-    qry.ParamByName('ativo').AsString := 'S' ;
-    qry.ParamByName('primeiro_acesso').AsString := 'N' ;
+    qry.ParamByName('ativo').AsString := 'N' ;
+    qry.ParamByName('primeiro_acesso').AsString := 'S' ;
     qry.active := true;
     novoUsuario:= qry.FieldByName('usuarioid').AsInteger;
 
@@ -141,6 +142,26 @@ begin
   qry.ExecSQL;
 
 end;
+
+procedure TDmUsuario.AtivarConta(usuarioid: integer; senha: string);
+begin
+
+  DmServidor.Conn.open;
+
+  qry.SQL.clear;
+  qry.SQL.Add('update usuario set senha =:senha, primeiro_acesso =:primeiro_acesso, ');
+  qry.SQL.Add('ativo =:ativo, data_ultima_troca =:data_ultima_troca ');
+  qry.SQL.Add('where usuarioid =:usuarioid ');
+  qry.ParamByName('usuarioid').AsInteger := usuarioid;
+  qry.ParamByName('senha').AsString := senha ;
+  qry.ParamByName('primeiro_acesso').AsString := 'N' ;
+  qry.ParamByName('ativo').AsString := 'S';
+  qry.ParamByName('data_ultima_troca').AsDateTime := now() ;
+  qry.ExecSQL;
+
+end;
+
+
 
 function TDmUsuario.listarUsuarioId(usuarioid: integer): TJSONObject;
 begin

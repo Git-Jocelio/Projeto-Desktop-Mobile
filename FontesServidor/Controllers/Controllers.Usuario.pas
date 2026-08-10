@@ -13,6 +13,7 @@ procedure EditarSenha(req: THorseRequest; res: THorseResponse; Next: TProc);
 procedure EditarUsuario(req: THorseRequest; res: THorseResponse; Next: TProc);
 procedure listarUsuarioId(req: THorseRequest; res: THorseResponse; Next: TProc);
 procedure listarTodos(req: THorseRequest; res: THorseResponse; Next: TProc);
+procedure AtivarConta(req: THorseRequest; res: THorseResponse; Next: TProc);
 
 implementation
 
@@ -26,6 +27,11 @@ begin
   THorse.AddCallback(HorseJWT( Controllers.JWT.SECRET,
                      THorseJWTConfig.New.SessionClass(TMyClaims)))
         .Post('/usuario/password', EditarSenha);
+
+  THorse.AddCallback(HorseJWT( Controllers.JWT.SECRET,
+                     THorseJWTConfig.New.SessionClass(TMyClaims)))
+        .Post('/usuario/ativar', AtivarConta);
+
 
   THorse.AddCallback(HorseJWT( Controllers.JWT.SECRET,
                      THorseJWTConfig.New.SessionClass(TMyClaims)))
@@ -138,6 +144,34 @@ begin
       res.Send(E.Message).Status(500);
   end;
 end;
+
+
+procedure AtivarConta(req: THorseRequest; res: THorseResponse; Next: TProc);
+var
+  body: TJSONObject;
+  usuarioid: integer;
+  senha: string;
+begin
+  try
+    body := req.Body<TJSONObject>;
+    if not Assigned(body) then
+    begin
+      res.Send('JSON inválido ou vazio').Status(400);
+      Exit;
+    end;
+    senha := body.GetValue<string>('senha', '');
+    // pega o id do usuario contido dentro do json
+    usuarioid := Get_Usuario_Request(req);
+    Service.Usuario.AtivarConta( usuarioid, senha );
+
+    res.Send('Ok');
+  except
+    on E: Exception do
+      res.Send(E.Message).Status(500);
+  end;
+end;
+
+
 
 procedure listarUsuarioId(req: THorseRequest; res: THorseResponse; Next: TProc);
 var

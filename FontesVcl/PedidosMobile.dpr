@@ -51,7 +51,7 @@ begin
     if frmLogin.ShowModal = mrOk then
     begin
       Application.CreateForm(TFormPrincipal, FormPrincipal);
-  Application.Run;
+      Application.Run;
     end;
   finally
     frmLogin.Free;
