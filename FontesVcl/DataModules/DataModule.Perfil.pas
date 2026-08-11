@@ -20,6 +20,9 @@ type
   private
   public
     procedure ListarTodos;
+    procedure Listarid(memTable: TFDMemTable; pessoaId: integer);
+    procedure InserirPerfil(descricao, observacao: string);
+    procedure AlterarPerfil(descricao, observacao: string; id_perfil:integer);
   end;
 
 var
@@ -58,6 +61,80 @@ begin
   if Res.StatusCode <> 200 then
     raise Exception.Create(Res.content);
 end;
+
+
+procedure TDmPerfil.Listarid(memTable: TFDMemTable; pessoaId: integer);
+var
+  resp : IResponse;
+begin
+  resp := TRequest.New.BaseURL(URL_BASE)
+                      .Resource('/perfil/' + pessoaId.ToString)
+                      .TokenBearer(TSession.TOKEN)
+                      .Accept('application/json')
+                      .Adapters(TDataSetSerializeAdapter.New(memTable))
+                      .Get;
+  // trata erro se houver
+  if resp.StatusCode <> 200 then
+    raise Exception.Create(resp.content);
+end;
+
+procedure TDmPerfil.InserirPerfil(descricao, observacao: string);
+var
+  Res : IResponse;
+  json : TJSONObject;
+begin
+  try
+    //criar um objeto json com os dados do usuario
+    json := TJSONObject.Create;
+
+    json.AddPair('descricao', descricao);
+    json.AddPair('observacao', observacao);
+
+    Res := TRequest.New.BaseURL(URL_BASE)
+                       .Resource('/perfil')
+                       .TokenBearer(TSession.TOKEN)
+                       .AddBody(json.ToJSON)
+                       .Accept('application/json')
+                       .Post;
+
+    if Res.StatusCode <> 201 then
+      raise Exception.Create(Res.content);
+
+  finally
+    freeandnil(json);
+  end;
+end;
+
+procedure TDmPerfil.AlterarPerfil(descricao, observacao: string; id_perfil:integer);
+var
+  Res : IResponse;
+  json : TJSONObject;
+begin
+  try
+    //criar um objeto json com os dados do usuario
+    json := TJSONObject.Create;
+
+    json.AddPair('descricao', descricao);
+    json.AddPair('observacao', descricao);
+    json.AddPair('id_perfil', id_perfil.ToString);
+
+    Res := TRequest.New.BaseURL(URL_BASE)
+                       .Resource('/perfil')
+                       .TokenBearer(TSession.TOKEN)
+                       .AddBody(json.ToJSON)
+                       .Accept('application/json')
+                       .Adapters(TDataSetSerializeAdapter.New(MemTable))
+                       .Put;
+    if Res.StatusCode <> 200 then
+      raise Exception.Create(Res.content);
+
+  finally
+    freeandnil(json);
+  end;
+end;
+
+
+
 
 
 end.

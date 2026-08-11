@@ -200,8 +200,6 @@ begin
   end;
 end;
 
-
-
 procedure TdmUsuario.ListarColaboradores;
 var
   Res : IResponse;

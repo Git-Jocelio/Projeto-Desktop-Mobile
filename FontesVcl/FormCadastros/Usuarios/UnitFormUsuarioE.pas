@@ -52,7 +52,6 @@ begin
   TNavigation.Close(self);
 end;
 
-
 procedure TFormUsuarioE.btnSalvarClick(Sender: TObject);
 
 begin
@@ -108,8 +107,6 @@ end;
 procedure TFormUsuarioE.FormShow(Sender: TObject);
 begin
   inherited;
-
-
   // busca colaboradores no banco para listar no combobox
   ListarColaboradores;
 

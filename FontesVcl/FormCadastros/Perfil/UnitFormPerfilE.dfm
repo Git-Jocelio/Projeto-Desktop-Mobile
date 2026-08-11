@@ -1,9 +1,9 @@
 inherited FormPerfilE: TFormPerfilE
   Caption = 'FormPerfilE'
   ClientHeight = 397
-  ClientWidth = 416
+  ClientWidth = 421
   OnShow = FormShow
-  ExplicitWidth = 416
+  ExplicitWidth = 421
   ExplicitHeight = 397
   TextHeight = 15
   inherited lblTitulo: TLabel
@@ -64,7 +64,7 @@ inherited FormPerfilE: TFormPerfilE
     ParentFont = False
   end
   inherited pnlBotaoSalvar: TPanel
-    Left = 103
+    Left = 108
     Top = 353
     Anchors = [akRight, akBottom]
     ExplicitLeft = 103
@@ -74,7 +74,7 @@ inherited FormPerfilE: TFormPerfilE
     end
   end
   inherited pnlBotaoCancelar: TPanel
-    Left = 218
+    Left = 223
     Top = 353
     Anchors = [akRight, akBottom]
     ExplicitLeft = 218

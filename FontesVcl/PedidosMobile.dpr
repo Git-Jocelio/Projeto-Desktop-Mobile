@@ -37,7 +37,9 @@ uses
   UnitFormUsuario in 'FormCadastros\Usuarios\UnitFormUsuario.pas' {FormUsuario},
   UnitFormUsuarioE in 'FormCadastros\Usuarios\UnitFormUsuarioE.pas' {FormUsuarioE},
   UnitFormPerfil in 'FormCadastros\Perfil\UnitFormPerfil.pas' {FormPerfil},
-  DataModule.Perfil in 'DataModules\DataModule.Perfil.pas' {DmPerfil: TDataModule};
+  DataModule.Perfil in 'DataModules\DataModule.Perfil.pas' {DmPerfil: TDataModule},
+  UnitFormPerfilEdicao in 'FormCadastros\Perfil\UnitFormPerfilEdicao.pas' {FormPerfilEdicao},
+  Service.Perfil in 'Services\Service.Perfil.pas';
 
 {$R *.res}
 

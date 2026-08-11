@@ -10,6 +10,11 @@ inherited FormPerfil: TFormPerfil
       Caption = 'Perfis de acesso ao sistema'
       ExplicitWidth = 357
     end
+    inherited Panel2: TPanel
+      inherited btnInserir: TSpeedButton
+        OnClick = btnInserirClick
+      end
+    end
     inherited Panel1: TPanel
       Left = 387
       Width = 423
@@ -28,6 +33,7 @@ inherited FormPerfil: TFormPerfil
   end
   inherited dbg: TDBGrid
     DataSource = ds
+    OnDblClick = dbgDblClick
     Columns = <
       item
         Expanded = False

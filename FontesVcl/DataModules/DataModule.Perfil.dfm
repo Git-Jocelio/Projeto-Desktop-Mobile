@@ -11,6 +11,6 @@ object DmPerfil: TDmPerfil
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     Left = 160
-    Top = 80
+    Top = 88
   end
 end
