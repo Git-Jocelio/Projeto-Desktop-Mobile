@@ -597,6 +597,7 @@ object FormPrincipal: TFormPrincipal
             item
               Caption = ' Perfis'
               ImageIndex = 1
+              OnClick = CategorysubMenuSegurancaCategories0Items1Click
             end
             item
               Caption = 'Permiss'#245'es'

@@ -3,7 +3,8 @@ unit DataModule.Usuario;
 interface
 
 uses
-  System.SysUtils, System.Classes,
+  System.SysUtils,
+  System.Classes,
   DataSet.Serialize.Config,  // transforma json em dataset
   RestRequest4D,             // usado para receber respostas do servidor
   DataSet.Serialize.Adapter.RESTRequest4D, //json para dataset

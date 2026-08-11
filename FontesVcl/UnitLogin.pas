@@ -62,6 +62,9 @@ type
     edtConfirmarNovaSenha: TEdit;
     btnAtivarAcesso: TSpeedButton;
     lblLogin: TLabel;
+    Label2: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
     procedure BtnAcessarClick(Sender: TObject);
     procedure btnAcessarLoginClick(Sender: TObject);
     procedure btnAtivarContaClick(Sender: TObject);

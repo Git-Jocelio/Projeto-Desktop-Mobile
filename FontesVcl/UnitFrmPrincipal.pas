@@ -54,7 +54,8 @@ type
     procedure CategorySubMenuButtonsCategories0Items3Click(Sender: TObject);//cad colaboradores
 
     procedure FormShow(Sender: TObject);
-    procedure CategorysubMenuSegurancaCategories0Items0Click(Sender: TObject);
+    procedure CategorysubMenuSegurancaCategories0Items0Click(Sender: TObject);//cad usuario
+    procedure CategorysubMenuSegurancaCategories0Items1Click(Sender: TObject);//cad perfil
 
   private
     procedure CloseSubMenu;
@@ -73,7 +74,7 @@ implementation
 
 uses UnitFormPedidos, UnitFormProduto, UnitFormPessoa, UnitFormFornecedor,
      UnitFormSolicitacaoCompras, UnitFormColaborador, UnitFormPerfilE,
-     UnitFormUsuario;
+     UnitFormUsuario, UnitFormPerfil;
 
 procedure TFormPrincipal.CategoryButtonsCategories0Items1Click(Sender: TObject);
 begin
@@ -155,7 +156,6 @@ procedure TFormPrincipal.CategorySubMenuButtonsCategories0Items3Click(
 begin
   CloseSubMenu;
   TNavigation.Open(TFormColaborador, FormColaborador, PnlContainer);
-
 end;
 
 procedure TFormPrincipal.CategorysubMenuSegurancaCategories0Items0Click(
@@ -163,7 +163,13 @@ procedure TFormPrincipal.CategorysubMenuSegurancaCategories0Items0Click(
 begin
   CloseSubMenu;
   TNavigation.Open(TFormUsuario, FormUsuario, PnlContainer);
+end;
 
+procedure TFormPrincipal.CategorysubMenuSegurancaCategories0Items1Click(
+  Sender: TObject);
+begin
+  CloseSubMenu;
+  TNavigation.Open(TFormPerfil, FormPerfil, PnlContainer);
 end;
 
 procedure TFormPrincipal.CloseSubMenu;
@@ -180,8 +186,6 @@ procedure TFormPrincipal.FormShow(Sender: TObject);
 begin
   svSubMenuCadastros.Opened := false;
   svSubMenuSeguranca.Opened := false;
-
-
 
   lblNome.Caption  := TSession.NOME;
   lblEmail.Caption := TSession.EMAIL;

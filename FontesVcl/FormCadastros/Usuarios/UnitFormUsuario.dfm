@@ -40,6 +40,7 @@ inherited FormUsuario: TFormUsuario
       end
       inherited edtFiltrar: TEdit
         Width = 447
+        TextHint = 'Pesquisar por nome'
         ExplicitWidth = 447
       end
     end

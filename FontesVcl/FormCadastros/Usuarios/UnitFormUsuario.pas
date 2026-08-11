@@ -10,11 +10,12 @@ uses
 
 type
   TFormUsuario = class(TFormBaseGrade)
-    procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure btnInserirClick(Sender: TObject);
     procedure dbgDblClick(Sender: TObject);
+
+    procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     procedure Listartodos;
     procedure TerminateListartodos(Sender: TObject);
@@ -33,13 +34,11 @@ implementation
 
 uses DataModule.Usuario, Vcl.Loading, UnitFormUsuarioE;
 
-
 procedure TFormUsuario.TerminateListartodos(Sender: TObject);
 begin
   TLoading.Hide;
   ds.DataSet := DmUsuario.MemTable;
 end;
-
 
 procedure TFormUsuario.ListarTodos;
 begin
@@ -54,7 +53,6 @@ begin
   );
 end;
 
-
 procedure TFormUsuario.btnInserirClick(Sender: TObject);
 begin
   inherited;
@@ -65,13 +63,12 @@ procedure TFormUsuario.FormCreate(Sender: TObject);
 begin
   inherited;
   dmUsuario := TdmUsuario.Create(Self);
-
 end;
 
 procedure TFormUsuario.FormDestroy(Sender: TObject);
 begin
   inherited;
-    FreeAndNil(dmUsuario);
+  FreeAndNil(dmUsuario);
 end;
 
 procedure TFormUsuario.FormShow(Sender: TObject);

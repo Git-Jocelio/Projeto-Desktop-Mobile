@@ -84,7 +84,6 @@ begin
     AConnection.Params.Add('Password=' + Env['DB_PASSWORD']);
 
     AConnection.LoginPrompt := False;
-
   finally
     Env.Free;
   end;

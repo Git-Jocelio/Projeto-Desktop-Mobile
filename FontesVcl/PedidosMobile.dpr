@@ -35,7 +35,9 @@ uses
   UnitFormPerfilE in 'FormCadastros\Perfil\UnitFormPerfilE.pas' {FormPerfilE},
   Service.Usuario in 'Services\Service.Usuario.pas',
   UnitFormUsuario in 'FormCadastros\Usuarios\UnitFormUsuario.pas' {FormUsuario},
-  UnitFormUsuarioE in 'FormCadastros\Usuarios\UnitFormUsuarioE.pas' {FormUsuarioE};
+  UnitFormUsuarioE in 'FormCadastros\Usuarios\UnitFormUsuarioE.pas' {FormUsuarioE},
+  UnitFormPerfil in 'FormCadastros\Perfil\UnitFormPerfil.pas' {FormPerfil},
+  DataModule.Perfil in 'DataModules\DataModule.Perfil.pas' {DmPerfil: TDataModule};
 
 {$R *.res}
 
@@ -51,7 +53,7 @@ begin
     if frmLogin.ShowModal = mrOk then
     begin
       Application.CreateForm(TFormPrincipal, FormPrincipal);
-      Application.Run;
+  Application.Run;
     end;
   finally
     frmLogin.Free;
