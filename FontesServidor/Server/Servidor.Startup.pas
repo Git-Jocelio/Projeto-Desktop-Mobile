@@ -19,7 +19,8 @@ uses
   Controllers.Usuario,
   Controllers.Produto,
   Controllers.Fornecedor,
-  Controllers.Colaborador;
+  Controllers.Colaborador,
+  Controllers.Perfil;
 
 var
   ServidorConfigurado: Boolean = false;
@@ -41,6 +42,7 @@ begin
   Controllers.Produto.RegistrarRotas;
   Controllers.Fornecedor.RegistrarRotas;
   Controllers.Colaborador.RegistrarRotas;
+  Controllers.Perfil.RegistrarRotas;
 
   ServidorConfigurado := True;
 end;

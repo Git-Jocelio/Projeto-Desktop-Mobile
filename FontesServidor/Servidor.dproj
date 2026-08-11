@@ -176,6 +176,13 @@
         <DCCReference Include="Server\Servidor.Startup.pas"/>
         <DCCReference Include="Controllers\Controllers.JWT.pas"/>
         <DCCReference Include="Service\Service.Usuario.pas"/>
+        <DCCReference Include="DataModules\DataModule.Perfil.pas">
+            <Form>DmPerfil</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Service\Service.Perfil.pas"/>
+        <DCCReference Include="Controllers\Controllers.Perfil.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

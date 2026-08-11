@@ -22,7 +22,10 @@ uses
   Service.Colaborador in 'Service\Service.Colaborador.pas',
   Servidor.Startup in 'Server\Servidor.Startup.pas',
   Controllers.JWT in 'Controllers\Controllers.JWT.pas',
-  Service.Usuario in 'Service\Service.Usuario.pas';
+  Service.Usuario in 'Service\Service.Usuario.pas',
+  DataModule.Perfil in 'DataModules\DataModule.Perfil.pas' {DmPerfil: TDataModule},
+  Service.Perfil in 'Service\Service.Perfil.pas',
+  Controllers.Perfil in 'Controllers\Controllers.Perfil.pas';
 
 {$R *.res}
 

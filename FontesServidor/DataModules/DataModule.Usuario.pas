@@ -21,8 +21,10 @@ uses
 type
   TDmUsuario = class(TDataModule)
     qry: TFDQuery;
-    procedure DataModuleCreate(Sender: TObject);
+
     procedure ConnBeforeConnect(Sender: TObject);
+
+    procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private
   public
@@ -95,10 +97,8 @@ function TDmUsuario.InserirUsuario( login, senha: string; pessoaid: integer): TJ
 var
   novoUsuario: integer;
 begin
-
   result := nil;
   DmServidor.Conn.open;
-
   try
     DmServidor.Conn.StartTransaction;
     qry.SQL.clear;
@@ -122,12 +122,10 @@ begin
     Result.AddPair('usuarioid', TJSONNumber.Create(novoUsuario));
     Result.AddPair('pessoaid', qry.FieldByName('pessoaid').AsString);
     Result.AddPair('login', qry.FieldByName('login').AsString);
-
   except
     DmServidor.Conn.Rollback;
     raise;
   end;
-
 end;
 
 procedure TDmUsuario.EditarSenha(usuarioid: integer; senha: string);
