@@ -119,13 +119,16 @@ begin
     json.AddPair('obs', obs);
     json.AddPair('id_perfil', id_perfil.ToString);
 
-    Res := TRequest.New.BaseURL(URL_BASE)
+    Res := TRequest.New
+                       .BaseURL(URL_BASE)
                        .Resource('/perfil')
+                       .ResourceSuffix(id_perfil.ToString)
                        .TokenBearer(TSession.TOKEN)
                        .AddBody(json.ToJSON)
                        .Accept('application/json')
                        .Adapters(TDataSetSerializeAdapter.New(MemTable))
                        .Put;
+
     if Res.StatusCode <> 200 then
       raise Exception.Create(Res.content);
 
