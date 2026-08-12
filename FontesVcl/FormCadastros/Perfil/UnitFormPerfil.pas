@@ -15,11 +15,13 @@ type
     procedure FormShow(Sender: TObject);
     procedure btnInserirClick(Sender: TObject);
     procedure dbgDblClick(Sender: TObject);
+    procedure BtnExcluirClick(Sender: TObject);
   private
     procedure ListarTodos;
     procedure TerminateListartodos(Sender: TObject);
     procedure OpenCadPerfil(id_perfil: integer);
     procedure Editar;
+    procedure TerminateExcluir(Sender: TObject);
     { Private declarations }
   public
     { Public declarations }
@@ -33,6 +35,38 @@ implementation
 {$R *.dfm}
 
 uses UnitFormPerfilEdicao, Service.Perfil;
+
+procedure TFormPerfil.TerminateExcluir(Sender: TObject);
+begin
+  TLoading.Hide;
+
+  if (Sender is TThread) then
+    if Assigned(TThread(Sender).FatalException) then
+    begin
+      ShowMessage( Exception(TThread(Sender).FatalException).Message );
+      exit;
+    end;
+
+  ListarTodos;
+
+end;
+
+procedure TFormPerfil.BtnExcluirClick(Sender: TObject);
+begin
+  inherited;
+  if DmPerfil.MemTable.IsEmpty then exit;
+  if MessageDlg('Deseja realmente excluir este registro?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+  begin
+    TLoading.Show(FormPerfil);
+    TLoading.ExecuteThread(procedure
+                         begin
+                            DmPerfil.excluirPerfil(DmPerfil.MemTable.FieldByName('id_perfil').AsInteger);
+                         end,
+                         TerminateExcluir
+                         );
+   end;
+end;
+
 
 procedure TFormPerfil.btnInserirClick(Sender: TObject);
 begin

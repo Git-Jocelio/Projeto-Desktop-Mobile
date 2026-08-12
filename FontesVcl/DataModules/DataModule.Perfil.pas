@@ -23,6 +23,7 @@ type
     procedure Listarid(memTable: TFDMemTable; pessoaId: integer);
     procedure InserirPerfil(descricao, obs: string);
     procedure AlterarPerfil(descricao, obs: string; id_perfil:integer);
+    procedure excluirPerfil(id_perfil: integer);
   end;
 
 var
@@ -133,7 +134,20 @@ begin
   end;
 end;
 
+procedure TDmPerfil.excluirPerfil(id_perfil:integer);
+var
+  res : IResponse;
+begin
+  Res := TRequest.New.BaseURL(URL_BASE)
+              .Resource('/perfil')
+              .ResourceSuffix(id_perfil.ToString)
+              .Accept('application/json')
+              .TokenBearer(TSession.TOKEN)
+              .Delete;
 
+  if res.StatusCode <> 204 then
+    raise Exception.Create(res.content);
+end;
 
 
 

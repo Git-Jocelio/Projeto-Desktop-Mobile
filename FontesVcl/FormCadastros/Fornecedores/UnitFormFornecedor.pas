@@ -56,8 +56,6 @@ begin
    TerminateExcluir
    );
  end;
-
-
 end;
 
 procedure TFormFornecedor.TerminateExcluir(Sender: TObject);
