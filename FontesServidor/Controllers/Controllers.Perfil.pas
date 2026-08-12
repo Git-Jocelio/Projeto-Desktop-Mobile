@@ -38,7 +38,7 @@ begin
 
   THorse.AddCallback(HorseJWT( Controllers.JWT.SECRET,
                      THorseJWTConfig.New.SessionClass(TMyClaims)))
-        .Put('/perfil', EditarPerfil);
+        .Put('/perfil/:id_perfil', EditarPerfil);
 
   THorse.AddCallback(HorseJWT( Controllers.JWT.SECRET,
                      THorseJWTConfig.New.SessionClass(TMyClaims)))
@@ -79,8 +79,34 @@ begin
 end;
 
 procedure EditarPerfil(req: THorseRequest; res: THorseResponse; Next: TProc);
+var
+  body : TJSONObject;
+  id_perfil: integer;
+  descricao, obs : string;
 begin
+  try
 
+    if not TryStrToInt(req.Params['id_perfil'], id_perfil) then
+    begin
+      res.Send('ID inválido').Status(400);
+      Exit;
+    end;
+
+    body := req.Body<TJSONObject>;
+    if not Assigned(body) then
+    begin
+      res.Send('Corpo da requisição vazio ou inválido').Status(400);
+      Exit;
+    end;
+
+    descricao := body.GetValue<string>('descricao', '');
+    obs := body.GetValue<string>('obs', '');
+    service.Perfil.alterar(descricao, obs, id_perfil);
+    res.send('OK').Status(200);
+  except
+     on e : Exception do
+       raise Exception.Create('Erro ao alterar o Perfil');
+  end;
 end;
 
 procedure listarPerfilId(req: THorseRequest; res: THorseResponse; Next: TProc);
@@ -94,7 +120,8 @@ var
 begin
   try
     id_perfil := StrToIntDef(req.Params['id'], 0);
-    res.Send(Service.Perfil.excluir(id_perfil).ToString).Status(204);
+    Service.Perfil.excluir(id_perfil);
+    res.Send('OK').Status(204);
   except
      on e : Exception do
        raise Exception.Create('Erro ao excluir o Perfil');

@@ -210,6 +210,8 @@ begin
       res.Send('JSON inválido ou vazio').Status(400);
       Exit;
     end;
+
+
     usuarioid := Get_Usuario_Request(req);
     login := body.GetValue<string>('login', '');
     ativo := body.GetValue<string>('ativo', '');

@@ -9,7 +9,8 @@ uses
 
 function listarTodos: TJSONArray;
 function InserirPerfil(descricao, obs: string): TJSONObject;
-function excluir(id_perfil: integer): TJSONObject;
+procedure excluir(id_perfil: integer);
+procedure alterar(descricao, obs: string; id_perfil: integer);
 
 
 implementation
@@ -40,7 +41,7 @@ begin
   end;
 end;
 
-function excluir(id_perfil: integer): TJSONObject;
+procedure excluir(id_perfil: integer);
 var
   dm : TDmPerfil;
 begin
@@ -48,10 +49,27 @@ begin
     raise exception.Create('Código do perfil inválido');
   try
     dm := TDmPerfil.Create(nil);
-    result := dm.excluir(id_perfil);
+    dm.excluir(id_perfil);
   finally
     FreeAndNil(dm)
   end;
 end;
+
+procedure alterar(descricao, obs: string; id_perfil: integer);
+var
+  dm : TDmPerfil;
+begin
+  if id_perfil <=0 then
+    raise exception.Create('Código do perfil inválido');
+  if (descricao = '') or (obs = '') then
+    raise Exception.Create('Informe todos os campos: descrição e observação ');
+  try
+    dm := TDmPerfil.Create(nil);
+    dm.alterar(descricao, obs, id_Perfil);
+  finally
+    FreeAndNil(dm)
+  end;
+end;
+
 
 end.
