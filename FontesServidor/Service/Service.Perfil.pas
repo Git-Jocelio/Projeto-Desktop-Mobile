@@ -8,6 +8,7 @@ uses
   System.SysUtils;
 
 function listarTodos: TJSONArray;
+function InserirPerfil(descricao, obs: string): TJSONObject;
 
 
 implementation
@@ -23,6 +24,21 @@ begin
     FreeAndNil(dm);
   end;
 end;
+
+function InserirPerfil(descricao, obs: string): TJSONObject;
+var
+  dm : TDmPerfil;
+begin
+  if (descricao = '') or (obs = '') then
+    raise Exception.Create('Informe todos os campos: descrição e observação ');
+  try
+    dm := TDmPerfil.Create(nil);
+    result := dm.InserirPerfil(descricao, obs);
+  finally
+    FreeAndNil(dm);
+  end;
+end;
+
 
 
 end.

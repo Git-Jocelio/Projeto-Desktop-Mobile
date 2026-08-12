@@ -52,8 +52,26 @@ begin
 end;
 
 procedure InserirPerfil(req: THorseRequest; res: THorseResponse; Next: TProc);
+var
+  body : TJSONObject;
+  descricao, obs: string;
 begin
+  try
+    body := req.Body<TJSONObject>;
+    if not Assigned(body) then
+    begin
+      res.Send('JSON inválido ou vazio').Status(400);
+      exit;
+    end;
 
+    descricao := body.GetValue<string>('descricao','');
+    obs := body.GetValue<string>('obs','');
+
+    res.Send<TJSONObject>( Service.Perfil.InserirPerfil(descricao, obs) ).Status(201);
+  except
+    on E: Exception do
+      res.Send(E.Message).Status(500);
+  end;
 end;
 
 procedure EditarPerfil(req: THorseRequest; res: THorseResponse; Next: TProc);

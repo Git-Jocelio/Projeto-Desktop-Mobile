@@ -21,8 +21,8 @@ type
   public
     procedure ListarTodos;
     procedure Listarid(memTable: TFDMemTable; pessoaId: integer);
-    procedure InserirPerfil(descricao, observacao: string);
-    procedure AlterarPerfil(descricao, observacao: string; id_perfil:integer);
+    procedure InserirPerfil(descricao, obs: string);
+    procedure AlterarPerfil(descricao, obs: string; id_perfil:integer);
   end;
 
 var
@@ -78,7 +78,7 @@ begin
     raise Exception.Create(resp.content);
 end;
 
-procedure TDmPerfil.InserirPerfil(descricao, observacao: string);
+procedure TDmPerfil.InserirPerfil(descricao, obs: string);
 var
   Res : IResponse;
   json : TJSONObject;
@@ -88,7 +88,7 @@ begin
     json := TJSONObject.Create;
 
     json.AddPair('descricao', descricao);
-    json.AddPair('observacao', observacao);
+    json.AddPair('obs', obs);
 
     Res := TRequest.New.BaseURL(URL_BASE)
                        .Resource('/perfil')
@@ -105,7 +105,7 @@ begin
   end;
 end;
 
-procedure TDmPerfil.AlterarPerfil(descricao, observacao: string; id_perfil:integer);
+procedure TDmPerfil.AlterarPerfil(descricao, obs: string; id_perfil:integer);
 var
   Res : IResponse;
   json : TJSONObject;
@@ -115,7 +115,7 @@ begin
     json := TJSONObject.Create;
 
     json.AddPair('descricao', descricao);
-    json.AddPair('observacao', descricao);
+    json.AddPair('obs', obs);
     json.AddPair('id_perfil', id_perfil.ToString);
 
     Res := TRequest.New.BaseURL(URL_BASE)

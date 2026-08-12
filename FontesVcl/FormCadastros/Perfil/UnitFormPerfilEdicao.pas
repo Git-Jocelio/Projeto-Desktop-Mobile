@@ -49,7 +49,6 @@ begin
   // carrega os edits
   edtDescricao.Text := DmPerfil.MemTable.FieldByName('DESCRICAO').AsString;
   edtObs.Text := DmPerfil.MemTable.FieldByName('OBS').AsString;
-
 end;
 
 function TFormPerfilEdicao.Validar: boolean;
@@ -102,7 +101,7 @@ begin
           TServicePerfil.InserirPerfil(edtDescricao.Text, edtObs.Text)
         else if operacao = 'opAlterar' then
           TServicePerfil.AlterarPerfil(edtDescricao.Text, edtObs.Text,
-                                        DmPerfil.MemTable.FieldByName('id_perfil').AsInteger )
+                          DmPerfil.MemTable.FieldByName('id_perfil').AsInteger)
       end,
       TerminateSalvar
       );
@@ -121,7 +120,9 @@ begin
     TLoading.ExecuteThread(procedure
     begin
        sleep(500);
-       dmPerfil.ListarId(MemTable, TNavigation.ParamInt);
+       // não é necessário ir buscar no servidor, pois os dados já estão
+       // carregados no memTable
+       //dmPerfil.ListarId(MemTable, TNavigation.ParamInt);
     end,
     TerminatePerfilE
     );
