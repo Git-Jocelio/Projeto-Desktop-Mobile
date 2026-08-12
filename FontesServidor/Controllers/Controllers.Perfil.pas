@@ -15,12 +15,12 @@ procedure listarTodos(req: THorseRequest; res: THorseResponse; Next: TProc);
 procedure InserirPerfil(req: THorseRequest; res: THorseResponse; Next: TProc);
 procedure EditarPerfil(req: THorseRequest; res: THorseResponse; Next: TProc);
 procedure listarPerfilId(req: THorseRequest; res: THorseResponse; Next: TProc);
+procedure ExcluirPerfil(req: THorseRequest; res: THorseResponse; Next: TProc);
 
 implementation
 
 procedure RegistrarRotas;
 begin
-
   // rotas protejidas
   THorse.AddCallback(HorseJWT( Controllers.JWT.SECRET,
                      THorseJWTConfig.New.SessionClass(TMyClaims)))
@@ -39,6 +39,10 @@ begin
   THorse.AddCallback(HorseJWT( Controllers.JWT.SECRET,
                      THorseJWTConfig.New.SessionClass(TMyClaims)))
         .Put('/perfil', EditarPerfil);
+
+  THorse.AddCallback(HorseJWT( Controllers.JWT.SECRET,
+                     THorseJWTConfig.New.SessionClass(TMyClaims)))
+        .Delete('/perfil/:id', ExcluirPerfil);
 end;
 
 procedure listarTodos(req: THorseRequest; res: THorseResponse; Next: TProc);
@@ -81,7 +85,20 @@ end;
 
 procedure listarPerfilId(req: THorseRequest; res: THorseResponse; Next: TProc);
 begin
+//
+end;
 
+procedure ExcluirPerfil(req: THorseRequest; res: THorseResponse; Next: TProc);
+var
+  id_perfil: integer;
+begin
+  try
+    id_perfil := StrToIntDef(req.Params['id'], 0);
+    res.Send(Service.Perfil.excluir(id_perfil).ToString).Status(204);
+  except
+     on e : Exception do
+       raise Exception.Create('Erro ao excluir o Perfil');
+  end;
 end;
 
 end.

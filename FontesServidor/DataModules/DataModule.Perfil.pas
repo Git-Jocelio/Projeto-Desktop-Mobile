@@ -20,6 +20,7 @@ type
   public
     function listarTodos: TJSONArray;
     function InserirPerfil(descricao, obs: string): TJSONObject;
+    function excluir(id_perfil: integer): TJSONObject;
   end;
 
 var
@@ -102,5 +103,16 @@ begin
     result := qry.ToJSONArray;
 end;
 
+function TDmPerfil.excluir(id_perfil: integer): TJSONObject;
+begin
+  result := nil;
+  DmServidor.Conn.Open;
+  qry.SQL.Clear;
+  qry.SQL.add('delete from perfil where id_perfil =:id_perfil');
+  qry.ParamByName('id_perfil').AsInteger := id_perfil;
+  qry.ExecSQL;
+  result := TJSONObject.Create;
+  result.AddPair('id_perfil',id_perfil.ToString);
+end;
 
 end.

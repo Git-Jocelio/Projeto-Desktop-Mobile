@@ -9,6 +9,7 @@ uses
 
 function listarTodos: TJSONArray;
 function InserirPerfil(descricao, obs: string): TJSONObject;
+function excluir(id_perfil: integer): TJSONObject;
 
 
 implementation
@@ -39,6 +40,18 @@ begin
   end;
 end;
 
-
+function excluir(id_perfil: integer): TJSONObject;
+var
+  dm : TDmPerfil;
+begin
+  if id_perfil <=0 then
+    raise exception.Create('Código do perfil inválido');
+  try
+    dm := TDmPerfil.Create(nil);
+    result := dm.excluir(id_perfil);
+  finally
+    FreeAndNil(dm)
+  end;
+end;
 
 end.
