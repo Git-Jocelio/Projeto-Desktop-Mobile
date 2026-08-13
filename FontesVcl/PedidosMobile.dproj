@@ -239,6 +239,11 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Services\Service.Perfil.pas"/>
+        <DCCReference Include="DataModules\DataModule.Tela.pas">
+            <Form>Dm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

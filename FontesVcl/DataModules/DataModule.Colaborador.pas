@@ -9,21 +9,21 @@ uses
   DataSet.Serialize.Config,
   RestRequest4D,
   DataSet.Serialize.Adapter.RESTRequest4D,
-  System.JSON, Vcl.Config;
+  System.JSON,
+  Vcl.Config;
 
 type
   TDmColaborador = class(TDataModule)
     TabColaborador: TFDMemTable;
     procedure DataModuleCreate(Sender: TObject);
   private
-    { Private declarations }
+
   public
     procedure Listar(memTable: TFDMemTable; filtro: string);
     procedure ListarId(memTable: TFDMemTable; pessoaId: integer);
     procedure Inserir(nome, email, telefone:string; setorID: integer);
     procedure Editar(pessoaId: integer; nome, email, telefone: string; setorID: integer);
     procedure Excluir(pessoaId: integer);
-
   end;
 
 var
@@ -41,7 +41,6 @@ procedure TDmColaborador.DataModuleCreate(Sender: TObject);
 begin
   TDataSetSerializeConfig.GetInstance.CaseNameDefinition := cndLower;
   TDataSetSerializeConfig.GetInstance.Import.DecimalSeparator := '.';
-
 end;
 
 procedure TDmColaborador.Listar(memTable: TFDMemTable; filtro: string);

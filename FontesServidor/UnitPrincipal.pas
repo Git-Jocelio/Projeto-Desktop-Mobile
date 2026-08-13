@@ -21,6 +21,8 @@ type
     { Public declarations }
   end;
 
+  const PORT = 3000;
+
 var
   FormPrincipal: TFormPrincipal;
 
@@ -34,7 +36,7 @@ uses
 procedure TFormPrincipal.FormShow(Sender: TObject);
 begin
   ConfigurarServidor;
-  IniciarServidor(3000);
+  IniciarServidor(PORT);
 
   lblServidor.Caption := 'Servidor Compras respondendo na PORTA : ' + PortaServidor.ToString;
   Switch.State := tssOn;
@@ -47,7 +49,7 @@ begin
   if Switch.State = tssOn then
   begin
     ConfigurarServidor;
-    IniciarServidor(3000);
+    IniciarServidor(PORT);
     lblServidor.Caption := 'Servidor Horse respondendo na PORTA : ' + PortaServidor.ToString;
   end
   else

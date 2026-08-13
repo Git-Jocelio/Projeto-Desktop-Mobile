@@ -7,9 +7,9 @@ uses
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  DataSet.Serialize.Config, // necessário para tratar varaveis de consulta
-  DataSet.Serialize,        // necessário para por transformar um dataset em um array JSON
-  System.JSON,              // necessario para retorno do JSON
+  DataSet.Serialize.Config, // tratar varaveis de consulta
+  DataSet.Serialize,        // transformar um dataset em um array JSON
+  System.JSON,              //  retorno do JSON
   Env.Conf,  dialogs,
   DataModule.Servidor;
 
@@ -21,14 +21,13 @@ type
     procedure DataModuleDestroy(Sender: TObject);
   private
     procedure ConnBeforeConnect(Sender: TObject);
-    { Private declarations }
   public
+    function Listar(filtro: string): TJSONArray;
+    function ListarId(pessoaid: integer): TJSONObject;
+    function Inserir(nome, email, telefone: string; setorId: integer): TJSONObject;
     function Editar(pessoaId: integer; nome, email, telefone: string;
                                  setorId: integer): TJSONObject;
     function Excluir(pessoaid: integer): TJSONObject;
-    function Inserir(nome, email, telefone: string; setorId: integer): TJSONObject;
-    function Listar(filtro: string): TJSONArray;
-    function ListarId(pessoaid: integer): TJSONObject;
   end;
 
 var
@@ -57,7 +56,6 @@ begin
   {esta duas linha dizem ao serialize como tratar as variaveis nas consultas sql}
   TDataSetSerializeConfig.GetInstance.CaseNameDefinition := cndLower;
   TDataSetSerializeConfig.GetInstance.Import.DecimalSeparator := '.';
-
 end;
 
 

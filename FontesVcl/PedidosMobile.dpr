@@ -39,7 +39,8 @@ uses
   UnitFormPerfil in 'FormCadastros\Perfil\UnitFormPerfil.pas' {FormPerfil},
   DataModule.Perfil in 'DataModules\DataModule.Perfil.pas' {DmPerfil: TDataModule},
   UnitFormPerfilEdicao in 'FormCadastros\Perfil\UnitFormPerfilEdicao.pas' {FormPerfilEdicao},
-  Service.Perfil in 'Services\Service.Perfil.pas';
+  Service.Perfil in 'Services\Service.Perfil.pas',
+  DataModule.Tela in 'DataModules\DataModule.Tela.pas' {Dm: TDataModule};
 
 {$R *.res}
 

@@ -183,6 +183,11 @@
         </DCCReference>
         <DCCReference Include="Service\Service.Perfil.pas"/>
         <DCCReference Include="Controllers\Controllers.Perfil.pas"/>
+        <DCCReference Include="DataModules\DataModule.Tela.pas">
+            <Form>dmTela</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
