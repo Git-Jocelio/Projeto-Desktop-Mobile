@@ -27,9 +27,7 @@ var
 
 procedure ConfigurarServidor;
 begin
-
-  if ServidorConfigurado then
-    Exit;
+  if ServidorConfigurado then Exit;
 
   THorse.Use(Jhonson());
   THorse.Use(CORS);

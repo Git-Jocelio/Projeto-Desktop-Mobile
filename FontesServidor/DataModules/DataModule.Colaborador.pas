@@ -41,6 +41,7 @@ implementation
 
 procedure TDmColaborador.ConnBeforeConnect(Sender: TObject);
 begin
+  // configura o TFDConnection através de um arquivo .ini
   //TEnvConfig.ConfigurarConexao(DmServidor.Conn);
   TEnvConfig.ConfigurarConexao(TFDConnection(Sender));
 end;
@@ -91,7 +92,6 @@ end;
 
 function TDmColaborador.ListarId(pessoaid: integer): TJSONObject;
 begin
-
   result := nil;
 
   DmServidor.Conn.open;
@@ -108,7 +108,6 @@ begin
   qry.Open;
 
   Result := qry.ToJSONObject;
-
 end;
 
 function TDmColaborador.Inserir(nome, email, telefone: string; setorId: integer): TJSONObject;

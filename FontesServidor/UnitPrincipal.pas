@@ -3,8 +3,8 @@ unit UnitPrincipal;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Imaging.pngimage,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Imaging.pngimage,
   Vcl.WinXCtrls, Vcl.ExtCtrls;
 
 type
@@ -41,7 +41,6 @@ begin
   lblServidor.Caption := 'Servidor Compras respondendo na PORTA : ' + PortaServidor.ToString;
   Switch.State := tssOn;
   lblSwith.Caption := 'Servidor Ativo';
-
 end;
 
 procedure TFormPrincipal.SwitchClick(Sender: TObject);
