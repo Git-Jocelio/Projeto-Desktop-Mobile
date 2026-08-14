@@ -602,6 +602,11 @@ object FormPrincipal: TFormPrincipal
             item
               Caption = 'Permiss'#245'es'
               ImageIndex = 4
+            end
+            item
+              Caption = 'Telas(M'#243'dulos)'
+              ImageIndex = 6
+              OnClick = CategorysubMenuSegurancaCategories0Items3Click
             end>
           VisibleGutter = False
         end>

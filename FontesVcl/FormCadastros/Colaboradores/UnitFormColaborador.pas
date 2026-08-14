@@ -12,8 +12,8 @@ type
   TFormColaborador = class(TFormBaseGrade)
     procedure btnInserirClick(Sender: TObject);
     procedure btnFiltrarClick(Sender: TObject);
-    procedure dbgDblClick(Sender: TObject);
     procedure BtnExcluirClick(Sender: TObject);
+    procedure dbgDblClick(Sender: TObject);
 
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -138,7 +138,6 @@ end;
 procedure TFormColaborador.RefreshColaborador;
 begin
   TLoading.Show;
-
   try
     ds.DataSet := nil;
     DmColaborador.Listar(DmColaborador.TabColaborador, UpperCase(edtFiltrar.Text));
@@ -148,7 +147,6 @@ begin
   finally
      TerminateBusca;
   end;
-
 end;
 
 
