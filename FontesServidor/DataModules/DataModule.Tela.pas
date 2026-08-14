@@ -70,7 +70,8 @@ begin
   DmServidor.Conn.Connected := true;
 
   qry.SQL.Clear;
-  qry.SQL.Add('update tela set (nome_tela =:nome_tela, modulo =:modulo, ordem =:ordem, ativo =:ativo) ');
+  qry.SQL.Add('update tela ');
+  qry.SQL.Add('set nome_tela =:nome_tela, modulo =:modulo, ordem =:ordem, ativo =:ativo ');
   qry.SQL.Add('where id_tela =:id_tela ');
   qry.ParamByName('nome_tela').value := nome_tela;
   qry.ParamByName('modulo').value := modulo;
@@ -110,7 +111,7 @@ begin
   qry.SQL.Clear;
   qry.SQL.Add('insert into tela (nome_tela, modulo, ordem, ativo) ');
   qry.SQL.Add('values (:nome_tela, :modulo, :ordem, :ativo) ');
-  qry.SQL.Add('returning id_tela, modulo, ordem, ativo');
+  qry.SQL.Add('returning id_tela, nome_tela, modulo, ordem, ativo');
   qry.ParamByName('nome_tela').value := nome_tela;
   qry.ParamByName('modulo').value := modulo;
   qry.ParamByName('ordem').value := ordem;
@@ -140,7 +141,7 @@ begin
     qry.SQL.Add('and upper(nome_tela) like :nome_tela ');
     qry.ParamByName('nome_tela').value := '%' + uppercase(filtro) + '%';
   end;
-  qry.SQL.Add('order by nome_tela');
+  qry.SQL.Add('order by id_tela');
   qry.open;
 
   result := qry.toJSONArray;
@@ -153,7 +154,7 @@ begin
 
   qry.SQL.clear;
   qry.SQL.Add('select ');
-  qry.SQL.Add('  id_tela, descricao, modulo, ordem, ativo ');
+  qry.SQL.Add('  id_tela, nome_tela, modulo, ordem, ativo ');
   qry.SQL.Add('from tela ');
   qry.SQL.Add('where id_tela =:id_tela');
   qry.ParamByName('id_tela').AsInteger := id_tela;

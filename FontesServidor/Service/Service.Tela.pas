@@ -2,7 +2,8 @@ unit Service.Tela;
 
 interface
 
-uses DataModule.Tela, System.JSON, System.SysUtils;
+uses DataModule.Tela, System.JSON, System.SysUtils,
+ dialogs;
 
 type
    //Classe responsável por:
@@ -15,6 +16,7 @@ type
      constructor Create;
      destructor Destroy; override;
      function InserirEditar(id_tela, ordem: integer; nome_tela, modulo, ativo:string):TJSONObject;
+     function Excluir(id_tela: integer):TJSONObject;
    end;
 
 implementation
@@ -35,6 +37,7 @@ end;
 function TServiceTela.InserirEditar(id_tela, ordem: integer; nome_tela,
                                       modulo, ativo: string): TJSONObject;
 begin
+
   // validações...
   if id_tela < 0  then
     raise Exception.Create('ID inválido.');
@@ -53,9 +56,18 @@ begin
 
   // inserir ou alterar
   if id_tela > 0 then
-    result := dmTela.Editar(nome_tela, modulo, ativo, id_tela, ordem )
+    result := FdmTela.Editar(nome_tela, modulo, ativo, id_tela, ordem )
   else
-    result := dmTela.Inserir(nome_tela, modulo, ativo, ordem )
+    result := FdmTela.Inserir(nome_tela, modulo, ativo, ordem )
+end;
+
+function TServiceTela.Excluir(id_tela: integer): TJSONObject;
+begin
+  // validações...
+  if id_tela < 0  then
+    raise Exception.Create('ID inválido.');
+
+  result := FdmTela.Excluir(id_tela)
 end;
 
 end.

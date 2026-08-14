@@ -189,6 +189,7 @@
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Service\Service.Tela.pas"/>
+        <DCCReference Include="Controllers\Controllers.Tela.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

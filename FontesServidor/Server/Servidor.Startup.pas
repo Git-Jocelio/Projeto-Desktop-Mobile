@@ -20,7 +20,8 @@ uses
   Controllers.Produto,
   Controllers.Fornecedor,
   Controllers.Colaborador,
-  Controllers.Perfil;
+  Controllers.Perfil,
+  Controllers.Tela;
 
 var
   ServidorConfigurado: Boolean = false;
@@ -41,6 +42,7 @@ begin
   Controllers.Fornecedor.RegistrarRotas;
   Controllers.Colaborador.RegistrarRotas;
   Controllers.Perfil.RegistrarRotas;
+  Controllers.Tela.RegistrarRotas;
 
   ServidorConfigurado := True;
 end;

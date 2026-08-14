@@ -17,8 +17,6 @@ type
                                 nome, email, telefone: string; setorID: integer): TJSONObject;
   end;
 
-
-
 implementation
 
 constructor TServiceColaborador.Create;
