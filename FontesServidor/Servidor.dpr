@@ -26,7 +26,8 @@ uses
   DataModule.Perfil in 'DataModules\DataModule.Perfil.pas' {DmPerfil: TDataModule},
   Service.Perfil in 'Service\Service.Perfil.pas',
   Controllers.Perfil in 'Controllers\Controllers.Perfil.pas',
-  DataModule.Tela in 'DataModules\DataModule.Tela.pas' {dmTela: TDataModule};
+  DataModule.Tela in 'DataModules\DataModule.Tela.pas' {dmTela: TDataModule},
+  Service.Tela in 'Service\Service.Tela.pas';
 
 {$R *.res}
 
