@@ -9,19 +9,15 @@ inherited FormFornecedor: TFormFornecedor
   inherited PnlHeader: TPanel
     Width = 1208
     ExplicitWidth = 1208
-    inherited Label1: TLabel
-      Width = 149
-      Height = 45
-      Caption = 'Fornecedor'
-      ExplicitWidth = 149
-    end
     inherited PnlBotaoInserir: TPanel
       Left = 1096
       ExplicitLeft = 1096
+      ExplicitHeight = 123
     end
     inherited Panel2: TPanel
       Left = 852
       ExplicitLeft = 852
+      ExplicitHeight = 123
       inherited btnInserir: TSpeedButton
         OnClick = btnInserirClick
       end
@@ -29,12 +25,23 @@ inherited FormFornecedor: TFormFornecedor
     inherited Panel3: TPanel
       Left = 974
       ExplicitLeft = 974
+      ExplicitHeight = 123
     end
     inherited Panel1: TPanel
-      Left = 179
-      Width = 613
-      ExplicitLeft = 179
-      ExplicitWidth = 613
+      Width = 772
+      ExplicitLeft = 20
+      ExplicitWidth = 772
+      ExplicitHeight = 153
+      inherited Label2: TLabel
+        Width = 772
+        Caption = 'Cadastro dos fornecedores da empresa'
+        ExplicitWidth = 294
+      end
+      inherited Label3: TLabel
+        Width = 772
+        Caption = 'CADASTRAR FORNECEDOR'
+        ExplicitWidth = 260
+      end
       inherited Panel4: TPanel
         Left = 501
         ExplicitLeft = 501
@@ -44,14 +51,14 @@ inherited FormFornecedor: TFormFornecedor
       end
       inherited edtFiltrar: TEdit
         Width = 486
-        TextHint = 'Digite o nome do fornecedor'
+        TextHint = 'Pesquisar pelo nome do fornecedor'
         ExplicitWidth = 486
       end
     end
   end
   inherited dbg: TDBGrid
     Width = 1208
-    Height = 335
+    Height = 247
     DataSource = ds
     OnDblClick = dbgDblClick
     Columns = <

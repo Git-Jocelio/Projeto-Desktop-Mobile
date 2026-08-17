@@ -8,40 +8,30 @@ inherited FormUsuario: TFormUsuario
   inherited PnlHeader: TPanel
     Width = 1300
     ExplicitWidth = 1300
-    inherited Label1: TLabel
-      Width = 280
-      Height = 45
-      Caption = ' Usu'#225'rios do sistema '
-      ExplicitWidth = 280
-    end
-    inherited PnlBotaoInserir: TPanel
-      Left = 1188
-      ExplicitLeft = 1188
-    end
-    inherited Panel2: TPanel
-      Left = 944
-      ExplicitLeft = 944
-      inherited btnInserir: TSpeedButton
-        OnClick = btnInserirClick
-      end
-    end
-    inherited Panel3: TPanel
-      Left = 1066
-      ExplicitLeft = 1066
-    end
     inherited Panel1: TPanel
-      Left = 310
-      Width = 574
-      ExplicitLeft = 310
-      ExplicitWidth = 574
+      Width = 1230
+      ExplicitWidth = 864
+      inherited Label2: TLabel
+        Width = 1230
+        Caption = 'Cadastro de acesso ao sistema.'
+        ExplicitWidth = 233
+      end
+      inherited Label3: TLabel
+        Width = 1230
+        Caption = 'CRIAR USU'#193'RIO PARA O COLABORADOR'
+        ExplicitWidth = 395
+      end
       inherited Panel4: TPanel
         Left = 462
         ExplicitLeft = 462
       end
       inherited edtFiltrar: TEdit
         Width = 447
-        TextHint = 'Pesquisar por nome'
+        TextHint = 'Pesquisar pelo nome do colaborador'
         ExplicitWidth = 447
+      end
+      inherited pnlBotoes: TPanel
+        Left = 857
       end
     end
   end

@@ -3,21 +3,16 @@ inherited FormProduto: TFormProduto
   OnCreate = FormCreate
   TextHeight = 15
   inherited PnlHeader: TPanel
-    inherited Label1: TLabel
-      Width = 106
-      Caption = 'Produto'
-      ExplicitWidth = 106
-    end
-    inherited Panel2: TPanel
-      inherited btnInserir: TSpeedButton
-        OnClick = btnInserirClick
-      end
-    end
     inherited Panel1: TPanel
-      Left = 136
-      Width = 674
-      ExplicitLeft = 136
-      ExplicitWidth = 674
+      ExplicitWidth = 790
+      inherited Label2: TLabel
+        Caption = 'Cadastro dos produtos da empresa.'
+        ExplicitWidth = 267
+      end
+      inherited Label3: TLabel
+        Caption = 'CADASTRAR PRODUTO'
+        ExplicitWidth = 223
+      end
       inherited Panel4: TPanel
         Left = 562
         ExplicitLeft = 562
@@ -27,7 +22,7 @@ inherited FormProduto: TFormProduto
       end
       inherited edtFiltrar: TEdit
         Width = 547
-        TextHint = 'Digite a descri'#231#227'o do produto'
+        TextHint = 'Pesquisar pela descri'#231#227'o do produto'
         ExplicitWidth = 547
       end
     end

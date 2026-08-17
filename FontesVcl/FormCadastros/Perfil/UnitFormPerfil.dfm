@@ -4,30 +4,23 @@ inherited FormPerfil: TFormPerfil
   OnDestroy = FormDestroy
   TextHeight = 15
   inherited PnlHeader: TPanel
-    inherited Label1: TLabel
-      Width = 357
-      Height = 45
-      Caption = 'Perfis de acesso ao sistema'
-      ExplicitWidth = 357
-    end
-    inherited Panel2: TPanel
-      inherited btnInserir: TSpeedButton
-        OnClick = btnInserirClick
-      end
-    end
     inherited Panel1: TPanel
-      Left = 387
-      Width = 423
-      ExplicitLeft = 387
-      ExplicitWidth = 423
+      ExplicitWidth = 790
+      inherited Label2: TLabel
+        Caption = 'Perfis (pap'#233's) que agrupam permiss'#245'es.'
+      end
+      inherited Label3: TLabel
+        Caption = 'CADASTRAR PERFIS'
+        ExplicitWidth = 189
+      end
       inherited Panel4: TPanel
-        Left = 311
-        ExplicitLeft = 311
+        Left = 376
+        ExplicitLeft = 376
       end
       inherited edtFiltrar: TEdit
-        Width = 296
-        TextHint = 'Pesquisar perfil'
-        ExplicitWidth = 296
+        Width = 346
+        TextHint = 'Pesquisar pela descri'#231#227'o do perfil'
+        ExplicitWidth = 346
       end
     end
   end

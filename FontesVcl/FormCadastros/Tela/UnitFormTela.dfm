@@ -4,138 +4,52 @@ inherited FormTela: TFormTela
   OnDestroy = FormDestroy
   TextHeight = 15
   inherited PnlHeader: TPanel
-    inherited Label1: TLabel
-      Width = 358
-      Height = 45
-      Caption = 'Telas (M'#243'dulos do sistema)'
-      ExplicitWidth = 358
-    end
-    inherited Panel2: TPanel
-      inherited btnInserir: TSpeedButton
-        OnClick = btnInserirClick
+    inherited pnlPesquisa: TPanel
+      ExplicitWidth = 790
+      inherited Label2: TLabel
+        Caption = 'Telas/M'#243'dulos do sistema'
+        ExplicitWidth = 198
       end
-    end
-    inherited Panel1: TPanel
-      Left = 388
-      Width = 422
-      ExplicitLeft = 388
-      ExplicitWidth = 422
-      inherited Panel4: TPanel
-        Left = 310
-        ExplicitLeft = 310
-        inherited btnFiltrar: TSpeedButton
-          OnClick = btnFiltrarClick
+      inherited Label3: TLabel
+        Caption = 'CADASTRAR TELAS (RECURSOS)'
+        ExplicitWidth = 307
+      end
+      inherited pnlBarraPequisa: TPanel
+        ExplicitWidth = 1088
+        inherited edtFiltrar: TEdit
+          ExplicitLeft = 0
+          ExplicitTop = 15
+          ExplicitWidth = 1001
+          ExplicitHeight = 43
+        end
+        inherited Panel4: TPanel
+          ExplicitLeft = 1001
+          ExplicitHeight = 43
         end
       end
-      inherited edtFiltrar: TEdit
-        Width = 295
-        TextHint = 'Pesquisar pelo nome da tela'
-        ExplicitWidth = 295
+    end
+    inherited pnlBotoes: TPanel
+      ExplicitLeft = 1158
+      ExplicitTop = 80
+      ExplicitHeight = 70
+      inherited Panel2: TPanel
+        ExplicitLeft = 0
+        ExplicitHeight = 40
+      end
+      inherited Panel3: TPanel
+        ExplicitLeft = 122
+        ExplicitHeight = 40
+      end
+      inherited PnlBotaoInserir: TPanel
+        ExplicitTop = 0
+        ExplicitHeight = 55
       end
     end
   end
-  inherited dbg: TDBGrid
-    DataSource = ds
-    OnDblClick = dbgDblClick
-    Columns = <
-      item
-        Expanded = False
-        FieldName = 'ID_TELA'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        Title.Alignment = taCenter
-        Title.Caption = 'Cod. Tela'
-        Title.Font.Charset = ANSI_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -16
-        Title.Font.Name = 'Segoe UI Semibold'
-        Title.Font.Style = [fsBold]
-        Width = 91
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'NOME_TELA'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        Title.Alignment = taCenter
-        Title.Caption = 'Nome da Tela'
-        Title.Font.Charset = ANSI_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -16
-        Title.Font.Name = 'Segoe UI Semibold'
-        Title.Font.Style = [fsBold]
-        Width = 361
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'MODULO'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        Title.Alignment = taCenter
-        Title.Caption = 'M'#243'dulo'
-        Title.Font.Charset = ANSI_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -16
-        Title.Font.Name = 'Segoe UI Semibold'
-        Title.Font.Style = [fsBold]
-        Width = 292
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'ORDEM'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        Title.Alignment = taCenter
-        Title.Caption = 'Ordem'
-        Title.Font.Charset = ANSI_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -16
-        Title.Font.Name = 'Segoe UI Semibold'
-        Title.Font.Style = [fsBold]
-        Width = 104
-        Visible = True
-      end
-      item
-        Alignment = taCenter
-        Expanded = False
-        FieldName = 'ATIVO'
-        Title.Alignment = taCenter
-        Title.Caption = 'Ativo'
-        Title.Font.Charset = ANSI_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -16
-        Title.Font.Name = 'Segoe UI Semibold'
-        Title.Font.Style = [fsBold]
-        Width = 87
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'ACOES'
-        Title.Alignment = taCenter
-        Title.Caption = 'A'#231#245'es'
-        Title.Font.Charset = ANSI_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -16
-        Title.Font.Name = 'Segoe UI Semibold'
-        Title.Font.Style = [fsBold]
-        Width = 116
-        Visible = True
-      end>
+  inherited pnlGrig: TPanel
+    ExplicitLeft = 30
+    ExplicitTop = 153
+    ExplicitWidth = 1471
+    ExplicitHeight = 385
   end
 end

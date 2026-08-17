@@ -1,11 +1,12 @@
 object FormBaseGrade: TFormBaseGrade
+  AlignWithMargins = True
   Left = 0
   Top = 0
   Align = alClient
   BorderStyle = bsNone
   Caption = 'Form Base Grade'
-  ClientHeight = 512
-  ClientWidth = 1226
+  ClientHeight = 568
+  ClientWidth = 1531
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,168 +19,27 @@ object FormBaseGrade: TFormBaseGrade
   OnShow = FormShow
   TextHeight = 15
   object PnlHeader: TPanel
+    AlignWithMargins = True
     Left = 0
     Top = 0
-    Width = 1226
-    Height = 65
+    Width = 1531
+    Height = 153
+    Margins.Left = 0
+    Margins.Top = 0
+    Margins.Right = 0
+    Margins.Bottom = 0
     Align = alTop
     BevelOuter = bvNone
     Color = 16051947
     ParentBackground = False
     TabOrder = 0
-    object Label1: TLabel
+    ExplicitWidth = 1226
+    object pnlPesquisa: TPanel
       AlignWithMargins = True
-      Left = 10
-      Top = 10
-      Width = 89
-      Height = 45
-      Margins.Left = 10
-      Margins.Top = 10
-      Margins.Right = 0
-      Margins.Bottom = 10
-      Align = alLeft
-      Caption = 'Pessoa'
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -29
-      Font.Name = 'Segoe UI Semibold'
-      Font.Style = [fsBold]
-      ParentFont = False
-      ExplicitHeight = 40
-    end
-    object PnlBotaoInserir: TPanel
-      AlignWithMargins = True
-      Left = 1114
-      Top = 15
-      Width = 102
-      Height = 35
-      Margins.Left = 10
-      Margins.Top = 15
-      Margins.Right = 10
-      Margins.Bottom = 15
-      Align = alRight
-      BevelOuter = bvNone
-      Color = 6316270
-      ParentBackground = False
-      TabOrder = 0
-      Visible = False
-      object BtnExcluir: TSpeedButton
-        AlignWithMargins = True
-        Left = 0
-        Top = 0
-        Width = 102
-        Height = 35
-        Cursor = crHandPoint
-        Margins.Left = 0
-        Margins.Top = 0
-        Margins.Right = 0
-        Margins.Bottom = 0
-        Align = alClient
-        Caption = 'Excluir'
-        Flat = True
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
-        Font.Height = -15
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-        OnClick = BtnExcluirClick
-        ExplicitLeft = 176
-        ExplicitTop = 16
-        ExplicitWidth = 23
-        ExplicitHeight = 22
-      end
-    end
-    object Panel2: TPanel
-      AlignWithMargins = True
-      Left = 870
-      Top = 15
-      Width = 102
-      Height = 35
-      Margins.Left = 10
-      Margins.Top = 15
-      Margins.Right = 10
-      Margins.Bottom = 15
-      Align = alRight
-      BevelOuter = bvNone
-      Color = 16744448
-      ParentBackground = False
-      TabOrder = 1
-      object btnInserir: TSpeedButton
-        AlignWithMargins = True
-        Left = 0
-        Top = 0
-        Width = 102
-        Height = 35
-        Cursor = crHandPoint
-        Margins.Left = 0
-        Margins.Top = 0
-        Margins.Right = 0
-        Margins.Bottom = 0
-        Align = alClient
-        Caption = 'Inserir'
-        Flat = True
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
-        Font.Height = -15
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-        ExplicitLeft = 176
-        ExplicitTop = 16
-        ExplicitWidth = 23
-        ExplicitHeight = 22
-      end
-    end
-    object Panel3: TPanel
-      AlignWithMargins = True
-      Left = 992
-      Top = 15
-      Width = 102
-      Height = 35
-      Margins.Left = 10
-      Margins.Top = 15
-      Margins.Right = 10
-      Margins.Bottom = 15
-      Align = alRight
-      BevelOuter = bvNone
-      Color = 16744448
-      ParentBackground = False
-      TabOrder = 2
-      Visible = False
-      object BtnEditar: TSpeedButton
-        AlignWithMargins = True
-        Left = 0
-        Top = 0
-        Width = 102
-        Height = 35
-        Cursor = crHandPoint
-        Margins.Left = 0
-        Margins.Top = 0
-        Margins.Right = 0
-        Margins.Bottom = 0
-        Align = alClient
-        Caption = 'Editar'
-        Flat = True
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
-        Font.Height = -15
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-        OnClick = BtnEditarClick
-        ExplicitLeft = 176
-        ExplicitTop = 16
-        ExplicitWidth = 23
-        ExplicitHeight = 22
-      end
-    end
-    object Panel1: TPanel
-      AlignWithMargins = True
-      Left = 119
+      Left = 20
       Top = 0
-      Width = 691
-      Height = 65
+      Width = 1088
+      Height = 153
       Margins.Left = 20
       Margins.Top = 0
       Margins.Right = 50
@@ -188,35 +48,164 @@ object FormBaseGrade: TFormBaseGrade
       BevelOuter = bvNone
       Color = 16051947
       ParentBackground = False
-      TabOrder = 3
-      object Panel4: TPanel
+      TabOrder = 0
+      ExplicitWidth = 1229
+      object Label2: TLabel
+        Left = 0
+        Top = 30
+        Width = 1088
+        Height = 21
+        Align = alTop
+        Caption = 'Cadastro dos colaboradores da empresa'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clGray
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 303
+      end
+      object Label3: TLabel
+        Left = 0
+        Top = 0
+        Width = 1088
+        Height = 30
+        Align = alTop
+        Caption = 'CADASTRAR COLABORADOR'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = 16744448
+        Font.Height = -21
+        Font.Name = 'Segoe UI Semibold'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 279
+      end
+      object pnlBarraPequisa: TPanel
+        Left = 0
+        Top = 80
+        Width = 1088
+        Height = 73
+        Margins.Right = 0
+        Align = alBottom
+        BevelOuter = bvNone
+        TabOrder = 0
+        ExplicitWidth = 1085
+        object edtFiltrar: TEdit
+          AlignWithMargins = True
+          Left = 0
+          Top = 15
+          Width = 1001
+          Height = 43
+          Margins.Left = 0
+          Margins.Top = 15
+          Margins.Right = 0
+          Margins.Bottom = 15
+          Align = alClient
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BorderStyle = bsNone
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 0
+          TextHint = 'Digite o nome da pessoa'
+          OnKeyPress = edtFiltrarKeyPress
+          ExplicitLeft = -330
+          ExplicitTop = 2
+          ExplicitWidth = 931
+          ExplicitHeight = 39
+        end
+        object pnlBtnFiltar: TPanel
+          AlignWithMargins = True
+          Left = 1001
+          Top = 15
+          Width = 77
+          Height = 43
+          Margins.Left = 0
+          Margins.Top = 15
+          Margins.Right = 10
+          Margins.Bottom = 15
+          Align = alRight
+          BevelOuter = bvNone
+          Color = 16744448
+          ParentBackground = False
+          TabOrder = 1
+          ExplicitLeft = 522
+          ExplicitHeight = 11
+          object btnFiltrar: TSpeedButton
+            AlignWithMargins = True
+            Left = 0
+            Top = 0
+            Width = 77
+            Height = 43
+            Cursor = crHandPoint
+            Margins.Left = 0
+            Margins.Top = 0
+            Margins.Right = 0
+            Margins.Bottom = 0
+            Align = alClient
+            Caption = 'Filtrar'
+            Flat = True
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWhite
+            Font.Height = -15
+            Font.Name = 'Segoe UI'
+            Font.Style = []
+            ParentFont = False
+            ExplicitHeight = 12
+          end
+        end
+      end
+    end
+    object pnlBotoes: TPanel
+      AlignWithMargins = True
+      Left = 1158
+      Top = 80
+      Width = 370
+      Height = 70
+      Margins.Left = 0
+      Margins.Top = 80
+      Align = alRight
+      BevelOuter = bvNone
+      Color = 16051947
+      ParentBackground = False
+      TabOrder = 1
+      ExplicitLeft = 1088
+      ExplicitTop = 81
+      ExplicitHeight = 69
+      object pnlBtnInserir: TPanel
         AlignWithMargins = True
-        Left = 579
+        Left = 0
         Top = 15
         Width = 102
-        Height = 35
+        Height = 40
         Margins.Left = 0
         Margins.Top = 15
         Margins.Right = 10
         Margins.Bottom = 15
-        Align = alRight
+        Align = alLeft
         BevelOuter = bvNone
         Color = 16744448
         ParentBackground = False
         TabOrder = 0
-        object btnFiltrar: TSpeedButton
+        ExplicitLeft = 10
+        ExplicitHeight = 90
+        object btnInserir: TSpeedButton
           AlignWithMargins = True
           Left = 0
           Top = 0
           Width = 102
-          Height = 35
+          Height = 40
           Cursor = crHandPoint
           Margins.Left = 0
           Margins.Top = 0
           Margins.Right = 0
           Margins.Bottom = 0
           Align = alClient
-          Caption = 'Filtrar'
+          Caption = 'Inserir'
           Flat = True
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWhite
@@ -230,139 +219,223 @@ object FormBaseGrade: TFormBaseGrade
           ExplicitHeight = 22
         end
       end
-      object edtFiltrar: TEdit
+      object pnlBtnEditar: TPanel
         AlignWithMargins = True
-        Left = 15
+        Left = 122
         Top = 15
-        Width = 564
-        Height = 35
-        Margins.Left = 15
+        Width = 102
+        Height = 40
+        Margins.Left = 10
         Margins.Top = 15
-        Margins.Right = 0
+        Margins.Right = 10
         Margins.Bottom = 15
-        Align = alClient
-        BevelInner = bvNone
+        Align = alLeft
         BevelOuter = bvNone
-        BorderStyle = bsNone
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -21
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
+        Color = 16744448
+        ParentBackground = False
         TabOrder = 1
-        TextHint = 'Digite o nome da pessoa'
-        OnKeyPress = edtFiltrarKeyPress
+        Visible = False
+        ExplicitLeft = 132
+        ExplicitHeight = 90
+        object BtnEditar: TSpeedButton
+          AlignWithMargins = True
+          Left = 0
+          Top = 0
+          Width = 102
+          Height = 40
+          Cursor = crHandPoint
+          Margins.Left = 0
+          Margins.Top = 0
+          Margins.Right = 0
+          Margins.Bottom = 0
+          Align = alClient
+          Caption = 'Editar'
+          Flat = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+          OnClick = BtnEditarClick
+          ExplicitLeft = 176
+          ExplicitTop = 16
+          ExplicitWidth = 23
+          ExplicitHeight = 22
+        end
+      end
+      object PnlBotaoInserir: TPanel
+        AlignWithMargins = True
+        Left = 258
+        Top = 15
+        Width = 102
+        Height = 40
+        Margins.Left = 10
+        Margins.Top = 15
+        Margins.Right = 10
+        Margins.Bottom = 15
+        Align = alRight
+        BevelOuter = bvNone
+        Color = 6316270
+        ParentBackground = False
+        TabOrder = 2
+        Visible = False
+        ExplicitTop = 0
+        ExplicitHeight = 55
+        object pnlBtnExluir: TSpeedButton
+          AlignWithMargins = True
+          Left = 0
+          Top = 0
+          Width = 102
+          Height = 40
+          Cursor = crHandPoint
+          Margins.Left = 0
+          Margins.Top = 0
+          Margins.Right = 0
+          Margins.Bottom = 0
+          Align = alClient
+          Caption = 'Excluir'
+          Flat = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+          OnClick = pnlBtnExluirClick
+          ExplicitLeft = 176
+          ExplicitTop = 16
+          ExplicitWidth = 23
+          ExplicitHeight = 22
+        end
       end
     end
   end
-  object dbg: TDBGrid
-    Left = 0
-    Top = 65
-    Width = 1226
-    Height = 447
+  object pnlGrig: TPanel
+    AlignWithMargins = True
+    Left = 30
+    Top = 153
+    Width = 1471
+    Height = 385
+    Margins.Left = 30
+    Margins.Top = 0
+    Margins.Right = 30
+    Margins.Bottom = 30
     Align = alClient
-    BorderStyle = bsNone
-    Color = clWhite
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -19
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
-    ParentFont = False
+    BevelOuter = bvNone
     TabOrder = 1
-    TitleFont.Charset = DEFAULT_CHARSET
-    TitleFont.Color = clWindowText
-    TitleFont.Height = -12
-    TitleFont.Name = 'Segoe UI'
-    TitleFont.Style = []
-    OnDrawColumnCell = dbgDrawColumnCell
-    OnKeyDown = dbgKeyDown
-    OnMouseUp = dbgMouseUp
-    OnTitleClick = dbgTitleClick
-    Columns = <
-      item
-        Expanded = False
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        Title.Alignment = taCenter
-        Title.Caption = 'Cod. Pessoa'
-        Title.Font.Charset = ANSI_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -15
-        Title.Font.Name = 'Segoe UI Semibold'
-        Title.Font.Style = [fsBold]
-        Width = 91
-        Visible = True
-      end
-      item
-        Expanded = False
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        Title.Alignment = taCenter
-        Title.Caption = 'Nome'
-        Title.Font.Charset = ANSI_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -15
-        Title.Font.Name = 'Segoe UI Semibold'
-        Title.Font.Style = [fsBold]
-        Width = 361
-        Visible = True
-      end
-      item
-        Expanded = False
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        Title.Alignment = taCenter
-        Title.Caption = 'Telefone'
-        Title.Font.Charset = ANSI_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -15
-        Title.Font.Name = 'Segoe UI Semibold'
-        Title.Font.Style = [fsBold]
-        Width = 405
-        Visible = True
-      end
-      item
-        Expanded = False
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        Title.Alignment = taCenter
-        Title.Caption = 'Setor'
-        Title.Font.Charset = ANSI_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -15
-        Title.Font.Name = 'Segoe UI Semibold'
-        Title.Font.Style = [fsBold]
-        Width = 159
-        Visible = True
-      end
-      item
-        Alignment = taCenter
-        Expanded = False
-        Title.Alignment = taCenter
-        Title.Caption = 'A'#231#245'es'
-        Title.Font.Charset = ANSI_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -15
-        Title.Font.Name = 'Segoe UI Semibold'
-        Title.Font.Style = [fsBold]
-        Width = 130
-        Visible = True
-      end>
+    ExplicitLeft = 32
+    ExplicitTop = 192
+    ExplicitWidth = 185
+    ExplicitHeight = 233
+    object dbg: TDBGrid
+      Left = 0
+      Top = 0
+      Width = 1471
+      Height = 385
+      Align = alClient
+      BorderStyle = bsNone
+      Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -19
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+      ParentFont = False
+      TabOrder = 0
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -12
+      TitleFont.Name = 'Segoe UI'
+      TitleFont.Style = []
+      OnDrawColumnCell = dbgDrawColumnCell
+      OnKeyDown = dbgKeyDown
+      OnMouseUp = dbgMouseUp
+      OnTitleClick = dbgTitleClick
+      Columns = <
+        item
+          Expanded = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          Title.Alignment = taCenter
+          Title.Caption = 'Cod. Pessoa'
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -15
+          Title.Font.Name = 'Segoe UI Semibold'
+          Title.Font.Style = [fsBold]
+          Width = 91
+          Visible = True
+        end
+        item
+          Expanded = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          Title.Alignment = taCenter
+          Title.Caption = 'Nome'
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -15
+          Title.Font.Name = 'Segoe UI Semibold'
+          Title.Font.Style = [fsBold]
+          Width = 361
+          Visible = True
+        end
+        item
+          Expanded = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          Title.Alignment = taCenter
+          Title.Caption = 'Telefone'
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -15
+          Title.Font.Name = 'Segoe UI Semibold'
+          Title.Font.Style = [fsBold]
+          Width = 405
+          Visible = True
+        end
+        item
+          Expanded = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          Title.Alignment = taCenter
+          Title.Caption = 'Setor'
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -15
+          Title.Font.Name = 'Segoe UI Semibold'
+          Title.Font.Style = [fsBold]
+          Width = 159
+          Visible = True
+        end
+        item
+          Alignment = taCenter
+          Expanded = False
+          Title.Alignment = taCenter
+          Title.Caption = 'A'#231#245'es'
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -15
+          Title.Font.Name = 'Segoe UI Semibold'
+          Title.Font.Style = [fsBold]
+          Width = 130
+          Visible = True
+        end>
+    end
   end
   object ds: TDataSource
     AutoEdit = False

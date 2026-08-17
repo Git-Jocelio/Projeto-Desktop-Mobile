@@ -16,20 +16,24 @@ type
 type
   TFormBaseGrade = class(TForm)
     PnlHeader: TPanel;
-    Label1: TLabel;
-    PnlBotaoInserir: TPanel;
-    BtnExcluir: TSpeedButton;
-    Panel2: TPanel;
-    btnInserir: TSpeedButton;
-    Panel3: TPanel;
-    BtnEditar: TSpeedButton;
-    Panel1: TPanel;
-    Panel4: TPanel;
-    btnFiltrar: TSpeedButton;
-    edtFiltrar: TEdit;
-    dbg: TDBGrid;
+    pnlPesquisa: TPanel;
     ds: TDataSource;
     ImageList: TImageList;
+    Label2: TLabel;
+    Label3: TLabel;
+    pnlGrig: TPanel;
+    dbg: TDBGrid;
+    pnlBotoes: TPanel;
+    pnlBtnInserir: TPanel;
+    btnInserir: TSpeedButton;
+    pnlBtnEditar: TPanel;
+    BtnEditar: TSpeedButton;
+    PnlBotaoInserir: TPanel;
+    pnlBtnExluir: TSpeedButton;
+    pnlBarraPequisa: TPanel;
+    edtFiltrar: TEdit;
+    pnlBtnFiltar: TPanel;
+    btnFiltrar: TSpeedButton;
     procedure edtFiltrarKeyPress(Sender: TObject; var Key: Char);
     procedure dbgDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
@@ -39,7 +43,7 @@ type
 
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure dbgKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure BtnExcluirClick(Sender: TObject);
+    procedure pnlBtnExluirClick(Sender: TObject);
     procedure BtnEditarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -73,7 +77,7 @@ begin
   // EDITAR
 end;
 
-procedure TFormBaseGrade.BtnExcluirClick(Sender: TObject);
+procedure TFormBaseGrade.pnlBtnExluirClick(Sender: TObject);
 begin
   //EXCLUIR
 end;

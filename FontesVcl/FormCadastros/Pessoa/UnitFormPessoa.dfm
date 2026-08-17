@@ -3,19 +3,23 @@ inherited FormPessoa: TFormPessoa
   OnCreate = FormCreate
   TextHeight = 15
   inherited PnlHeader: TPanel
-    inherited Label1: TLabel
-      Height = 45
-    end
-    inherited Panel2: TPanel
-      inherited btnInserir: TSpeedButton
-        OnClick = btnInserirClick
-      end
-    end
     inherited Panel1: TPanel
+      ExplicitWidth = 790
+      inherited Label2: TLabel
+        Caption = 'Cadastro das pessoas da empresa.'
+        ExplicitWidth = 256
+      end
+      inherited Label3: TLabel
+        Caption = 'CADASTRAR PESSOA'
+        ExplicitWidth = 200
+      end
       inherited Panel4: TPanel
         inherited btnFiltrar: TSpeedButton
           OnClick = btnFiltrarClick
         end
+      end
+      inherited edtFiltrar: TEdit
+        TextHint = 'Pesquisar pelo nome da pessoa'
       end
     end
   end
