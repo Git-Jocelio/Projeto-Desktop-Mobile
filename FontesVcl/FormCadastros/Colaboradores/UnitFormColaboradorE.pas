@@ -69,10 +69,8 @@ begin
       exit;
     end;
 
-
    TNavigation.Close(self);
 end;
-
 
 procedure TFormColaboradorE.btnSalvarClick(Sender: TObject);
 begin

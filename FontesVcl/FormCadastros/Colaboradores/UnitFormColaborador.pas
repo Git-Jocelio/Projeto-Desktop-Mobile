@@ -39,7 +39,6 @@ uses DataModule.Colaborador, UnitFormColaboradorE;
 
 procedure TFormColaborador.TerminateExcluir(Sender: TObject);
 begin
-
   TLoading.Hide;
 
   if (Sender is TThread) then
@@ -50,7 +49,6 @@ begin
     end;
 
   RefreshColaborador;
-
 end;
 
 procedure TFormColaborador.BtnExcluirClick(Sender: TObject);
@@ -89,8 +87,8 @@ begin
   if DmColaborador.TabColaborador.IsEmpty then
     exit;
 
-    bookMark := dbg.DataSource.DataSet.GetBookmark;
-    OpenCadColaborador(DmColaborador.TabColaborador.FieldByName('pessoaId').AsInteger);
+  bookMark := dbg.DataSource.DataSet.GetBookmark;
+  OpenCadColaborador(DmColaborador.TabColaborador.FieldByName('pessoaId').AsInteger);
 end;
 
 procedure TFormColaborador.dbgDblClick(Sender: TObject);

@@ -10,6 +10,11 @@ inherited FormTela: TFormTela
       Caption = 'Telas (M'#243'dulos do sistema)'
       ExplicitWidth = 358
     end
+    inherited Panel2: TPanel
+      inherited btnInserir: TSpeedButton
+        OnClick = btnInserirClick
+      end
+    end
     inherited Panel1: TPanel
       Left = 388
       Width = 422
@@ -31,6 +36,7 @@ inherited FormTela: TFormTela
   end
   inherited dbg: TDBGrid
     DataSource = ds
+    OnDblClick = dbgDblClick
     Columns = <
       item
         Expanded = False
@@ -131,8 +137,5 @@ inherited FormTela: TFormTela
         Width = 116
         Visible = True
       end>
-  end
-  inherited ds: TDataSource
-    DataSet = Dm.memTable
   end
 end

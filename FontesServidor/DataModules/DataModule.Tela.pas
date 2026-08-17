@@ -81,7 +81,7 @@ begin
   qry.ExecSQL;
 
   Result := TJSONObject.Create;
-  Result.AddPair('pessoaId', TJSONNumber.Create(id_tela));
+  Result.AddPair('id_tela', TJSONNumber.Create(id_tela));
 
 end;
 
@@ -97,7 +97,7 @@ begin
   qry.ExecSQL;
 
   Result := TJSONObject.Create;
-  Result.AddPair('pessoaId', TJSONNumber.Create(id_tela));
+  Result.AddPair('id_tela', TJSONNumber.Create(id_tela));
 end;
 
 function TdmTela.Inserir(nome_tela, modulo, ativo: string;

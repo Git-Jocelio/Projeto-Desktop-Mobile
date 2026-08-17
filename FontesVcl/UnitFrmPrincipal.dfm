@@ -542,9 +542,9 @@ object FormPrincipal: TFormPrincipal
         AlignWithMargins = True
         Left = 17
         Top = 14
-        Width = 89
+        Width = 103
         Height = 25
-        Caption = 'Seguran'#231'a'
+        Caption = 'Operacional'
         Font.Charset = ANSI_CHARSET
         Font.Color = clWhite
         Font.Height = -19

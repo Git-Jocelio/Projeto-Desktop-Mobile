@@ -240,7 +240,7 @@
         </DCCReference>
         <DCCReference Include="Services\Service.Perfil.pas"/>
         <DCCReference Include="DataModules\DataModule.Tela.pas">
-            <Form>Dm</Form>
+            <Form>DmTela</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
@@ -248,6 +248,11 @@
             <Form>FormTela</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="FormCadastros\Tela\UnitFormTelaE.pas">
+            <Form>FormTelasE</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Services\Service.Tela.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

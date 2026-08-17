@@ -135,7 +135,7 @@ begin
   try
     try
       jsonRetorno := serviceTela.InserirEditar(id_tela, ordem, nome_tela, modulo, ativo);
-      res.Send<TJSONObject>(jsonRetorno).Status(201);
+      res.Send<TJSONObject>(jsonRetorno).Status(200);
     except
       on E: Exception do
         res.Send(E.Message).Status(500);

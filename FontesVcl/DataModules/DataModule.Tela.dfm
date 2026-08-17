@@ -1,4 +1,4 @@
-object Dm: TDm
+object DmTela: TDmTela
   OnCreate = DataModuleCreate
   Height = 414
   Width = 570
