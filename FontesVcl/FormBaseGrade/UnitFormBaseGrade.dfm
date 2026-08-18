@@ -33,7 +33,6 @@ object FormBaseGrade: TFormBaseGrade
     Color = 16051947
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1226
     object pnlPesquisa: TPanel
       AlignWithMargins = True
       Left = 20
@@ -49,7 +48,6 @@ object FormBaseGrade: TFormBaseGrade
       Color = 16051947
       ParentBackground = False
       TabOrder = 0
-      ExplicitWidth = 1229
       object Label2: TLabel
         Left = 0
         Top = 30
@@ -71,14 +69,14 @@ object FormBaseGrade: TFormBaseGrade
         Width = 1088
         Height = 30
         Align = alTop
-        Caption = 'CADASTRAR COLABORADOR'
+        Caption = 'CADASTRAR ...'
         Font.Charset = ANSI_CHARSET
         Font.Color = 16744448
         Font.Height = -21
         Font.Name = 'Segoe UI Semibold'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitWidth = 279
+        ExplicitWidth = 140
       end
       object pnlBarraPequisa: TPanel
         Left = 0
@@ -89,7 +87,6 @@ object FormBaseGrade: TFormBaseGrade
         Align = alBottom
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 1085
         object edtFiltrar: TEdit
           AlignWithMargins = True
           Left = 0
@@ -111,12 +108,8 @@ object FormBaseGrade: TFormBaseGrade
           Font.Style = []
           ParentFont = False
           TabOrder = 0
-          TextHint = 'Digite o nome da pessoa'
+          TextHint = 'Pesquisar pelo ...'
           OnKeyPress = edtFiltrarKeyPress
-          ExplicitLeft = -330
-          ExplicitTop = 2
-          ExplicitWidth = 931
-          ExplicitHeight = 39
         end
         object pnlBtnFiltar: TPanel
           AlignWithMargins = True
@@ -133,8 +126,6 @@ object FormBaseGrade: TFormBaseGrade
           Color = 16744448
           ParentBackground = False
           TabOrder = 1
-          ExplicitLeft = 522
-          ExplicitHeight = 11
           object btnFiltrar: TSpeedButton
             AlignWithMargins = True
             Left = 0
@@ -173,9 +164,6 @@ object FormBaseGrade: TFormBaseGrade
       Color = 16051947
       ParentBackground = False
       TabOrder = 1
-      ExplicitLeft = 1088
-      ExplicitTop = 81
-      ExplicitHeight = 69
       object pnlBtnInserir: TPanel
         AlignWithMargins = True
         Left = 0
@@ -191,8 +179,6 @@ object FormBaseGrade: TFormBaseGrade
         Color = 16744448
         ParentBackground = False
         TabOrder = 0
-        ExplicitLeft = 10
-        ExplicitHeight = 90
         object btnInserir: TSpeedButton
           AlignWithMargins = True
           Left = 0
@@ -235,8 +221,6 @@ object FormBaseGrade: TFormBaseGrade
         ParentBackground = False
         TabOrder = 1
         Visible = False
-        ExplicitLeft = 132
-        ExplicitHeight = 90
         object BtnEditar: TSpeedButton
           AlignWithMargins = True
           Left = 0
@@ -264,7 +248,7 @@ object FormBaseGrade: TFormBaseGrade
           ExplicitHeight = 22
         end
       end
-      object PnlBotaoInserir: TPanel
+      object PnlBotaoExcluir: TPanel
         AlignWithMargins = True
         Left = 258
         Top = 15
@@ -280,9 +264,7 @@ object FormBaseGrade: TFormBaseGrade
         ParentBackground = False
         TabOrder = 2
         Visible = False
-        ExplicitTop = 0
-        ExplicitHeight = 55
-        object pnlBtnExluir: TSpeedButton
+        object BtnExcluir: TSpeedButton
           AlignWithMargins = True
           Left = 0
           Top = 0
@@ -302,7 +284,7 @@ object FormBaseGrade: TFormBaseGrade
           Font.Name = 'Segoe UI'
           Font.Style = []
           ParentFont = False
-          OnClick = pnlBtnExluirClick
+          OnClick = BtnExcluirClick
           ExplicitLeft = 176
           ExplicitTop = 16
           ExplicitWidth = 23
@@ -324,10 +306,6 @@ object FormBaseGrade: TFormBaseGrade
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitLeft = 32
-    ExplicitTop = 192
-    ExplicitWidth = 185
-    ExplicitHeight = 233
     object dbg: TDBGrid
       Left = 0
       Top = 0

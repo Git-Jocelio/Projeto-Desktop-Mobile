@@ -28,8 +28,8 @@ type
     btnInserir: TSpeedButton;
     pnlBtnEditar: TPanel;
     BtnEditar: TSpeedButton;
-    PnlBotaoInserir: TPanel;
-    pnlBtnExluir: TSpeedButton;
+    PnlBotaoExcluir: TPanel;
+    BtnExcluir: TSpeedButton;
     pnlBarraPequisa: TPanel;
     edtFiltrar: TEdit;
     pnlBtnFiltar: TPanel;
@@ -43,7 +43,7 @@ type
 
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure dbgKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure pnlBtnExluirClick(Sender: TObject);
+    procedure BtnExcluirClick(Sender: TObject);
     procedure BtnEditarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -77,7 +77,7 @@ begin
   // EDITAR
 end;
 
-procedure TFormBaseGrade.pnlBtnExluirClick(Sender: TObject);
+procedure TFormBaseGrade.BtnExcluirClick(Sender: TObject);
 begin
   //EXCLUIR
 end;

@@ -91,7 +91,6 @@ procedure TFormPessoa.btnFiltrarClick(Sender: TObject);
 begin
   inherited;
   RefreshPessoa;
-
 end;
 
 procedure TFormPessoa.RefreshPessoa;
