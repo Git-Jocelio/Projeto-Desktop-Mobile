@@ -38,6 +38,11 @@ inherited FormUsuario: TFormUsuario
     inherited pnlBotoes: TPanel
       Left = 927
       ExplicitLeft = 927
+      inherited pnlBtnInserir: TPanel
+        inherited btnInserir: TSpeedButton
+          OnClick = btnInserirClick
+        end
+      end
     end
   end
   inherited pnlGrig: TPanel

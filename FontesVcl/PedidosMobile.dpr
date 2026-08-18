@@ -43,7 +43,10 @@ uses
   DataModule.Tela in 'DataModules\DataModule.Tela.pas' {DmTela: TDataModule},
   UnitFormTela in 'FormCadastros\Tela\UnitFormTela.pas' {FormTela},
   UnitFormTelaE in 'FormCadastros\Tela\UnitFormTelaE.pas' {FormTelasE},
-  Service.Tela in 'Services\Service.Tela.pas';
+  Service.Tela in 'Services\Service.Tela.pas',
+  UnitFormUsuarioPerfil in 'FormCadastros\UsuarioPerfil\UnitFormUsuarioPerfil.pas' {FormUsuarioPerfil},
+  UnitFormUsuarioPerfilE in 'FormCadastros\UsuarioPerfil\UnitFormUsuarioPerfilE.pas' {FormUsuarioPerfilE},
+  DataModule.UsuarioPerfil in 'DataModules\DataModule.UsuarioPerfil.pas' {DmUsuarioPerfil: TDataModule};
 
 {$R *.res}
 

@@ -253,6 +253,19 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Services\Service.Tela.pas"/>
+        <DCCReference Include="FormCadastros\UsuarioPerfil\UnitFormUsuarioPerfil.pas">
+            <Form>FormUsuarioPerfil</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="FormCadastros\UsuarioPerfil\UnitFormUsuarioPerfilE.pas">
+            <Form>FormUsuarioPerfilE</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="DataModules\DataModule.UsuarioPerfil.pas">
+            <Form>DmUsuarioPerfil</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

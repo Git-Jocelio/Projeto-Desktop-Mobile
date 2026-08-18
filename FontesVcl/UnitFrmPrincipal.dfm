@@ -600,13 +600,18 @@ object FormPrincipal: TFormPrincipal
               OnClick = CategorysubMenuSegurancaCategories0Items1Click
             end
             item
+              Caption = 'Telas(M'#243'dulos)'
+              ImageIndex = 6
+              OnClick = CategorysubMenuSegurancaCategories0Items3Click
+            end
+            item
               Caption = 'Permiss'#245'es'
               ImageIndex = 4
             end
             item
-              Caption = 'Telas(M'#243'dulos)'
-              ImageIndex = 6
-              OnClick = CategorysubMenuSegurancaCategories0Items3Click
+              Caption = 'Perfis do usu'#225'rio'
+              ImageIndex = 2
+              OnClick = CategorysubMenuSegurancaCategories0Items4Click
             end>
           VisibleGutter = False
         end>
@@ -622,8 +627,8 @@ object FormPrincipal: TFormPrincipal
     DrawingStyle = dsTransparent
     Height = 32
     Width = 32
-    Left = 632
-    Top = 240
+    Left = 1088
+    Top = 8
     Bitmap = {
       494C01010B001800040020002000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       00000000000036000000280000008000000060000000010020000000000000C0
