@@ -21,7 +21,8 @@ uses
   Controllers.Fornecedor,
   Controllers.Colaborador,
   Controllers.Perfil,
-  Controllers.Tela;
+  Controllers.Tela,
+  Controllers.UsuarioPerfil;
 
 var
   ServidorConfigurado: Boolean = false;
@@ -43,6 +44,7 @@ begin
   Controllers.Colaborador.RegistrarRotas;
   Controllers.Perfil.RegistrarRotas;
   Controllers.Tela.RegistrarRotas;
+  Controllers.UsuarioPerfil.RegistrarRotas;
 
   ServidorConfigurado := True;
 end;

@@ -28,7 +28,10 @@ uses
   Controllers.Perfil in 'Controllers\Controllers.Perfil.pas',
   DataModule.Tela in 'DataModules\DataModule.Tela.pas' {dmTela: TDataModule},
   Service.Tela in 'Service\Service.Tela.pas',
-  Controllers.Tela in 'Controllers\Controllers.Tela.pas';
+  Controllers.Tela in 'Controllers\Controllers.Tela.pas',
+  Controllers.UsuarioPerfil in 'Controllers\Controllers.UsuarioPerfil.pas',
+  Service.UsuarioPerfil in 'Service\Service.UsuarioPerfil.pas',
+  DataModule.UsuarioPerfil in 'DataModules\DataModule.UsuarioPerfil.pas' {DmUsuarioPerfil: TDataModule};
 
 {$R *.res}
 
@@ -36,5 +39,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TFormPrincipal, FormPrincipal);
+  Application.CreateForm(TDmUsuarioPerfil, DmUsuarioPerfil);
   Application.Run;
 end.

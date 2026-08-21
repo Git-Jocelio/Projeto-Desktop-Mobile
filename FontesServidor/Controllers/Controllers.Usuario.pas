@@ -5,7 +5,7 @@ interface
 
 uses Horse,
      DataModule.Pessoa, System.SysUtils,System.JSON,Service.Usuario,
-     Controllers.JWT, Horse.JWT;
+     dialogs, Controllers.JWT, Horse.JWT;
 
 procedure RegistrarRotas;
 procedure Login(req: THorseRequest; res: THorseResponse; Next: TProc);
@@ -54,6 +54,8 @@ var
   jsonRetorno: TJSONObject;
   login, senha: string;
 begin
+
+
   jsonRetorno := nil;
   try
     body := req.Body<TJSONObject>;

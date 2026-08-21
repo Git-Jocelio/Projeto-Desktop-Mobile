@@ -26,6 +26,9 @@ type
     Label5: TLabel;
     ds: TDataSource;
     MemTableAtivo: TStringField;
+    Label4: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure DBGrid1CellClick(Column: TColumn);

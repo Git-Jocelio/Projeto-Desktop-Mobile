@@ -102,8 +102,6 @@ end;
 
 function TdmTela.Inserir(nome_tela, modulo, ativo: string;
                           ordem: integer): TJSONObject;
-var
-  id_tela: integer;
 begin
   result := nil;
   DmServidor.Conn.Connected := true;
@@ -117,15 +115,9 @@ begin
   qry.ParamByName('ordem').value := ordem;
   qry.ParamByName('ativo').value := ativo;
   qry.active:= true;
-  id_tela := qry.FieldByName('id_tela').AsInteger;
 
-  Result := TJSONObject.Create;
-  Result.AddPair('id_tela', TJSONNumber.Create(id_tela));
-  Result.AddPair('nome_tela', TJSONString.Create(qry.FieldByName('nome_tela').AsString));
-  Result.AddPair('modulo', TJSONString.Create(qry.FieldByName('modulo').AsString));
-  Result.AddPair('ordem', TJSONNumber.Create(qry.FieldByName('ordem').AsInteger));
-  Result.AddPair('ativo', TJSONString.Create(qry.FieldByName('ativo').AsString));
-  qry.active:= false;
+  Result :=  qry.ToJSONObject;
+  qry.Active := False;
 end;
 
 function TdmTela.Listar(filtro: string): TJSONArray;

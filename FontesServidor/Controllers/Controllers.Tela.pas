@@ -91,8 +91,8 @@ begin
   ordem := body.GetValue<integer>('ordem',0);
   ativo := body.GetValue<string>('ativo', 'N');
 
-  serviceTela := TServiceTela.Create;
   try
+    serviceTela := TServiceTela.Create;
     try
       jsonRetorno := serviceTela.InserirEditar(0, ordem, nome_tela, modulo, ativo);
       res.Send<TJSONObject>(jsonRetorno).Status(201);

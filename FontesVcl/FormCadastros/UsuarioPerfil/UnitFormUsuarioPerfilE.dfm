@@ -1,6 +1,6 @@
 inherited FormUsuarioPerfilE: TFormUsuarioPerfilE
   Caption = 'FormUsuarioPerfilE'
-  ClientHeight = 493
+  ClientHeight = 537
   ClientWidth = 613
   Font.Charset = ANSI_CHARSET
   Font.Color = clGray
@@ -8,7 +8,7 @@ inherited FormUsuarioPerfilE: TFormUsuarioPerfilE
   Font.Name = 'Segoe UI Semibold'
   Font.Style = [fsBold]
   ExplicitWidth = 613
-  ExplicitHeight = 493
+  ExplicitHeight = 537
   TextHeight = 21
   inherited lblTitulo: TLabel
     Width = 250
@@ -82,19 +82,62 @@ inherited FormUsuarioPerfilE: TFormUsuarioPerfilE
     Font.Style = []
     ParentFont = False
   end
+  object Label4: TLabel [6]
+    Left = 20
+    Top = 200
+    Width = 332
+    Height = 17
+    Caption = 'os itens marcados ser'#227'o salvos na tabela usuario_perfil'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clRed
+    Font.Height = -13
+    Font.Name = 'Segoe UI Semibold'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label8: TLabel [7]
+    Left = 20
+    Top = 184
+    Width = 560
+    Height = 15
+    Caption = 
+      'ao abrir o form ser'#227'o apresentados todos o perfis disponiveis e ' +
+      'ser'#225' marcado  os vinculados com o usuario'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clRed
+    Font.Height = -12
+    Font.Name = 'Segoe UI Semibold'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label9: TLabel [8]
+    Left = 20
+    Top = 223
+    Width = 346
+    Height = 15
+    Caption = 
+      'ao clicar em salvar excluir os perfis do usuario e salvar novame' +
+      'nte'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clRed
+    Font.Height = -12
+    Font.Name = 'Segoe UI Semibold'
+    Font.Style = []
+    ParentFont = False
+  end
   inherited pnlBotaoSalvar: TPanel
     Left = 183
-    Top = 456
+    Top = 503
     ExplicitLeft = 183
-    ExplicitTop = 456
+    ExplicitTop = 503
   end
   inherited pnlBotaoCancelar: TPanel
     Left = 297
-    Top = 455
+    Top = 502
     ExplicitLeft = 297
-    ExplicitTop = 455
+    ExplicitTop = 502
   end
-  object edtLogin: TEdit [8]
+  object edtLogin: TEdit [11]
     Left = 29
     Top = 95
     Width = 251
@@ -108,7 +151,7 @@ inherited FormUsuarioPerfilE: TFormUsuarioPerfilE
     ParentFont = False
     TabOrder = 2
   end
-  object Edit1: TEdit [9]
+  object Edit1: TEdit [12]
     Left = 47
     Top = 149
     Width = 233
@@ -122,7 +165,7 @@ inherited FormUsuarioPerfilE: TFormUsuarioPerfilE
     ParentFont = False
     TabOrder = 3
   end
-  object Edit2: TEdit [10]
+  object Edit2: TEdit [13]
     Left = 365
     Top = 95
     Width = 233
@@ -136,7 +179,7 @@ inherited FormUsuarioPerfilE: TFormUsuarioPerfilE
     ParentFont = False
     TabOrder = 4
   end
-  object Edit3: TEdit [11]
+  object Edit3: TEdit [14]
     Left = 365
     Top = 149
     Width = 233
@@ -150,9 +193,9 @@ inherited FormUsuarioPerfilE: TFormUsuarioPerfilE
     ParentFont = False
     TabOrder = 5
   end
-  object Panel2: TPanel [12]
+  object Panel2: TPanel [15]
     Left = 8
-    Top = 194
+    Top = 241
     Width = 599
     Height = 255
     BevelOuter = bvNone
@@ -314,6 +357,6 @@ inherited FormUsuarioPerfilE: TFormUsuarioPerfilE
   object ds: TDataSource
     DataSet = MemTable
     Left = 240
-    Top = 384
+    Top = 431
   end
 end
