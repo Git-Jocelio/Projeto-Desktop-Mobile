@@ -181,6 +181,7 @@ var
   usuarioid: integer;
 begin
   try
+    // vai pegar o usuario que esta no token(o que fez o login)
     usuarioid := Get_Usuario_Request(req);
     res.Send<TJSONObject>( Service.Usuario.listarUsuarioId( usuarioid ));
   except

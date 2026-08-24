@@ -170,7 +170,7 @@ begin
 
   qry.SQL.clear;
   qry.SQL.Add('select ');
-  qry.SQL.Add('  p.pessoaid, p.nome, u.login, ativo, primeiro_acesso ');
+  qry.SQL.Add('  p.pessoaid, u.usuarioid, p.nome, u.login, u.ativo, u.primeiro_acesso ');
   qry.SQL.Add('from ');
   qry.SQL.Add('  pessoa p, usuario u ');
   qry.SQL.Add('where ');
@@ -181,6 +181,20 @@ begin
 
   if not qry.IsEmpty then
     result := qry.ToJSONObject;
+
+  // buscar perfis do usuário
+  qry.SQL.clear;
+  qry.SQL.Add('select ');
+  qry.SQL.Add('  up.id_usuario, up.id_perfil ');
+  qry.SQL.Add('from ');
+  qry.SQL.Add('  usuario_perfil up ');
+  qry.SQL.Add('where ');
+  qry.SQL.Add('  up.id_usuario = :usuarioid ');
+  qry.ParamByName('usuarioid').AsInteger := usuarioid;
+  qry.Open;
+
+  result.AddPair('Perfis', qry.ToJSONArray);
+
 
 end;
 

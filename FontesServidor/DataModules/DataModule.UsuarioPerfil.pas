@@ -22,8 +22,9 @@ type
     procedure ConnBeforeConnect(Sender: TObject);
   public
     function Listar(filtro: string): TJSONArray;
-    function ListarId(id: integer): TJSONObject;
-    function Inserir(id_usuario, id_perfil: integer): TJSONObject;
+    function ListarId(id: integer): TJSONArray;
+    //function Inserir(id_usuario, id_perfil: integer; perfis: TJSONArray): TJSONObject;
+    function Inserir(id_usuario: integer; perfis: TJSONArray): TJSONObject;
     function Editar(id, id_usuario, id_perfil: integer): TJSONObject;
     function Excluir(id: integer): TJSONObject;
   end;
@@ -62,18 +63,33 @@ begin
   FreeAndNil( dmServidor );
 end;
 
-function TDmUsuarioPerfil.Inserir(id_usuario, id_perfil: integer): TJSONObject;
+//function TDmUsuarioPerfil.Inserir(id_usuario, id_perfil: integer; perfis: TJSONArray): TJSONObject;
+function TDmUsuarioPerfil.Inserir(id_usuario: integer; perfis: TJSONArray): TJSONObject;
+var
+  i : integer;
 begin
    result := nil;
+
+   // não haverá edição de perfis por enquanto... então vou deletar todo o perfil e incluir novamente
+   qry.SQL.clear;
+   qry.SQL.Add('delete from usuario_perfil where id_usuario =:id_usuario ');
+   qry.ParamByName('id_usuario').AsInteger := id_usuario;
+   qry.ExecSQL;
+
+   // incluir novamente
    qry.SQL.clear;
    qry.SQL.Add('insert into usuario_perfil (id_usuario, id_perfil) values (:id_usuario, :id_perfil) ');
-   qry.SQL.Add('returning id, id_usuario, id_perfil ');
-   qry.ParamByName('id_usuario').AsInteger := id_usuario;
-   qry.ParamByName('id_perfil').AsInteger := id_perfil;
-   qry.Active := true;
 
-   Result := qry.ToJSONObject;
-   qry.Active := false;
+   // curso easy  pedido, aula 4, momento 14:21
+   for i := 0 to perfis.Size -1 do
+   begin
+     qry.ParamByName('id_usuario').AsInteger := id_usuario;
+     qry.ParamByName('id_perfil').AsInteger := perfis[i].GetValue<integer>('id_perfil',0);
+     qry.ExecSQL;
+   end;
+
+   Result := TJSONObject.Create;
+   Result.AddPair('id_usuario', id_usuario);
 end;
 
 function TDmUsuarioPerfil.Editar(id, id_usuario, id_perfil: integer): TJSONObject;
@@ -135,29 +151,28 @@ begin
   result := qry.toJSONArray;
 end;
 
-function TDmUsuarioPerfil.ListarId(id: integer): TJSONObject;
+function TDmUsuarioPerfil.ListarId(id: integer): TJSONArray;
 begin
+  // lista os perfis vinculados ao usuario
   result := nil;
   dmServidor.Conn.Open;
-
   qry.SQL.Clear;
-  qry.SQL.Add('select ');
-  qry.SQL.Add('    up.id, ');
-  qry.SQL.Add('    p.nome, ');
-  qry.SQL.Add('    up.id_perfil, ');
-  qry.SQL.Add('    pf.descricao ');
-  qry.SQL.Add('from usuario_perfil up ');
-  qry.SQL.Add('inner join usuario u ');
-  qry.SQL.Add('    on u.usuarioid = up.id_usuario ');
-  qry.SQL.Add('inner join pessoa p ');
-  qry.SQL.Add('    on p.pessoaid = u.pessoaid ');
-  qry.SQL.Add('inner join perfil pf ');
-  qry.SQL.Add('    on pf.id_perfil = up.id_perfil ');
-  qry.SQL.Add('where up.id = :id');
-  qry.ParamByName('id').value := id;
-  qry.open;
-
-  result := qry.toJSONObject;
+  qry.SQL.Add('SELECT ');
+  qry.SQL.Add('    P.ID_PERFIL, ');
+  qry.SQL.Add('    P.DESCRICAO, ');
+  qry.SQL.Add('    P.OBS, ');
+  qry.SQL.Add('    CASE ');
+  qry.SQL.Add('        WHEN UP.ID_PERFIL IS NOT NULL THEN ' + QuotedStr('S'));
+  qry.SQL.Add('        ELSE ' + QuotedStr('N'));
+  qry.SQL.Add('    END AS VINCULADO ');
+  qry.SQL.Add('FROM PERFIL P ');
+  qry.SQL.Add('LEFT JOIN USUARIO_PERFIL UP ');
+  qry.SQL.Add('    ON UP.ID_PERFIL = P.ID_PERFIL ');
+  qry.SQL.Add('    AND UP.ID_USUARIO = :ID_USUARIO ');
+  qry.SQL.Add('ORDER BY P.ID_PERFIL; ');
+  qry.ParamByName('ID_USUARIO').AsInteger := id;
+  qry.Active := true;
+  Result := qry.ToJSONArray;
 end;
 
 

@@ -72,16 +72,19 @@ procedure ListarId(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 var
   id: integer;
   ServiceUsuarioPerfil: TServiceUsuarioPerfil;
-  jsonRetorno: TJSONObject;
+  jsonRetorno: TJSONArray;
 begin
-  //lista um registro da tabela
-  id := Req.Params['id'].ToInteger;
+  //pega o id que vem na url da requisição
+  //id := Req.Params['id'].ToInteger;
+
+  // vai pegar o usuario que esta no token(o que fez o login)
+  id := Get_Usuario_Request(req);
 
   try
     ServiceUsuarioPerfil:= TServiceUsuarioPerfil.Create;
     try
       jsonRetorno := ServiceUsuarioPerfil.ListarId(id);
-      res.Send<TJSONObject>( jsonRetorno ).Status(200);
+      res.Send<TJSONArray>( jsonRetorno ).Status(200);
     except
       on E: Exception do
         res.Send(E.Message).Status(500);
@@ -94,11 +97,12 @@ end;
 procedure Inserir(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 var
   body, jsonRetorno: TJSONObject;
-  id_usuario, id_perfil: integer;
+  id_usuario: integer;
+  perfis: TJSONArray; // lista de perfis
+
   ServiceUsuarioPerfil: TServiceUsuarioPerfil;
 begin
   body := req.Body<TJSONObject>;
-
   if not Assigned(body) then
   begin
     res.Send('JSON inválido ou vazio').Status(400);
@@ -106,12 +110,12 @@ begin
   end;
 
   id_usuario := body.GetValue<integer>('id_usuario', 0);
-  id_perfil  := body.GetValue<integer>('id_perfil' , 0);
+  perfis := body.GetValue<TJSONArray>('perfis');
 
   try
     ServiceUsuarioPerfil:= TServiceUsuarioPerfil.Create;
     try
-      jsonRetorno := ServiceUsuarioPerfil.InserirUsuarioPerfil(0, id_usuario, id_perfil);
+      jsonRetorno := ServiceUsuarioPerfil.InserirUsuarioPerfil(0, id_usuario, perfis);
       res.Send<TJSONObject>( jsonRetorno ).Status(201);
     except
       on E: Exception do
@@ -125,7 +129,8 @@ end;
 procedure Editar(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 var
   body, jsonRetorno: TJSONObject;
-  id, id_usuario, id_perfil: integer;
+  id, id_usuario: integer;
+  perfis: TJSONArray; // lista de perfis
   ServiceUsuarioPerfil: TServiceUsuarioPerfil;
 begin
   try
@@ -145,8 +150,7 @@ begin
       end;
 
       id_usuario  := body.GetValue<integer>('id_usuario', 0);
-      id_perfil   := body.GetValue<integer>('id_perfil',  0);
-      jsonRetorno := ServiceUsuarioPerfil.InserirUsuarioPerfil(id, id_usuario, id_perfil);
+      jsonRetorno := ServiceUsuarioPerfil.InserirUsuarioPerfil(id, id_usuario, perfis);
       res.Send<TJSONObject>( jsonRetorno ).Status(200);
     except
       on E: Exception do

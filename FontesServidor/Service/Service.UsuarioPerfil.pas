@@ -18,10 +18,11 @@ type
    public
      constructor Create;
      destructor Destroy; override;
-     function InserirUsuarioPerfil(id, id_usuario, id_perfil: integer):TJSONObject;
+     //function InserirUsuarioPerfil(id, id_usuario, id_perfil: integer; perfis: TJSONArray):TJSONObject;
+     function InserirUsuarioPerfil(id, id_usuario: integer; perfis: TJSONArray):TJSONObject;
      function ExcluirUsuarioPerfil(id: integer):TJSONObject;
      function Listar(filtro:string):TJSONArray;
-    function ListarId(id: integer): TJSONObject;
+    function ListarId(usuarioid: integer): TJSONArray;
    end;
 
 implementation
@@ -39,16 +40,17 @@ begin
   inherited;
 end;
 
-function TServiceUsuarioPerfil.InserirUsuarioPerfil(id, id_usuario, id_perfil: integer): TJSONObject;
+//function TServiceUsuarioPerfil.InserirUsuarioPerfil(id, id_usuario, id_perfil: integer; perfis: TJSONArray): TJSONObject;
+function TServiceUsuarioPerfil.InserirUsuarioPerfil(id, id_usuario: integer; perfis: TJSONArray): TJSONObject;
 begin
 
-   if (id_usuario < 0) or (id_perfil < 0) then
+   if (id_usuario < 0) then
      raise Exception.Create('Id do usuário e/ou Id Perfil inválido.');
 
    if id > 0 then
-      Result := FDmUsuarioPerfil.Editar(id, id_usuario, id_perfil)
+     // Result := FDmUsuarioPerfil.Editar(id, id_usuario, perfis)
    else
-      Result := FDmUsuarioPerfil.Inserir(id_usuario, id_perfil)
+      Result := FDmUsuarioPerfil.Inserir(id_usuario, perfis)
 
 end;
 
@@ -57,9 +59,9 @@ begin
   result := FDmUsuarioPerfil.Listar(filtro);
 end;
 
-function TServiceUsuarioPerfil.ListarId(id: integer): TJSONObject;
+function TServiceUsuarioPerfil.ListarId(usuarioid: integer): TJSONArray;
 begin
-  result := FDmUsuarioPerfil.ListarId(id);
+  result := FDmUsuarioPerfil.ListarId(usuarioid);
 end;
 
 
