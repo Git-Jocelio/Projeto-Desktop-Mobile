@@ -75,10 +75,10 @@ var
   jsonRetorno: TJSONArray;
 begin
   //pega o id que vem na url da requisição
-  //id := Req.Params['id'].ToInteger;
+  id := Req.Params['id'].ToInteger;
 
   // vai pegar o usuario que esta no token(o que fez o login)
-  id := Get_Usuario_Request(req);
+  // id := Get_Usuario_Request(req);
 
   try
     ServiceUsuarioPerfil:= TServiceUsuarioPerfil.Create;

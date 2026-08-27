@@ -48,7 +48,7 @@ var
   resp: IResponse;
 begin
   try
-    // 1. criar um object JSON com os parametros recebdos da procedure
+    // 1. criar um object JSON com os parametros recebidos da procedure
     json := TJSONOBject.Create;
     json.AddPair('ordem',ordem);
     json.AddPair('nome_tela',nome_tela);

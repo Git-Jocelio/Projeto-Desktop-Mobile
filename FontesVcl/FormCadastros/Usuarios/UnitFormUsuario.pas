@@ -53,6 +53,13 @@ begin
   );
 end;
 
+procedure TFormUsuario.FormShow(Sender: TObject);
+begin
+  inherited;
+  ListarTodos;
+end;
+
+
 procedure TFormUsuario.btnInserirClick(Sender: TObject);
 begin
   inherited;
@@ -71,11 +78,6 @@ begin
   FreeAndNil(dmUsuario);
 end;
 
-procedure TFormUsuario.FormShow(Sender: TObject);
-begin
-  inherited;
-  ListarTodos;
-end;
 
 procedure TFormUsuario.OpenCadUsuario(pessoaId: integer);
 begin

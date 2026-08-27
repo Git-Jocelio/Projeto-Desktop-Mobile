@@ -63,7 +63,6 @@ begin
   FreeAndNil( dmServidor );
 end;
 
-//function TDmUsuarioPerfil.Inserir(id_usuario, id_perfil: integer; perfis: TJSONArray): TJSONObject;
 function TDmUsuarioPerfil.Inserir(id_usuario: integer; perfis: TJSONArray): TJSONObject;
 var
   i : integer;
@@ -153,25 +152,36 @@ end;
 
 function TDmUsuarioPerfil.ListarId(id: integer): TJSONArray;
 begin
-  // lista os perfis vinculados ao usuario
+
   result := nil;
   dmServidor.Conn.Open;
   qry.SQL.Clear;
-  qry.SQL.Add('SELECT ');
-  qry.SQL.Add('    P.ID_PERFIL, ');
-  qry.SQL.Add('    P.DESCRICAO, ');
-  qry.SQL.Add('    P.OBS, ');
-  qry.SQL.Add('    CASE ');
-  qry.SQL.Add('        WHEN UP.ID_PERFIL IS NOT NULL THEN ' + QuotedStr('S'));
-  qry.SQL.Add('        ELSE ' + QuotedStr('N'));
-  qry.SQL.Add('    END AS VINCULADO ');
-  qry.SQL.Add('FROM PERFIL P ');
-  qry.SQL.Add('LEFT JOIN USUARIO_PERFIL UP ');
-  qry.SQL.Add('    ON UP.ID_PERFIL = P.ID_PERFIL ');
-  qry.SQL.Add('    AND UP.ID_USUARIO = :ID_USUARIO ');
-  qry.SQL.Add('ORDER BY P.ID_PERFIL; ');
+  qry.SQL.text :=
+  'SELECT '+
+  '    U.USUARIOID, '+
+  '    U.LOGIN, '+
+  '    PESS.NOME, '+
+  '    PESS.EMAIL, '+
+  '    U.ATIVO, '+
+  '    P.ID_PERFIL, '+
+  '    P.DESCRICAO, '+
+  '    P.OBS, '+
+  '    CASE '+
+  '        WHEN UP.ID_PERFIL IS NOT NULL THEN ' + QuotedStr('S') +
+  '        ELSE ' + QuotedStr('N') +
+  '    END AS VINCULADO '+
+  'FROM USUARIO U '+
+  'INNER JOIN PESSOA PESS '+
+  '    ON PESS.PESSOAID = U.PESSOAID '+
+  'CROSS JOIN PERFIL P '+
+  'LEFT JOIN USUARIO_PERFIL UP '+
+  '    ON UP.ID_PERFIL = P.ID_PERFIL '+
+  '    AND UP.ID_USUARIO = U.USUARIOID '+
+  'WHERE U.USUARIOID = :ID_USUARIO '+
+  'ORDER BY P.ID_PERFIL; ';
   qry.ParamByName('ID_USUARIO').AsInteger := id;
   qry.Active := true;
+
   Result := qry.ToJSONArray;
 end;
 

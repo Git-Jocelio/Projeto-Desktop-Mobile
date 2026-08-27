@@ -8,32 +8,38 @@ uses
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, Vcl.Buttons, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Grids,
-  Vcl.DBGrids, FireDAC.Stan.StorageBin;
+  Vcl.DBGrids, FireDAC.Stan.StorageBin,
+  Vcl.Navigation, Vcl.Loading;
 
 type
   TFormUsuarioPerfilE = class(TFormBaseEdicao)
     Label1: TLabel;
     Label2: TLabel;
-    edtLogin: TEdit;
+    edtUsuarioId: TEdit;
     Label3: TLabel;
-    Edit1: TEdit;
+    edtNome: TEdit;
     Label7: TLabel;
-    Edit2: TEdit;
+    edtLogin: TEdit;
     Label6: TLabel;
-    Edit3: TEdit;
+    edtEmail: TEdit;
     Panel2: TPanel;
     DBGrid1: TDBGrid;
     Label5: TLabel;
     ds: TDataSource;
-    MemTableAtivo: TStringField;
     Label4: TLabel;
     Label8: TLabel;
     Label9: TLabel;
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure DBGrid1CellClick(Column: TColumn);
+    procedure FormShow(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure btnSalvarClick(Sender: TObject);
   private
-    { Private declarations }
+    procedure LerDados;
+    procedure TerminateLerDados(Sender: TObject);
+    procedure TerminateSalvar(Sender: TObject);
   public
     { Public declarations }
   end;
@@ -45,84 +51,144 @@ implementation
 
 {$R *.dfm}
 
-procedure TFormUsuarioPerfilE.DBGrid1CellClick(Column: TColumn);
-var
-  Field: TField;
-  DataSet: TDataSet;
+uses DataModule.UsuarioPerfil;
+
+procedure TFormUsuarioPerfilE.TerminateSalvar(Sender: TObject);
 begin
-  if not Assigned(Column) then
-    Exit;
+  TLoading.Hide;
 
-  Field := Column.Field;
+  if (Sender is TThread) then
+    if Assigned(TThread(Sender).FatalException) then
+    begin
+      ShowMessage( Exception(TThread(Sender).FatalException).Message );
+      exit;
+    end;
+  //TNavigation.Close(self);
+  TNavigation.CloseAndCancel(Self);
+end;
 
-  if not Assigned(Field) then
-    Exit;
 
-  if not SameText(Field.FieldName, 'ATIVO') then
-    Exit;
+procedure TFormUsuarioPerfilE.btnSalvarClick(Sender: TObject);
+begin
+  inherited;
+  TLoading.Show;
+  TLoading.ExecuteThread(
+  procedure
+  begin
+    sleep(500);
+    DmUsuarioPerfil.VincularPerfis(MemTable, strtoint(edtUsuarioId.Text));
+  end,
+  TerminateSalvar
+  );
 
-  DataSet := Field.DataSet;
+end;
 
-  if not Assigned(DataSet) then
-    Exit;
+procedure TFormUsuarioPerfilE.DBGrid1CellClick(Column: TColumn);
+begin
 
-  if not DataSet.Active then
-    Exit;
+  if SameText(Column.FieldName, 'VINCULADO') then
+  begin
+    MemTable.Edit;
 
-  if DataSet.State = dsBrowse then
-    DataSet.Edit;
+    if MemTable.FieldByName('VINCULADO').AsString = 'S' then
+      MemTable.FieldByName('VINCULADO').AsString := 'N'
+    else
+      MemTable.FieldByName('VINCULADO').AsString := 'S';
 
-  if SameText(Field.AsString, 'S') then
-    Field.AsString := 'N'
-  else
-    Field.AsString := 'S';
+    MemTable.Post;
 
-  DataSet.Post;
+    DBGrid1.Invalidate;
+  end;
+
 end;
 
 procedure TFormUsuarioPerfilE.DBGrid1DrawColumnCell(Sender: TObject;
   const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
 var
-  ChkRect: TRect;
+  R: TRect;
+  Flags: UINT;
 begin
-  // Verifica se existe um Field associado à coluna
-  if not Assigned(Column.Field) then
-  begin
-    DBGrid1.DefaultDrawColumnCell(Rect, DataCol, Column, State);
-    Exit;
-  end;
-
-  // Verifica se é a coluna ATIVO
-  if SameText(Column.Field.FieldName, 'ATIVO') then
+  if SameText(Column.FieldName, 'VINCULADO') then
   begin
     DBGrid1.Canvas.FillRect(Rect);
 
-    ChkRect := Rect;
-    InflateRect(ChkRect, -2, -2);
+    R.Left := Rect.Left + ((Rect.Width - 13) div 2);
+    R.Top := Rect.Top + ((Rect.Height - 13) div 2);
+    R.Right := R.Left + 13;
+    R.Bottom := R.Top + 13;
 
-    if SameText(Column.Field.AsString, 'S') then
-    begin
-      DrawFrameControl(
-        DBGrid1.Canvas.Handle,
-        ChkRect,
-        DFC_BUTTON,
-        DFCS_BUTTONCHECK or DFCS_CHECKED
-      );
-    end
-    else
-    begin
-      DrawFrameControl(
-        DBGrid1.Canvas.Handle,
-        ChkRect,
-        DFC_BUTTON,
-        DFCS_BUTTONCHECK
-      );
-    end;
+    Flags := DFCS_BUTTONCHECK;
+
+    if Column.Field.AsString = 'S' then
+      Flags := Flags or DFCS_CHECKED;
+
+    DrawFrameControl(
+      DBGrid1.Canvas.Handle,
+      R,
+      DFC_BUTTON,
+      Flags
+    );
   end
   else
-  begin
     DBGrid1.DefaultDrawColumnCell(Rect, DataCol, Column, State);
-  end;
+end;
+
+procedure TFormUsuarioPerfilE.FormCreate(Sender: TObject);
+begin
+  inherited;
+  DmUsuarioPerfil := TDmUsuarioPerfil.Create(self)
+end;
+
+procedure TFormUsuarioPerfilE.FormDestroy(Sender: TObject);
+begin
+  inherited;
+  DmUsuarioPerfil.Free;
+end;
+
+procedure TFormUsuarioPerfilE.FormShow(Sender: TObject);
+begin
+  inherited;
+  LerDados;
+end;
+
+procedure TFormUsuarioPerfilE.TerminateLerDados(Sender: TObject);
+begin
+  TLoading.Hide;
+
+  if (Sender is TThread) then
+    if Assigned(TThread(Sender).FatalException) then
+    begin
+      ShowMessage( Exception(TThread(Sender).FatalException).Message );
+      exit;
+    end;
+
+
+  ds.DataSet := MemTable;
+
+
+  if memtable.RecordCount > 0 then
+  begin
+    edtUsuarioId.Text := MemTable.FieldByName('usuarioid').asstring;
+    edtNome.Text := MemTable.FieldByName('nome').asstring;
+    edtLogin.Text := MemTable.FieldByName('login').asstring;
+    edtEmail.Text := MemTable.FieldByName('email').asstring;
+  end
+  else
+    ShowMessage('Erro ao carregar perfis do usuário.');
+end;
+
+
+procedure TFormUsuarioPerfilE.LerDados;
+begin
+  TLoading.Show;
+  ds.DataSet := nil;
+  TLoading.ExecuteThread(procedure
+  begin
+    sleep(500);
+    DmUsuarioPerfil.ListarId(MemTable, TNavigation.ParamInt);
+  end,
+  TerminateLerDados
+  );
 end;
 
 end.

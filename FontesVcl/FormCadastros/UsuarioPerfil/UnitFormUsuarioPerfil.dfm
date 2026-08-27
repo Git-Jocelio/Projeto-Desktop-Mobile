@@ -1,6 +1,8 @@
 inherited FormUsuarioPerfil: TFormUsuarioPerfil
   Caption = 'Vincular usu'#225'rio aos perfis'
   ClientWidth = 1245
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   ExplicitWidth = 1245
   TextHeight = 15
   inherited PnlHeader: TPanel
@@ -54,6 +56,7 @@ inherited FormUsuarioPerfil: TFormUsuarioPerfil
         item
           Alignment = taCenter
           Expanded = False
+          FieldName = 'USUARIOID'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -71,6 +74,7 @@ inherited FormUsuarioPerfil: TFormUsuarioPerfil
         end
         item
           Expanded = False
+          FieldName = 'NOME'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -104,6 +108,7 @@ inherited FormUsuarioPerfil: TFormUsuarioPerfil
         item
           Alignment = taCenter
           Expanded = False
+          FieldName = 'ACOES'
           Title.Alignment = taCenter
           Title.Caption = 'A'#231#245'es'
           Title.Font.Charset = ANSI_CHARSET
@@ -117,6 +122,7 @@ inherited FormUsuarioPerfil: TFormUsuarioPerfil
     end
   end
   inherited ds: TDataSource
+    DataSet = dmUsuario.MemTable
     Left = 494
     Top = 16
   end

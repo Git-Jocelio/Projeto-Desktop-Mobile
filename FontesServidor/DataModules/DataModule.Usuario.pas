@@ -160,7 +160,6 @@ begin
 end;
 
 
-
 function TDmUsuario.listarUsuarioId(usuarioid: integer): TJSONObject;
 begin
 
@@ -194,7 +193,6 @@ begin
   qry.Open;
 
   result.AddPair('Perfis', qry.ToJSONArray);
-
 
 end;
 
@@ -232,7 +230,7 @@ begin
   DmServidor.Conn.open;
   qry.SQL.clear;
   qry.SQL.Add('select ');
-  qry.SQL.Add('  p.pessoaid, p.nome, p.telefone, p.email, p.cpf, ');
+  qry.SQL.Add('  p.pessoaid, u.usuarioid, p.nome, p.telefone, p.email, p.cpf, ');
   qry.SQL.Add('  u.login, u.ativo ');
   qry.SQL.Add('from ');
   qry.SQL.Add('  pessoa p, usuario u');
