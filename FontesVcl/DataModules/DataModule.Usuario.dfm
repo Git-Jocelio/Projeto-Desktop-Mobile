@@ -10,8 +10,8 @@ object dmUsuario: TdmUsuario
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 288
-    Top = 112
+    Left = 264
+    Top = 48
   end
   object TabColaboradores: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
@@ -21,7 +21,7 @@ object dmUsuario: TdmUsuario
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 152
-    Top = 112
+    Left = 160
+    Top = 48
   end
 end

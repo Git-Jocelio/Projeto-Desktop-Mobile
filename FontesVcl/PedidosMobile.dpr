@@ -46,7 +46,9 @@ uses
   Service.Tela in 'Services\Service.Tela.pas',
   UnitFormUsuarioPerfil in 'FormCadastros\UsuarioPerfil\UnitFormUsuarioPerfil.pas' {FormUsuarioPerfil},
   UnitFormUsuarioPerfilE in 'FormCadastros\UsuarioPerfil\UnitFormUsuarioPerfilE.pas' {FormUsuarioPerfilE},
-  DataModule.UsuarioPerfil in 'DataModules\DataModule.UsuarioPerfil.pas' {DmUsuarioPerfil: TDataModule};
+  DataModule.UsuarioPerfil in 'DataModules\DataModule.UsuarioPerfil.pas' {DmUsuarioPerfil: TDataModule},
+  UnitFormPermissoesE in 'FormCadastros\Permissoes\UnitFormPermissoesE.pas' {FormPermissoesE},
+  DataModule.Permissoes in 'DataModules\DataModule.Permissoes.pas' {DmPermissoes: TDataModule};
 
 {$R *.res}
 
@@ -62,6 +64,7 @@ begin
     if frmLogin.ShowModal = mrOk then
     begin
       Application.CreateForm(TFormPrincipal, FormPrincipal);
+  Application.CreateForm(TDmPermissoes, DmPermissoes);
   Application.Run;
     end;
   finally

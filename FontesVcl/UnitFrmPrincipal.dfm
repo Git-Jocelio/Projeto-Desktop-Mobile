@@ -602,11 +602,12 @@ object FormPrincipal: TFormPrincipal
             item
               Caption = 'Telas(M'#243'dulos)'
               ImageIndex = 6
-              OnClick = CategorysubMenuSegurancaCategories0Items3Click
+              OnClick = CategorysubMenuSegurancaCategories0Items2Click
             end
             item
               Caption = 'Permiss'#245'es'
               ImageIndex = 4
+              OnClick = CategorysubMenuSegurancaCategories0Items3Click
             end
             item
               Caption = 'Perfis do usu'#225'rio'

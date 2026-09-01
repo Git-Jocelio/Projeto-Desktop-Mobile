@@ -8,7 +8,7 @@ uses
   Vcl.Imaging.pngimage, Vcl.Buttons, System.ImageList, Vcl.ImgList,
   Vcl.CategoryButtons, Vcl.StdCtrls,
   Vcl.Session,
-  Vcl.Navigation;
+  Vcl.Navigation, UnitFormPermissoesE;
 
 type
   TFormPrincipal = class(TForm)
@@ -55,8 +55,9 @@ type
 
     procedure FormShow(Sender: TObject);
     procedure CategorysubMenuSegurancaCategories0Items0Click(Sender: TObject);//cad usuario
-    procedure CategorysubMenuSegurancaCategories0Items1Click(Sender: TObject);
-    procedure CategorysubMenuSegurancaCategories0Items3Click(Sender: TObject);
+    procedure CategorysubMenuSegurancaCategories0Items1Click(Sender: TObject);//cad Perfis
+    procedure CategorysubMenuSegurancaCategories0Items2Click(Sender: TObject);//cad Telas
+    procedure CategorysubMenuSegurancaCategories0Items3Click(Sender: TObject);// cad Permissões
     procedure CategorysubMenuSegurancaCategories0Items4Click(Sender: TObject);//cad perfil
 
   private
@@ -174,11 +175,20 @@ begin
   TNavigation.Open(TFormPerfil, FormPerfil, PnlContainer);
 end;
 
-procedure TFormPrincipal.CategorysubMenuSegurancaCategories0Items3Click(
+procedure TFormPrincipal.CategorysubMenuSegurancaCategories0Items2Click(
   Sender: TObject);
 begin
   CloseSubMenu;
   TNavigation.Open(TFormTela, FormTela, PnlContainer);
+end;
+
+
+procedure TFormPrincipal.CategorysubMenuSegurancaCategories0Items3Click(
+  Sender: TObject);
+begin
+  // exibir num modal
+  CloseSubMenu;
+  TNavigation.OpenModal(TFormPermissoesE, FormPermissoesE);
 end;
 
 procedure TFormPrincipal.CategorysubMenuSegurancaCategories0Items4Click(

@@ -35,6 +35,8 @@ implementation
 
 {$R *.dfm}
 
+
+
 procedure TDmPerfil.DataModuleCreate(Sender: TObject);
 begin
   TDataSetSerializeConfig.GetInstance.CaseNameDefinition := cndLower;
