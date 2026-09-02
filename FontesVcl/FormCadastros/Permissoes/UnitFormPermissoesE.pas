@@ -8,17 +8,25 @@ uses
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, Vcl.Buttons, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Grids,
-  Vcl.DBGrids, Vcl.DBCtrls;
+  Vcl.DBGrids, Vcl.DBCtrls,
+  DataModule.Perfil,
+  DataModule.Permissoes;
 
 type
   TFormPermissoesE = class(TFormBaseEdicao)
     Label2: TLabel;
     Label4: TLabel;
     cbxPerfil: TDBLookupComboBox;
-    DBGrid1: TDBGrid;
     ds: TDataSource;
+    dsPermissoes: TDataSource;
+    DBGrid1: TDBGrid;
     procedure FormShow(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure cbxPerfilClick(Sender: TObject);
   private
+    FDmPerfil: TDmPerfil;
+    FDmPermissoes: TDmPermissoes;
+    procedure ListarPermissoes(perfilId: integer);
     { Private declarations }
   public
     procedure ListarPerfis;
@@ -31,47 +39,44 @@ implementation
 
 {$R *.dfm}
 
-uses DataModule.Perfil;
+
+
+
+procedure TFormPermissoesE.FormCreate(Sender: TObject);
+begin
+  inherited;
+
+  FDmPerfil := TDmPerfil.Create(Self);
+  FDmPermissoes := TDmPermissoes.Create(Self);
+
+  dsPermissoes.DataSet := FDmPermissoes.TabPermissoes;
+
+  DBGrid1.DataSource := dsPermissoes;
+end;
 
 procedure TFormPermissoesE.FormShow(Sender: TObject);
 begin
   inherited;
-  ListarPerfis;
+   ListarPerfis;
 end;
 
 procedure TFormPermissoesE.ListarPerfis;
-var
-  dmPerfil : TDmPerfil;
 begin
-   dmPerfil := TDmPerfil.Create(self);
-   DmPerfil.ListarTodos;
+   FDmPerfil.ListarTodos;
 end;
-(*
-sql para listar permissoes
 
-SELECT
-    T.ID_TELA,
-    T.NOME_TELA,
-    T.MODULO,
-    T.ORDEM,
+procedure TFormPermissoesE.ListarPermissoes(perfilId: integer);
 
-    COALESCE(P.VER, 'N') AS VER,
-    COALESCE(P.INSERIR, 'N') AS INSERIR,
-    COALESCE(P.EDITAR, 'N') AS EDITAR,
-    COALESCE(P.EXCLUIR, 'N') AS EXCLUIR,
-    COALESCE(P.IMPRIMIR, 'N') AS IMPRIMIR
+begin
+  FDmPermissoes.ListarPermissoes(perfilId);
+end;
 
-FROM TELA T
-
-LEFT JOIN PERMISSOES P
-    ON P.TELA_ID = T.ID_TELA
-    AND P.PERFIL_ID = :PERFIL_ID
-
-WHERE T.ATIVO = 'S'
-
-ORDER BY T.ORDEM;
-
-*)
+procedure TFormPermissoesE.cbxPerfilClick(Sender: TObject);
+begin
+  inherited;
+  if not VarIsNull(cbxPerfil.KeyValue) then
+    ListarPermissoes(cbxPerfil.KeyValue);
+end;
 
 
 end.

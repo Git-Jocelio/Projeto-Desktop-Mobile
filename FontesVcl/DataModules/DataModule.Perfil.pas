@@ -53,7 +53,7 @@ begin
     MemTable.emptydataset;
 
   MemTable.FieldDefs.Clear;
-
+  // lista todos os perfis
   Res := TRequest.New.BaseURL(URL_BASE)
                  .Resource('/perfil')
                  .TokenBearer(TSession.TOKEN)

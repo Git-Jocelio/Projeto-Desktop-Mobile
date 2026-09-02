@@ -4,7 +4,7 @@ object DmUsuarioPerfil: TDmUsuarioPerfil
   Height = 420
   Width = 549
   object qry: TFDQuery
-    Left = 216
-    Top = 112
+    Left = 152
+    Top = 104
   end
 end

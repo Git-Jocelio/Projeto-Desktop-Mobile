@@ -11,18 +11,18 @@ uses
 type
    //Classe responsável por:
    // -instanciar e destruir o datamodule
-   // -inserir/alterar na tabela "UsuarioPerfil"
+   // -inserir/alterar, excluir, listar todos e listar por id na tabela "UsuarioPerfil"
    TServiceUsuarioPerfil = class
    private
      FDmUsuarioPerfil : TDmUsuarioPerfil;
    public
      constructor Create;
      destructor Destroy; override;
-     //function InserirUsuarioPerfil(id, id_usuario, id_perfil: integer; perfis: TJSONArray):TJSONObject;
+
      function InserirUsuarioPerfil(id, id_usuario: integer; perfis: TJSONArray):TJSONObject;
      function ExcluirUsuarioPerfil(id: integer):TJSONObject;
      function Listar(filtro:string):TJSONArray;
-    function ListarId(usuarioid: integer): TJSONArray;
+     function ListarId(usuarioid: integer): TJSONArray;
    end;
 
 implementation
@@ -40,7 +40,6 @@ begin
   inherited;
 end;
 
-//function TServiceUsuarioPerfil.InserirUsuarioPerfil(id, id_usuario, id_perfil: integer; perfis: TJSONArray): TJSONObject;
 function TServiceUsuarioPerfil.InserirUsuarioPerfil(id, id_usuario: integer; perfis: TJSONArray): TJSONObject;
 begin
 
@@ -63,7 +62,6 @@ function TServiceUsuarioPerfil.ListarId(usuarioid: integer): TJSONArray;
 begin
   result := FDmUsuarioPerfil.ListarId(usuarioid);
 end;
-
 
 function TServiceUsuarioPerfil.ExcluirUsuarioPerfil(id: integer):TJSONObject;
 begin

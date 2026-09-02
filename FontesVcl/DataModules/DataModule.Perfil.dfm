@@ -10,7 +10,7 @@ object DmPerfil: TDmPerfil
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 160
-    Top = 88
+    Left = 104
+    Top = 32
   end
 end

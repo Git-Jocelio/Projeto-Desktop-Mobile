@@ -197,6 +197,13 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="DataModules\DataModule.Permissoes.pas">
+            <Form>DmPermissoes</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Service\Service.Permissoes.pas"/>
+        <DCCReference Include="Controllers\Controllers.Permissoes.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

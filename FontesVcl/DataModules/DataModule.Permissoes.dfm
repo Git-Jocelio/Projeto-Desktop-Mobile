@@ -2,7 +2,7 @@ object DmPermissoes: TDmPermissoes
   OnCreate = DataModuleCreate
   Height = 349
   Width = 591
-  object TabPerfis: TFDMemTable
+  object TabPermissoes: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]

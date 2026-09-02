@@ -3,16 +3,16 @@ unit DataModule.UsuarioPerfil;
 interface
 
 uses
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet, dialogs,
+  FireDAC.Comp.Client,
   System.SysUtils, System.Classes,
   DataModule.Servidor,
   Env.Conf,
   DataSet.Serialize.Config,
   DataSet.Serialize,
-  System.JSON, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
-  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet, dialogs,
-  FireDAC.Comp.Client;
-
+  System.JSON;
 type
   TDmUsuarioPerfil = class(TDataModule)
     qry: TFDQuery;
@@ -23,7 +23,6 @@ type
   public
     function Listar(filtro: string): TJSONArray;
     function ListarId(id: integer): TJSONArray;
-    //function Inserir(id_usuario, id_perfil: integer; perfis: TJSONArray): TJSONObject;
     function Inserir(id_usuario: integer; perfis: TJSONArray): TJSONObject;
     function Editar(id, id_usuario, id_perfil: integer): TJSONObject;
     function Excluir(id: integer): TJSONObject;
@@ -60,7 +59,7 @@ end;
 
 procedure TDmUsuarioPerfil.DataModuleDestroy(Sender: TObject);
 begin
-  FreeAndNil( dmServidor );
+  FreeAndNil( DmServidor );
 end;
 
 function TDmUsuarioPerfil.Inserir(id_usuario: integer; perfis: TJSONArray): TJSONObject;

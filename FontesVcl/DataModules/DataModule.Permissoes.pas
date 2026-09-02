@@ -10,17 +10,16 @@ uses
   RestRequest4D,                           // usado para receber respostas do servidor
   DataSet.Serialize.Adapter.RESTRequest4D, //json para dataset
   System.JSON,
-  Vcl.Config,
+  Vcl.Config,      dialogs,
   Vcl.Session;
 
 type
   TDmPermissoes = class(TDataModule)
-    TabPerfis: TFDMemTable;
+    TabPermissoes: TFDMemTable;
     procedure DataModuleCreate(Sender: TObject);
   private
-    procedure ListarTodos;
   public
-    { Public declarations }
+    procedure ListarPermissoes(perfilId: integer);
   end;
 
 var
@@ -38,23 +37,22 @@ begin
   TDataSetSerializeConfig.GetInstance.Import.DecimalSeparator := '.';
 end;
 
-procedure TDmPermissoes.ListarTodos;
+procedure TDmPermissoes.ListarPermissoes(perfilId: integer);
 var
   Res : IResponse;
 begin
   // limpar o dataset
-  if TabPerfis.Active then
-    TabPerfis.emptydataset;
+  if TabPermissoes.Active then
+    TabPermissoes.emptydataset;
 
-  TabPerfis.FieldDefs.Clear;
+  TabPermissoes.FieldDefs.Clear;
 
   Res := TRequest.New.BaseURL(URL_BASE)
-                 .Resource('/perfil')
+                 .Resource('/permissoes/' + perfilId.ToString)
                  .TokenBearer(TSession.TOKEN)
                  .Accept('application/json')
-                 .Adapters(TDataSetSerializeAdapter.New(TabPerfis))
+                 .Adapters(TDataSetSerializeAdapter.New(TabPermissoes))
                  .Get;
-
   if Res.StatusCode <> 200 then
     raise Exception.Create(Res.content);
 end;

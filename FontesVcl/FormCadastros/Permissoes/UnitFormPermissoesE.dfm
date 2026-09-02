@@ -2,6 +2,7 @@ inherited FormPermissoesE: TFormPermissoesE
   Caption = 'Permiss'#245'es por perfil'
   ClientHeight = 429
   ClientWidth = 727
+  OnCreate = FormCreate
   OnShow = FormShow
   ExplicitWidth = 727
   ExplicitHeight = 429
@@ -68,14 +69,14 @@ inherited FormPermissoesE: TFormPermissoesE
     ListSource = ds
     ParentFont = False
     TabOrder = 2
+    OnClick = cbxPerfilClick
   end
   object DBGrid1: TDBGrid [6]
     Left = 24
     Top = 120
     Width = 681
-    Height = 256
-    BorderStyle = bsNone
-    Color = clWhite
+    Height = 249
+    DataSource = dsPermissoes
     TabOrder = 3
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
@@ -85,96 +86,136 @@ inherited FormPermissoesE: TFormPermissoesE
     Columns = <
       item
         Expanded = False
-        FieldName = 'ID'
+        FieldName = 'id_tela'
         Title.Alignment = taCenter
+        Title.Caption = 'ID TELA'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
-        Title.Font.Height = -12
+        Title.Font.Height = -13
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
-        Visible = True
+        Visible = False
       end
       item
         Expanded = False
         FieldName = 'nome_tela'
-        Title.Alignment = taCenter
-        Title.Caption = 'Tela(Recurso)'
+        Title.Caption = 'Nome da Tela'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
-        Title.Font.Height = -12
+        Title.Font.Height = -13
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
-        Width = 227
+        Width = 294
         Visible = True
       end
       item
         Expanded = False
-        FieldName = 'ver'
+        FieldName = 'modulo'
         Title.Alignment = taCenter
-        Title.Caption = 'Visualizar'
+        Title.Caption = 'M'#243'dulo'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
-        Title.Font.Height = -12
+        Title.Font.Height = -13
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
-        Width = 75
+        Visible = False
+      end
+      item
+        Alignment = taCenter
+        Expanded = False
+        FieldName = 'ordem'
+        ImeName = 'Portuguese (Brazilian ABNT)'
+        Title.Alignment = taCenter
+        Title.Caption = 'Ordem'
+        Title.Font.Charset = ANSI_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -13
+        Title.Font.Name = 'Segoe UI Semibold'
+        Title.Font.Style = [fsBold]
+        Visible = False
+      end
+      item
+        Alignment = taCenter
+        Expanded = False
+        FieldName = 'ver'
+        Title.Alignment = taCenter
+        Title.Caption = 'Ver'
+        Title.Font.Charset = ANSI_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -13
+        Title.Font.Name = 'Segoe UI Semibold'
+        Title.Font.Style = [fsBold]
+        Width = 65
         Visible = True
       end
       item
+        Alignment = taCenter
         Expanded = False
         FieldName = 'inserir'
         Title.Alignment = taCenter
         Title.Caption = 'Inserir'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
-        Title.Font.Height = -12
+        Title.Font.Height = -13
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
+        Width = 65
         Visible = True
       end
       item
+        Alignment = taCenter
         Expanded = False
-        FieldName = 'alterar'
+        FieldName = 'editar'
         Title.Alignment = taCenter
-        Title.Caption = 'Alterar'
+        Title.Caption = 'Editar'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
-        Title.Font.Height = -12
+        Title.Font.Height = -13
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
+        Width = 65
         Visible = True
       end
       item
+        Alignment = taCenter
         Expanded = False
         FieldName = 'excluir'
         Title.Alignment = taCenter
         Title.Caption = 'Excluir'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
-        Title.Font.Height = -12
+        Title.Font.Height = -13
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
+        Width = 65
         Visible = True
       end
       item
+        Alignment = taCenter
         Expanded = False
         FieldName = 'imprimir'
         Title.Alignment = taCenter
         Title.Caption = 'Imprimir'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
-        Title.Font.Height = -12
+        Title.Font.Height = -13
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
+        Width = 65
         Visible = True
       end>
   end
   inherited MemTable: TFDMemTable
-    Left = 485
+    Left = 645
   end
   object ds: TDataSource
     DataSet = DmPerfil.MemTable
     Left = 424
     Top = 24
+  end
+  object dsPermissoes: TDataSource
+    DataSet = DmPermissoes.TabPermissoes
+    Left = 176
+    Top = 224
   end
 end

@@ -31,7 +31,10 @@ uses
   Controllers.Tela in 'Controllers\Controllers.Tela.pas',
   Controllers.UsuarioPerfil in 'Controllers\Controllers.UsuarioPerfil.pas',
   Service.UsuarioPerfil in 'Service\Service.UsuarioPerfil.pas',
-  DataModule.UsuarioPerfil in 'DataModules\DataModule.UsuarioPerfil.pas' {DmUsuarioPerfil: TDataModule};
+  DataModule.UsuarioPerfil in 'DataModules\DataModule.UsuarioPerfil.pas' {DmUsuarioPerfil: TDataModule},
+  DataModule.Permissoes in 'DataModules\DataModule.Permissoes.pas' {DmPermissoes: TDataModule},
+  Service.Permissoes in 'Service\Service.Permissoes.pas',
+  Controllers.Permissoes in 'Controllers\Controllers.Permissoes.pas';
 
 {$R *.res}
 
@@ -40,5 +43,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TFormPrincipal, FormPrincipal);
   Application.CreateForm(TDmUsuarioPerfil, DmUsuarioPerfil);
+  Application.CreateForm(TDmPermissoes, DmPermissoes);
   Application.Run;
 end.
