@@ -47,6 +47,9 @@ inherited FormPermissoesE: TFormPermissoesE
     Top = 388
     ExplicitLeft = 255
     ExplicitTop = 388
+    inherited btnSalvar: TSpeedButton
+      OnClick = btnSalvarClick
+    end
   end
   inherited pnlBotaoCancelar: TPanel
     Left = 369

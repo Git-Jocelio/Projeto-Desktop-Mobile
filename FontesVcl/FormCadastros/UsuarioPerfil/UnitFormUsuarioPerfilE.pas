@@ -70,7 +70,7 @@ end;
 
 procedure TFormUsuarioPerfilE.btnSalvarClick(Sender: TObject);
 begin
-  inherited;
+
   TLoading.Show;
   TLoading.ExecuteThread(
   procedure

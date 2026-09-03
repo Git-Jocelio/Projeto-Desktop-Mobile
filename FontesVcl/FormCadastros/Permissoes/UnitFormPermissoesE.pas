@@ -10,7 +10,9 @@ uses
   FireDAC.Comp.Client, Vcl.Buttons, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Grids,
   Vcl.DBGrids, Vcl.DBCtrls,
   DataModule.Perfil,
-  DataModule.Permissoes;
+  DataModule.Permissoes,
+  Vcl.Loading,
+  Vcl.Navigation;
 
 type
   TFormPermissoesE = class(TFormBaseEdicao)
@@ -26,11 +28,13 @@ type
     procedure DBGrid1CellClick(Column: TColumn);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure btnSalvarClick(Sender: TObject);
   private
     FDmPerfil: TDmPerfil;
     FDmPermissoes: TDmPermissoes;
     procedure ListarPermissoes(perfilId: integer);
     function EhPermissao(const Campo: string): Boolean;
+    procedure TerminateSalvar(Sender: TObject);
   public
     procedure ListarPerfis;
   end;
@@ -157,6 +161,38 @@ procedure TFormPermissoesE.ListarPermissoes(perfilId: integer);
 
 begin
   FDmPermissoes.ListarPermissoes(perfilId);
+end;
+
+procedure TFormPermissoesE.TerminateSalvar(Sender: TObject);
+begin
+  TLoading.Hide;
+
+  if (Sender is TThread) then
+    if Assigned(TThread(Sender).FatalException) then
+    begin
+      ShowMessage( Exception(TThread(Sender).FatalException).Message );
+      exit;
+    end;
+  //TNavigation.Close(self);
+  TNavigation.CloseAndCancel(Self);
+end;
+
+procedure TFormPermissoesE.btnSalvarClick(Sender: TObject);
+var
+  perfilId : integer;
+begin
+  perfilId := cbxPerfil.KeyValue;
+
+  TLoading.Show;
+  TLoading.ExecuteThread(
+  procedure
+  begin
+    sleep(500);
+    FDmPermissoes.InserirPermissoes(FDmPermissoes.TabPermissoes, perfilId);
+  end,
+  TerminateSalvar
+  );
+
 end;
 
 procedure TFormPermissoesE.cbxPerfilClick(Sender: TObject);
