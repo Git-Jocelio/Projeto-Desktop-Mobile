@@ -19,7 +19,7 @@ type
      constructor Create;
      destructor Destroy; override;
 
-     //function InserirPermissoes(id, id_usuario: integer; perfis: TJSONArray):TJSONObject;
+     function InserirPermissoes(perfilID: integer; permissoes: TJSONArray):TJSONObject;
      //function ExcluirPermissoes(id: integer):TJSONObject;
      //function Listar(filtro:string):TJSONArray;
      function ListarPermissoesId( perfilId: integer ): TJSONArray;
@@ -46,5 +46,15 @@ function TServicePermissoes.ListarPermissoesId( perfilId: integer): TJSONArray;
 begin
   result := FDmPermissoes.ListarPermissoesId( perfilId );
 end;
+
+function TServicePermissoes.InserirPermissoes(perfilID: integer; permissoes: TJSONArray): TJSONObject;
+begin
+   if (perfilID < 0) then
+     raise Exception.Create('Id Perfil inválido.');
+
+   Result := FDmPermissoes.InserirPermissoes(perfilID, permissoes)
+
+end;
+
 
 end.

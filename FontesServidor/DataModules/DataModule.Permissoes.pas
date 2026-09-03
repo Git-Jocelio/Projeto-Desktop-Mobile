@@ -1,3 +1,4 @@
+// dm modelo para mestre detalhe
 unit DataModule.Permissoes;
 
 interface
@@ -22,6 +23,7 @@ type
     procedure ConnBeforeConnect(Sender: TObject);
   public
     function ListarPermissoesId(perfilId: integer): TJSONArray;
+    function InserirPermissoes(perfilID: integer; permissoes: TJSONArray): TJSONObject;
   end;
 
 var
@@ -94,5 +96,60 @@ begin
   Result := qry.ToJSONArray;
 end;
 
+
+function TDmPermissoes.InserirPermissoes(perfilID: integer; permissoes: TJSONArray): TJSONObject;
+var
+  i : integer;
+begin
+
+   result := nil;
+   try
+
+     DmServidor.Conn.StartTransaction;
+
+     // não haverá edição de permissoes por enquanto... então vou deletar todo o perfil e incluir novamente
+     qry.close;
+     qry.SQL.clear;
+     qry.SQL.Add('delete from permissoes where perfil_id =:perfil_id ');
+     qry.ParamByName('perfil_id').AsInteger := perfilID;
+     qry.ExecSQL;
+
+     // incluir novamente
+     qry.close;
+     qry.SQL.clear;
+     qry.SQL.Add(
+                 'insert into permissoes ' +
+                 '(perfil_id, tela_id, ver, inserir, editar, excluir, imprimir) ');
+     qry.SQL.Add('values ' +
+                '(:perfil_id, :tela_id, :ver, :inserir, :editar, :excluir, :imprimir)');
+
+     // curso easy  pedido, aula 4, momento 14:21
+     for i := 0 to permissoes.Size -1 do
+     begin
+       qry.ParamByName('perfil_id').AsInteger := perfilID;
+       qry.ParamByName('tela_id').AsInteger   := permissoes[i].GetValue<integer>('tela_id',0);
+       qry.ParamByName('ver').AsString        := permissoes[i].GetValue<string>('ver','N');
+       qry.ParamByName('inserir').AsString    := permissoes[i].GetValue<string>('inserir','N');
+       qry.ParamByName('editar').AsString     := permissoes[i].GetValue<string>('editar','N');
+       qry.ParamByName('excluir').AsString    := permissoes[i].GetValue<string>('excluir','N');
+       qry.ParamByName('imprimir').AsString   := permissoes[i].GetValue<string>('imprimir','N');
+       qry.ExecSQL;
+     end;
+
+     DmServidor.Conn.Commit;
+
+     Result := TJSONObject.Create;
+     Result.AddPair('perfil_id', TJSONNumber.Create(perfilID));
+     Result.AddPair('mensagem', 'Permissões inseridas com sucesso');
+   except
+     on E: Exception do
+     begin
+       if DmServidor.Conn.InTransaction then
+         DmServidor.Conn.Rollback;
+       raise;
+     end;
+   end;
+
+end;
 
 end.
