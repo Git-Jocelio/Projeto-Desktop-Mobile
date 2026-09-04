@@ -2,9 +2,28 @@
 unit Vcl.Session;
 
 interface
+
 // curso poupei aula 5 min 15:00
 type
-  TSession = class
+
+// Pemissões de uma determinada tela
+TPermissaoTela = record
+  ID_TELA    : Integer;
+  TELA_PAI_ID: Integer;
+
+  NOME_TELA: string;
+  MODULO   : string;
+  ORDEM    : integer;
+
+  VER     : Boolean;
+  INSERIR : Boolean;
+  EDITAR  : Boolean;
+  EXCLUIR : Boolean;
+  IMPRIMIR: Boolean;
+end;
+
+//Sessão do usuário logado
+TSession = class
   private
     class var FID_USUARIO: integer;
     class var FNOME: string;
@@ -12,6 +31,12 @@ type
     class var FPRIMEIRO_ACESSO: string;
     class var FTOKEN: string;
     class var FSTATUS: string;
+
+    class var FPERMISSOES: array of TPermissaoTela;
+
+    //Procura uma tela dentro das permissões carregadas
+    class function IndicePermissao(ATelaID: Integer): Integer; static;
+
   public
     class property ID_USUARIO: integer read FID_USUARIO write FID_USUARIO;
     class property NOME: string read FNOME write FNOME;
@@ -19,8 +44,161 @@ type
     class property PRIMEIRO_ACESSO: string read FPRIMEIRO_ACESSO write FPRIMEIRO_ACESSO;
     class property TOKEN: string read FTOKEN write FTOKEN;
     class property STATUS: string read FSTATUS write FSTATUS;// status da empresa TESTE, BLOQUEADO, LIBERADO
-  end;
+
+    // Controle da sessão
+    class procedure Limpar; static;
+
+    //Permissões
+    class procedure AdicionarPermissao(AIDTela: integer; ATelaPaiID: integer;
+                                  ANomeTela: string; AModulo: string; AOrdem: Integer;
+                                  AVer: Boolean; AInserir: Boolean; AEditar: Boolean;
+                                  AExcluir: Boolean; AImprimir: Boolean); static;
+
+    class function QuantidadePermissoes: Integer; static;
+
+    class function ObterPermissao(AIndex: Integer): TPermissaoTela; static;
+
+    //==========================================================================
+    // Verificação das permissões
+    //==========================================================================
+    class function PodeVer(ATelaID: Integer): Boolean; static;
+    class function PodeInserir(ATelaID: Integer): Boolean; static;
+    class function PodeEditar(ATelaID: Integer): Boolean; static;
+    class function PodeExcluir(ATelaID: Integer): Boolean; static;
+    class function PodeImprimir(ATelaID: Integer): Boolean; static;
+
+    end;
+
 
 implementation
+
+//=================================================================
+//
+//Retorna;
+//  índice da permissão encontrada dentro da lista de permissoes
+//  -1 caso a tela não exista
+//=================================================================
+class function TSession.IndicePermissao(ATelaID: Integer): Integer;
+var
+ I: Integer;
+begin
+  Result := -1;
+
+  for I := 0 to Length(FPERMISSOES) -1 do
+  begin
+    if FPERMISSOES[I].ID_TELA = -1 then
+    begin
+       Result := I;
+       exit;
+    end;
+  end;
+
+end;
+
+class procedure TSession.Limpar;
+begin
+   FID_USUARIO := 0;
+   FNOME := '';
+   FEMAIL:= '';
+   FPRIMEIRO_ACESSO := '';
+   FTOKEN := '';
+   FSTATUS := '';
+
+   SetLength(FPERMISSOES,0);//?
+end;
+
+//===============================================================================
+// Adiciona uma permissão na Session
+//===============================================================================
+
+class procedure TSession.AdicionarPermissao(AIDTela: integer; ATelaPaiID: integer;
+                                  ANomeTela: string; AModulo: string; AOrdem: Integer;
+                                  AVer: Boolean; AInserir: Boolean; AEditar: Boolean;
+                                  AExcluir: Boolean; AImprimir: Boolean);
+var
+  I: Integer;
+begin
+  I:= Length(FPERMISSOES);
+
+  SetLength(FPERMISSOES, I + 1);
+
+  FPERMISSOES[I].ID_TELA := AIDTela;
+  FPERMISSOES[I].TELA_PAI_ID := AIDTela;
+
+ FPERMISSOES[I].NOME_TELA := ANomeTela;
+ FPERMISSOES[I].MODULO := AModulo;
+ FPERMISSOES[I].ORDEM := AOrdem;
+
+ FPERMISSOES[I].VER := AVer;
+ FPERMISSOES[I].INSERIR := AInserir;
+ FPERMISSOES[I].EDITAR := AEditar;
+ FPERMISSOES[I].EXCLUIR := AExcluir;
+ FPERMISSOES[I].IMPRIMIR := AImprimir;
+
+
+end;
+
+class function TSession.QuantidadePermissoes: Integer;
+begin
+  Result := Length(FPERMISSOES);
+end;
+
+class function TSession.ObterPermissao(AIndex: Integer): TPermissaoTela;
+begin
+  Result := FPERMISSOES[AIndex];
+end;
+
+class function TSession.PodeVer(ATelaID: Integer): Boolean;
+var
+ I: Integer;
+begin
+  I := IndicePermissao(ATelaID);
+
+  if I = -1 then Exit(False);  // retorne false e encerre a funcao!
+  Result := FPERMISSOES[I].VER;
+end;
+
+class function TSession.PodeInserir(ATelaID: Integer): Boolean;
+var
+ I: Integer;
+begin
+  I := IndicePermissao(ATelaID);
+
+  if I = -1 then Exit(False);  // retorne false e encerre a funcao!
+  Result := FPERMISSOES[I].INSERIR;
+end;
+
+
+class function TSession.PodeEditar(ATelaID: Integer): Boolean;
+var
+ I: Integer;
+begin
+  I := IndicePermissao(ATelaID);
+
+  if I = -1 then Exit(False);  // retorne false e encerre a funcao!
+  Result := FPERMISSOES[I].EDITAR;
+end;
+
+class function TSession.PodeExcluir(ATelaID: Integer): Boolean;
+var
+ I: Integer;
+begin
+  I := IndicePermissao(ATelaID);
+
+  if I = -1 then Exit(False);  // retorne false e encerre a funcao!
+  Result := FPERMISSOES[I].EXCLUIR;
+end;
+
+class function TSession.PodeImprimir(ATelaID: Integer): Boolean;
+var
+ I: Integer;
+begin
+  I := IndicePermissao(ATelaID);
+
+  if I = -1 then Exit(False);  // retorne false e encerre a funcao!
+  Result := FPERMISSOES[I].IMPRIMIR;
+end;
+
+
 
 end.
