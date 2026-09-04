@@ -3,6 +3,9 @@ unit Vcl.Session;
 
 interface
 
+uses
+  System.JSON;
+
 // curso poupei aula 5 min 15:00
 type
 
@@ -53,6 +56,8 @@ TSession = class
                                   ANomeTela: string; AModulo: string; AOrdem: Integer;
                                   AVer: Boolean; AInserir: Boolean; AEditar: Boolean;
                                   AExcluir: Boolean; AImprimir: Boolean); static;
+
+    class procedure CarregarPermissoes(AJson: TJSONArray); static;
 
     class function QuantidadePermissoes: Integer; static;
 
@@ -199,6 +204,34 @@ begin
   Result := FPERMISSOES[I].IMPRIMIR;
 end;
 
+class procedure TSession.CarregarPermissoes(AJson: TJSONArray);
+var
+  I: Integer;
+  Obj: TJSONObject;
+begin
+  SetLength(FPERMISSOES, 0);
 
+  if not Assigned(AJson) then
+    Exit;
+
+  for I := 0 to AJson.Count - 1 do
+  begin
+    Obj := AJson.Items[I] as TJSONObject;
+
+    AdicionarPermissao(
+      Obj.GetValue<Integer>('id_tela', 0),
+      Obj.GetValue<Integer>('tela_pai_id', 0),
+      Obj.GetValue<string>('nome_tela', ''),
+      Obj.GetValue<string>('modulo', ''),
+      Obj.GetValue<Integer>('ordem', 0),
+
+      Obj.GetValue<string>('ver', 'N') = 'S',
+      Obj.GetValue<string>('inserir', 'N') = 'S',
+      Obj.GetValue<string>('editar', 'N') = 'S',
+      Obj.GetValue<string>('excluir', 'N') = 'S',
+      Obj.GetValue<string>('imprimir', 'N') = 'S'
+    );
+  end;
+end;
 
 end.

@@ -23,6 +23,7 @@ type
      //function ExcluirPermissoes(id: integer):TJSONObject;
      //function Listar(filtro:string):TJSONArray;
      function ListarPermissoesId( perfilId: integer ): TJSONArray;
+     function ListarPermissoesUsuario(usuarioId: integer): TJSONArray;
    end;
 
 
@@ -55,6 +56,13 @@ begin
    Result := FDmPermissoes.InserirPermissoes(perfilID, permissoes)
 
 end;
+
+function TServicePermissoes.ListarPermissoesUsuario(usuarioId: integer): TJSONArray;
+begin
+  result := FDmPermissoes.ListarPermissoesUsuario(usuarioId );
+end;
+
+
 
 
 end.

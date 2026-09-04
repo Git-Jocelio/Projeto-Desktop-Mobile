@@ -23,6 +23,7 @@ type
   public
     //endpoints para usuários
     procedure Login(email, senha: string);
+    procedure ListarPermissoesUsuario;
     procedure AtivarConta(senha: string);
     procedure AlterarSenha( senha: string);
     procedure AlterarUsuario(login, ativo: string; usuarioid:integer);
@@ -255,6 +256,34 @@ begin
   // trata erro se houver
   if resp.StatusCode <> 200 then
     raise Exception.Create(resp.content);
+end;
+
+procedure TdmUsuario.ListarPermissoesUsuario;
+var
+  Res: IResponse;
+  JsonPermissoes: TJSONArray;
+begin
+  Res := TRequest.New.BaseURL(URL_BASE)
+                 .Resource('/permissoes/usuario')
+                 .TokenBearer(TSession.TOKEN)
+                 .Accept('application/json')
+                 .Get;
+
+  if Res.StatusCode <> 200 then
+    raise Exception.Create(Res.Content);
+
+  JsonPermissoes := TJSONObject.ParseJSONValue(
+    Res.Content
+  ) as TJSONArray;
+
+  try
+    if not Assigned(JsonPermissoes) then
+      raise Exception.Create('JSON de permissões inválido.');
+
+    TSession.CarregarPermissoes(JsonPermissoes);
+  finally
+    JsonPermissoes.Free;
+  end;
 end;
 
 end.

@@ -14,6 +14,7 @@ uses Horse,
 procedure RegistrarRotas;
 procedure ListarPermissoesId(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 procedure InserirPermissoes(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+procedure ListarPermissoesusuario(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 
 implementation
 
@@ -29,6 +30,9 @@ begin
                      THorseJWTConfig.New.SessionClass(TMyClaims)))
         .Post('/permissoes', InserirPermissoes);
 
+  THorse.AddCallback(HorseJWT( Controllers.JWT.SECRET,
+                     THorseJWTConfig.New.SessionClass(TMyClaims)))
+        .Get('/permissoes/usuario', ListarPermissoesUsuario); // passar o id do usuario
 
 end;
 
@@ -112,5 +116,32 @@ begin
         res.Send(E.Message).Status(500);
   end;
 end;
+
+procedure ListarPermissoesUsuario(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+var
+  id: integer;
+  ServicePermissoes: TServicePermissoes;
+  jsonRetorno: TJSONArray;
+begin
+  // pega o ID do usuário autenticado através do token
+  id := Get_Usuario_Request(req);
+
+  try
+    ServicePermissoes:= TServicePermissoes.Create;
+
+    try
+        jsonRetorno := ServicePermissoes.ListarPermissoesUsuario( id );
+        res.Send<TJSONArray>( jsonRetorno ).Status(200);
+    finally
+      ServicePermissoes.Free
+    end;
+
+  except
+    on E: Exception do
+      res.Send(E.Message).Status(500);
+  end;
+
+end;
+
 
 end.

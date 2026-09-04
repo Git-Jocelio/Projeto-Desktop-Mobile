@@ -24,6 +24,7 @@ type
   public
     function ListarPermissoesId(perfilId: integer): TJSONArray;
     function InserirPermissoes(perfilID: integer; permissoes: TJSONArray): TJSONObject;
+    function ListarPermissoesUsuario(usuarioId: integer): TJSONArray;
   end;
 
 var
@@ -96,6 +97,101 @@ begin
   Result := qry.ToJSONArray;
 end;
 
+
+function TDmPermissoes.ListarPermissoesUsuario(usuarioId: integer): TJSONArray;
+begin
+  // lista as telas que o usuario pode visualizar
+  // consolidando as permissoes de todos os seus perfis
+
+  Result := nil;
+
+  DmServidor.Conn.Open;
+
+  qry.Close;
+  qry.SQL.Clear;
+
+  qry.SQL.Text :=
+    'SELECT ' +
+    '    T.ID_TELA, ' +
+    '    T.TELA_PAI_ID, ' +
+    '    T.NOME_TELA, ' +
+    '    T.MODULO, ' +
+    '    T.ORDEM, ' +
+
+    '    CASE ' +
+    '        WHEN MAX(CASE WHEN P.VER = ' + QuotedStr('S') +
+    ' THEN 1 ELSE 0 END) = 1 ' +
+    '        THEN ' + QuotedStr('S') +
+    '        ELSE ' + QuotedStr('N') +
+    '    END AS VER, ' +
+
+    '    CASE ' +
+    '        WHEN MAX(CASE WHEN P.INSERIR = ' + QuotedStr('S') +
+    ' THEN 1 ELSE 0 END) = 1 ' +
+    '        THEN ' + QuotedStr('S') +
+    '        ELSE ' + QuotedStr('N') +
+    '    END AS INSERIR, ' +
+
+    '    CASE ' +
+    '        WHEN MAX(CASE WHEN P.EDITAR = ' + QuotedStr('S') +
+    ' THEN 1 ELSE 0 END) = 1 ' +
+    '        THEN ' + QuotedStr('S') +
+    '        ELSE ' + QuotedStr('N') +
+    '    END AS EDITAR, ' +
+
+    '    CASE ' +
+    '        WHEN MAX(CASE WHEN P.EXCLUIR = ' + QuotedStr('S') +
+    ' THEN 1 ELSE 0 END) = 1 ' +
+    '        THEN ' + QuotedStr('S') +
+    '        ELSE ' + QuotedStr('N') +
+    '    END AS EXCLUIR, ' +
+
+    '    CASE ' +
+    '        WHEN MAX(CASE WHEN P.IMPRIMIR = ' + QuotedStr('S') +
+    ' THEN 1 ELSE 0 END) = 1 ' +
+    '        THEN ' + QuotedStr('S') +
+    '        ELSE ' + QuotedStr('N') +
+    '    END AS IMPRIMIR ' +
+
+    'FROM USUARIO U ' +
+
+    'INNER JOIN USUARIO_PERFIL UP ' +
+    '    ON UP.ID_USUARIO = U.USUARIOID ' +
+
+    'INNER JOIN PERFIL PF ' +
+    '    ON PF.ID_PERFIL = UP.ID_PERFIL ' +
+
+    'INNER JOIN PERMISSOES P ' +
+    '    ON P.PERFIL_ID = PF.ID_PERFIL ' +
+
+    'INNER JOIN TELA T ' +
+    '    ON T.ID_TELA = P.TELA_ID ' +
+
+    'WHERE U.USUARIOID = :USUARIOID ' +
+    '  AND U.ATIVO = ' + QuotedStr('S') + ' ' +
+    '  AND T.ATIVO = ' + QuotedStr('S') + ' ' +
+
+    'GROUP BY ' +
+    '    T.ID_TELA, ' +
+    '    T.TELA_PAI_ID, ' +
+    '    T.NOME_TELA, ' +
+    '    T.MODULO, ' +
+    '    T.ORDEM ' +
+
+    'HAVING MAX( ' +
+    '    CASE ' +
+    '        WHEN P.VER = ' + QuotedStr('S') +
+    ' THEN 1 ELSE 0 END ' +
+    ') = 1 ' +
+
+    'ORDER BY T.ORDEM';
+
+  qry.ParamByName('USUARIOID').AsInteger := usuarioId;
+
+  qry.Active := True;
+
+  Result := qry.ToJSONArray;
+end;
 
 function TDmPermissoes.InserirPermissoes(perfilID: integer; permissoes: TJSONArray): TJSONObject;
 var
