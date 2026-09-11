@@ -110,6 +110,8 @@ begin
   qry.Close;
   qry.SQL.Clear;
 
+
+(*
   qry.SQL.Text :=
     'SELECT ' +
     '    T.ID_TELA, ' +
@@ -185,6 +187,118 @@ begin
     ') = 1 ' +
 
     'ORDER BY T.ORDEM';
+*)
+
+  qry.SQL.Text :=
+    'WITH RECURSIVE ' +
+
+    // Permissões consolidadas do usuário
+    'PERMISSOES_USUARIO AS ( ' +
+    '    SELECT ' +
+    '        P.TELA_ID, ' +
+
+    '        MAX(CASE WHEN P.VER = ' + QuotedStr('S') +
+    ' THEN 1 ELSE 0 END) AS PODE_VER, ' +
+
+    '        MAX(CASE WHEN P.INSERIR = ' + QuotedStr('S') +
+    ' THEN 1 ELSE 0 END) AS PODE_INSERIR, ' +
+
+    '        MAX(CASE WHEN P.EDITAR = ' + QuotedStr('S') +
+    ' THEN 1 ELSE 0 END) AS PODE_EDITAR, ' +
+
+    '        MAX(CASE WHEN P.EXCLUIR = ' + QuotedStr('S') +
+    ' THEN 1 ELSE 0 END) AS PODE_EXCLUIR, ' +
+
+    '        MAX(CASE WHEN P.IMPRIMIR = ' + QuotedStr('S') +
+    ' THEN 1 ELSE 0 END) AS PODE_IMPRIMIR ' +
+
+    '    FROM USUARIO_PERFIL UP ' +
+
+    '    INNER JOIN PERMISSOES P ' +
+    '        ON P.PERFIL_ID = UP.ID_PERFIL ' +
+
+    '    WHERE UP.ID_USUARIO = :USUARIOID ' +
+
+    '    GROUP BY P.TELA_ID ' +
+    '), ' +
+
+    // Começa pelas telas que o usuário realmente pode visualizar
+    'ARVORE AS ( ' +
+
+    '    SELECT ' +
+    '        T.ID_TELA, ' +
+    '        T.TELA_PAI_ID ' +
+
+    '    FROM TELA T ' +
+
+    '    INNER JOIN PERMISSOES_USUARIO PU ' +
+    '        ON PU.TELA_ID = T.ID_TELA ' +
+
+    '    WHERE T.ATIVO = ' + QuotedStr('S') + ' ' +
+    '      AND PU.PODE_VER = 1 ' +
+
+    '    UNION ALL ' +
+
+    // Sobe pela hierarquia buscando os pais
+    '    SELECT ' +
+    '        PAI.ID_TELA, ' +
+    '        PAI.TELA_PAI_ID ' +
+
+    '    FROM TELA PAI ' +
+
+    '    INNER JOIN ARVORE FILHO ' +
+    '        ON FILHO.TELA_PAI_ID = PAI.ID_TELA ' +
+
+    '    WHERE PAI.ATIVO = ' + QuotedStr('S') + ' ' +
+    ') ' +
+
+    // Retorna as telas permitidas + todos os pais necessários
+    'SELECT DISTINCT ' +
+    '    T.ID_TELA, ' +
+    '    T.TELA_PAI_ID, ' +
+    '    T.NOME_TELA, ' +
+    '    T.MODULO, ' +
+    '    T.ORDEM, ' +
+
+    // Todo nó que entrou na árvore pode ser exibido no menu
+    '    ' + QuotedStr('S') + ' AS VER, ' +
+
+    '    CASE ' +
+    '        WHEN COALESCE(PU.PODE_INSERIR, 0) = 1 ' +
+    '        THEN ' + QuotedStr('S') +
+    '        ELSE ' + QuotedStr('N') +
+    '    END AS INSERIR, ' +
+
+    '    CASE ' +
+    '        WHEN COALESCE(PU.PODE_EDITAR, 0) = 1 ' +
+    '        THEN ' + QuotedStr('S') +
+    '        ELSE ' + QuotedStr('N') +
+    '    END AS EDITAR, ' +
+
+    '    CASE ' +
+    '        WHEN COALESCE(PU.PODE_EXCLUIR, 0) = 1 ' +
+    '        THEN ' + QuotedStr('S') +
+    '        ELSE ' + QuotedStr('N') +
+    '    END AS EXCLUIR, ' +
+
+    '    CASE ' +
+    '        WHEN COALESCE(PU.PODE_IMPRIMIR, 0) = 1 ' +
+    '        THEN ' + QuotedStr('S') +
+    '        ELSE ' + QuotedStr('N') +
+    '    END AS IMPRIMIR ' +
+
+    'FROM TELA T ' +
+
+    'INNER JOIN ARVORE A ' +
+    '    ON A.ID_TELA = T.ID_TELA ' +
+
+    'LEFT JOIN PERMISSOES_USUARIO PU ' +
+    '    ON PU.TELA_ID = T.ID_TELA ' +
+
+    'WHERE T.ATIVO = ' + QuotedStr('S') + ' ' +
+
+    'ORDER BY T.TELA_PAI_ID, T.ORDEM';
+
 
   qry.ParamByName('USUARIOID').AsInteger := usuarioId;
 

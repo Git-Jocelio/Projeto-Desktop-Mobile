@@ -24,8 +24,6 @@ object FormMain: TFormMain
     Color = clWhite
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = 488
-    ExplicitWidth = 595
     object pnlHeader: TPanel
       Left = 0
       Top = 0
@@ -37,7 +35,6 @@ object FormMain: TFormMain
       Color = clFuchsia
       ParentBackground = False
       TabOrder = 0
-      ExplicitWidth = 345
     end
     object pnlRodape: TPanel
       Left = 0
@@ -50,8 +47,6 @@ object FormMain: TFormMain
       Color = clFuchsia
       ParentBackground = False
       TabOrder = 1
-      ExplicitTop = 272
-      ExplicitWidth = 345
     end
     object pnlMenu: TPanel
       Left = 0
@@ -76,10 +71,6 @@ object FormMain: TFormMain
       Color = clAqua
       ParentBackground = False
       TabOrder = 3
-      ExplicitLeft = 200
-      ExplicitTop = 95
-      ExplicitWidth = 161
-      ExplicitHeight = 352
     end
   end
 end

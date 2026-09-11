@@ -30,13 +30,13 @@ implementation
 
 {$R *.dfm}
 
+uses Vcl.Session;
+
 
 
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
   FMenuManager := TMenuManager.Create(pnlMenu);
-
-  ShowMessage(FMenuManager.TextoArvore);
 end;
 
 procedure TFormMain.FormDestroy(Sender: TObject);
