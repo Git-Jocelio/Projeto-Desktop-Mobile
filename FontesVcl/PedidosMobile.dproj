@@ -275,6 +275,11 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="FormMain\UnitFormMain.pas">
+            <Form>FormMain</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="FormMain\UnitMenuManager.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

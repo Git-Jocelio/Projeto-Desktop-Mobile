@@ -272,9 +272,10 @@ begin
   if Res.StatusCode <> 200 then
     raise Exception.Create(Res.Content);
 
-  JsonPermissoes := TJSONObject.ParseJSONValue(
-    Res.Content
-  ) as TJSONArray;
+  // recebe em Res(Resposta) um TJSonObject contendo a lista de permissões
+  // para o usuário... eu poderia também carregar uma memTable e fazer um loop
+  // e carrgar a session.
+  JsonPermissoes := TJSONObject.ParseJSONValue( Res.Content) as TJSONArray;
 
   try
     if not Assigned(JsonPermissoes) then
@@ -284,6 +285,7 @@ begin
   finally
     JsonPermissoes.Free;
   end;
+
 end;
 
 end.

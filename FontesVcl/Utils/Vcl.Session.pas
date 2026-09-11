@@ -89,9 +89,9 @@ var
 begin
   Result := -1;
 
-  for I := 0 to Length(FPERMISSOES) -1 do
+  for I := 0 to Length(FPERMISSOES)  do
   begin
-    if FPERMISSOES[I].ID_TELA = -1 then
+    if FPERMISSOES[I].ID_TELA = ATelaID then
     begin
        Result := I;
        exit;
@@ -102,12 +102,12 @@ end;
 
 class procedure TSession.Limpar;
 begin
-   FID_USUARIO := 0;
-   FNOME := '';
-   FEMAIL:= '';
+   FID_USUARIO      := 0;
+   FNOME            := '';
+   FEMAIL           := '';
    FPRIMEIRO_ACESSO := '';
-   FTOKEN := '';
-   FSTATUS := '';
+   FTOKEN           := '';
+   FSTATUS          := '';
 
    SetLength(FPERMISSOES,0);//?
 end;
@@ -127,18 +127,18 @@ begin
 
   SetLength(FPERMISSOES, I + 1);
 
-  FPERMISSOES[I].ID_TELA := AIDTela;
-  FPERMISSOES[I].TELA_PAI_ID := AIDTela;
+  FPERMISSOES[I].ID_TELA     := AIDTela;
+  FPERMISSOES[I].TELA_PAI_ID := ATelaPaiID;
 
  FPERMISSOES[I].NOME_TELA := ANomeTela;
- FPERMISSOES[I].MODULO := AModulo;
- FPERMISSOES[I].ORDEM := AOrdem;
+ FPERMISSOES[I].MODULO    := AModulo;
+ FPERMISSOES[I].ORDEM     := AOrdem;
 
- FPERMISSOES[I].VER := AVer;
- FPERMISSOES[I].INSERIR := AInserir;
- FPERMISSOES[I].EDITAR := AEditar;
- FPERMISSOES[I].EXCLUIR := AExcluir;
- FPERMISSOES[I].IMPRIMIR := AImprimir;
+ FPERMISSOES[I].VER       := AVer;
+ FPERMISSOES[I].INSERIR   := AInserir;
+ FPERMISSOES[I].EDITAR    := AEditar;
+ FPERMISSOES[I].EXCLUIR   := AExcluir;
+ FPERMISSOES[I].IMPRIMIR  := AImprimir;
 
 
 end;

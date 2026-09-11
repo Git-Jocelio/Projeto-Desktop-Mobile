@@ -94,10 +94,12 @@ uses UnitFrmPrincipal, DataModule.Usuario, Vcl.Config, Service.Usuario;
 
 
 procedure TfrmLogin.TerminateLogin(Sender: TObject);
-//var
-//  I: Integer;
-//  Permissao: TPermissaoTela;
-//  Texto: string;
+(*//TESTE
+var
+  I: Integer;
+  Permissao: TPermissaoTela;
+  Texto: string;
+*)
 begin
    TLoading.Hide;
 
@@ -110,18 +112,18 @@ begin
      end;
 
    //pegar dados de acesso do usuario... devolvidos pelo servidor
-   TSession.ID_USUARIO := dmUsuario.MemTable.fieldbyname('usuarioId').AsInteger;
-   TSession.NOME := dmUsuario.MemTable.fieldbyname('nome').AsString;
-   TSession.EMAIL := dmUsuario.MemTable.fieldbyname('login').AsString;
+   TSession.ID_USUARIO      := dmUsuario.MemTable.fieldbyname('usuarioId').AsInteger;
+   TSession.NOME            := dmUsuario.MemTable.fieldbyname('nome').AsString;
+   TSession.EMAIL           := dmUsuario.MemTable.fieldbyname('login').AsString;
    TSession.PRIMEIRO_ACESSO := dmUsuario.MemTable.fieldbyname('primeiro_acesso').AsString;
-   TSession.TOKEN := dmUsuario.MemTable.fieldbyname('token').AsString;
-   TSession.STATUS := 'TESTE';
+   TSession.TOKEN           := dmUsuario.MemTable.fieldbyname('token').AsString;
+   TSession.STATUS          := 'TESTE';
 
    // carrega as permissões do usuário
    dmUsuario.ListarPermissoesUsuario;
 
-  (*
-  //TESTE
+
+(*  //INICIO TESTE
   Texto := '';
 
   for I := 0 to TSession.QuantidadePermissoes - 1 do
@@ -129,17 +131,17 @@ begin
     Permissao := TSession.ObterPermissao(I);
 
     Texto := Texto +
-      'ID: ' + Permissao.ID_TELA.ToString +
-      ' | Pai: ' + Permissao.TELA_PAI_ID.ToString +
-      ' | Tela: ' + Permissao.NOME_TELA +
-      ' | Ver: ' + BoolToStr(Permissao.VER, True) +
+      'ID: '         + Permissao.ID_TELA.ToString +
+      ' | Pai: '     + Permissao.TELA_PAI_ID.ToString +
+      ' | Tela: '    + Permissao.NOME_TELA +
+      ' | Ver: '     + BoolToStr(Permissao.VER, True) +
       ' | Inserir: ' + BoolToStr(Permissao.INSERIR, True) +
       sLineBreak;
   end;
 
   ShowMessage(Texto);
   //FIM TESTE
-  *)
+*)
 
    FreeAndNil(dmUsuario);
 

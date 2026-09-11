@@ -48,7 +48,9 @@ uses
   UnitFormUsuarioPerfilE in 'FormCadastros\UsuarioPerfil\UnitFormUsuarioPerfilE.pas' {FormUsuarioPerfilE},
   DataModule.UsuarioPerfil in 'DataModules\DataModule.UsuarioPerfil.pas' {DmUsuarioPerfil: TDataModule},
   UnitFormPermissoesE in 'FormCadastros\Permissoes\UnitFormPermissoesE.pas' {FormPermissoesE},
-  DataModule.Permissoes in 'DataModules\DataModule.Permissoes.pas' {DmPermissoes: TDataModule};
+  DataModule.Permissoes in 'DataModules\DataModule.Permissoes.pas' {DmPermissoes: TDataModule},
+  UnitFormMain in 'FormMain\UnitFormMain.pas' {FormMain},
+  UnitMenuManager in 'FormMain\UnitMenuManager.pas';
 
 {$R *.res}
 
@@ -63,9 +65,9 @@ begin
   try
     if frmLogin.ShowModal = mrOk then
     begin
+      Application.CreateForm(TFormMain, FormMain);
       Application.CreateForm(TFormPrincipal, FormPrincipal);
-  Application.CreateForm(TDmPermissoes, DmPermissoes);
-  Application.Run;
+      Application.Run;
     end;
   finally
     frmLogin.Free;
