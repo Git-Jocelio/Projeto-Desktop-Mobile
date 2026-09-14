@@ -31,8 +31,7 @@ object FormMain: TFormMain
       Height = 65
       Align = alTop
       BevelOuter = bvNone
-      Caption = 'pnlHeader'
-      Color = clFuchsia
+      Color = clWhite
       ParentBackground = False
       TabOrder = 0
     end
@@ -43,8 +42,7 @@ object FormMain: TFormMain
       Height = 80
       Align = alBottom
       BevelOuter = bvNone
-      Caption = 'pnlRodape'
-      Color = clFuchsia
+      Color = clWhite
       ParentBackground = False
       TabOrder = 1
     end
@@ -56,7 +54,7 @@ object FormMain: TFormMain
       Align = alLeft
       BevelOuter = bvNone
       Caption = 'pnlMenu'
-      Color = clLime
+      Color = clAqua
       ParentBackground = False
       TabOrder = 2
     end
@@ -67,8 +65,7 @@ object FormMain: TFormMain
       Height = 504
       Align = alClient
       BevelOuter = bvNone
-      Caption = 'pnlContainer'
-      Color = clAqua
+      Color = clWhite
       ParentBackground = False
       TabOrder = 3
     end

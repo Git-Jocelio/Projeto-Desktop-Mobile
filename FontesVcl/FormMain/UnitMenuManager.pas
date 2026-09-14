@@ -1,4 +1,4 @@
-unit UnitMenuManager;
+Ôªøunit UnitMenuManager;
 
 interface
 
@@ -10,10 +10,12 @@ uses
   Vcl.Session,
   System.SysUtils,
   System.Classes,
-  Vcl.StdCtrls, Vcl.Forms;
+  Vcl.StdCtrls,
+  Vcl.Forms,
+  Vcl.Graphics;
 type
 
-  // Representa um nÛ da ·rvore do menu
+  // Representa um n√≥ da √°rvore do menu
   TMenuNode = class
   private
     FIDTela: Integer;
@@ -24,8 +26,8 @@ type
     FFilhos: TObjectList<TMenuNode>;
     FNivel: Integer;
     FExpandido: Boolean;
+    FIcone: string;
 
-  public
     constructor Create;
     destructor Destroy; override;
 
@@ -38,15 +40,17 @@ type
     property Filhos: TObjectList<TMenuNode> read FFilhos;
     property Expandido: Boolean read FExpandido write FExpandido;
     function TemFilhos: Boolean;
+    property Icone: string read FIcone write FIcone;
   end;
 
 
-  // Respons·vel pelo gerenciamento do menu
+  // Respons√°vel pelo gerenciamento do menu
   TMenuManager = class
   private
     FPanelMenu: TPanel;
     FPanelContainer: TPanel;
     FFormAtual: TForm;
+    FPainelSelecionado: TPanel;
 
     FNos: TObjectList<TMenuNode>;
     FRaizes: TObjectList<TMenuNode>;
@@ -66,6 +70,10 @@ type
 
     procedure AbrirTela(AIDTela: Integer);
     procedure FecharFormAtual;
+
+    procedure MouseEnterMenu(Sender: TObject);
+    procedure MouseLeaveMenu(Sender: TObject);  public
+
     //teste
     //procedure AdicionarTextoNo(ANo: TMenuNode; ANivel: Integer; var ATexto: string);
 
@@ -99,6 +107,16 @@ begin
 end;
 
 
+
+procedure TMenuManager.MouseEnterMenu(Sender: TObject);
+begin
+  TPanel(Sender).Color := clSilver;
+end;
+
+procedure TMenuManager.MouseLeaveMenu(Sender: TObject);
+begin
+  TPanel(Sender).Color := clWhite;
+end;
 
 function TMenuNode.TemFilhos: Boolean;
 begin
@@ -172,17 +190,26 @@ var
   No: TMenuNode;
   I: Integer;
   PainelItem: TPanel;
+  LabelItem: TLabel;
 begin
-  Panel := TPanel(Sender);
+
+  if Sender is TPanel then
+    Panel := TPanel(Sender)
+  else if (Sender is TControl) and
+          (TControl(Sender).Parent is TPanel) then
+    Panel := TPanel(TControl(Sender).Parent)
+  else
+    Exit;
 
   NoClicado := EncontrarNo(Panel.Tag);
+
 
   if not Assigned(NoClicado) then
   begin
     Exit;
   end;
 
-  // Se n„o possui filhos, futuramente ir· abrir a tela
+  // Se n√£o possui filhos, futuramente ir√° abrir a tela
   if not NoClicado.TemFilhos then
   begin
     AbrirTela(NoClicado.IDTela);
@@ -190,6 +217,25 @@ begin
   end;
 
   NoClicado.Expandido := not NoClicado.Expandido;
+
+  LabelItem := nil;
+
+  for I := 0 to Panel.ControlCount - 1 do
+  begin
+    if Panel.Controls[I] is TLabel then
+    begin
+      LabelItem := TLabel(Panel.Controls[I]);
+      Break;
+    end;
+  end;
+
+  if Assigned(LabelItem) then
+  begin
+    if NoClicado.Expandido then
+      LabelItem.Caption := '‚ñº ' + NoClicado.NomeTela
+    else
+      LabelItem.Caption := '‚ñ∂ ' + NoClicado.NomeTela;
+  end;
 
   for I := 0 to FPanelMenu.ControlCount - 1 do
   begin
@@ -271,6 +317,7 @@ constructor TMenuManager.Create(APanelMenu, APanelContainer: TPanel);
 begin
   FPanelMenu := APanelMenu;
   FPanelContainer := APanelContainer;
+  FPainelSelecionado := nil;
 
   FNos := TObjectList<TMenuNode>.Create(True);
   FRaizes := TObjectList<TMenuNode>.Create(False);
@@ -294,6 +341,7 @@ begin
     PanelFilho.Parent := FPanelMenu;
     PanelFilho.Align := alNone;
     PanelFilho.Height := 40;
+    PanelFilho.Width := FPanelMenu.ClientWidth;
 
     PanelFilho.Caption := '';
     PanelFilho.BevelOuter := bvNone;
@@ -302,26 +350,48 @@ begin
     PanelFilho.Tag := Filho.IDTela;
     PanelFilho.OnClick := AlternarNo;
 
+    PanelFilho.OnMouseEnter := MouseEnterMenu;
+    PanelFilho.OnMouseLeave := MouseLeaveMenu;
+
     ImageFilho := TImage.Create(PanelFilho);
     ImageFilho.Parent := PanelFilho;
 
-
-
-    ImageFilho.Left := 10;
+    //ImageFilho.Left := 10;
+    ImageFilho.Left := Filho.Nivel * 20 + 10;
     ImageFilho.Top := 8;
     ImageFilho.Width := 24;
     ImageFilho.Height := 24;
-    //ImageFilho.Picture.LoadFromFile('D:\desktop_mobile\FontesVcl\Images\menu_cadastros.png');
 
     ImageFilho.Stretch := True;
     ImageFilho.Proportional := True;
+    ImageFilho.OnClick := AlternarNo;
+  (*
+    ImageFilho.Picture.LoadFromFile(
+    IncludeTrailingPathDelimiter(
+       ExtractFilePath(Application.ExeName) + 'Images'
+            ) + 'menu-produtos.png'
+     );
+  *)
 
+    if Filho.Icone <> '' then
+      ImageFilho.Picture.LoadFromFile(
+      IncludeTrailingPathDelimiter(
+      ExtractFilePath(Application.ExeName) + 'Images'
+       ) + Filho.Icone
+     );
 
     LabelFilho := TLabel.Create(PanelFilho);
     LabelFilho.Parent := PanelFilho;
-    LabelFilho.Caption := Filho.NomeTela;
-    LabelFilho.Left := Filho.Nivel * 20;
+    //LabelFilho.Caption := Filho.NomeTela;
+    if Filho.TemFilhos then
+      LabelFilho.Caption := '‚ñº ' + Filho.NomeTela
+    else
+      LabelFilho.Caption := Filho.NomeTela;
+
+    //LabelFilho.Left := Filho.Nivel * 20;
+    LabelFilho.Left := Filho.Nivel * 20 + 40;
     LabelFilho.Top := 12;
+    LabelFilho.OnClick := AlternarNo;
 
     criarFilhosVisual(Filho, PanelFilho,  ANivel +1);
   end;
@@ -331,29 +401,70 @@ procedure TMenuManager.CriarMenuVisual;
 var
   No: TMenuNode;
   PanelMenu: TPanel;
+  ImageMenu: TImage;
+  LabelMenu: TLabel;
 begin
   for No in FRaizes do
+  begin
+    PanelMenu := TPanel.Create(FPanelMenu);
+
+    PanelMenu.Parent := FPanelMenu;
+    PanelMenu.Align := alNone;
+    PanelMenu.Height := 45;
+    PanelMenu.Width := FPanelMenu.ClientWidth;
+
+    PanelMenu.Caption := '';
+    PanelMenu.Alignment := taLeftJustify;
+    PanelMenu.BevelOuter := bvNone;
+    PanelMenu.ParentBackground := False;
+
+    PanelMenu.Tag := No.IDTela;
+    PanelMenu.OnClick := AlternarNo;
+
+    PanelMenu.OnMouseEnter := MouseEnterMenu;
+    PanelMenu.OnMouseLeave := MouseLeaveMenu;
+
+    if No.Icone <> '' then
     begin
-      PanelMenu := TPanel.Create(FPanelMenu);
+      ImageMenu := TImage.Create(PanelMenu);
+      ImageMenu.Parent := PanelMenu;
+      ImageMenu.Left := 10;
+      ImageMenu.Top := 8;
+      ImageMenu.Width := 28;
+      ImageMenu.Height := 28;
+      ImageMenu.Stretch := True;
+      ImageMenu.Proportional := True;
+      ImageMenu.OnClick := AlternarNo;
 
-      PanelMenu.Parent := FPanelMenu;
-      PanelMenu.Align := alNone;
-      PanelMenu.Height := 45;
-
-      //PanelMenu.Caption := No.NomeTela;
-      PanelMenu.Caption := No.NomeTela;// + ' - Nivel: ' + inttostr(No.Nivel);
-      PanelMenu.Alignment := taLeftJustify;
-      PanelMenu.BevelOuter := bvNone;
-      PanelMenu.ParentBackground := False;
-
-      PanelMenu.Tag := No.IDTela;
-      PanelMenu.OnClick := AlternarNo;
-
-      CriarFilhosVisual(No, PanelMenu, 1);
+      ImageMenu.Picture.LoadFromFile(
+        IncludeTrailingPathDelimiter(
+          ExtractFilePath(Application.ExeName) + 'Images'
+        ) + No.Icone
+      );
     end;
 
-    ReorganizarMenu;
+    LabelMenu := TLabel.Create(PanelMenu);
+    LabelMenu.Parent := PanelMenu;
+
+    if No.TemFilhos then
+      LabelMenu.Caption := '‚ñº ' + No.NomeTela
+    else
+      LabelMenu.Caption := No.NomeTela;
+
+    if No.Icone <> '' then
+      LabelMenu.Left := 45
+    else
+      LabelMenu.Left := 20;
+
+    LabelMenu.Top := 14;
+    LabelMenu.OnClick := AlternarNo;
+
+    CriarFilhosVisual(No, PanelMenu, 1);
+  end;
+
+  ReorganizarMenu;
 end;
+
 
 destructor TMenuManager.Destroy;
 begin
@@ -411,8 +522,8 @@ end;
 procedure TMenuManager.MontarArvore;
 var
   I: integer;
-  // n„o precisa por Vcl.Session, coloquei sÛ pra saber que os metÛdos est„o dento de vcl.session
-  Permissao: Vcl.Session.TPermissaoTela; // permissao È um record com todos os campos da tabela
+  // n√£o precisa por Vcl.Session, coloquei s√≥ pra saber que os met√≥dos est√£o dento de vcl.session
+  Permissao: Vcl.Session.TPermissaoTela; // permissao √© um record com todos os campos da tabela
   No : TMenuNode;
   NoPai : TMenuNode;
 
@@ -420,12 +531,12 @@ begin
   FRaizes.Clear;
   FNos.Clear;
 
-  // primeiro criamos todos os nÛs
+  // primeiro criamos todos os n√≥s
   for I := 0 to Vcl.Session.TSession.QuantidadePermissoes -1 do
   begin
     Permissao := Vcl.Session.TSession.ObterPermissao(I);
 
-    // sÛ entra no menu aquilo que o usu·rio pode visualizar
+    // s√≥ entra no menu aquilo que o usu√°rio pode visualizar
     if not Permissao.VER then
       continue;
 
@@ -437,6 +548,12 @@ begin
     No.Modulo    := Permissao.MODULO;
     No.Ordem     := Permissao.ORDEM;
 
+    if No.IDTela = 5 then
+       No.Icone := 'menu-produtos.png';
+
+    if No.IDTela = 11 then
+      No.Icone := 'menu-cadastro.png';
+
     FNos.Add(No);
   end;
 
@@ -445,7 +562,7 @@ begin
   begin
     if No.TelaPaiID = 0 then
     begin
-      // È um nÛ raiz
+      // √© um n√≥ raiz
       No.Nivel := 0;
       FRaizes.Add(No);
     end
@@ -468,6 +585,7 @@ begin
     No.Filhos.Sort(TComparer<TMenuNode>.Construct(CompararNos));
 
 end;
+
 procedure TMenuManager.ReorganizarMenu;
 var
   I: Integer;
@@ -487,11 +605,14 @@ begin
       Continue;
 
     PainelItem.Align := alNone;
+    PainelItem.Left := 0;
     PainelItem.Top := TopAtual;
 
     TopAtual := TopAtual + PainelItem.Height;
   end;
 end;
+
+
 (*
 //teste
 function TMenuManager.TextoArvore: string;
