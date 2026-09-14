@@ -3,14 +3,14 @@ unit UnitMenuManager;
 interface
 
 uses
-  System.Generics.Collections,
+  System.Generics.Collections, dialogs,
   system.Generics.Defaults,
   Vcl.Controls,
   Vcl.ExtCtrls,
   Vcl.Session,
   System.SysUtils,
   System.Classes,
-  Vcl.StdCtrls;
+  Vcl.StdCtrls, Vcl.Forms;
 type
 
   // Representa um nó da árvore do menu
@@ -23,6 +23,7 @@ type
     FOrdem: Integer;
     FFilhos: TObjectList<TMenuNode>;
     FNivel: Integer;
+    FExpandido: Boolean;
 
   public
     constructor Create;
@@ -35,6 +36,8 @@ type
     property Ordem: Integer read FOrdem write FOrdem;
     property Nivel: Integer read FNivel write FNivel;
     property Filhos: TObjectList<TMenuNode> read FFilhos;
+    property Expandido: Boolean read FExpandido write FExpandido;
+    function TemFilhos: Boolean;
   end;
 
 
@@ -42,6 +45,8 @@ type
   TMenuManager = class
   private
     FPanelMenu: TPanel;
+    FPanelContainer: TPanel;
+    FFormAtual: TForm;
 
     FNos: TObjectList<TMenuNode>;
     FRaizes: TObjectList<TMenuNode>;
@@ -52,13 +57,20 @@ type
     class function CompararNos(const Left, Right: TMenuNode): integer; static;
 
     procedure CriarMenuVisual;
-    procedure criarFilhosVisual(ANoPai: TMenuNode; ANivel: integer);
+    procedure CriarFilhosVisual(ANoPai: TMenuNode; APanelPai: TPanel; ANivel: integer);
 
+    procedure AlternarNo(Sender: TOBject);
+    function CalcularNivel(Ano: TMenuNode): integer;
+    function EhDescendente(ANo: TMenuNode; ANoPai: TMenuNode): Boolean;
+    procedure ReorganizarMenu;
+
+    procedure AbrirTela(AIDTela: Integer);
+    procedure FecharFormAtual;
     //teste
     //procedure AdicionarTextoNo(ANo: TMenuNode; ANivel: Integer; var ATexto: string);
 
   public
-    constructor Create(APanelMenu: TPanel);
+    constructor Create(APanelMenu, APanelContainer: TPanel);
     destructor Destroy; override;
 
     //teste
@@ -68,21 +80,156 @@ type
 
 implementation
 
+uses UnitFormProduto, UnitFormUsuario, UnitFormPerfil, UnitFormTela,
+  UnitFormFornecedor, UnitFormColaborador, UnitFormPermissoesE, UnitFormPessoa;
+
 { TMenuNode }
 
 
 constructor TMenuNode.Create;
 begin
   FFilhos := TObjectList<TMenuNode>.Create(false);
+  FExpandido := true;
 end;
 
 destructor TMenuNode.Destroy;
 begin
   FFilhos.Free;
-
   inherited;
 end;
 
+
+
+function TMenuNode.TemFilhos: Boolean;
+begin
+  Result := FFilhos.Count > 0;
+end;
+
+procedure TMenuManager.AbrirTela(AIDTela: Integer);
+begin
+  FecharFormAtual;
+
+  case AIDTela of
+
+    1:
+     begin
+        FFormAtual := TFormUsuario.Create(FPanelContainer);
+     end;
+
+    2:
+     begin
+        FFormAtual := TFormPerfil.Create(FPanelContainer);
+     end;
+
+    3:
+     begin
+        FFormAtual := TFormTela.Create(FPanelContainer);
+     end;
+
+    4:
+     begin
+        FFormAtual := TFormFornecedor.Create(FPanelContainer);
+     end;
+
+    5:
+     begin
+        FFormAtual := TFormProduto.Create(FPanelContainer);
+     end;
+
+    6:
+     begin
+        FFormAtual := TFormColaborador.Create(FPanelContainer);
+     end;
+
+    9:
+     begin
+        FFormAtual := TFormColaborador.Create(FPanelContainer);
+     end;
+
+
+    10:
+     begin
+        FFormAtual := TFormPessoa.Create(FPanelContainer);
+     end;
+
+
+  end;
+
+  if Assigned(FFormAtual) then
+  begin
+    FFormAtual.Parent := FPanelContainer;
+    FFormAtual.Align := alClient;
+    //FFormAtual.BorderStyle := bsNone;
+
+    FFormAtual.Show;
+  end;
+end;
+
+procedure TMenuManager.AlternarNo(Sender: TOBject);
+var
+  Panel: TPanel;
+  NoClicado: TMenuNode;
+  No: TMenuNode;
+  I: Integer;
+  PainelItem: TPanel;
+begin
+  Panel := TPanel(Sender);
+
+  NoClicado := EncontrarNo(Panel.Tag);
+
+  if not Assigned(NoClicado) then
+  begin
+    Exit;
+  end;
+
+  // Se não possui filhos, futuramente irá abrir a tela
+  if not NoClicado.TemFilhos then
+  begin
+    AbrirTela(NoClicado.IDTela);
+    Exit;
+  end;
+
+  NoClicado.Expandido := not NoClicado.Expandido;
+
+  for I := 0 to FPanelMenu.ControlCount - 1 do
+  begin
+    if not (FPanelMenu.Controls[I] is TPanel) then
+      Continue;
+
+    PainelItem := TPanel(FPanelMenu.Controls[I]);
+
+    No := EncontrarNo(PainelItem.Tag);
+
+    if not Assigned(No) then
+      Continue;
+
+    if EhDescendente(No, NoClicado) then
+      PainelItem.Visible := NoClicado.Expandido;
+
+  end;
+
+  ReorganizarMenu;
+
+end;
+
+
+function TMenuManager.CalcularNivel(Ano: TMenuNode): integer;
+var
+  NoPai: TMenuNode;
+begin
+  if Ano.TelaPaiID = 0 then
+  begin
+    Result := 0;
+    Exit;
+  end;
+
+  NoPai := EncontrarNo(Ano.TelaPaiID);
+
+  if Assigned(NoPai) then
+    Result := CalcularNivel(NoPai) + 1
+  else
+    Result := 0;
+end;
 
 { TMenuManager }
 
@@ -120,9 +267,10 @@ begin
   Result := Left.Ordem - Right.Ordem;
 end;
 
-constructor TMenuManager.Create(APanelMenu: TPanel);
+constructor TMenuManager.Create(APanelMenu, APanelContainer: TPanel);
 begin
   FPanelMenu := APanelMenu;
+  FPanelContainer := APanelContainer;
 
   FNos := TObjectList<TMenuNode>.Create(True);
   FRaizes := TObjectList<TMenuNode>.Create(False);
@@ -132,7 +280,7 @@ begin
   CriarMenuVisual;
 end;
 
-procedure TMenuManager.CriarFilhosVisual(ANoPai: TMenuNode; ANivel: integer);
+procedure TMenuManager.CriarFilhosVisual(ANoPai: TMenuNode; APanelPai: TPanel; ANivel: integer);
 var
   Filho: TMenuNode;
   PanelFilho: TPanel;
@@ -144,15 +292,20 @@ begin
     PanelFilho := TPanel.Create(FPanelMenu);
 
     PanelFilho.Parent := FPanelMenu;
-    PanelFilho.Align := alTop;
+    PanelFilho.Align := alNone;
     PanelFilho.Height := 40;
 
     PanelFilho.Caption := '';
     PanelFilho.BevelOuter := bvNone;
     PanelFilho.ParentBackground := False;
 
+    PanelFilho.Tag := Filho.IDTela;
+    PanelFilho.OnClick := AlternarNo;
+
     ImageFilho := TImage.Create(PanelFilho);
     ImageFilho.Parent := PanelFilho;
+
+
 
     ImageFilho.Left := 10;
     ImageFilho.Top := 8;
@@ -170,7 +323,7 @@ begin
     LabelFilho.Left := Filho.Nivel * 20;
     LabelFilho.Top := 12;
 
-    criarFilhosVisual(Filho, ANivel +1);
+    criarFilhosVisual(Filho, PanelFilho,  ANivel +1);
   end;
 end;
 
@@ -184,7 +337,7 @@ begin
       PanelMenu := TPanel.Create(FPanelMenu);
 
       PanelMenu.Parent := FPanelMenu;
-      PanelMenu.Align := alTop;
+      PanelMenu.Align := alNone;
       PanelMenu.Height := 45;
 
       //PanelMenu.Caption := No.NomeTela;
@@ -193,13 +346,41 @@ begin
       PanelMenu.BevelOuter := bvNone;
       PanelMenu.ParentBackground := False;
 
-      CriarFilhosVisual(No, 1);
+      PanelMenu.Tag := No.IDTela;
+      PanelMenu.OnClick := AlternarNo;
+
+      CriarFilhosVisual(No, PanelMenu, 1);
     end;
+
+    ReorganizarMenu;
 end;
 
 destructor TMenuManager.Destroy;
 begin
+  FNos.Free;
+  FRaizes.Free;
   inherited;
+end;
+
+function TMenuManager.EhDescendente(ANo, ANoPai: TMenuNode): Boolean;
+var
+  NoPai: TMenuNode;
+begin
+  Result := False;
+
+  if ANo.TelaPaiID = 0 then
+    Exit;
+
+  if ANo.TelaPaiID = ANoPai.IDTela then
+  begin
+    Result := True;
+    Exit;
+  end;
+
+  NoPai := EncontrarNo(ANo.TelaPaiID);
+
+  if Assigned(NoPai) then
+    Result := EhDescendente(NoPai, ANoPai);
 end;
 
 function TMenuManager.EncontrarNo(AIDTela: Integer): TMenuNode;
@@ -216,6 +397,15 @@ begin
      exit;
    end;
   end;
+end;
+
+procedure TMenuManager.FecharFormAtual;
+begin
+  if not Assigned(FFormAtual) then
+    exit;
+
+  FFormAtual.Close;
+  FreeAndNil(FFormAtual);
 end;
 
 procedure TMenuManager.MontarArvore;
@@ -265,7 +455,8 @@ begin
 
       if Assigned(NoPai) then
       begin
-        No.Nivel := Nopai.Nivel +1;;
+        //No.Nivel := Nopai.Nivel +1;;
+        No.Nivel := CalcularNivel(No);
         NoPai.Filhos.Add(No);
       end;
     end;
@@ -276,6 +467,30 @@ begin
   for No in FNos do
     No.Filhos.Sort(TComparer<TMenuNode>.Construct(CompararNos));
 
+end;
+procedure TMenuManager.ReorganizarMenu;
+var
+  I: Integer;
+  TopAtual: Integer;
+  PainelItem: TPanel;
+begin
+  TopAtual := 0;
+
+  for I := 0 to FPanelMenu.ControlCount - 1 do
+  begin
+    if not (FPanelMenu.Controls[I] is TPanel) then
+      Continue;
+
+    PainelItem := TPanel(FPanelMenu.Controls[I]);
+
+    if not PainelItem.Visible then
+      Continue;
+
+    PainelItem.Align := alNone;
+    PainelItem.Top := TopAtual;
+
+    TopAtual := TopAtual + PainelItem.Height;
+  end;
 end;
 (*
 //teste

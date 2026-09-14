@@ -36,7 +36,7 @@ uses Vcl.Session;
 
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
-  FMenuManager := TMenuManager.Create(pnlMenu);
+  FMenuManager := TMenuManager.Create(pnlMenu, pnlContainer);
 end;
 
 procedure TFormMain.FormDestroy(Sender: TObject);
